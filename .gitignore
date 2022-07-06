@@ -3,3 +3,4 @@
 *.iml
 /csRecruitz_codebase/cs_venv
 /csRecruitz_codebase/cs_venv/
+/csRecruitz_codebase/first_module/__pycache__/
