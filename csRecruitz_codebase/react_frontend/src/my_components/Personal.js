@@ -2,22 +2,13 @@ import React, {Component} from "react";
 import {Animated} from "react-animated-css";
 import './Personal.css';
 import {AiFillEdit} from 'react-icons/ai'
+import Sidebar from "./Sidebar";
 class Personal extends Component {
     render() {
         return (
             <React.Fragment>
             <body>
-            <div className="sidebar">
-                <a className="active" href="/">Personal Information</a>
-                <a href="/">Upload Resume</a>
-                <a href="/">Professional Information</a>
-                <a href="/">Applied Jobs</a>
-                <a href="/">Shortlisted Jobs</a>
-
-
-
-            </div>
-
+            <Sidebar/>
             <div className="content">
                 <div className="row"> <h1>About Me:</h1></div>
                 <Animated animationIn="slideInUp"  animationInDuration={1800}  isVisible={true}>

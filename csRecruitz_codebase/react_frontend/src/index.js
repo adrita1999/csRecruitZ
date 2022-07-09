@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {Route,BrowserRouter,Routes} from "react-router-dom";
 import Personal from "./my_components/Personal";
+import Professional from "./my_components/Professional";
 import "bootstrap/dist/css/bootstrap.min.css";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -12,6 +13,7 @@ root.render(
     <Routes>
       <Route path="/" element={<App />} />
       <Route path="/dashboard" element={<Personal />} />
+        <Route path="/professional" element={< Professional/>} />
     </Routes>
   </BrowserRouter>
 );
