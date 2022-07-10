@@ -63,7 +63,7 @@ ol.gradient-list {
 }
 .publist li {
   background: #F7FFFF;
-  border-radius: 0 0.5rem 0.5rem 0.5rem;
+  border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
   box-shadow: 0.25rem 0.25rem 0.6rem rgba(0,0,0,0.05), 0 0.5rem 1.125rem rgba(75,0,0,0.05);
   margin-top: 1rem;
   min-height: 6rem;
@@ -71,9 +71,10 @@ ol.gradient-list {
   position: relative;
   width: 98%;
 }
+
 .projectlist li {
   background: #F7FFFF;
-  border-radius: 0 0.5rem 0.5rem 0.5rem;
+  border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
   box-shadow: 0.25rem 0.25rem 0.6rem rgba(0,0,0,0.05), 0 0.5rem 1.125rem rgba(75,0,0,0.05);
   margin-top: 1rem;
   min-height: 9rem;
@@ -185,7 +186,6 @@ ol.gradient-list > li + li {
   margin-top: 20px;
   margin-left: 120px;
 
-
 }
 .custom_btn {
   width: 150px;
@@ -195,12 +195,14 @@ ol.gradient-list > li + li {
   border: none;
   border-radius: 5px;
   float: right;
-  margin-right: 25px;
+  margin-top: 40px;
+  margin-right: 145px;
+  margin-bottom: 50px;
   transition-duration: 0.4s;
 
 }
 .custom_btn2 {
-  width: 120px;
+  width: 130px;
   height: 30px;
   background-color:#29A335;
   color: white;
@@ -228,6 +230,16 @@ ol.gradient-list > li + li {
 
 
 
+}
+.personal_div_bg {
+  background: #F7FFFF;
+  border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  box-shadow: 0.25rem 0.25rem 0.6rem rgba(0,0,0,0.05), 0 0.5rem 1.125rem rgba(75,0,0,0.05);
+  margin-top: 1rem;
+  min-height: 5rem;
+  padding: 1rem 1rem 1rem 1rem;
+  position: relative;
+  width: 97.5%;
 }
 .icon_edit {
 

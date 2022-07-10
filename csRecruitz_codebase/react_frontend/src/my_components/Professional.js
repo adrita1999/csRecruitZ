@@ -206,6 +206,23 @@ class Professional extends Component {
 
                     </ul>
                     </AnimationOnScroll>
+                    <div className="row_custom">
+                    <div className="row">
+                        <div className="align">
+                        <h4>Licenses and Certificates:</h4>
+                            <button className="icon_btn"><FiEdit2 size={'1.5em'} className="icon_edit"/></button></div>
+                    </div>
+                    </div>
+                    <AnimationOnScroll animateIn="bounceInLeft" duration={4} delay={100} animateOnce={false}>
+                    <ul className="publist">
+                        <li><b className="seems-h1">Neural Network and Deep Learning</b>
+                            <button className="custom_btn2">View Credential</button>
+                        <p><small>Coursera</small></p></li>
+                        <li><b className="seems-h1">Neural Network and Deep Learning</b>
+                            <button className="custom_btn2">View Credential</button>
+                        <p><small>Coursera</small></p></li>
+                    </ul>
+                     </AnimationOnScroll>
                 </div>
                 </body>
             </React.Fragment>
