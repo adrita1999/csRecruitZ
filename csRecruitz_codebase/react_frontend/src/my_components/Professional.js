@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import {Animated} from "react-animated-css";
 import Sidebar from "./Sidebar";
 import './Personal.css';
 import {FiEdit2} from 'react-icons/fi';
@@ -6,14 +7,19 @@ import {FaArrowRight} from 'react-icons/fa';
 import { AnimationOnScroll } from 'react-animation-on-scroll';
 import {MdFileDownloadDone} from 'react-icons/md';
 import {HiExternalLink} from 'react-icons/hi';
+import Navb from "./Navb";
 class Professional extends Component {
     render() {
         return (
             <React.Fragment>
                 <body>
+                <Navb/>
+
                 <Sidebar/>
                 <div className="content">
                 <div className="row"> <h1>Professional Information:</h1></div>
+                    <Animated animationIn="slideInUp"  animationInDuration={1800}  isVisible={true}>
+                    <div>
                <div className="row_custom">
                     <div className="align">
                     <p><b className="seems-h1">Field of Work: </b>Research and Development</p>
@@ -224,6 +230,9 @@ class Professional extends Component {
                     </ul>
                      </AnimationOnScroll>
                 </div>
+                    </Animated>
+                    </div>
+
                 </body>
             </React.Fragment>
         )

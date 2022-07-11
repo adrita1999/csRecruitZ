@@ -3,14 +3,18 @@ import {Animated} from "react-animated-css";
 import './Personal.css';
 import {AiFillEdit} from 'react-icons/ai'
 import Sidebar from "./Sidebar";
+import Navb from "./Navb";
 class Personal extends Component {
     render() {
         return (
             <React.Fragment>
             <body>
+           <Navb/>
             <Sidebar/>
             <div className="content">
+
                 <div className="row"> <h1>About Me:</h1></div>
+
                 <Animated animationIn="slideInUp"  animationInDuration={1800}  isVisible={true}>
                 <div>
                 <div className="row_custom ">
