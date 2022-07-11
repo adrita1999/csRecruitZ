@@ -13,7 +13,7 @@ class Navb extends Component {
                 boxShadow:"0px 0px 5px 1px #93BF7A"
             }}>
   <Container>
-    <Navbar.Brand href="/" style={{
+    <Navbar.Brand href="/" className="navBrand" style={{
         marginLeft:-55,
         fontSize:38,
         fontWeight:"bold",

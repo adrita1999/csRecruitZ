@@ -55,6 +55,12 @@ body {
   transform: scale(1.15);
 
 }
+.navBrand {
+  transition: 0.5s ease-in-out;
+}
+.navBrand:hover {
+  transform: rotateY(35deg);
+}
 
 div.content {
   background-color: #DEE7F4;
