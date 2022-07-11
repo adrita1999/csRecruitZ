@@ -8,6 +8,7 @@ import { AnimationOnScroll } from 'react-animation-on-scroll';
 import {MdFileDownloadDone} from 'react-icons/md';
 import {HiExternalLink} from 'react-icons/hi';
 import Navb from "./Navb";
+import Foot from "./Foot";
 class Professional extends Component {
     render() {
         return (
@@ -232,6 +233,7 @@ class Professional extends Component {
                 </div>
                     </Animated>
                     </div>
+                 <Foot margin_value={172}/>
 
                 </body>
             </React.Fragment>
