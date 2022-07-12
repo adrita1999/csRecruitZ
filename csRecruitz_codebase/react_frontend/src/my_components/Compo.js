@@ -7,6 +7,7 @@ function Compo(props) {
         <div>
             <h2>my component {props.name}</h2>
             <button className="btn btn-success" onClick={()=> history("/dashboard")}>Dashboard</button>
+            <button className="btn btn-success" onClick={()=> history("/joblist")}>joblist</button>
         </div>
     )
 }
