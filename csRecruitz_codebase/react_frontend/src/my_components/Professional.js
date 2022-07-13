@@ -7,6 +7,8 @@ import {FaArrowRight} from 'react-icons/fa';
 import { AnimationOnScroll } from 'react-animation-on-scroll';
 import {MdFileDownloadDone} from 'react-icons/md';
 import {HiExternalLink} from 'react-icons/hi';
+import {BiLockAlt} from 'react-icons/bi';
+
 import Navb from "./Navb";
 import Foot from "./Foot";
 class Professional extends Component {
@@ -18,6 +20,7 @@ class Professional extends Component {
 
                 <Sidebar/>
                 <div className="content">
+
                 <div className="row"> <h1>Professional Information:</h1></div>
                     <Animated animationIn="slideInUp"  animationInDuration={1800}  isVisible={true}>
                     <div>
@@ -35,7 +38,7 @@ class Professional extends Component {
                         <div className="container ">
 
                             <div className="row px-3" style={{
-                                marginTop:20
+                                marginTop:-20
                             }}>
 
                                     <div className="border-left pt-2 pl-4 ml-2">
@@ -163,7 +166,7 @@ class Professional extends Component {
                             <button className="icon_btn"><FiEdit2 size={'1.5em'} className="icon_edit"/></button></div>
                     </div>
                     </div>
-                    <AnimationOnScroll animateIn="bounceInLeft" duration={4} delay={100} animateOnce={false}>
+                    <AnimationOnScroll animateIn="bounceInRight" duration={4} delay={100} animateOnce={false}>
                     <ul className="projectlist">
                         <li><b className="seems-h1"> Gesture Based Mini Piano</b>
                         <p>Tempor eos dolore amet tempor dolor tempor. Dolore ea magna sit amet
@@ -192,7 +195,7 @@ class Professional extends Component {
                             <button className="icon_btn"><FiEdit2 size={'1.5em'} className="icon_edit"/></button></div>
                     </div>
                     </div>
-                    <AnimationOnScroll animateIn="bounceInLeft" duration={4} delay={100} animateOnce={false}>
+                    <AnimationOnScroll animateIn="bounceInRight" duration={4} delay={100} animateOnce={false}>
                     <ul className="publist">
                         <li>
 
@@ -220,7 +223,7 @@ class Professional extends Component {
                             <button className="icon_btn"><FiEdit2 size={'1.5em'} className="icon_edit"/></button></div>
                     </div>
                     </div>
-                    <AnimationOnScroll animateIn="bounceInLeft" duration={4} delay={100} animateOnce={false}>
+                    <AnimationOnScroll animateIn="bounceInRight" duration={4} delay={50} animateOnce={false}>
                     <ul className="publist">
                         <li><b className="seems-h1">Neural Network and Deep Learning</b>
                             <button className="custom_btn2">View Credential</button>
@@ -230,9 +233,52 @@ class Professional extends Component {
                         <p><small>Coursera</small></p></li>
                     </ul>
                      </AnimationOnScroll>
+                        <div className="row_custom">
+                    <div className="row">
+                        <div className="align">
+                        <h4>Personal Preferences:</h4>
+                            <button className="icon_btn"><FiEdit2 size={'1.5em'} className="icon_edit"/></button></div>
+                            <p>Private to you <BiLockAlt size={'1.2em'} style={{
+                                marginTop:-3
+                            }}/></p>
+                    </div>
+                    </div>
+                        <div className="row_custom">
+
+                        <div className="prof_div_bg ">
+                            <div className="row">
+                                <div className="col-sm-12">
+                            <b className= "seems-h1">Currently Open To</b><p>
+                                    <div className="round1"><b>C++</b></div>
+                                    <div className="round2"><b>ReactJS</b></div>
+                                    <div className="round3"><b>Django</b></div>
+                                </p>
+                        </div>
+                                <div className="col-sm-12">
+                                    <b className= "seems-h1">Preferred Salary</b><p>
+                                    BDT 50000
+                                    </p>
+                                </div>
+                                <div className="col-sm-12">
+                                    <b className= "seems-h1">Preferred Job Nature</b><p>
+                                    Full-time
+                                    </p>
+                                </div>
+                                <div className="col-sm-12">
+                                    <b className= "seems-h1">Preferred Organization Type</b><p>
+                                    Government Org
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                            </div>
                 </div>
+
+
+
                     </Animated>
                     </div>
+
                  <Foot margin_value={172}/>
 
                 </body>

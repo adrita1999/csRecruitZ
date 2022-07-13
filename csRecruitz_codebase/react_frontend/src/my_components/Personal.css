@@ -70,6 +70,7 @@ div.content {
   padding: 1px 16px;
   height: auto;
   min-height: 100vh;
+  overflow: hidden;
 
 }
 ol.gradient-list {
@@ -82,11 +83,73 @@ ol.gradient-list {
   margin-top: 20px;
   margin-left: 90px;
   list-style-type: none;
+
 }
 .publist {
   margin-top: 20px;
   margin-left: 90px;
   list-style-type: none;
+}
+.prof_div_bg {
+  margin-top: -20px;
+  background: #F7FFFF;
+  border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  box-shadow: 0.25rem 0.25rem 0.6rem rgba(0,0,0,0.05), 0 0.5rem 1.125rem rgba(75,0,0,0.05);
+  min-height: 6rem;
+  padding: 1rem 1rem 1rem 1rem;
+  position: relative;
+  width: 96.5%;
+  margin-bottom: 50px;
+
+}
+.round1 {
+  background: linear-gradient(135deg, #a2ed56 0%, #fddc32 100%);
+  min-height: 2rem;
+  border-radius: 3.5rem 3.5rem 3.5rem 3.5rem;
+  box-shadow:  0px 0px 5px 1px #93BF7A;
+  padding: 1rem 1rem 1rem 1rem;
+  position: relative;
+  min-width: 9%;
+  text-align: center;
+  margin-right: 8px;
+  margin-top: 10px;
+  float: left;
+  margin-bottom: 20px;
+}
+.round2 {
+  background:linear-gradient(135deg, rgba(162, 237, 86, 0.8) 0%, rgba(253, 220, 50, 0.8) 100%);
+  min-height: 2rem;
+  border-radius: 3.5rem 3.5rem 3.5rem 3.5rem;
+  box-shadow:  0px 0px 5px 1px #93BF7A;
+  padding: 1rem 1rem 1rem 1rem;
+  position: relative;
+  min-width: 9%;
+  margin-right: 8px;
+  margin-top: 10px;
+  text-align: center;
+  float: left;
+  margin-bottom: 20px;
+
+
+}
+.round3 {
+  background: linear-gradient(135deg, rgba(162, 237, 86, 0.6) 0%, rgba(253, 220, 50, 0.6) 100%);
+  min-height: 2rem;
+  border-radius: 3.5rem 3.5rem 3.5rem 3.5rem;
+  padding: 1rem 1rem 1rem 1rem;
+  box-shadow:  0px 0px 5px 1px #93BF7A;
+  position: relative;
+  min-width: 9%;
+  text-align: center;
+  margin-right: 8px;
+  margin-top: 10px;
+  float: left;
+  margin-bottom: 20px;
+}
+
+
+.text-body {
+  color: #646464 !important;
 }
 .publist li {
   background: #F7FFFF;
@@ -212,6 +275,11 @@ ol.gradient-list > li + li {
 .content h5 {
   color: #29A335;
 }
+.content h6 {
+  color: #29A335;
+  font-size: larger;
+  font-weight: bold;
+}
 
 .row_custom {
   margin-top: 20px;
@@ -270,6 +338,18 @@ ol.gradient-list > li + li {
   min-height: 5rem;
   padding: 1rem 1rem 1rem 1rem;
   position: relative;
+  width: 97.5%;
+}
+.personal_div_bg2 {
+  background:transparent;
+  /*border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;*/
+  box-shadow: 0.25rem 0.25rem 0.6rem rgba(0,0,0,0.05), -1rem 0.5rem 1.125rem rgba(75,0,0,0.05);
+  margin-top: 1rem;
+  min-height: 5rem;
+  padding: 1rem 1rem 1rem 1rem;
+  position: relative;
+
+  border-bottom: 1px solid #E2E2E2;
   width: 97.5%;
 }
 .icon_edit {

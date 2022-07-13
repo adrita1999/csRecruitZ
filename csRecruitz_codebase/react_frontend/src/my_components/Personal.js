@@ -2,7 +2,8 @@ import React, {Component} from "react";
 import {Animated} from "react-animated-css";
 import './Personal.css';
 import {AiFillEdit} from 'react-icons/ai'
-
+import pic from './images/pp.JPG'
+import TypeAnimation from 'react-type-animation';
 
 
 
@@ -18,8 +19,40 @@ class Personal extends Component {
 
             <Sidebar/>
             <div className="content">
+                <div className="row_custom">
+                    <div className="personal_div_bg2">
+                <div className="row" style={{
+                    display:"flex",
+                    flexFlow:"row"
+                }}>
 
-                <div className="row"> <h1>About Me:</h1></div>
+                <img src={pic} alt="Profile Pic" style={{
+                    height:120,
+                    width:140,
+                    borderRadius:"50%",
+
+
+
+
+                }}/>
+
+                    <div style ={{
+                    display:"inline-block",
+                        marginTop:30
+                }}>
+                        <p style={{
+                            fontSize:24
+                        }}><b>Adrita Hossain Nakshi</b></p>
+                <TypeAnimation
+                cursor={true}
+                sequence={['Research and Development Engineer', 2000, 'Skilled in Cpp, Java and more ',2000,'10 years of work experience',2000,'']}
+                wrapper="h6"
+                repeat={Infinity}/>
+                </div>
+                </div>
+                    </div>
+                    </div>
+                <div className="row_custom"> <h3>About Me:</h3></div>
 
                 <Animated animationIn="slideInUp"  animationInDuration={1800}  isVisible={true}>
                 <div>
