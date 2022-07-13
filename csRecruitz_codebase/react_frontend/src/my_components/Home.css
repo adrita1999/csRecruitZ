@@ -1,0 +1,51 @@
+body {
+    margin-bottom: 0;
+  }
+
+.image{
+    width: '100%';
+    height: 650px;
+    aspect-ratio: 120 / 60;
+    opacity: 0.65;
+    transition: 'contain';
+    align-self: 'center';
+    color: black;
+    background-color: Black;
+    z-index:10;
+}
+figcaption{
+    position: absolute;
+    bottom: 16rem;
+    margin: 0 0 0 2rem;
+    color: white;
+    font-size: 4.3em;
+    font-weight:bold;
+    color: #50C878;
+    line-height: 105%;
+}
+.container-fluid{
+    padding: 35px;
+    visibility: visible;
+    animation-delay: 0.1s;
+    background-color: #00B074 !important;
+}
+.recom-1{
+    visibility: visible;
+    animation-delay: 0.1s;
+    animation-name: fadeInUp;
+    /* background-color: #00B074 !important; */
+    background-color:hsl(131, 58%, 77%);
+    opacity: 0.6;
+    padding-right: calc(var(--bs-gutter-x) / 2);
+    padding-left: calc(var(--bs-gutter-x) / 2);
+    margin-left: 150px;
+    box-shadow: 10px 10px rgb(245, 228, 196);
+    
+}
+.recom-1:hover{
+    
+}
+.org{
+    color: aliceblue;
+    background-color: aliceblue;
+}
