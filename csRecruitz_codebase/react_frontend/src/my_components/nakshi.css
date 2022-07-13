@@ -72,3 +72,26 @@ div.joblistbgdiv {
   margin-top: 1.5%;
 }
 
+.sort_by_txt {
+  display:inline;
+  position:absolute;
+  left:72%;
+  margin-top: 1.7%;
+}
+.select_sort_div {
+  display:inline;
+  position:absolute;
+  left:76%;
+  margin-top: 1.45%;
+}
+.asc_desc_btn_div {
+  display:inline;
+  position:absolute;
+  left:91.5%;
+  margin-top: 1.75%;
+  padding: 0px;
+}
+.asc_desc_btn {
+  background: #29A335;
+  border: none;
+}

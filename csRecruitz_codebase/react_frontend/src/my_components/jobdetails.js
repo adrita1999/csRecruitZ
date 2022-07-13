@@ -42,7 +42,7 @@ const dropDownStyle ={
    })
 };
 
-class Joblist extends Component {
+class Jobdetails extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -306,4 +306,4 @@ class Joblist extends Component {
     }
 }
 
-export default Joblist;
+export default Jobdetails;
