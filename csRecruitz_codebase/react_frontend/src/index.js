@@ -8,6 +8,8 @@ import Personal from "./my_components/Personal";
 import Professional from "./my_components/Professional";
 
 import Joblist from "./my_components/jobpostlist";
+import Jobdetails from "./my_components/jobdetails";
+
 import Home from "./my_components/Home";
 import "bootstrap/dist/css/bootstrap.min.css";
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -19,6 +21,7 @@ root.render(
         <Route path="/professional" element={< Professional/>} />
 
         <Route path="/joblist" element={< Joblist/>} />
+        <Route path="/jobdetails" element={< Jobdetails/>} />
 
         <Route path="/home" element={< Home/>} />
     </Routes>

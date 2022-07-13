@@ -15,7 +15,7 @@ class Filter_sidebar extends Component {
         return (
 
             <div className="filterbar">
-                <h1>hi</h1>
+
 
 
             </div>
