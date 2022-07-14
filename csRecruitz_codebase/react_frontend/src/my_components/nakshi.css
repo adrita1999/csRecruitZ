@@ -2,7 +2,7 @@ body{
     background-color: #ffffff;
   /* font-family: gothambook; */
     /*overflow: hidden;*/
-  overflow-x: hidden;
+    /*overflow-x: hidden;*/
     }
 ::-webkit-scrollbar {
   width: 10px;

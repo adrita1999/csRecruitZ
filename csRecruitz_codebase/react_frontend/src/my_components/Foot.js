@@ -8,30 +8,36 @@ class Foot extends Component {
     }
     render() {
         return (
-            <div className="  text-white-50 footer " style={{
+            <div className=" text-white-50 footer " style={{
                 zIndex:1,
-               position:"absolute",
-               marginTop:this.props.margin_value,
-               background:"#002A8D"
+                maxWidth:1600,
+                width:"100%",
+
+                position:"absolute",
+                marginTop:this.props.margin_value,
+                background:"#002A8D"
 
            }}>
                <div className="container " style={{
-                   minWidth:"100vw",
-                   marginLeft:50
+
+
+                   marginLeft:50,
+
 
                }} >
-                   <div className="row g-5" >
-                       <div className="col-lg-3 col-md-6">
+                   <div className="row g-5"  >
+                       <div className="col-lg-3 col-md-6" >
                            <h5 className="text-white mb-4" style={{
                                marginTop:10
                            }}>Company</h5>
-                           <a className="btn btn-link text-white-50" href="/">About Us</a>
-                           <a className="btn btn-link text-white-50" href="/">Our Services</a>
-
-                           <a className="btn btn-link text-white-50  " href="/">Terms & Condition</a>
+                           <ul className="footer_list">
+                           <li><a className="text-white-50" href="/">About Us</a></li>
+                           <li><a className="text-white-50" href="/">Our Services</a></li>
+                           <li><a className="text-white-50  " href="/">Terms & Condition</a></li>
+                           </ul>
                        </div>
 
-                       <div className="col-lg-3 col-md-6">
+                       <div className="col-lg-3 col-md-6" >
                            <h5 className="text-white mb-4" style={{
                                marginTop:10
                            }}>Contact</h5>
@@ -41,7 +47,7 @@ class Foot extends Component {
                            <p className="mb-2">csRecruitZ@example.com</p>
 
                        </div>
-                       <div className="col-lg-3 col-md-6">
+                       <div className="col-lg-3 col-md-6" >
                            <h5 className="text-white mb-4" style={{
                                marginTop:10
                            }}>Find Us</h5>
@@ -62,7 +68,7 @@ class Foot extends Component {
 
                            </div>
                        </div>
-                       <div className="col-lg-3 col-md-6">
+                       <div className="col-lg-3 col-md-6" >
                            <h5 className="text-white mb-4" style={{
                                marginTop:10
                            }}>Rights and Permissions</h5>

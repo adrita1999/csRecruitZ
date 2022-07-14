@@ -21,7 +21,9 @@ class Professional extends Component {
                 <Sidebar/>
                 <div className="content">
 
-                <div className="row"> <h1>Professional Information:</h1></div>
+                <div className="row" style={{
+                    marginLeft:"-13.5%"
+                }}> <h1>Professional Information:</h1></div>
                     <Animated animationIn="slideInUp"  animationInDuration={1800}  isVisible={true}>
                     <div>
                <div className="row_custom">

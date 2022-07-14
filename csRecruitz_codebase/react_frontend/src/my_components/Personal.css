@@ -12,7 +12,9 @@ ol.gradient-list > li, ol.gradient-list > li::before {
     --dark: #2B3940;
 }
 body {
-  margin-bottom: 0;
+  height: 100%;
+  width: 100%;
+  padding: 0;
 }
 .sidebar {
   margin-left: 30px;
@@ -22,7 +24,8 @@ body {
   position: fixed;
   height: 100%;
   overflow: auto;
-    z-index: 0;
+  z-index: 0;
+
 }
 
 .sidebar a {
@@ -65,12 +68,13 @@ body {
 div.content {
   background-color: #DEE7F4;
   margin-top: 10px;
-  margin-left: 200px;
+  margin-left: 340px;
   margin-right: 50px;
   padding: 1px 16px;
   height: auto;
   min-height: 100vh;
   overflow: hidden;
+
 
 }
 ol.gradient-list {
@@ -81,13 +85,13 @@ ol.gradient-list {
 }
 .projectlist {
   margin-top: 20px;
-  margin-left: 90px;
+  margin-left: -4%;
   list-style-type: none;
 
 }
 .publist {
   margin-top: 20px;
-  margin-left: 90px;
+   margin-left: -4%;
   list-style-type: none;
 }
 .prof_div_bg {
@@ -283,7 +287,7 @@ ol.gradient-list > li + li {
 
 .row_custom {
   margin-top: 20px;
-  margin-left: 155px;
+  margin-left: 20px;
 
 }
 .custom_btn {
@@ -295,7 +299,7 @@ ol.gradient-list > li + li {
   border-radius: 5px;
   float: right;
   margin-top: 40px;
-  margin-right: 180px;
+  margin-right: 45px;
   margin-bottom: 50px;
   transition-duration: 0.4s;
 
@@ -415,8 +419,12 @@ ol.gradient-list > li + li {
     border-color: var(--light);
 }
 
-.footer .btn.btn-link {
-    display: block;
+
+.footer_list {
+  list-style-type: none;
+  margin-left: -12%;
+}
+.footer_list li {
     margin-bottom: 5px;
     padding: 0;
     text-align: left;
@@ -426,15 +434,7 @@ ol.gradient-list > li + li {
     transition: .3s;
 }
 
-.footer .btn.btn-link::before {
-    position: relative;
-    content: "\f105";
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
-    margin-right: 10px;
-}
-
-.footer .btn.btn-link:hover {
+.footer_list li:hover {
     letter-spacing: 1px;
     box-shadow: none;
 }

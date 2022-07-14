@@ -9,6 +9,7 @@ class Navb extends Component {
         return (
             <Navbar  expand="lg" sticky="top" style={{
                 height:80,
+                width:"100%",
                 background:"#F1FFE8",
                 boxShadow:"0px 0px 5px 1px #93BF7A"
             }}>

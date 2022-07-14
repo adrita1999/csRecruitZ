@@ -77,10 +77,10 @@ class Personal extends Component {
                      <div className="personal_div_bg ">
                   <div className="row">
                         <div className="col-sm-6">
-                            <b className= "seems-h1">First Name</b><p>the text right after....</p>
+                            <b className= "seems-h1">Name</b><p>the text right after....</p>
                         </div>
                         <div className="col-sm-6">
-                            <b className= "seems-h1">Last Name</b><p>the text right after....</p>
+                            <b className= "seems-h1">Age</b><p>the text right after....</p>
                         </div>
                         <div className="col-sm-6">
                             <b className= "seems-h1">Father's Name</b><p>the text right after....</p>
@@ -101,7 +101,9 @@ class Personal extends Component {
                             <b className= "seems-h1">NID number</b><p>the text right after....</p>
                         </div>
                     <div className="col-sm-6">
-                            <b className= "seems-h1">Mobile number</b><p>the text right after....</p>
+                            <b className= "seems-h1">Mobile number</b><p>01521226945</p>
+                        <p>01871666053</p>
+
                         </div>
                     <div className="col-sm-6">
                             <b className= "seems-h1">Email Address</b><p>the text right after....</p>
@@ -144,7 +146,6 @@ class Personal extends Component {
             </div>
                 </Animated>
             </div>
-
             <Foot margin_value={172}/>
 
             </body>
