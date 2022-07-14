@@ -1,7 +1,11 @@
+
 import React, {Component, useState} from 'react'
+
+import React, { Component,useState } from 'react'
+
+
 import {Animated} from "react-animated-css";
 import './Home.css';
-import {AiFillEdit} from 'react-icons/ai'
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
@@ -31,9 +35,11 @@ const options = [
     { value: 'software engineer', label: 'software engineer' }
   ]
 const CatOptions = [
-    { value: 'teacher', label: 'teacher' },
-    { value: 'developer', label: 'developer' },
-    { value: 'software engineer', label: 'software engineer' }
+    { value: 'Teaching', label: 'Teaching' },
+    { value: 'DevOps', label: 'DevOps' },
+    { value: 'Security', label: 'Security' },
+    { value: 'Research and Development', label: 'Research and Development' },
+    { value: 'programming', label: 'programming' },
   ]
 const TitleOptions = [
     { value: 'Govt', label: 'Govt' },
@@ -41,9 +47,11 @@ const TitleOptions = [
     { value: 'NGO', label: 'NGO' }
   ]
   const OrgOptions = [
-    { value: 'Govt', label: 'Govt' },
-    { value: 'Non-Govt', label: 'Non-Govt' },
-    { value: 'NGO', label: 'NGO' }
+    { value: 'Government', label: 'Government' },
+    { value: 'Semi Government', label: 'Non Government' },
+    { value: 'NGO', label: 'NGO' },
+    { value: 'Private Firm', label: 'Private Firm' },
+    { value: 'International Agencies', label: 'International Agencies' }
   ]
   const LocationOptions = [
     { value: 'Dhaka', label: 'Dhaka' },
@@ -51,7 +59,9 @@ const TitleOptions = [
     { value: 'Rangpur', label: 'Rangpur' },
     { value: 'Sylhet', label: 'Sylhet' },
     { value: 'Khulna', label: 'Khulna' },
-    { value: 'Chittagoan', label: 'Chittagoan' }
+    { value: 'Chattogram', label: 'Chattogram' },
+    { value: 'Mymensingh ', label: 'Mymensingh ' },
+    { value: 'Barishal', label: 'Barishal' }
   ]
 
 var jsonData = {
@@ -107,8 +117,23 @@ export class Home extends Component {
       })
     }).then(resp => resp.json())}
 
-
+    // constructor(props) {
+    //     super(props);
+    //   }
   render() {
+    // const TagsInput = props => {
+    //     const [tags, setTags] = React.useState(props.tags);
+    //     const removeTags = indexToRemove => {
+    //         setTags([...tags.filter((_, index) => index !== indexToRemove)]);
+    //     }
+    // };
+    // const addTags = event => {
+    //     if (event.target.value !== "") {
+    //         setTags([...tags, event.target.value]);
+    //         props.selectedTags([...tags, event.target.value]);
+    //         event.target.value = "";
+    //     }
+    // };
     return (
        <React.Fragment>
        <body>
@@ -118,7 +143,28 @@ export class Home extends Component {
             <div className='floatingdiv'> 
                 <div className='row g-2'>
                     <div className='col-md-12'>
+
                         <Select  options={options} openMenuOnFocus isClearable  placeholder='Keyword' />
+                        <Select options={options} openMenuOnFocus isClearable  placeholder='Keyword' />
+                        {/* <div className="tags-input">
+                            <ul id="tags">
+                                {tags.map((tag, index) => (
+                                    <li key={index} className="tag">
+                                        <span className='tag-title'>{tag}</span>
+                                        <span className='tag-close-icon'
+                                            onClick={() => removeTags(index)}
+                                        >
+                                            x
+                                        </span>
+                                    </li>
+                                ))}
+                            </ul>
+                            <input
+                                type="text"
+                                onKeyUp={event => event.key === "Enter" ? addTags(event) : null}
+                                placeholder="Press enter to add tags"
+                            />
+                        </div> */}
                     </div>
 
 
