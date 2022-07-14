@@ -1,51 +1,98 @@
 body {
     margin-bottom: 0;
-  }
-
-.image{
-    width: '100%';
-    height: 650px;
-    aspect-ratio: 120 / 60;
-    opacity: 0.65;
-    transition: 'contain';
-    align-self: 'center';
-    color: black;
-    background-color: Black;
-    z-index:10;
 }
-figcaption{
-    position: absolute;
-    bottom: 16rem;
-    margin: 0 0 0 2rem;
-    color: white;
-    font-size: 4.3em;
-    font-weight:bold;
-    color: #50C878;
-    line-height: 105%;
+.homebg{
+  background-color: #DEE7F4;
+  margin-bottom: 0.8%;
+  padding: 1% 2% 2% 2%;
+  height: auto;
+  min-height: 100vh;
+  overflow:hidden;
 }
 .container-fluid{
-    padding: 35px;
+    width: 100%;
+    margin-top: 15px;
+    padding: 70px;
     visibility: visible;
     animation-delay: 0.1s;
     background-color: #00B074 !important;
+    
 }
-.recom-1{
+
+
+.floatingdiv{
+    width: 89.5%;
+    background-color:white;
+    margin-top: -130px;
+    margin-left: 50px;
+    margin-right: 50px;
+    border-radius: 10px;
+    padding: 70px;
     visibility: visible;
-    animation-delay: 0.1s;
-    animation-name: fadeInUp;
-    /* background-color: #00B074 !important; */
-    background-color:hsl(131, 58%, 77%);
-    opacity: 0.6;
-    padding-right: calc(var(--bs-gutter-x) / 2);
-    padding-left: calc(var(--bs-gutter-x) / 2);
-    margin-left: 150px;
-    box-shadow: 10px 10px rgb(245, 228, 196);
+    position:absolute;
+    box-shadow: 0.25rem 0.25rem 0.6rem rgba(0,0,0,0.05), 0 0.5rem 1.125rem rgba(75,0,0,0.05);
+}
+.nicherdiv{
+    background-color:white;
+    height: 300px;
+    padding: 70px;
+    margin-top: -48px;
+    margin-left: 30px;
+    margin-right: 30px;
     
 }
-.recom-1:hover{
+
+.vacancydiv{
+    display: table-cell;
+    width: 20%;
+    
+    justify-content: center; 
     
 }
-.org{
-    color: aliceblue;
-    background-color: aliceblue;
+.companydiv{
+    display: table-cell;
+    width: 20%;
+    justify-content: center; 
+}
+.newjobdiv{
+    display: table-cell;
+    width: 20%;
+}
+.vacancy{
+    display: table-cell;
+    width: 25%;
+    margin-right: 300px;
+    margin-left: 80px;
+    margin-top: 100px;
+    float: right;
+}
+.company{
+    display: table-cell;
+    width: 20%;
+    margin-right: 300px;
+    margin-left: 80px;
+    margin-bottom: 15px;
+}
+.newjob{
+    display: table-cell;
+    width: 25%;
+    margin-right: 300px;
+    margin-left: 80px;
+    
+
+}
+.recommendationdiv{
+    background-color:white;
+    height: auto;
+    margin-top: 20px;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+.jobdiv{
+    background: #F7FFFF;
+  border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  box-shadow: 0.25rem 0.25rem 0.6rem rgba(0,0,0,0.05), 0 0.5rem 1.125rem rgba(75,0,0,0.05);
+  padding: 2%;
+  width: 95%;
+  margin-top: 1.5%;
 }

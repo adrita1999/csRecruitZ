@@ -11,18 +11,19 @@ import Joblist from "./my_components/jobpostlist";
 import Jobdetails from "./my_components/jobdetails";
 
 import Home from "./my_components/Home";
+import Quiz from "./my_components/Quiz"
 import "bootstrap/dist/css/bootstrap.min.css";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<App />} />
+      <Route path="/" element={<Home />} />
       <Route path="/dashboard" element={<Personal />} />
         <Route path="/professional" element={< Professional/>} />
 
         <Route path="/joblist" element={< Joblist/>} />
         <Route path="/jobdetails" element={< Jobdetails/>} />
-
+        <Route path="/quiz" element={< Quiz/>} />
         <Route path="/home" element={< Home/>} />
     </Routes>
   </BrowserRouter>

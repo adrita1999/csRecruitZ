@@ -1,0 +1,42 @@
+.quiz{
+    width: 60%;
+    margin-left: 20%;
+    border-radius: 5px;
+}
+.title{
+    text-align: center;
+    background-color: grey;
+    padding: 10px;
+}
+.question{
+    margin-left: 2%;
+}
+#rad1{
+    margin-left: 40px;
+}
+#label{
+    margin-left: 15px;
+}
+
+.lastdiv{
+    background-color: white;
+    width: 100%;
+
+}
+.countp{
+    margin-left: 15px;
+    float: left;
+}
+.time{
+    margin-left: 15px;
+    padding-bottom: 20px;
+    float: left;
+    
+}
+.clock{
+    margin-right: 5px;
+}
+.btn{
+    float: right;
+    margin-right: 20px;
+}
