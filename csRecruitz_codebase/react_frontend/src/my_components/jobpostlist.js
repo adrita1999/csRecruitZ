@@ -68,7 +68,7 @@ class Joblist extends Component {
                     <div style={{float:"right",marginTop:-60}}>
                         <p className="sort_by_txt">Sort by</p>
                         <div className="select_sort_div">
-                            <Select options={sortOptions} openMenuOnFocus styles={dropDownStyle} isClearable  placeholder='None...' />
+                            <Select options={sortOptions} defaultValue="Salary" openMenuOnFocus styles={dropDownStyle} isClearable  placeholder='None...' />
                         </div>
                         <div className="asc_desc_btn_div">
                            <button className="asc_desc_btn" onClick={() => this.toggleSort()}>

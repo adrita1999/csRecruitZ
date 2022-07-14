@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, {Component, useState} from 'react'
 import {Animated} from "react-animated-css";
 import './Home.css';
 import {AiFillEdit} from 'react-icons/ai'
@@ -20,6 +20,7 @@ import {HiSortDescending} from "react-icons/hi";
 import {FaRegClock} from 'react-icons/fa';
 import {FaRegMoneyBillAlt} from 'react-icons/fa';
 import {FaRegCalendarAlt} from 'react-icons/fa';
+import Dropdown_my from "./dropdown"
 
 import Navb from "./Navb";
 import Foot from "./Foot";
@@ -53,7 +54,60 @@ const TitleOptions = [
     { value: 'Chittagoan', label: 'Chittagoan' }
   ]
 
+var jsonData = {
+    "category":"test",
+  }
+
+  function handleClick() {
+
+    // Send data to the backend via POST
+    fetch('http://127.0.0.1:8000/searchinput/', {  // Enter your IP address here
+
+      method: 'POST',
+        headers:{
+        'Content-Type': 'application/json',
+      },
+      mode: 'cors',
+      body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
+
+    })
+
+  }
+
+
 export class Home extends Component {
+    state={
+        cat: { value: 'Category', label: 'Category' }
+    };
+    constructor(props) {
+    super(props);
+    this.handleSubmitSearchFilters=this.handleSubmitSearchFilters.bind(this);
+  }
+
+
+  handler = (event) => {
+      const value = event.value
+      console.log(value)
+      this.state.cat.value=value
+      this.state.cat.label=value
+    }
+
+    handleSubmitSearchFilters= (event) =>{
+    event.preventDefault()
+    fetch("http://127.0.0.1:8000/",{
+      method:"POST",
+      headers:{
+        'Accept':'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        'data_options': {
+          'category': "teststring",
+        }
+      })
+    }).then(resp => resp.json())}
+
+
   render() {
     return (
        <React.Fragment>
@@ -64,11 +118,15 @@ export class Home extends Component {
             <div className='floatingdiv'> 
                 <div className='row g-2'>
                     <div className='col-md-12'>
-                        <Select options={options} openMenuOnFocus isClearable  placeholder='Keyword' />
+                        <Select  options={options} openMenuOnFocus isClearable  placeholder='Keyword' />
                     </div>
+
+
                     <div className='col-md-2'>
-                        <Select options={CatOptions} openMenuOnFocus isClearable  placeholder='Category' />
+                        <Select options={CatOptions} value={this.state.cat}  onChange={this.handler} isClearable placeholder="Category" />
                     </div>
+
+
                     <div className='col-md-3'>
                         <Select closeMenuOnSelect={false}
                                 isMulti
@@ -81,8 +139,11 @@ export class Home extends Component {
                         <Select options={LocationOptions} openMenuOnFocus isClearable  placeholder='Location' />
                     </div>
                     <div className='col-md-2'>
-                        <button className='btn btn-success'>Search</button>
+                        <button className='btn btn-success' onClick={handleClick}>Search</button>
                     </div>
+
+
+
                 </div>
             </div>
             <div className='nicherdiv mb-3'> 

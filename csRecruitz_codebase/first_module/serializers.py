@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Jobpost
+from .models import *
 
 class postSerializer(serializers.ModelSerializer):
     class Meta:
@@ -10,3 +10,9 @@ class postSerializer(serializers.ModelSerializer):
     #
     # def update(self, instance, validated_data):
     #     instance.title=validated_data.get('title',instance.title)
+
+
+class NewPostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= NewJobpost
+        fields='__all__'
