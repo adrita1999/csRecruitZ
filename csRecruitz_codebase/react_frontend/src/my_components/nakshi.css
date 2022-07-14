@@ -1,13 +1,37 @@
+body{
+    background-color: #ffffff;
+  /* font-family: gothambook; */
+    /*overflow: hidden;*/
+  overflow-x: hidden;
+    }
+::-webkit-scrollbar {
+  width: 10px;
+}
 
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
 .filterbar {
   margin-left: 3%;
   margin-top: 0.8%;
   padding: 0;
+  padding-bottom: 25px;
   width: 20%;
   background-color: #DEE7F4;
-  position: fixed;
-  height: 100%;
-  overflow: auto;
+  position: absolute;
+  height: auto;
+  bottom: auto;
 }
 
 div.joblistbgdiv {
@@ -94,4 +118,48 @@ div.joblistbgdiv {
 .asc_desc_btn {
   background: #29A335;
   border: none;
+}
+
+div.jobdetailsbgdiv {
+  background-color: #DEE7F4;
+  margin-top: 0.8%;
+  margin-left: 4%;
+  margin-right: 4%;
+  margin-bottom: 0.8%;
+  padding: 2% 2% 2% 2%;
+  height: auto;
+  min-height: 100vh;
+  overflow:hidden;
+}
+
+.category_div{
+  margin-left: 6%;
+}
+
+.hr_style{
+  width: 90%;
+  color: #29A335;
+  opacity: 1;
+  margin-left: 5%;
+}
+
+.radio_btn_option {
+  font-size: 14px;
+}
+
+.radio_btn_option:hover {
+  font-size: 15px;
+  color: #2853AF;
+}
+
+.filter_title_bg_div {
+  background:#EAEEF3;
+  /*border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;*/
+  box-shadow: 0.15rem 0.15rem 0.3rem rgba(0,0,0,0.05), -1rem 0.5rem 1.125rem rgba(75,0,0,0.05);
+  margin-top: 1rem;
+  margin-bottom: 0.4rem;
+  margin-left: -1%;
+  padding: 0.5rem 0.6rem 0.1rem 0.6rem;
+  border-bottom: 1px solid #E2E2E2;
+  width: 94%;
 }
