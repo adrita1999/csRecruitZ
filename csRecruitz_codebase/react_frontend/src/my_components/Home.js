@@ -77,7 +77,6 @@ var jsonData = {
       },
       mode: 'cors',
       body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
-
     })
 
   }

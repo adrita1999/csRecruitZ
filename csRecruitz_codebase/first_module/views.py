@@ -39,7 +39,7 @@ contact1.save()
 contact2 = UserContact(user_contact_id=2, user_id=1, contact_no="01718464397")
 contact2.save()
 jobpost1 = NewJobpost(jobpost_id=1, employer_id=emp1, title="Senior Software Engineer",
-                      category="Research and Development", post_date="2022-06-28", deadline_date="2022-07-28",
+                      category="Teaching", post_date="2022-06-28", deadline_date="2022-07-28",
                       salary=55000, required_experience=5, vacancies=2,
                       job_context="We are looking for a Sr. Software Engineer who will able to produce scalable software solutions. Selected Candidate will be the part of a cross-functional team that’s responsible for the full software development life cycle, from conception to deployment. As a Sr. Software Engineer, Candidate should be comfortable around both front-end and back-end coding languages, development frameworks and third-party libraries. Candidate should also be a team player with a knack for visual design and utility.",
                       job_nature="Full-time",
@@ -48,7 +48,7 @@ jobpost1 = NewJobpost(jobpost_id=1, employer_id=emp1, title="Senior Software Eng
                       additional_requirements="Work experience as a Full Stack Developer or similar role.",
                       application_process=" Email your CV from MY BDJOBS account.")
 jobpost1.save()
-jobpost2 = NewJobpost(jobpost_id=2, employer_id=emp2, title="Software Developer", category="Teaching",
+jobpost2 = NewJobpost(jobpost_id=2, employer_id=emp2, title="Software Developer", category="Research and Development",
                       post_date="2022-06-26", deadline_date="2022-07-26", salary=50000, required_experience=3,
                       vacancies=2,
                       job_context="We are looking for a .NET Software Engineer to join our development team. The selected software engineers will get a chance to work with the latest technology stacks, exercising industry-standard principles & best practices to build scalable, high performance & robust software solutions.",
@@ -73,13 +73,14 @@ class postViewsets(viewsets.ModelViewSet):
 
 
 class postViewsets_for_jobpost(viewsets.ModelViewSet):
-    print("sth")
+
     # def list(self,request):
     #     posts = Jobpost.objects.all()
     #     serializer = postSerializer(posts, many=True)
     #     return Response(serializer.data)
     queryset = NewJobpost.objects.all()
     serializer_class = NewPostSerializer
+    cat=""
 
     # def listy(self):
     #     # if category != "none":
@@ -91,26 +92,27 @@ class postViewsets_for_jobpost(viewsets.ModelViewSet):
     #     return Response(self.serializer_class(query_set, many=True).data,
     #                     status=status.HTTP_200_OK)
 
-    @action(methods=['post'], detail=False, url_path='searchinput')
+
+
+
+    @action(methods=['post','get'], detail=False ,url_path='searchinput')
     def follow(self, request):
-        # print(request.data['category'])
-        queryset = NewJobpost.objects.all().filter(category__iexact="Teaching")
-        # print(queryset[0].title)
-        print(NewPostSerializer(queryset,many=True).data)
 
-        # global category
-        # category= request.data['category']
+        if request.method == 'POST':
+            print(request.data['category'])
+            postViewsets_for_jobpost.cat=request.data['category']
+            return Response(status=status.HTTP_204_NO_CONTENT)
 
-        #self.listy()
+        else :
+            print(postViewsets_for_jobpost.cat)
+            objs = NewJobpost.objects.filter(category=postViewsets_for_jobpost.cat)
+            serializer = NewPostSerializer(objs, many=True)
+            return Response({
+                'status': status.HTTP_204_NO_CONTENT,
+                'data': serializer.data
+                })
 
-        return JsonResponse(NewPostSerializer(queryset, many=True).data, safe=False)
-        #return redirect("http://127.0.0.1:8000/search/")
 
-
-class tempViewsets_for_jobpost(viewsets.ModelViewSet):
-    print("view")
-    queryset = NewJobpost.objects.all()
-    serializer_class = NewPostSerializer
 
 # @api_view(['GET','POST'])
 # def home(request):
