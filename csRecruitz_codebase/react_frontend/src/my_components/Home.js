@@ -68,34 +68,20 @@ var jsonData = {
     "category":"",
   }
 
-var redirect=false
 
-  function handleClick() {
-    //const history = useNavigate();
-    // Send data to the backend via POST
-    fetch('http://127.0.0.1:8000/searchinput/', {  // Enter your IP address here
 
-      method: 'POST',
-        headers:{
-        'Content-Type': 'application/json',
-      },
-      mode: 'cors',
-      body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
-    })
-      redirect=true;
-    console.log(redirect)
-  }
 
 
 export class Home extends Component {
 
     state={
         cat: { value: 'Category', label: 'Category' },
+        redirect:false
 
     };
     constructor(props) {
     super(props);
-
+    this.handleClick=this.handleClick.bind(this);
   }
 
 
@@ -107,12 +93,27 @@ export class Home extends Component {
       jsonData.category=value
     }
 
+handleClick() {
+    //const history = useNavigate();
+    // Send data to the backend via POST
 
+    fetch('http://127.0.0.1:8000/searchinput/', {  // Enter your IP address here
+
+      method: 'POST',
+        headers:{
+        'Content-Type': 'application/json',
+      },
+      mode: 'cors',
+      body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
+    })
+    this.setState({'redirect':true})
+
+  }
     // constructor(props) {
     //     super(props);
     //   }
   render() {
-        let dir=redirect;
+
         //const { navigation } = this.props;
         //this.setState({navigation})
     // const TagsInput = props => {
@@ -177,8 +178,11 @@ export class Home extends Component {
                     <div className='col-md-2'>
                         <Select options={LocationOptions} openMenuOnFocus isClearable  placeholder='Location' />
                     </div>
-                    <div className='col-md-1'>
-                        <button className='btn btn-success' onClick={handleClick}>Search</button>
+
+                    <div className='col-md-2'>
+                        <button className='btn btn-success' onClick={this.handleClick}>Search</button>
+
+
                     </div>
 
 
@@ -306,8 +310,13 @@ export class Home extends Component {
              
 
        </div>
+
+
+
+       {this.state.redirect && <Navigate to='/joblist' replace={true}/>}
+
        <Foot margin_value={172}/>
-       {dir && <Navigate to='/joblist' replace={true}/>}
+
        </body>
        </React.Fragment>
     )
