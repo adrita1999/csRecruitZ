@@ -26,6 +26,8 @@ import Dropdown_my from "./dropdown"
 
 import Navb from "./Navb";
 import Foot from "./Foot";
+import {useNavigate} from "react-router-dom";
+import {Navigate} from "react-router-dom";
 
 const options = [
     { value: 'devops', label: 'devops' },
@@ -66,8 +68,10 @@ var jsonData = {
     "category":"",
   }
 
-  function handleClick() {
+var redirect=false
 
+  function handleClick() {
+    //const history = useNavigate();
     // Send data to the backend via POST
     fetch('http://127.0.0.1:8000/searchinput/', {  // Enter your IP address here
 
@@ -78,17 +82,20 @@ var jsonData = {
       mode: 'cors',
       body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
     })
-
+      redirect=true;
+    console.log(redirect)
   }
 
 
 export class Home extends Component {
+
     state={
-        cat: { value: 'Category', label: 'Category' }
+        cat: { value: 'Category', label: 'Category' },
+
     };
     constructor(props) {
     super(props);
-    this.handleSubmitSearchFilters=this.handleSubmitSearchFilters.bind(this);
+
   }
 
 
@@ -100,25 +107,14 @@ export class Home extends Component {
       jsonData.category=value
     }
 
-    handleSubmitSearchFilters= (event) =>{
-    event.preventDefault()
-    fetch("http://127.0.0.1:8000/",{
-      method:"POST",
-      headers:{
-        'Accept':'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        'data_options': {
-          'category': "teststring",
-        }
-      })
-    }).then(resp => resp.json())}
 
     // constructor(props) {
     //     super(props);
     //   }
   render() {
+        let dir=redirect;
+        //const { navigation } = this.props;
+        //this.setState({navigation})
     // const TagsInput = props => {
     //     const [tags, setTags] = React.useState(props.tags);
     //     const removeTags = indexToRemove => {
@@ -308,10 +304,18 @@ export class Home extends Component {
 
        </div>
        {/* <Foot margin_value={172}/> */}
+       {dir && <Navigate to='/joblist' replace={true}/>}
        </body>
        </React.Fragment>
     )
   }
 }
 
-export default Home
+export default Home;
+//export default withRouter(Home);
+
+// export default function(props) {
+//   const navigation = useNavigate();
+//
+//   return <Home {...props} navigation={navigation} />;
+// }

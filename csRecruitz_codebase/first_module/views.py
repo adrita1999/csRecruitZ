@@ -39,7 +39,7 @@ contact1.save()
 contact2 = UserContact(user_contact_id=2, user_id=1, contact_no="01718464397")
 contact2.save()
 jobpost1 = NewJobpost(jobpost_id=1, employer_id=emp1, title="Senior Software Engineer",
-                      category="Teaching", post_date="2022-06-28", deadline_date="2022-07-28",
+                      category="Research and Development", post_date="2022-06-28", deadline_date="2022-07-28",
                       salary=55000, required_experience=5, vacancies=2,
                       job_context="We are looking for a Sr. Software Engineer who will able to produce scalable software solutions. Selected Candidate will be the part of a cross-functional team that’s responsible for the full software development life cycle, from conception to deployment. As a Sr. Software Engineer, Candidate should be comfortable around both front-end and back-end coding languages, development frameworks and third-party libraries. Candidate should also be a team player with a knack for visual design and utility.",
                       job_nature="Full-time",

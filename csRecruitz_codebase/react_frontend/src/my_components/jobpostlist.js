@@ -47,6 +47,9 @@ class Joblist extends Component {
         super(props);
         this.state = {
           asc: true,
+          items: [],
+          DataisLoaded: false,
+          datas:[]
         };
       }
 
@@ -56,7 +59,23 @@ class Joblist extends Component {
         });
     };
 
+    componentDidMount() {
+        fetch(
+"http://127.0.0.1:8000/searchinput/",{
+        method:"GET"
+            })
+            .then((res) => res.json())
+            .then((json) => {
+                this.setState({datas: json.data, DataisLoaded: true})
+                console.log(json.data)
+            })
+
+    }
+
     render() {
+        const { DataisLoaded, items } = this.state;
+        if (!DataisLoaded) return <div>
+            <h1> Pleses wait some time.... </h1> </div> ;
         return (
             <React.Fragment>
             <body>
@@ -79,10 +98,16 @@ class Joblist extends Component {
 
                 </div>
 
+
+
+
                 <Animated animationIn="slideInLeft"  animationInDuration={1800}  isVisible={true}>
 
+                {
+                this.state.datas.map((item) => (
+
                     <div className="jobdiv">
-                        <h4 style={{color:"#29A335"}}>Software Engineer</h4>
+                        <h4 style={{color:"#29A335"}}>{item.title}</h4>
                         <h6 style={{color:"black"}}>Optimizely</h6>
 
                         <p style={{display:"inline"}}><HiLocationMarker style={{
@@ -111,410 +136,12 @@ class Joblist extends Component {
 
                         <button className="float_right_btn">View Details</button>
                     </div>
+                ))
+                }
 
-                    <div className="jobdiv">
-                        <h4 style={{color:"#29A335"}}>Software Engineer</h4>
-                        <h6 style={{color:"black"}}>Optimizely</h6>
 
-                        <p style={{display:"inline"}}><HiLocationMarker style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>Banani, Dhaka</p>
 
-                        <p className="fulltime_p"><FaRegClock style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>Full-time</p>
 
-                        <p className="salary_p"><FaRegMoneyBillAlt style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>50,000 BDT</p>
-
-                        <p className="float_right_p"><FaRegCalendarAlt style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>Deadline: 31 July, 2022</p>
-
-                        <button className="float_right_btn">View Details</button>
-                    </div>
-
-                    <div className="jobdiv">
-                        <h4 style={{color:"#29A335"}}>Software Engineer</h4>
-                        <h6 style={{color:"black"}}>Optimizely</h6>
-
-                        <p style={{display:"inline"}}><HiLocationMarker style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>Banani, Dhaka</p>
-
-                        <p className="fulltime_p"><FaRegClock style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>Full-time</p>
-
-                        <p className="salary_p"><FaRegMoneyBillAlt style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>50,000 BDT</p>
-
-                        <p className="float_right_p"><FaRegCalendarAlt style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>Deadline: 31 July, 2022</p>
-
-                        <button className="float_right_btn">View Details</button>
-                    </div>
-
-                    <div className="jobdiv">
-                        <h4 style={{color:"#29A335"}}>Software Engineer</h4>
-                        <h6 style={{color:"black"}}>Optimizely</h6>
-
-                        <p style={{display:"inline"}}><HiLocationMarker style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>Banani, Dhaka</p>
-
-                        <p className="fulltime_p"><FaRegClock style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>Full-time</p>
-
-                        <p className="salary_p"><FaRegMoneyBillAlt style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>50,000 BDT</p>
-
-                        <p className="float_right_p"><FaRegCalendarAlt style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>Deadline: 31 July, 2022</p>
-
-                        <button className="float_right_btn">View Details</button>
-                    </div>
-
-
-                    <div className="jobdiv">
-                        <h4 style={{color:"#29A335"}}>Software Engineer</h4>
-                        <h6 style={{color:"black"}}>Optimizely</h6>
-
-                        <p style={{display:"inline"}}><HiLocationMarker style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>Banani, Dhaka</p>
-
-                        <p className="fulltime_p"><FaRegClock style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>Full-time</p>
-
-                        <p className="salary_p"><FaRegMoneyBillAlt style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>50,000 BDT</p>
-
-                        <p className="float_right_p"><FaRegCalendarAlt style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>Deadline: 31 July, 2022</p>
-
-                        <button className="float_right_btn">View Details</button>
-                    </div>
-
-                    <div className="jobdiv">
-                        <h4 style={{color:"#29A335"}}>Software Engineer</h4>
-                        <h6 style={{color:"black"}}>Optimizely</h6>
-
-                        <p style={{display:"inline"}}><HiLocationMarker style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>Banani, Dhaka</p>
-
-                        <p className="fulltime_p"><FaRegClock style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>Full-time</p>
-
-                        <p className="salary_p"><FaRegMoneyBillAlt style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>50,000 BDT</p>
-
-                        <p className="float_right_p"><FaRegCalendarAlt style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>Deadline: 31 July, 2022</p>
-
-                        <button className="float_right_btn">View Details</button>
-                    </div>
-
-                    <div className="jobdiv">
-                        <h4 style={{color:"#29A335"}}>Software Engineer</h4>
-                        <h6 style={{color:"black"}}>Optimizely</h6>
-
-                        <p style={{display:"inline"}}><HiLocationMarker style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>Banani, Dhaka</p>
-
-                        <p className="fulltime_p"><FaRegClock style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>Full-time</p>
-
-                        <p className="salary_p"><FaRegMoneyBillAlt style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>50,000 BDT</p>
-
-                        <p className="float_right_p"><FaRegCalendarAlt style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>Deadline: 31 July, 2022</p>
-
-                        <button className="float_right_btn">View Details</button>
-                    </div>
-
-                    <div className="jobdiv">
-                        <h4 style={{color:"#29A335"}}>Software Engineer</h4>
-                        <h6 style={{color:"black"}}>Optimizely</h6>
-
-                        <p style={{display:"inline"}}><HiLocationMarker style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>Banani, Dhaka</p>
-
-                        <p className="fulltime_p"><FaRegClock style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>Full-time</p>
-
-                        <p className="salary_p"><FaRegMoneyBillAlt style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>50,000 BDT</p>
-
-                        <p className="float_right_p"><FaRegCalendarAlt style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>Deadline: 31 July, 2022</p>
-
-                        <button className="float_right_btn">View Details</button>
-                    </div>
-
-                    <div className="jobdiv">
-                        <h4 style={{color:"#29A335"}}>Software Engineer</h4>
-                        <h6 style={{color:"black"}}>Optimizely</h6>
-
-                        <p style={{display:"inline"}}><HiLocationMarker style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>Banani, Dhaka</p>
-
-                        <p className="fulltime_p"><FaRegClock style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>Full-time</p>
-
-                        <p className="salary_p"><FaRegMoneyBillAlt style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>50,000 BDT</p>
-
-                        <p className="float_right_p"><FaRegCalendarAlt style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>Deadline: 31 July, 2022</p>
-
-                        <button className="float_right_btn">View Details</button>
-                    </div>
-
-                    <div className="jobdiv">
-                        <h4 style={{color:"#29A335"}}>Software Engineer</h4>
-                        <h6 style={{color:"black"}}>Optimizely</h6>
-
-                        <p style={{display:"inline"}}><HiLocationMarker style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>Banani, Dhaka</p>
-
-                        <p className="fulltime_p"><FaRegClock style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>Full-time</p>
-
-                        <p className="salary_p"><FaRegMoneyBillAlt style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>50,000 BDT</p>
-
-                        <p className="float_right_p"><FaRegCalendarAlt style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>Deadline: 31 July, 2022</p>
-
-                        <button className="float_right_btn">View Details</button>
-                    </div>
-
-                    <div className="jobdiv">
-                        <h4 style={{color:"#29A335"}}>Software Engineer</h4>
-                        <h6 style={{color:"black"}}>Optimizely</h6>
-
-                        <p style={{display:"inline"}}><HiLocationMarker style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>Banani, Dhaka</p>
-
-                        <p className="fulltime_p"><FaRegClock style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>Full-time</p>
-
-                        <p className="salary_p"><FaRegMoneyBillAlt style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>50,000 BDT</p>
-
-                        <p className="float_right_p"><FaRegCalendarAlt style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>Deadline: 31 July, 2022</p>
-
-                        <button className="float_right_btn">View Details</button>
-                    </div>
-
-                    <div className="jobdiv">
-                        <h4 style={{color:"#29A335"}}>Software Engineer</h4>
-                        <h6 style={{color:"black"}}>Optimizely</h6>
-
-                        <p style={{display:"inline"}}><HiLocationMarker style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>Banani, Dhaka</p>
-
-                        <p className="fulltime_p"><FaRegClock style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>Full-time</p>
-
-                        <p className="salary_p"><FaRegMoneyBillAlt style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>50,000 BDT</p>
-
-                        <p className="float_right_p"><FaRegCalendarAlt style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>Deadline: 31 July, 2022</p>
-
-                        <button className="float_right_btn">View Details</button>
-                    </div>
-
-                    <div className="jobdiv">
-                        <h4 style={{color:"#29A335"}}>Software Engineer</h4>
-                        <h6 style={{color:"black"}}>Optimizely</h6>
-
-                        <p style={{display:"inline"}}><HiLocationMarker style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>Banani, Dhaka</p>
-
-                        <p className="fulltime_p"><FaRegClock style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>Full-time</p>
-
-                        <p className="salary_p"><FaRegMoneyBillAlt style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>50,000 BDT</p>
-
-                        <p className="float_right_p"><FaRegCalendarAlt style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>Deadline: 31 July, 2022</p>
-
-                        <button className="float_right_btn">View Details</button>
-                    </div>
-
-                    <div className="jobdiv">
-                        <h4 style={{color:"#29A335"}}>Software Engineer</h4>
-                        <h6 style={{color:"black"}}>Optimizely</h6>
-
-                        <p style={{display:"inline"}}><HiLocationMarker style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>Banani, Dhaka</p>
-
-                        <p className="fulltime_p"><FaRegClock style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>Full-time</p>
-
-                        <p className="salary_p"><FaRegMoneyBillAlt style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>50,000 BDT</p>
-
-                        <p className="float_right_p"><FaRegCalendarAlt style={{
-                            color:"#29A335",
-                            paddingRight:5,
-                            marginTop:-2
-                        }}/>Deadline: 31 July, 2022</p>
-
-                        <button className="float_right_btn">View Details</button>
-                    </div>
                 </Animated>
             </div>
 
