@@ -5,11 +5,7 @@ import React, {Component, useState} from 'react'
 import {Animated} from "react-animated-css";
 import './Home.css';
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Container } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import Dropdown from 'react-bootstrap/Dropdown';
 import vacancy from './images/vacancy.png'
 import company from './images/company.png'
 import newjob from './images/newjob.png'
@@ -17,17 +13,14 @@ import newjob from './images/newjob.png'
 import Select, { StylesConfig }  from 'react-select'
 
 import {HiLocationMarker} from "react-icons/hi";
-import {HiSortAscending} from "react-icons/hi";
-import {HiSortDescending} from "react-icons/hi";
 import {FaRegClock} from 'react-icons/fa';
 import {FaRegMoneyBillAlt} from 'react-icons/fa';
 import {FaRegCalendarAlt} from 'react-icons/fa';
-import Dropdown_my from "./dropdown"
 
 import Navb from "./Navb";
 import Foot from "./Foot";
-import {useNavigate} from "react-router-dom";
 import {Navigate} from "react-router-dom";
+
 
 const options = [
     { value: 'devops', label: 'devops' },
@@ -68,20 +61,34 @@ var jsonData = {
     "category":"",
   }
 
+var redirect=false
 
+  function handleClick() {
+    //const history = useNavigate();
+    // Send data to the backend via POST
+    fetch('http://127.0.0.1:8000/searchinput/', {  // Enter your IP address here
 
+      method: 'POST',
+        headers:{
+        'Content-Type': 'application/json',
+      },
+      mode: 'cors',
+      body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
+    })
+      redirect=true;
+    console.log(redirect)
+  }
 
 
 export class Home extends Component {
 
     state={
         cat: { value: 'Category', label: 'Category' },
-        redirect:false
 
     };
     constructor(props) {
     super(props);
-    this.handleClick=this.handleClick.bind(this);
+
   }
 
 
@@ -93,27 +100,12 @@ export class Home extends Component {
       jsonData.category=value
     }
 
-handleClick() {
-    //const history = useNavigate();
-    // Send data to the backend via POST
 
-    fetch('http://127.0.0.1:8000/searchinput/', {  // Enter your IP address here
-
-      method: 'POST',
-        headers:{
-        'Content-Type': 'application/json',
-      },
-      mode: 'cors',
-      body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
-    })
-    this.setState({'redirect':true})
-
-  }
     // constructor(props) {
     //     super(props);
     //   }
   render() {
-
+        let dir=redirect;
         //const { navigation } = this.props;
         //this.setState({navigation})
     // const TagsInput = props => {
@@ -138,8 +130,15 @@ handleClick() {
             <div className='floatingdiv'> 
                 <div className='row g-2'>
                     <div className='col-md-12'>
-
-                        <Select  options={options} openMenuOnFocus isClearable  placeholder='Keyword' />
+                    {/* <TextField
+                        // value={value}
+                        // onChange={(e) => {
+                        //     setValue(e.target.value);
+                        // }}
+                        /> */}
+                        <Form >
+                            <input style={{width:'1202px', padding:'7px'}} type="text" placeholder='Keyword'></input>
+                        </Form>
                         {/* <div className="tags-input">
                             <ul id="tags">
                                 {tags.map((tag, index) => (
@@ -178,11 +177,8 @@ handleClick() {
                     <div className='col-md-2'>
                         <Select options={LocationOptions} openMenuOnFocus isClearable  placeholder='Location' />
                     </div>
-
-                    <div className='col-md-2'>
-                        <button className='btn btn-success' onClick={this.handleClick}>Search</button>
-
-
+                    <div className='col-md-1'>
+                        <button className='btn btn-success' onClick={handleClick}>Search</button>
                     </div>
 
 
@@ -310,13 +306,8 @@ handleClick() {
              
 
        </div>
-
-
-
-       {this.state.redirect && <Navigate to='/joblist' replace={true}/>}
-
        <Foot margin_value={172}/>
-
+       {dir && <Navigate to='/joblist' replace={true}/>}
        </body>
        </React.Fragment>
     )
