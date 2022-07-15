@@ -5,7 +5,7 @@ from .serializers import *
 from rest_framework.decorators import api_view, action
 from rest_framework.response import Response
 from rest_framework import viewsets, status
-
+from django.db.models import Q
 user1 = Jobseeker(user_id=1, name="Adrita Hossain Nakshi", email="adrita_99@yahoo.com", password="1234", thana="Boalia",
                   district="Rajshahi", division="Rajshahi", father_name="Dr. Md. Elias Hossain",
                   mother_name="Dr. Zennat Ferdousi", date_of_birth="1999-02-06", self_desc="I am a CS under-graduate.",
@@ -132,6 +132,8 @@ class postViewsets_for_jobpost(viewsets.ModelViewSet):
     cat=""
     org=""
     loc=""
+    keyword=""
+    nature=""
 
     # def listy(self):
     #     # if category != "none":
@@ -153,15 +155,26 @@ class postViewsets_for_jobpost(viewsets.ModelViewSet):
             print(request.data['category'])
             print(request.data['organization'])
             print(request.data['location'])
+            print(request.data['keyword'])
+            print(request.data['nature'])
             postViewsets_for_jobpost.cat=request.data['category']
             postViewsets_for_jobpost.org=request.data['organization']
             postViewsets_for_jobpost.loc=request.data['location']
+            postViewsets_for_jobpost.keyword=request.data['keyword']
+            postViewsets_for_jobpost.nature = request.data['nature']
             return Response(status=status.HTTP_204_NO_CONTENT)
 
         else :
-            print(postViewsets_for_jobpost.cat)
-            objs = NewJobpost.objects.filter(category=postViewsets_for_jobpost.cat,employer_id__division=postViewsets_for_jobpost.loc,
-                                             employer_id__org_type=postViewsets_for_jobpost.org)
+
+            objs = NewJobpost.objects.filter(Q(category=postViewsets_for_jobpost.cat),Q(employer_id__division=postViewsets_for_jobpost.loc),
+                                             Q(employer_id__org_type=postViewsets_for_jobpost.org),Q(job_nature=postViewsets_for_jobpost.nature),(Q(title__icontains=postViewsets_for_jobpost.keyword)|Q(category__icontains=postViewsets_for_jobpost.keyword)
+                                                                                                    |Q(job_context__icontains=postViewsets_for_jobpost.keyword)|Q(job_nature=postViewsets_for_jobpost.keyword)
+                                                                                                    |Q(job_responsibilities__icontains=postViewsets_for_jobpost.keyword)|Q(edu_requirement__icontains=postViewsets_for_jobpost.keyword)
+                                                                                                    |Q(additional_requirements__icontains=postViewsets_for_jobpost.keyword) | Q(application_process__icontains=postViewsets_for_jobpost.keyword)
+                                                                                                    |Q(employer_id__org_type__icontains=postViewsets_for_jobpost.keyword)|Q(employer_id__thana__icontains=postViewsets_for_jobpost.keyword)
+                                                                                                    |Q(employer_id__district__icontains=postViewsets_for_jobpost.keyword) |Q(employer_id__division__icontains=postViewsets_for_jobpost.keyword)
+                                                                                                    |Q(employer_id__name__icontains=postViewsets_for_jobpost.keyword)))
+
 
             serializer = NewPostSerializer(objs, many=True)
             return Response({

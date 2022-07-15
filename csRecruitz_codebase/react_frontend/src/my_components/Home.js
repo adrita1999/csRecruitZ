@@ -34,10 +34,11 @@ const CatOptions = [
     { value: 'Research and Development', label: 'Research and Development' },
     { value: 'Programming', label: 'Programming' },
   ]
-const TitleOptions = [
-    { value: 'Govt', label: 'Govt' },
-    { value: 'Non-Govt', label: 'Non-Govt' },
-    { value: 'NGO', label: 'NGO' }
+const NatureOptions = [
+    { value: 'Part-time', label: 'Part-time' },
+    { value: 'Full-time', label: 'Full-time' },
+    { value: 'Remote', label: 'Remote' },
+    { value: 'Freelancing', label: 'Freelancing' }
   ]
   const OrgOptions = [
     { value: 'Government', label: 'Government' },
@@ -60,7 +61,9 @@ const TitleOptions = [
 var jsonData = {
     "category":"",
     "organization":"",
-    "location":""
+    "location":"",
+    "keyword":"",
+    "nature":""
   }
 
 
@@ -71,9 +74,10 @@ export class Home extends Component {
 
     state={
         cat: { value: 'Category', label: 'Category' },
-
+        keyword:"keyword",
         org :{ value:'Organization',label:'Organization'},
         loc :{ value:'Location',label:'Location'},
+        nature:{ value:'Job Nature',label:'Job Nature'},
         redirect:false
 
     };
@@ -103,6 +107,20 @@ export class Home extends Component {
       this.state.loc.value=value
       this.state.loc.label=value
       jsonData.location=value
+    }
+    handlernature = (event) => {
+      const value = event.value
+      console.log(value)
+      this.state.nature.value=value
+      this.state.nature.label=value
+      jsonData.nature=value
+    }
+    handlerkeyword= (event) => {
+      const value = event.target.value
+      console.log(value)
+      this.state.keyword=value
+
+      jsonData.keyword=value
     }
 
 handleClick() {
@@ -157,7 +175,7 @@ handleClick() {
                         // }}
                         /> */}
                         <Form >
-                            <input style={{width:'1202px', padding:'7px'}} type="text" placeholder='Keyword'></input>
+                            <input style={{width:'1202px', padding:'7px'}} type="text"  onChange={this.handlerkeyword} placeholder='Keyword'></input>
                         </Form>
                         {/* <div className="tags-input">
                             <ul id="tags">
@@ -187,9 +205,9 @@ handleClick() {
 
 
                     <div className='col-md-3'>
-                        <Select closeMenuOnSelect={false}
-                                isMulti
-                                options={TitleOptions} openMenuOnFocus isClearable placeholder='Title' />
+                        <Select 
+
+                                options={NatureOptions} value={this.state.nature}  onChange={this.handlernature} openMenuOnFocus isClearable placeholder='Job Nature' />
                     </div>
                     <div className='col-md-3'>
                         <Select options={OrgOptions} value={this.state.org}  onChange={this.handlerorg}openMenuOnFocus isClearable  placeholder='Organization' />
@@ -203,7 +221,7 @@ handleClick() {
                         <button className='btn btn-success' onClick={this.handleClick}>Search</button>
 
                     </div>
-                    
+
 
 
 
