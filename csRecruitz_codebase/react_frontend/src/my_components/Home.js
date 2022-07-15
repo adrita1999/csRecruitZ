@@ -126,9 +126,14 @@ export class Home extends Component {
 
 
                     <div className='col-md-3'>
+
                         <Select closeMenuOnSelect={false}
                                 isMulti
                                 options={TitleOptions} openMenuOnFocus isClearable placeholder='Title' />
+
+                        <Select
+
+                                options={NatureOptions} value={this.state.nature}  onChange={this.handlernature} openMenuOnFocus isClearable placeholder='Job Nature' />
                     </div>
                     <div className='col-md-3'>
                         <Select options={OrgOptions} openMenuOnFocus isClearable  placeholder='Organization' />
