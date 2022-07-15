@@ -1,4 +1,5 @@
-from django.shortcuts import render, HttpResponse
+from django.http import JsonResponse
+from django.shortcuts import render, HttpResponse, redirect
 from .models import *
 from .serializers import *
 from rest_framework.decorators import api_view, action
@@ -47,7 +48,7 @@ jobpost1 = NewJobpost(jobpost_id=1, employer_id=emp1, title="Senior Software Eng
                       additional_requirements="Work experience as a Full Stack Developer or similar role.",
                       application_process=" Email your CV from MY BDJOBS account.")
 jobpost1.save()
-jobpost2 = NewJobpost(jobpost_id=2, employer_id=emp2, title="Software Developer", category="Research and Development",
+jobpost2 = NewJobpost(jobpost_id=2, employer_id=emp2, title="Software Developer", category="Teaching",
                       post_date="2022-06-26", deadline_date="2022-07-26", salary=50000, required_experience=3,
                       vacancies=2,
                       job_context="We are looking for a .NET Software Engineer to join our development team. The selected software engineers will get a chance to work with the latest technology stacks, exercising industry-standard principles & best practices to build scalable, high performance & robust software solutions.",
@@ -68,19 +69,47 @@ class postViewsets(viewsets.ModelViewSet):
     serializer_class = postSerializer
 
 
+
+
+
 class postViewsets_for_jobpost(viewsets.ModelViewSet):
+    print("sth")
     # def list(self,request):
     #     posts = Jobpost.objects.all()
     #     serializer = postSerializer(posts, many=True)
     #     return Response(serializer.data)
     queryset = NewJobpost.objects.all()
+    serializer_class = NewPostSerializer
 
-    @action(methods=['post'], detail=False ,url_path='searchinput')
+    # def listy(self):
+    #     # if category != "none":
+    #     #     query_set = NewJobpost.objects.all().filter(category__iexact=category)
+    #     # else:
+    #     #     query_set = NewJobpost.objects.all()
+    #     query_set = NewJobpost.objects.all().filter(category__iexact="Teaching")
+    #     print("bal")
+    #     return Response(self.serializer_class(query_set, many=True).data,
+    #                     status=status.HTTP_200_OK)
+
+    @action(methods=['post'], detail=False, url_path='searchinput')
     def follow(self, request):
-        print(request.data['category'])
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        # print(request.data['category'])
+        queryset = NewJobpost.objects.all().filter(category__iexact="Teaching")
+        # print(queryset[0].title)
+        print(NewPostSerializer(queryset,many=True).data)
+
+        # global category
+        # category= request.data['category']
+
+        #self.listy()
+
+        return JsonResponse(NewPostSerializer(queryset, many=True).data, safe=False)
+        #return redirect("http://127.0.0.1:8000/search/")
 
 
+class tempViewsets_for_jobpost(viewsets.ModelViewSet):
+    print("view")
+    queryset = NewJobpost.objects.all()
     serializer_class = NewPostSerializer
 
 # @api_view(['GET','POST'])

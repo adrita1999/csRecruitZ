@@ -22,10 +22,11 @@ from rest_framework.routers import DefaultRouter
 router=DefaultRouter()
 #router.register('',postViewsets,basename='posts')
 router.register('',postViewsets_for_jobpost,basename='jobposts')
+router.register(r'search',tempViewsets_for_jobpost,basename='test')
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     #path('',home),
-    path('',include(router.urls))
+    path('',include(router.urls)),
 ]

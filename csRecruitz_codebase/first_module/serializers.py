@@ -13,6 +13,7 @@ class postSerializer(serializers.ModelSerializer):
 
 
 class NewPostSerializer(serializers.ModelSerializer):
+    #print("serialiser")
     class Meta:
         model= NewJobpost
         fields='__all__'

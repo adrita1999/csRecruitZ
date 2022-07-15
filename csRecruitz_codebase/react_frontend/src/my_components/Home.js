@@ -1,8 +1,6 @@
 
 import React, {Component, useState} from 'react'
 
-import React, { Component,useState } from 'react'
-
 
 import {Animated} from "react-animated-css";
 import './Home.css';
@@ -39,7 +37,7 @@ const CatOptions = [
     { value: 'DevOps', label: 'DevOps' },
     { value: 'Security', label: 'Security' },
     { value: 'Research and Development', label: 'Research and Development' },
-    { value: 'programming', label: 'programming' },
+    { value: 'Programming', label: 'Programming' },
   ]
 const TitleOptions = [
     { value: 'Govt', label: 'Govt' },
@@ -48,7 +46,7 @@ const TitleOptions = [
   ]
   const OrgOptions = [
     { value: 'Government', label: 'Government' },
-    { value: 'Semi Government', label: 'Non Government' },
+    { value: 'Semi Government', label: 'Semi Government' },
     { value: 'NGO', label: 'NGO' },
     { value: 'Private Firm', label: 'Private Firm' },
     { value: 'International Agencies', label: 'International Agencies' }
@@ -59,13 +57,13 @@ const TitleOptions = [
     { value: 'Rangpur', label: 'Rangpur' },
     { value: 'Sylhet', label: 'Sylhet' },
     { value: 'Khulna', label: 'Khulna' },
-    { value: 'Chattogram', label: 'Chattogram' },
+    { value: 'Chittagong', label: 'Chittagong' },
     { value: 'Mymensingh ', label: 'Mymensingh ' },
     { value: 'Barishal', label: 'Barishal' }
   ]
 
 var jsonData = {
-    "category":"test",
+    "category":"",
   }
 
   function handleClick() {
@@ -100,6 +98,7 @@ export class Home extends Component {
       console.log(value)
       this.state.cat.value=value
       this.state.cat.label=value
+      jsonData.category=value
     }
 
     handleSubmitSearchFilters= (event) =>{
@@ -145,7 +144,6 @@ export class Home extends Component {
                     <div className='col-md-12'>
 
                         <Select  options={options} openMenuOnFocus isClearable  placeholder='Keyword' />
-                        <Select options={options} openMenuOnFocus isClearable  placeholder='Keyword' />
                         {/* <div className="tags-input">
                             <ul id="tags">
                                 {tags.map((tag, index) => (
