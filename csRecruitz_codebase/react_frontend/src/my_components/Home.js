@@ -187,16 +187,19 @@ export class Home extends Component {
             </div>
             <div className='nicherdiv mb-3'> 
                 <div className=' vacancydiv' >
-                    <img className='vacancy' src={vacancy}></img>
-                    
+                    <a href='//'><img className='vacancy' src={vacancy}></img></a>
+                    <h2 className='vacancytitle'>Vacancy</h2>
                 </div> 
                 
                 <div className='companydiv'>
-                     <img className='company' src={company}></img>
-
+                    <a href='//'> <img className='company' src={company}></img></a>
+                    <h2 className='companytitle'>Company</h2>
                 </div>
                 <div className='newjobdiv'>
-                    <img className='newjob' src={newjob}></img>
+                    <a href='//'>
+                        <img className='newjob' src={newjob}></img>
+                    </a>
+                    <h2 className='newjobtitle'>New job</h2>
                 </div>
          
                 
