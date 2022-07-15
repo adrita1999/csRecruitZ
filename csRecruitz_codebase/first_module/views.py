@@ -101,6 +101,8 @@ class postViewsets_for_jobpost(viewsets.ModelViewSet):
     queryset = NewJobpost.objects.all()
     serializer_class = NewPostSerializer
     cat=""
+    org=""
+    loc=""
 
     # def listy(self):
     #     # if category != "none":
@@ -120,16 +122,23 @@ class postViewsets_for_jobpost(viewsets.ModelViewSet):
 
         if request.method == 'POST':
             print(request.data['category'])
+            print(request.data['organization'])
+            print(request.data['location'])
             postViewsets_for_jobpost.cat=request.data['category']
+            postViewsets_for_jobpost.org=request.data['organization']
+            postViewsets_for_jobpost.loc=request.data['location']
             return Response(status=status.HTTP_204_NO_CONTENT)
 
         else :
             print(postViewsets_for_jobpost.cat)
-            objs = NewJobpost.objects.filter(category=postViewsets_for_jobpost.cat)
+            objs = NewJobpost.objects.filter(category=postViewsets_for_jobpost.cat,employer_id__division=postViewsets_for_jobpost.loc,
+                                             employer_id__org_type=postViewsets_for_jobpost.org)
+
             serializer = NewPostSerializer(objs, many=True)
             return Response({
                 'status': status.HTTP_204_NO_CONTENT,
-                'data': serializer.data
+                'data': serializer.data,
+
                 })
 
 

@@ -66,6 +66,8 @@ const TitleOptions = [
 
 var jsonData = {
     "category":"",
+    "organization":"",
+    "location":""
   }
 
 
@@ -76,6 +78,8 @@ export class Home extends Component {
 
     state={
         cat: { value: 'Category', label: 'Category' },
+        org :{ value:'Organization',label:'Organization'},
+        loc :{ value:'Location',label:'Location'},
         redirect:false
 
     };
@@ -91,6 +95,20 @@ export class Home extends Component {
       this.state.cat.value=value
       this.state.cat.label=value
       jsonData.category=value
+    }
+     handlerorg = (event) => {
+      const value = event.value
+      console.log(value)
+      this.state.org.value=value
+      this.state.org.label=value
+      jsonData.organization=value
+    }
+     handlerloc = (event) => {
+      const value = event.value
+      console.log(value)
+      this.state.loc.value=value
+      this.state.loc.label=value
+      jsonData.location=value
     }
 
 handleClick() {
@@ -173,13 +191,13 @@ handleClick() {
                                 options={TitleOptions} openMenuOnFocus isClearable placeholder='Title' />
                     </div>
                     <div className='col-md-3'>
-                        <Select options={OrgOptions} openMenuOnFocus isClearable  placeholder='Organization' />
+                        <Select options={OrgOptions} value={this.state.org}  onChange={this.handlerorg}openMenuOnFocus isClearable  placeholder='Organization' />
                     </div>
                     <div className='col-md-2'>
-                        <Select options={LocationOptions} openMenuOnFocus isClearable  placeholder='Location' />
+                        <Select options={LocationOptions} value={this.state.loc}  onChange={this.handlerloc} openMenuOnFocus isClearable  placeholder='Location' />
                     </div>
 
-                    <div className='col-md-2'>
+                    <div className='col-md-1'>
                         <button className='btn btn-success' onClick={this.handleClick}>Search</button>
 
 

@@ -108,31 +108,31 @@ class Joblist extends Component {
 
                     <div className="jobdiv">
                         <h4 style={{color:"#29A335"}}>{item.title}</h4>
-                        <h6 style={{color:"black"}}>Optimizely</h6>
+                        <h6 style={{color:"black"}}>{item.emp_name}</h6>
 
                         <p style={{display:"inline"}}><HiLocationMarker style={{
                             color:"#29A335",
                             paddingRight:5,
                             marginTop:-2
-                        }}/>Banani, Dhaka</p>
+                        }}/>{item.emp_district}, {item.emp_division}</p>
 
                         <p className="fulltime_p"><FaRegClock style={{
                             color:"#29A335",
                             paddingRight:5,
                             marginTop:-2
-                        }}/>Full-time</p>
+                        }}/>{item.job_nature}</p>
 
                         <p className="salary_p"><FaRegMoneyBillAlt style={{
                             color:"#29A335",
                             paddingRight:5,
                             marginTop:-2
-                        }}/>50,000 BDT</p>
+                        }}/>{item.salary} BDT</p>
 
                         <p className="float_right_p"><FaRegCalendarAlt style={{
                             color:"#29A335",
                             paddingRight:5,
                             marginTop:-2
-                        }}/>Deadline: 31 July, 2022</p>
+                        }}/>Deadline: {item.deadline_date}</p>
 
                         <button className="float_right_btn">View Details</button>
                     </div>
