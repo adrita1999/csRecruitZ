@@ -161,7 +161,7 @@ export class Home extends Component {
                     </div>
 
 
-                    <div className='col-md-2'>
+                    <div className='col-md-3'>
                         <Select options={CatOptions} value={this.state.cat}  onChange={this.handler} isClearable placeholder="Category" />
                     </div>
 
@@ -177,7 +177,7 @@ export class Home extends Component {
                     <div className='col-md-2'>
                         <Select options={LocationOptions} openMenuOnFocus isClearable  placeholder='Location' />
                     </div>
-                    <div className='col-md-2'>
+                    <div className='col-md-1'>
                         <button className='btn btn-success' onClick={handleClick}>Search</button>
                     </div>
 
@@ -303,7 +303,7 @@ export class Home extends Component {
              
 
        </div>
-       {/* <Foot margin_value={172}/> */}
+       <Foot margin_value={172}/>
        {dir && <Navigate to='/joblist' replace={true}/>}
        </body>
        </React.Fragment>
