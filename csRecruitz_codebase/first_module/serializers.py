@@ -17,3 +17,9 @@ class NewPostSerializer(serializers.ModelSerializer):
     class Meta:
         model= NewJobpost
         fields='__all__'
+
+class jobseekerSerializer(serializers.ModelSerializer):
+    #print("serialiser")
+    class Meta:
+        model= Jobseeker
+        fields='__all__'

@@ -12,6 +12,7 @@ import Jobdetails from "./my_components/jobdetails";
 
 import Home from "./my_components/Home";
 import Quiz from "./my_components/Quiz"
+import Tag from "./my_components/Tag.js"
 import "bootstrap/dist/css/bootstrap.min.css";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -24,7 +25,7 @@ root.render(
         <Route path="/joblist" element={< Joblist/>} />
         <Route path="/jobdetails" element={< Jobdetails/>} />
         <Route path="/quiz" element={< Quiz/>} />
-        <Route path="/home" element={< Home/>} />
+        <Route path="/tag" element={< Tag/>} />
     </Routes>
   </BrowserRouter>
 );

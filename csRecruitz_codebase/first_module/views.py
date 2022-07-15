@@ -161,7 +161,9 @@ class postViewsets_for_jobpost(viewsets.ModelViewSet):
                 'data': serializer.data
                 })
 
-
+class jobseekerViewsets(viewsets.ModelViewSet):
+    queryset = Jobseeker.objects.all()
+    serializer_class = jobseekerSerializer
 
 # @api_view(['GET','POST'])
 # def home(request):

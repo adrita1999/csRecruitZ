@@ -1,6 +1,6 @@
 
 import React, {Component, useState} from 'react'
-
+import Tag from "./Tag.js"
 
 import {Animated} from "react-animated-css";
 import './Home.css';
@@ -78,7 +78,7 @@ var redirect=false
       redirect=true;
     console.log(redirect)
   }
-
+  
 
 export class Home extends Component {
 
@@ -89,9 +89,7 @@ export class Home extends Component {
     constructor(props) {
     super(props);
 
-  }
-
-
+    }
   handler = (event) => {
       const value = event.value
       console.log(value)
@@ -99,28 +97,10 @@ export class Home extends Component {
       this.state.cat.label=value
       jsonData.category=value
     }
-
-
-    // constructor(props) {
-    //     super(props);
-    //   }
+    
   render() {
         let dir=redirect;
-        //const { navigation } = this.props;
-        //this.setState({navigation})
-    // const TagsInput = props => {
-    //     const [tags, setTags] = React.useState(props.tags);
-    //     const removeTags = indexToRemove => {
-    //         setTags([...tags.filter((_, index) => index !== indexToRemove)]);
-    //     }
-    // };
-    // const addTags = event => {
-    //     if (event.target.value !== "") {
-    //         setTags([...tags, event.target.value]);
-    //         props.selectedTags([...tags, event.target.value]);
-    //         event.target.value = "";
-    //     }
-    // };
+
     return (
        <React.Fragment>
        <body>
@@ -130,34 +110,13 @@ export class Home extends Component {
             <div className='floatingdiv'> 
                 <div className='row g-2'>
                     <div className='col-md-12'>
-                    {/* <TextField
-                        // value={value}
-                        // onChange={(e) => {
-                        //     setValue(e.target.value);
-                        // }}
-                        /> */}
+                    
                         <Form >
                             <input style={{width:'1202px', padding:'7px'}} type="text" placeholder='Keyword'></input>
                         </Form>
-                        {/* <div className="tags-input">
-                            <ul id="tags">
-                                {tags.map((tag, index) => (
-                                    <li key={index} className="tag">
-                                        <span className='tag-title'>{tag}</span>
-                                        <span className='tag-close-icon'
-                                            onClick={() => removeTags(index)}
-                                        >
-                                            x
-                                        </span>
-                                    </li>
-                                ))}
-                            </ul>
-                            <input
-                                type="text"
-                                onKeyUp={event => event.key === "Enter" ? addTags(event) : null}
-                                placeholder="Press enter to add tags"
-                            />
-                        </div> */}
+
+                        {/* <Tag/> */}
+                        
                     </div>
 
 

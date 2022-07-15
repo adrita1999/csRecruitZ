@@ -48,7 +48,7 @@ class Example extends React.Component {
     // execute the code
     componentDidMount() {
         fetch(
-"http://127.0.0.1:8000/")
+            "http://127.0.0.1:8000/admin/first_module/jobseeker/")
             .then((res) => res.json())
             .then((json) => {
                 this.setState({
@@ -64,7 +64,8 @@ class Example extends React.Component {
 
         return (
         <div className = "App">
-            <h1> Fetch data from an api in react </h1>  {
+            <h1> Fetch data from an api in react </h1>
+            {
                 items.map((item) => (
                 <ol key = { item.id } >
                     Job title: { item.title },
