@@ -162,7 +162,7 @@ handleClick() {
                     </div>
 
 
-                    <div className='col-md-2'>
+                    <div className='col-md-3'>
                         <Select options={CatOptions} value={this.state.cat}  onChange={this.handler} isClearable placeholder="Category" />
                     </div>
 
@@ -178,8 +178,11 @@ handleClick() {
                     <div className='col-md-2'>
                         <Select options={LocationOptions} openMenuOnFocus isClearable  placeholder='Location' />
                     </div>
+
                     <div className='col-md-2'>
                         <button className='btn btn-success' onClick={this.handleClick}>Search</button>
+
+
                     </div>
 
 
@@ -306,7 +309,11 @@ handleClick() {
        </div>
 
 
+
        {this.state.redirect && <Navigate to='/joblist' replace={true}/>}
+
+       <Foot margin_value={172}/>
+
        </body>
        </React.Fragment>
     )

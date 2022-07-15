@@ -77,7 +77,7 @@ class JobSeekerSkill(models.Model):
 
 class JobSkill(models.Model):
     job_skill_id = models.IntegerField(primary_key=True)
-    jobpost_id = models.ForeignKey(Jobpost,  on_delete=models.CASCADE)
+    jobpost_id = models.ForeignKey(NewJobpost,  on_delete=models.CASCADE)
     skill_id = models.ForeignKey(Skill,  on_delete=models.CASCADE)
 
 
