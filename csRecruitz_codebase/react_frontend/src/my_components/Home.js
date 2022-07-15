@@ -205,7 +205,7 @@ handleClick() {
 
 
                     <div className='col-md-3'>
-                        <Select 
+                        <Select
 
                                 options={NatureOptions} value={this.state.nature}  onChange={this.handlernature} openMenuOnFocus isClearable placeholder='Job Nature' />
                     </div>
