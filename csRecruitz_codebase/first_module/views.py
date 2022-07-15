@@ -59,6 +59,26 @@ jobpost2 = NewJobpost(jobpost_id=2, employer_id=emp2, title="Software Developer"
                       application_process="*Photograph must be enclosed with the resume.")
 jobpost2.save()
 
+jobpost3 = NewJobpost(jobpost_id=3, employer_id=emp3, title="Junior Software Engineer",
+                      category="Teaching", post_date="2022-07-10", deadline_date="2022-08-10",
+                      salary=50000, required_experience=3, vacancies=3,
+                      job_context="AMBER GROUP invites applications for recruitment in the position:",
+                      job_nature="Full-time",
+                      job_responsibilities="Excellent working knowledge in Asp.Net, Asp.net MVC, WCF, Web API, LINQ, Entity Framework .Net Core",
+                      edu_requirement="B.Sc in Computer Science or Software Engineering from any reputed university.",
+                      additional_requirements="The applicants should have experience in the following business area(s): Software Company",
+                      application_process=" Send your CV to resume@amber.com.bd")
+jobpost3.save()
+jobpost4 = NewJobpost(jobpost_id=4, employer_id=emp4, title="Software Developer ( Intern )", category="Programming",
+                      post_date="2022-06-26", deadline_date="2022-07-26", salary=6000, required_experience=2,
+                      vacancies=2,
+                      job_context="In your CV you should share your leetcode.com username and GitHub user name.",
+                      job_nature="Full-time",
+                      job_responsibilities="Developing robust & user friendly secured web applications for managing the interchange of data between the server and the users.",
+                      edu_requirement="Computer Science (CS)/ Bachelor of Science (B.Sc)/ Computer Science & Engineering (CSE)/ Software Engineering (SE) or any other relevant field.",
+                      additional_requirements="Freshers are also encouraged to apply.",
+                      application_process="*Photograph must be enclosed with the resume.")
+jobpost4.save()
 
 class postViewsets(viewsets.ModelViewSet):
     # def list(self,request):
