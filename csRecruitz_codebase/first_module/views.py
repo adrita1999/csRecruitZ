@@ -79,7 +79,36 @@ jobpost4 = NewJobpost(jobpost_id=4, employer_id=emp4, title="Software Developer 
                       additional_requirements="Freshers are also encouraged to apply.",
                       application_process="*Photograph must be enclosed with the resume.")
 jobpost4.save()
-
+jobpost5 = NewJobpost(jobpost_id=5, employer_id=emp5, title="Software Engineer (Android)", category="Programming",
+                      post_date="2022-06-23", deadline_date="2022-07-23", salary=60000, required_experience=1,
+                      vacancies=2,
+                      job_context="We are looking for passionate Software Engineers in the Android platform having strong knowledge and proven experience of a minimum 2 years in developing native Android apps. The ideal candidate will be responsible for developing high-quality applications. They will also be responsible for designing and implementing testable and scalable code.",
+                      job_nature="Full-time",
+                      job_responsibilities="Analyze product requirements and propose solutions to them.",
+                      edu_requirement="Bachelor's degree in Computer Science or related field.",
+                      additional_requirements="Deep Knowledge of Object-Oriented Design and Implementation.",
+                      application_process="Send your CV to career@braincraftapps.com")
+jobpost5.save()
+jobpost6 = NewJobpost(jobpost_id=6, employer_id=emp6, title="Software Engineer (Asp.net Core, Angular)", category="DevOps",
+                      post_date="2022-07-02", deadline_date="2022-08-02", salary=45000, required_experience=2,
+                      vacancies=2,
+                      job_context="As a Software Engineer, you will be working with the team on different client projects and internal products expanding different platforms. You will work on implementing new features while taking ownership of the product or service. You will be working in a collaborative team with a supporting atmosphere. You will be able to strengthen your area of expertise to have shared success.",
+                      job_nature="Full-time",
+                      job_responsibilities="Work on feature development for different client projects and internal products.",
+                      edu_requirement="Bachelor of Science (BSc) in CSE",
+                      additional_requirements="Minimum 1 year of hands-on experience in software development.",
+                      application_process="Send your CV to contact@creativitix.com")
+jobpost6.save()
+jobpost7 = NewJobpost(jobpost_id=7, employer_id=emp7, title="Software Engineer", category="DevOps",
+                      post_date="2022-06-28", deadline_date="2022-08-28", salary=40000, required_experience=1,
+                      vacancies=2,
+                      job_context="We are looking for a Software Engineer to build functional and efficient server-client applications in Python. Responsibilities include participating in all phases of the software development lifecycle and be a good team player. If you’re a seasoned developer with a love for back-end technologies, have keen eye for detail and have problem-solving skills then we’d like to meet you.",
+                      job_nature="Full-time",
+                      job_responsibilities="Build efficient back-end features in Python",
+                      edu_requirement="Bachelor of Science (BSc) in CSE in any reputed university.",
+                      additional_requirements="Experience with Python frameworks (e.g., Django, Flask, FastAPI)",
+                      application_process="Apply online")
+jobpost7.save()
 class postViewsets(viewsets.ModelViewSet):
     # def list(self,request):
     #     posts = Jobpost.objects.all()

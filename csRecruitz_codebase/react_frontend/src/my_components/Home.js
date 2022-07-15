@@ -5,11 +5,7 @@ import React, {Component, useState} from 'react'
 import {Animated} from "react-animated-css";
 import './Home.css';
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Container } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import Dropdown from 'react-bootstrap/Dropdown';
 import vacancy from './images/vacancy.png'
 import company from './images/company.png'
 import newjob from './images/newjob.png'
@@ -17,17 +13,14 @@ import newjob from './images/newjob.png'
 import Select, { StylesConfig }  from 'react-select'
 
 import {HiLocationMarker} from "react-icons/hi";
-import {HiSortAscending} from "react-icons/hi";
-import {HiSortDescending} from "react-icons/hi";
 import {FaRegClock} from 'react-icons/fa';
 import {FaRegMoneyBillAlt} from 'react-icons/fa';
 import {FaRegCalendarAlt} from 'react-icons/fa';
-import Dropdown_my from "./dropdown"
 
 import Navb from "./Navb";
 import Foot from "./Foot";
-import {useNavigate} from "react-router-dom";
 import {Navigate} from "react-router-dom";
+
 
 const options = [
     { value: 'devops', label: 'devops' },
@@ -78,6 +71,7 @@ export class Home extends Component {
 
     state={
         cat: { value: 'Category', label: 'Category' },
+
         org :{ value:'Organization',label:'Organization'},
         loc :{ value:'Location',label:'Location'},
         redirect:false
@@ -156,8 +150,15 @@ handleClick() {
             <div className='floatingdiv'> 
                 <div className='row g-2'>
                     <div className='col-md-12'>
-
-                        <Select  options={options} openMenuOnFocus isClearable  placeholder='Keyword' />
+                    {/* <TextField
+                        // value={value}
+                        // onChange={(e) => {
+                        //     setValue(e.target.value);
+                        // }}
+                        /> */}
+                        <Form >
+                            <input style={{width:'1202px', padding:'7px'}} type="text" placeholder='Keyword'></input>
+                        </Form>
                         {/* <div className="tags-input">
                             <ul id="tags">
                                 {tags.map((tag, index) => (
@@ -197,11 +198,12 @@ handleClick() {
                         <Select options={LocationOptions} value={this.state.loc}  onChange={this.handlerloc} openMenuOnFocus isClearable  placeholder='Location' />
                     </div>
 
+
                     <div className='col-md-1'>
                         <button className='btn btn-success' onClick={this.handleClick}>Search</button>
 
-
                     </div>
+                    
 
 
 
@@ -209,16 +211,19 @@ handleClick() {
             </div>
             <div className='nicherdiv mb-3'> 
                 <div className=' vacancydiv' >
-                    <img className='vacancy' src={vacancy}></img>
-                    
+                    <a href='//'><img className='vacancy' src={vacancy}></img></a>
+                    <h2 className='vacancytitle'>Vacancy</h2>
                 </div> 
                 
                 <div className='companydiv'>
-                     <img className='company' src={company}></img>
-
+                    <a href='//'> <img className='company' src={company}></img></a>
+                    <h2 className='companytitle'>Company</h2>
                 </div>
                 <div className='newjobdiv'>
-                    <img className='newjob' src={newjob}></img>
+                    <a href='//'>
+                        <img className='newjob' src={newjob}></img>
+                    </a>
+                    <h2 className='newjobtitle'>New job</h2>
                 </div>
          
                 
@@ -325,13 +330,8 @@ handleClick() {
              
 
        </div>
-
-
-
-       {this.state.redirect && <Navigate to='/joblist' replace={true}/>}
-
        <Foot margin_value={172}/>
-
+       {this.state.redirect && <Navigate to='/joblist' replace={true}/>}
        </body>
        </React.Fragment>
     )
