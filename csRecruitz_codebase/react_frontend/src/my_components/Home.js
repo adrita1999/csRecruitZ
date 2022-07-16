@@ -57,11 +57,12 @@ const CatOptions = [
     { value: 'Research and Development', label: 'Research and Development' },
     { value: 'Programming', label: 'Programming' },
   ]
-const TitleOptions = [
-    { value: 'Govt', label: 'Govt' },
-    { value: 'Non-Govt', label: 'Non-Govt' },
-    { value: 'NGO', label: 'NGO' }
-  ]
+const NatureOptions = [
+    { value: 'Part-time', label: 'Part-time' },
+    { value: 'Full-time', label: 'Full-time' },
+    { value: 'Remote', label: 'Remote' },
+    { value: 'Freelancing', label: 'Freelancing' }
+    ]
   const OrgOptions = [
     { value: 'Government', label: 'Government' },
     { value: 'Semi Government', label: 'Semi Government' },
