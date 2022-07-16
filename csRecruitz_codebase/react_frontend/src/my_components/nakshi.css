@@ -187,7 +187,7 @@ div.jobdetailsbgdiv {
   height: auto;
   min-height: 90vh;
   float: left;
-  width:76%;
+  width:75%;
 
 }
 
@@ -224,21 +224,21 @@ div.jobdetailsbgdiv {
   margin-right: 1.5%;
   padding: 0%;
   float: right;
-  width: 20%;
-  height: 445px;
+  width: 23%;
+  height: 460px;
   animation: expanddiv 3s ease-out;
 }
 .jobsummaryinsidediv{
   opacity: 1;
-  padding-left: 5px;
-  padding-top: 3px;
+  padding-left: 15px;
+  padding-top: 12px;
   animation: expandinsidediv 6s;
 }
 .job_details_btn {
   width: 80%;
   height: 30px;
   padding: 0.1%;
-  margin: 5px 5px 5px 9%;
+  margin: 5px 5px 5px 8%;
   background-color:#29A335;
   color: white;
   border: none;
@@ -250,4 +250,22 @@ div.jobdetailsbgdiv {
   background-color: #226119; /* Green */
   color: white;
   box-shadow: 0 8px 10px 0 rgba(0,0,0,0.24);
+}
+
+.grad_h{
+  font-size: 1.2vw;
+  font-weight: bold;
+  background: linear-gradient(to right, #330867 , #30CFD0 40% );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.overviewheader{
+  background:linear-gradient(to right, #226119 , #29A335 70% );
+  margin:0;
+  padding-left:12px;
+  padding-top:6px;
+  padding-bottom:1px;
+  position:relative;
+
 }

@@ -11,6 +11,7 @@ import Filter_sidebar from "./Filter_sidebar";
 import Navb from "./Navb";
 import Select from "react-select";
 import {Navigate} from "react-router-dom";
+import {element} from "prop-types";
 
 const sortOptions = [
   { value: "Most Recent Post", label: "Most Recent Post" },
@@ -51,7 +52,8 @@ class Joblist extends Component {
           items: [],
           DataisLoaded: false,
           datas:[],
-            redirect:false
+          redirect:false,
+          navlink:"/jobdetails",
         };
         this.handleClick=this.handleClick.bind(this);
       }
@@ -74,9 +76,11 @@ class Joblist extends Component {
             })
 
     }
-    handleClick() {
+    handleClick(event) {
+        console.log(event.target.id)
+        const concatlink = "/jobdetails?" + event.target.id;
+        this.setState({'navlink':concatlink})
         this.setState({'redirect':true})
-
   }
 
     render() {
@@ -141,7 +145,7 @@ class Joblist extends Component {
                             marginTop:-2
                         }}/>Deadline: {item.deadline_date}</p>
 
-                        <button className="float_right_btn" onClick={this.handleClick}>View Details</button>
+                        <button id={item.jobpost_id} className="float_right_btn" onClick={this.handleClick}>View Details</button>
                     </div>
                 ))
                 }
@@ -151,7 +155,7 @@ class Joblist extends Component {
 
                 </Animated>
             </div>
-            {this.state.redirect && <Navigate to='/jobdetails' replace={true}/>}
+            {this.state.redirect && <Navigate to={this.state.navlink} replace={true}/>}
             </body>
                 </React.Fragment>
         )
