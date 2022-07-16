@@ -21,11 +21,14 @@ from rest_framework.routers import DefaultRouter
 
 router=DefaultRouter()
 #router.register('',postViewsets,basename='posts')
-# router.register('',postViewsets_for_jobpost, basename='jobposts')
-router.register('',jobseekerViewsets,basename='jobseeker')
+router.register('',postViewsets_for_jobpost, basename='jobposts')
+router.register(r'first_module/jobseeker',jobseekerViewsets)
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     #path('',home),
     path('',include(router.urls)),
+
 ]

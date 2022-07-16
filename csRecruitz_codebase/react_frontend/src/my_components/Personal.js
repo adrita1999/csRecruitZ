@@ -21,7 +21,8 @@ class Personal extends Component {
     }
     componentDidMount() {
         fetch(
-            "http://127.0.0.1:8000/")
+            "http://127.0.0.1:8000/first_module/jobseeker/")
+
             .then((res) => res.json())
             .then((json) => {
                 this.setState({

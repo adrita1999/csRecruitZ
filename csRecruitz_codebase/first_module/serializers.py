@@ -32,6 +32,7 @@ class NewPostSerializer(serializers.ModelSerializer):
 
     def get_emp_division(self, obj):
         return obj.employer_id.division
+
 class jobseekerSerializer(serializers.ModelSerializer):
     #print("serialiser")
     class Meta:
