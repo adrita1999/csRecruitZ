@@ -21,8 +21,8 @@ from rest_framework.routers import DefaultRouter
 
 router=DefaultRouter()
 #router.register('',postViewsets,basename='posts')
-router.register('',postViewsets_for_jobpost, basename='jobposts')
-router.register('jobseeker',jobseekerViewsets)
+# router.register('',postViewsets_for_jobpost, basename='jobposts')
+router.register('',jobseekerViewsets,basename='jobseeker')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
