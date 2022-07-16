@@ -75,6 +75,7 @@ class Joblist extends Component {
             .then((json) => {
                 this.setState({datas: json.data, DataisLoaded: true})
                 console.log(json.data)
+
             })
 
     }

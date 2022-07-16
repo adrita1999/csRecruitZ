@@ -102,7 +102,8 @@ export class Home extends Component {
         org :{ value:'Organization',label:'Select Org Type'},
         loc :{ value:'Location',label:'Select Location'},
         nature:{ value:'Job Nature',label:'Select Job Nature'},
-        redirect:false
+        redirect:false,
+        datas:[]
     };
 
     constructor(props) {
@@ -153,7 +154,30 @@ export class Home extends Component {
 
       jsonData.keyword=value
     }
+componentDidMount() {
+        fetch(
+"http://127.0.0.1:8000/first_module/jobseeker/matchuser/",{
+        method:"GET"
+            })
+            .then((res) => res.json())
+            .then((json) => {
+                if(json.response !=="not_submitted") {
+                    this.setState({datas: json.data, DataisLoaded: true})
+                    console.log(json.data)
+                    console.log(json.response)
+                    console.log(this.state.datas.length)
+                    if (json.response==="success") {
+                         alert("Login Successful")
 
+                    }
+                    else {
+                       alert("Login Failed.Try Again")
+                    }
+                }
+
+            })
+
+    }
 handleClick() {
     //const history = useNavigate();
     // Send data to the backend via POST
