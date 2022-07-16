@@ -10,6 +10,7 @@ import {FaRegCalendarAlt} from 'react-icons/fa';
 import Filter_sidebar from "./Filter_sidebar";
 import Navb from "./Navb";
 import Select from "react-select";
+import {Navigate} from "react-router-dom";
 
 const sortOptions = [
   { value: "Most Recent Post", label: "Most Recent Post" },
@@ -49,8 +50,10 @@ class Joblist extends Component {
           asc: true,
           items: [],
           DataisLoaded: false,
-          datas:[]
+          datas:[],
+            redirect:false
         };
+        this.handleClick=this.handleClick.bind(this);
       }
 
     toggleSort = () => {
@@ -71,6 +74,10 @@ class Joblist extends Component {
             })
 
     }
+    handleClick() {
+        this.setState({'redirect':true})
+
+  }
 
     render() {
         const { DataisLoaded, items } = this.state;
@@ -134,7 +141,7 @@ class Joblist extends Component {
                             marginTop:-2
                         }}/>Deadline: {item.deadline_date}</p>
 
-                        <button className="float_right_btn">View Details</button>
+                        <button className="float_right_btn" onClick={this.handleClick}>View Details</button>
                     </div>
                 ))
                 }
@@ -144,7 +151,7 @@ class Joblist extends Component {
 
                 </Animated>
             </div>
-
+            {this.state.redirect && <Navigate to='/jobdetails' replace={true}/>}
             </body>
                 </React.Fragment>
         )
