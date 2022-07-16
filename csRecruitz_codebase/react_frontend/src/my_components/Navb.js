@@ -142,7 +142,7 @@ class Navb extends Component {
                  color:"#410390",
                  marginRight:8
 
-        }} className="navHover" onClick={this.handleClick}>Sign Out</Nav.Link>
+        }} className="navHover" onClick={this.handleClick}>Sign In</Nav.Link>
 
       </Nav>
     </Navbar.Collapse>
@@ -172,18 +172,18 @@ class Navb extends Component {
                   onChange={this.handleChangeUser}
                    size="small"
                 >
-                  <ToggleButton value="Jobseeker">Jobseeker</ToggleButton>
-                  <ToggleButton value="Employer">Employer</ToggleButton>
+                  <ToggleButton value="Jobseeker" style={{fontWeight:'bold'}}>Jobseeker</ToggleButton>
+                  <ToggleButton value="Employer" style={{fontWeight:'bold'}}>Employer</ToggleButton>
             </ToggleButtonGroup>
             </div>
 
 
             <Form style={{marginTop:'80px',marginBottom:'20px'}}>
                 <InputLabel id="demo-simple-select-label" style={{fontSize:'14px'}}>E-mail</InputLabel>
-                <input style={{width:'98%', padding:'7px',marginBottom:14,borderRadius:'5px',borderWidth:1}} type="text"  onChange={this.handleremail}></input>
+                <input required={true} style={{width:'98%', padding:'7px',marginBottom:14,borderRadius:'5px',borderWidth:1}} type="text"  onChange={this.handleremail}></input>
 
                 <InputLabel id="demo-simple-select-label" style={{fontSize:'14px'}}>Password</InputLabel>
-                <input style={{width:'98%', padding:'7px',marginBottom:14,borderRadius:'5px',borderWidth:1}} type="password"  onChange={this.handlerpass}></input>
+                <input required={true} style={{width:'98%', padding:'7px',marginBottom:14,borderRadius:'5px',borderWidth:1}} type="password"  onChange={this.handlerpass}></input>
             </Form>
 
             <div style={{display:"inline",position:'absolute',width:'49%'}}>
