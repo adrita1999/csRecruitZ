@@ -35,8 +35,6 @@ class Personal extends Component {
     render() {
         const { DataisLoaded, items } = this.state;
         if (!this.state.DataisLoaded) return <Loader/>
-        // if (!DataisLoaded) return <div>
-        //     <h1> Pleses wait some time.... </h1> </div> ;
         return (
             <React.Fragment>
             <body>
@@ -89,11 +87,12 @@ class Personal extends Component {
                 <div className="row_custom ">
 
                 <div className="personal_div_bg ">
-                    <p>Sea et gubergren justo invidunt at amet clita. Justo sit justo tempor et invidunt voluptua, lorem
-                        voluptua ipsum gubergren et est nonumy magna et vero, sit eos dolor sea sed et dolor erat et.
-                        Accusam accusam magna aliquyam eirmod amet est kasd dolore sanctus. Lorem ea vero lorem eos eos
-                        sanctus labore. Aliquyam vero ipsum dolor duo clita consetetur stet, aliquyam ipsum sea sed et
-                        magna amet dolor.</p>
+                    {
+                        items.map((item) => {
+                    return(
+                    <p>{item.self_desc}</p>
+                        )})
+                    }
                 </div>
 
 
@@ -120,7 +119,7 @@ class Personal extends Component {
                             {
                                 items.map((item) => {
                                 return(
-                                    <p>{item.age}</p>
+                                    <p>{item.age} years</p>
                                 )})
                             }
                         </div>
@@ -156,7 +155,7 @@ class Personal extends Component {
                             {
                                 items.map((item) => {
                                 return(
-                                    <p>{item.gender}</p>
+                                    <p>Female</p>
                                 )})
                             }
                         </div>
@@ -212,7 +211,7 @@ class Personal extends Component {
                             {
                                 items.map((item) => {
                                 return(
-                                    <p>{item.street}</p>
+                                    <p>Kadirganj Rd</p>
                                 )})
                             }
                         </div>

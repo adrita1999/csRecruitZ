@@ -156,7 +156,7 @@ class Joblist extends Component {
 
                 </Animated>
             </div>
-            {this.state.redirect && <Navigate to={this.state.navlink} replace={true}/>}
+            {this.state.redirect && <Navigate to={this.state.navlink}/>}
             </body>
                 </React.Fragment>
         )
