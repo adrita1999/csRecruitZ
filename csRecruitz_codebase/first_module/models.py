@@ -44,6 +44,11 @@ class Jobseeker(User):
     pref_sal = models.IntegerField(unique=True)
     resume = models.FileField(upload_to='resumes', null=True)
 
+class Follow(models.Model):
+    follow_id = models.IntegerField(primary_key=True)
+    employer_id = models.ForeignKey(Employer,  on_delete=models.CASCADE)
+    follower_id = models.ForeignKey(Jobseeker,  on_delete=models.CASCADE)
+
 class NewJobpost(models.Model):
     jobpost_id = models.IntegerField(primary_key=True)
     employer_id = models.ForeignKey(Employer,  on_delete=models.CASCADE)
@@ -70,7 +75,7 @@ class Skill(models.Model):
 
 class JobSeekerSkill(models.Model):
     jobseeker_skill_id = models.IntegerField(primary_key=True)
-    user_id = models.ForeignKey(User,  on_delete=models.CASCADE)
+    user_id = models.ForeignKey(Jobseeker,  on_delete=models.CASCADE)
     skill_id = models.ForeignKey(Skill,  on_delete=models.CASCADE)
     isOpenToWork = models.BooleanField(default=False)
 
@@ -80,4 +85,77 @@ class JobSkill(models.Model):
     jobpost_id = models.ForeignKey(NewJobpost,  on_delete=models.CASCADE)
     skill_id = models.ForeignKey(Skill,  on_delete=models.CASCADE)
 
+class Question(models.Model):
+    question_id = models.IntegerField(primary_key=True)
+    skill_id = models.ForeignKey(Skill, on_delete=models.CASCADE)
+    question_text = models.TextField()
+    optionA = models.TextField()
+    optionB = models.TextField()
+    optionC = models.TextField()
+    optionD = models.TextField()
+    answer = models.TextField()
+    mark = models.IntegerField()
+    time_limit = models.TimeField()
 
+class SkillMarkCutoff(models.Model):
+    cutoff_id = models.IntegerField(primary_key=True)
+    skill_id = models.ForeignKey(Skill, on_delete=models.CASCADE)
+    cutoff_percentage = models.IntegerField()
+    from_date =  models.DateField()
+    to_date = models.DateField()
+
+class Assessment(models.Model):
+    assessment_id = models.IntegerField(primary_key=True)
+    jobseeker_skill_id = models.ForeignKey(JobSeekerSkill , on_delete=models.CASCADE)
+    marks_obtained = models.IntegerField()
+    date = models.DateField()
+
+class JobApplication(models.Model):
+    application_id = models.IntegerField(primary_key=True)
+    user_id = models.ForeignKey(Jobseeker,on_delete=models.CASCADE)
+    newjobpost_id = models.ForeignKey(NewJobpost,on_delete=models.CASCADE)
+    apply_date = models.DateField()
+    apply_time = models.TimeField()
+
+class JobShortlist(models.Model):
+    jobshortlist_id = models.IntegerField(primary_key=True)
+    user_id = models.ForeignKey(Jobseeker,on_delete=models.CASCADE)
+    newjobpost_id = models.ForeignKey(NewJobpost,on_delete=models.CASCADE)
+
+class JobExperience(models.Model):
+    jobexperience_id = models.IntegerField(primary_key=True)
+    experience_name = models.CharField(max_length=200)
+    organization_name = models.CharField(max_length=200)
+    from_year = models.IntegerField()
+    to_year = models.IntegerField()
+
+class Project(models.Model):
+    project_id = models.IntegerField(primary_key=True)
+    user_id = models.ForeignKey(Jobseeker, on_delete=models.CASCADE)
+    project_name = models.CharField(max_length=200)
+    project_short_desc = models.TextField()
+    project_link = models.CharField(max_length=200)
+
+class Publication(models.Model):
+    publication_id = models.IntegerField(primary_key=True)
+    user_id = models.ForeignKey(Jobseeker, on_delete=models.CASCADE)
+    publication_name = models.CharField(max_length=200)
+    publication_link = models.CharField(max_length=200)
+
+class LicenseCertificate(models.Model):
+    certificate_id = models.IntegerField(primary_key=True)
+    certificate_name = models.CharField(max_length=200)
+    issuing_org = models.CharField(max_length=200)
+    certificate_link = models.CharField(max_length=200)
+
+class JobseekerCertificate(models.Model):
+    jobseeker_certificate_id = models.IntegerField(primary_key=True)
+    user_id = models.ForeignKey(Jobseeker, on_delete=models.CASCADE)
+    certificate_id = models.ForeignKey(LicenseCertificate, on_delete=models.CASCADE)
+
+class Notification(models.Model):
+    notification_id = models.IntegerField(primary_key=True)
+    user_id = models.ForeignKey(Jobseeker, on_delete=models.CASCADE)
+    text = models.CharField(max_length=200)
+    apply_date = models.DateField()
+    apply_time = models.TimeField()

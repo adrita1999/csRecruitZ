@@ -6,7 +6,7 @@ import pic from './images/pp.JPG'
 import TypeAnimation from 'react-type-animation';
 
 
-
+import axios from "axios";
 import Sidebar from "./Sidebar";
 import Navb from "./Navb";
 import Foot from "./Foot";
@@ -17,21 +17,48 @@ class Personal extends Component {
 
         this.state = {
             items: [],
-            DataisLoaded: false
+            contacts:[]
+            
         };
     }
-    componentDidMount() {
-        fetch(
-            "http://127.0.0.1:8000/first_module/jobseeker/")
+    // componentDidMount() {
+    //     fetch(
+    //         "http://127.0.0.1:8000/first_module/jobseeker/")
 
-            .then((res) => res.json())
-            .then((json) => {
-                this.setState({
-                    items: json,
-                    DataisLoaded: true
-                });
-            })
-    }
+    //         .then((res) => res.json())
+    //         .then((json) => {
+    //             this.setState({
+    //                 items: json,
+    //                 DataisLoaded: true
+    //             });
+    //         })
+    //     fetch(
+    //         "http://127.0.0.1:8000/first_module/usercontact/")
+
+    //         .then((res) => res.json())
+    //         .then((json) => {
+    //             this.setState({
+    //                 contacts: json,
+    //                 DataisLoaded: true
+    //             });
+    //         })
+    // }
+    async componentDidMount() {
+
+        // Make first two requests
+        const [firstResponse, secondResponse] = await Promise.all([
+          axios.get(`http://127.0.0.1:8000/first_module/jobseeker/`),
+          axios.get(`http://127.0.0.1:8000/first_module/usercontact/`)
+        ]);
+      
+        // Update state once with all 3 responses
+        this.setState({
+          items: firstResponse.data,
+          contacts: secondResponse.data,
+        });
+      
+      }
+      
     render() {
         const { DataisLoaded, items } = this.state;
         if (!this.state.DataisLoaded) return <Loader/>
@@ -51,7 +78,7 @@ class Personal extends Component {
                 {
                     items.map((item) => {
                     return(
-                        <img  src={'/nakshi.jpg'} alt="Profile Pic" style={{
+                        <img  src="http://127.0.0.1:8000${item.propic}" alt="Profile Pic" style={{
                             height:120,
                             width:140,
                             borderRadius:"50%"
@@ -178,11 +205,11 @@ class Personal extends Component {
                             }
                         </div>
                     <div className="col-sm-6">
-                            <b className= "seems-h1">Mobile number</b>{
-                                items.map((item) => {
-                                return(
-                                    <p>{item.mobile}</p>
-                                )})
+                            <b className= "seems-h1">Mobile number</b>
+                            {
+                                (items,contacts) => {
+                                    
+                                }
                             }
 
                         </div>
