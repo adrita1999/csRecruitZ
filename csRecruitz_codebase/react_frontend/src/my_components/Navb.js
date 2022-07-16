@@ -19,11 +19,12 @@ const style = {
   width: 500,
   bgcolor: 'background.paper',
   boxShadow: 24,
-  p: 4,
+  p:4,
   backdrop:false,
   show:true,
     borderRadius:5,
-    border:0
+    border:0,
+    overflow:'hidden'
 };
 
 
@@ -119,7 +120,7 @@ class Navb extends Component {
 
         <div>
       <Modal
-        open={true}
+        open={this.state.signinopen}
         onClose={this.handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
@@ -163,10 +164,11 @@ class Navb extends Component {
             </div>
 
 
-            <div style={{marginTop:"80px"}}>
-                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Do not have an account?
-          </Typography>
+            <div style={{height:'auto',marginTop:"110px",background:"#3C6DE5",marginLeft:"-33px",marginRight:'-33px',marginBottom:'-43px',paddingLeft:'20px',paddingTop:'3px',paddingBottom:'12px',borderBottomLeftRadius:5,borderBottomRightRadius:5}}>
+                <Typography id="modal-modal-description" sx={{ mt: 2,color:"#ffffff",marginLeft:'30%' }}>
+                    Do not have an account?
+                  </Typography>
+                <button style={{marginTop:"10px",width:'80%',height:'40px',marginLeft:'8%',marginBottom:'30px',background:'#FFFFFF',border:0,borderRadius:5,color:'#410390',fontWeight:'bold'}}>Create a new account</button>
             </div>
 
         </Box>
