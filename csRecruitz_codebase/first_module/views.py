@@ -787,22 +787,4 @@ class recoViewsets(viewsets.ModelViewSet):
     queryset = NewJobpost.objects.all()
     serializer_class = NewPostSerializer
 
-# @api_view(['GET','POST'])
-# def home(request):
-#     #Jobpost.objects.create(title='Looking for a Software Engineer')
-#     #Jobpost.objects.create(title="DevOps Engineer Needed")
-#     #Jobpost.objects.create(title="Quality Assurance Engineer at Optimizely")
-#     #Jobpost.objects.create(title="Hiring Security Expert")
-#
-#     #print("here")
-#     if request.method=="GET":
-#         posts=Jobpost.objects.all()
-#         serializer=postSerializer(posts,many=True)
-#         str=""
-#         for post in posts:
-#             str=str+post.title
-#             str=str+"\n"
-#             print(post.title)
-#         return Response(serializer.data)
 
-# Create your views here.
