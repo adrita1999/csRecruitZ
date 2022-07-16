@@ -12,6 +12,8 @@ import Navb from "./Navb";
 import Select from "react-select";
 import {Navigate} from "react-router-dom";
 import {element} from "prop-types";
+import {BallTriangle, Circles, ThreeDots} from 'react-loader-spinner'
+import Loader from "./loader";
 
 const sortOptions = [
   { value: "Most Recent Post", label: "Most Recent Post" },
@@ -85,8 +87,7 @@ class Joblist extends Component {
 
     render() {
         const { DataisLoaded, items } = this.state;
-        if (!DataisLoaded) return <div>
-            <h1> Pleses wait some time.... </h1> </div> ;
+        if (!DataisLoaded) return <Loader/>
         return (
             <React.Fragment>
             <body>

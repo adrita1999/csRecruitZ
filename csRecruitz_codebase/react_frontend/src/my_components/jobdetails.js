@@ -12,6 +12,7 @@ import Navb from "./Navb";
 import Select from "react-select"
 import Jobdetailsitems from "./jobdetailsitems";
 import {useParams} from "react-router-dom";
+import Loader from "./loader";
 
 
 
@@ -50,6 +51,7 @@ class Jobdetails extends Component {
     }
 
     render() {
+        if (!this.state.DataisLoaded) return <Loader/>
         return (
             <React.Fragment>
             <body>

@@ -10,6 +10,7 @@ import TypeAnimation from 'react-type-animation';
 import Sidebar from "./Sidebar";
 import Navb from "./Navb";
 import Foot from "./Foot";
+import Loader from "./loader";
 class Personal extends Component {
     constructor(props) {
         super(props);
@@ -33,6 +34,7 @@ class Personal extends Component {
     }
     render() {
         const { DataisLoaded, items } = this.state;
+        if (!this.state.DataisLoaded) return <Loader/>
         // if (!DataisLoaded) return <div>
         //     <h1> Pleses wait some time.... </h1> </div> ;
         return (

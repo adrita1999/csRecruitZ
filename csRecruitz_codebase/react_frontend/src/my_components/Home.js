@@ -26,6 +26,7 @@ import Button from "./Button";
 import Ripple from "./Ripple";
 import CountUp from "react-countup";
 import AnimatedNumbers from "react-animated-numbers";
+import Loader from "./loader";
 
 
 const dropDownStyle ={
@@ -176,6 +177,7 @@ handleClick() {
 
         //const { navigation } = this.props;
         //this.setState({navigation})
+      //if (!this.state.DataisLoaded) return <Loader/>
     return (
        <React.Fragment>
        <body>
