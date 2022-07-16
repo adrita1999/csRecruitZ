@@ -17,23 +17,23 @@ user1.save()
 emp1 = Employer(user_id=2, name="Optimizely", email="optimizely@gmail.com", password="1234", district="Dhaka",
                 division="Dhaka", org_type="NGO", establishment_year="2005")
 emp1.save()
-emp2 = Employer(user_id=3, name="Kona SL", email="kona@yahoo.com", password="1234", district="Dhaka", division="Dhaka",
+emp2 = Employer(user_id=3, name="Kona SL", email="kona@yahoo.com", password="1234", district="Kishoreganj", division="Dhaka",
                 org_type="NGO", establishment_year="2001")
 emp2.save()
-emp3 = Employer(user_id=4, name="Data Edge Ltd", email="dataedge@gmail.com", password="1234", district="Dhaka",
-                division="Dhaka", org_type="NGO", establishment_year="1996")
+emp3 = Employer(user_id=4, name="Data Edge Ltd", email="dataedge@gmail.com", password="1234", district="Sunamganj",
+                division="Sylhet", org_type="NGO", establishment_year="1996")
 emp3.save()
-emp4 = Employer(user_id=5, name="Samsung", email="samsung@gmail.com", password="1234", district="Dhaka",
-                division="Dhaka", org_type="NGO", establishment_year="1981")
+emp4 = Employer(user_id=5, name="Samsung", email="samsung@gmail.com", password="1234", district="Cox's Bazar",
+                division="Chattogram", org_type="NGO", establishment_year="1981")
 emp4.save()
 emp5 = Employer(user_id=6, name="Intelligent Machines Limited", email="iml@gmail.com", password="1234",
-                district="Dhaka", division="Dhaka", org_type="NGO", establishment_year="2015")
+                district="Rangpur", division="Rangpur", org_type="NGO", establishment_year="2015")
 emp5.save()
-emp6 = Employer(user_id=7, name="BEPRC", email="beprc@gmail.com", password="1234", district="Dhaka", division="Dhaka",
+emp6 = Employer(user_id=7, name="BEPRC", email="beprc@gmail.com", password="1234", district="Netrokona", division="Mymensingh",
                 org_type="Government", establishment_year="1998")
 emp6.save()
-emp7 = Employer(user_id=8, name="Bangladesh Airforce", email="airbd@gmail.com", password="1234", district="Dhaka",
-                division="Dhaka", org_type="Government", establishment_year="1975")
+emp7 = Employer(user_id=8, name="Bangladesh Airforce", email="airbd@gmail.com", password="1234", district="Bogura",
+                division="Rajshahi", org_type="Government", establishment_year="1975")
 emp7.save()
 contact1 = UserContact(user_contact_id=1, user_id=1, contact_no="01878046439")
 contact1.save()
