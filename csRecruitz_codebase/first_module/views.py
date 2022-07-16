@@ -10,7 +10,7 @@ user1 = Jobseeker(user_id=1, name="Adrita Hossain Nakshi", email="adrita_99@yaho
                   district="Rajshahi", division="Rajshahi", father_name="Dr. Md. Elias Hossain",
                   mother_name="Dr. Zennat Ferdousi", date_of_birth="1999-02-06", self_desc="I am a CS under-graduate.",
                   nationality="Bangladeshi", nid_number="12345678", field="Teaching", pref_sal="50000",
-                  pref_job_ntr="Full-time", pref_org_type="Government", propic="propics_input/nakshi.jpeg",
+                  pref_job_ntr="Full-time", pref_org_type="Government", propic="propics_input/nakshi.jpg",
                   resume="resumes_input/nakshi.docx")
 user1.save()
 emp1 = Employer(user_id=2, name="Optimizely", email="optimizely@gmail.com", password="1234", district="Dhaka",
@@ -109,6 +109,77 @@ jobpost7 = NewJobpost(jobpost_id=7, employer_id=emp7, title="Software Engineer",
                       additional_requirements="Experience with Python frameworks (e.g., Django, Flask, FastAPI)",
                       application_process="Apply online")
 jobpost7.save()
+jobpost8 = NewJobpost(jobpost_id=8, employer_id=emp1, title="Junior Software Engineer",
+                      category="DevOps", post_date="2022-07-08", deadline_date="2022-08-08",
+                      salary=55000, required_experience=5, vacancies=2,
+                      job_context="We are looking for a Sr. Software Engineer who will able to produce scalable software solutions. Selected Candidate will be the part of a cross-functional team that’s responsible for the full software development life cycle, from conception to deployment. As a Sr. Software Engineer, Candidate should be comfortable around both front-end and back-end coding languages, development frameworks and third-party libraries. Candidate should also be a team player with a knack for visual design and utility.",
+                      job_nature="Full-time",
+                      job_responsibilities="Bachelor of Science (BSc) in CSE in any reputed university.",
+                      edu_requirement="M.Sc/ B.Sc in Computer Science & Engineering or relevant degree from any reputed University",
+                      additional_requirements="Work experience as a Full Stack Developer or similar role.",
+                      application_process=" Email your CV from MY BDJOBS account.")
+jobpost8.save()
+jobpost9 = NewJobpost(jobpost_id=9, employer_id=emp2, title="Senior Software Engineer (PHP - Laravel, Codeigniter)", category="Programming",
+                      post_date="2022-06-26", deadline_date="2022-07-26", salary=30000, required_experience=3,
+                      vacancies=4,
+                      job_context="Technical Experience : Codeigniter, Laravel, jQuery, Ajax, Vue.js, Mysql.",
+                      job_nature="Full-time",
+                      job_responsibilities="Analysis, Coding, Problem Solving and Team Leading.",
+                      edu_requirement="Bachelor of Science (BSc)",
+                      additional_requirements="Should have experience to guide software engineer.",
+                      application_process="*Photograph must be enclosed with the resume.")
+jobpost9.save()
+
+jobpost10 = NewJobpost(jobpost_id=10, employer_id=emp3, title="Senior Application Security Engineer",
+                      category="Programming", post_date="2022-07-10", deadline_date="2022-08-10",
+                      salary=70000, required_experience=10, vacancies=4,
+                      job_context="Job Grade: Senior Principal Officer to First Assistant Vice President",
+                      job_nature="Full-time",
+                      job_responsibilities="Perform Information Security Assessment of different ICT Systems, Services, Application and processes like Core Banking Applications, Payment Systems, Digital Banking Applications, Card Management System, SWIFT, Active Directory etc.",
+                      edu_requirement="MSc/BSc in Computer Science, Information Systems, Information Technology or a related field from reputed University with No Third Division in academic records.",
+                      additional_requirements="Minimum 10 year(s) working experience in relevant area",
+                      application_process=" Apply online")
+jobpost10.save()
+jobpost11 = NewJobpost(jobpost_id=11, employer_id=emp4, title="Senior Software Engineer (Full Stack Java Developer)", category="DevOps",
+                      post_date="2022-06-29", deadline_date="2022-07-29", salary=4000, required_experience=2,
+                      vacancies=5,
+                      job_context="We are seeking an experienced, self-motivated Java engineer with 1+ years of experience in developing applications and 1+ technology experience.",
+                      job_nature="Full-time",
+                      job_responsibilities="Collaborates with the development team and initiates process improvements for new and existing systems.",
+                      edu_requirement="Bachelor of Science (BSc) in CSE, IT, SE, Diploma in Engineering in Computer Science & Engineering",
+                      additional_requirements="Requires 1+ years of hands-on experience in java and PL/SQL.",
+                      application_process="*Photograph must be enclosed with the resume.")
+jobpost11.save()
+jobpost12 = NewJobpost(jobpost_id=12, employer_id=emp5, title=" Software Developer (Java) [MFSD- 20220616]", category="Programming",
+                      post_date="2022-06-23", deadline_date="2022-07-23", salary=45000, required_experience=1,
+                      vacancies=2,
+                      job_context="Developers need to compile detailed technical documentation and user assistance material, requiring excellent written communication.",
+                      job_nature="Full-time",
+                      job_responsibilities="Coding, testing and troubleshooting so that developed software performs as per requirements",
+                      edu_requirement="Bachelor of Science (BSc) in CSE, Post Graduate Diploma (PGD) in Computer Science & Engineering",
+                      additional_requirements="Age 25 to 40 years",
+                      application_process="Apply online")
+jobpost12.save()
+jobpost13 = NewJobpost(jobpost_id=13, employer_id=emp6, title="Senior Test Engineer/Test Engineer (Software), Capital Market Solutions", category="Security",
+                      post_date="2022-07-05", deadline_date="2022-08-05", salary=65000, required_experience=2,
+                      vacancies=2,
+                      job_context="Test Engineer - We are seeking an experienced, self-motivated test engineer with 1+ years of experience in software testing and for Senior Test Engineer- Test engineer with 1+ years of experience in developing software and 3+ software testing experience. ",
+                      job_nature="Full-time",
+                      job_responsibilities="and internal products.",
+                      edu_requirement="Bachelor of Science (BSc) in CSE",
+                      additional_requirements="Minimum 1 year of hands-on experience in software development.",
+                      application_process="Send your CV to contact@creativitix.com")
+jobpost13.save()
+jobpost14 = NewJobpost(jobpost_id=14, employer_id=emp7, title="Senior Test Engineer/Test Engineer (Software), Capital Market Solutions", category="DevOps",
+                      post_date="2022-06-30", deadline_date="2022-08-30", salary=50000, required_experience=3,
+                      vacancies=3,
+                      job_context="We are looking for a Software Engineer to build functional and efficient server-client applications in Python. Responsibilities include participating in all phases of the software development lifecycle and be a good team player. If you’re a seasoned developer with a love for back-end technologies, have keen eye for detail and have problem-solving skills then we’d like to meet you.",
+                      job_nature="Full-time",
+                      job_responsibilities="Automates test coverage per platform capabilities and requirements. Establishes and maintains continuous build and integration testing on applicable platforms and assists with manual system and integration testing efforts.",
+                      edu_requirement="Bachelor of Computer Science & Engineering",
+                      additional_requirements="Ability to communicate clearly and concisely, both orally and in writing.",
+                      application_process="*Photograph must be enclosed with the resume.")
+jobpost14.save()
 class postViewsets(viewsets.ModelViewSet):
     # def list(self,request):
     #     posts = Jobpost.objects.all()
@@ -522,7 +593,8 @@ class postViewsets_for_jobpost(viewsets.ModelViewSet):
                                                          employer_id__org_type__icontains=postViewsets_for_jobpost.keyword) | Q(
                                                          employer_id__thana__icontains=postViewsets_for_jobpost.keyword)
                                                              | Q(
-                                                         employer_id__district__icontains=postViewsets_for_jobpost.keyword) | Q(
+                                                      Automates
+                                                  test coverage per platform capabilities and requirements.Establishes and maintains continuous build and integration testing on applicable platforms and assists with manual system and integration testing efforts.                                                         employer_id__district__icontains=postViewsets_for_jobpost.keyword) | Q(
                                                          employer_id__division__icontains=postViewsets_for_jobpost.keyword)
                                                              | Q(
                                                          employer_id__name__icontains=postViewsets_for_jobpost.keyword)))
