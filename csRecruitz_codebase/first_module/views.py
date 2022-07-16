@@ -715,6 +715,9 @@ class postViewsets_for_jobpost(viewsets.ModelViewSet):
 class jobseekerViewsets(viewsets.ModelViewSet):
     queryset = Jobseeker.objects.all()
     serializer_class = jobseekerSerializer
+class usercontactViewsets(viewsets.ModelViewSet):
+    queryset = UserContact.objects.all()
+    serializer_class = usercontactSerializer
 
 
 class recoViewsets(viewsets.ModelViewSet):

@@ -44,3 +44,9 @@ class jobseekerSerializer(serializers.ModelSerializer):
         day=((today - obj.date_of_birth).days)
         return day//365
 
+
+class usercontactSerializer(serializers.ModelSerializer):
+    #print("serialiser")
+    class Meta:
+        model= UserContact
+        fields='__all__'
