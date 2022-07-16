@@ -51,7 +51,7 @@ class Personal extends Component {
                 {
                     items.map((item) => {
                     return(
-                        <img  src={item.pro_pic} alt="Profile Pic" style={{
+                        <img  src={'/nakshi.jpg'} alt="Profile Pic" style={{
                             height:120,
                             width:140,
                             borderRadius:"50%"

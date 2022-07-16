@@ -593,8 +593,7 @@ class postViewsets_for_jobpost(viewsets.ModelViewSet):
                                                          employer_id__org_type__icontains=postViewsets_for_jobpost.keyword) | Q(
                                                          employer_id__thana__icontains=postViewsets_for_jobpost.keyword)
                                                              | Q(
-                                                      Automates
-                                                  test coverage per platform capabilities and requirements.Establishes and maintains continuous build and integration testing on applicable platforms and assists with manual system and integration testing efforts.                                                         employer_id__district__icontains=postViewsets_for_jobpost.keyword) | Q(
+                                                         employer_id__district__icontains=postViewsets_for_jobpost.keyword) | Q(
                                                          employer_id__division__icontains=postViewsets_for_jobpost.keyword)
                                                              | Q(
                                                          employer_id__name__icontains=postViewsets_for_jobpost.keyword)))
