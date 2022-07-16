@@ -14,6 +14,7 @@ import {Navigate} from "react-router-dom";
 import {element} from "prop-types";
 import {BallTriangle, Circles, ThreeDots} from 'react-loader-spinner'
 import Loader from "./loader";
+import Foot from "./Foot";
 
 const sortOptions = [
   { value: "Most Recent Post", label: "Most Recent Post" },
@@ -156,6 +157,7 @@ class Joblist extends Component {
 
                 </Animated>
             </div>
+            <Foot margin_value={40}/>
             {this.state.redirect && <Navigate to={this.state.navlink}/>}
             </body>
                 </React.Fragment>

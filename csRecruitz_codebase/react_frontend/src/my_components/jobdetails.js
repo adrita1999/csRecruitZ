@@ -13,6 +13,7 @@ import Select from "react-select"
 import Jobdetailsitems from "./jobdetailsitems";
 import {useParams} from "react-router-dom";
 import Loader from "./loader";
+import Foot from "./Foot";
 
 
 
@@ -101,6 +102,7 @@ class Jobdetails extends Component {
 
             </div>
             </div>
+            <Foot margin_value={40}/>
             </body>
                 </React.Fragment>
         )
