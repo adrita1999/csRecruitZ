@@ -260,3 +260,13 @@ div.jobdetailsbgdiv {
   -webkit-text-fill-color: transparent;
 }
 
+.overviewheader{
+  background:linear-gradient(to right, #226119 , #29A335 70% );
+  margin:0;
+  padding-left:12px;
+  padding-top:6px;
+  padding-bottom:1px;
+  position:relative;
+
+}
+
