@@ -10,6 +10,7 @@ import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import Form from "react-bootstrap/Form";
 import {ToggleButton, ToggleButtonGroup} from "@mui/material";
+import {Navigate} from "react-router-dom";
 
 const style = {
   position: 'absolute',
@@ -27,11 +28,18 @@ const style = {
     overflow:'hidden'
 };
 
+var jsonData = {
+    "email":"",
+    "password":"",
 
+  }
 class Navb extends Component {
     state={
         signinopen:false,
-        userORemp:"Jobseeker"
+        userORemp:"Jobseeker",
+        email:"",
+        password:"",
+        redirect:false,
     }
 
 
@@ -48,9 +56,33 @@ class Navb extends Component {
         this.setState({signinopen: true})
         console.log(this.state.signinopen)
    }
-   handleClickLogin() {
 
-        console.log("login tipse")
+    handleremail= (event) => {
+      const value = event.target.value
+      console.log(value)
+      this.state.email=value
+
+      jsonData.email=value
+    }
+
+    handlerpass= (event) => {
+      const value = event.target.value
+      console.log(value)
+      this.state.password=value
+
+      jsonData.password=value
+    }
+   handleClickLogin() {
+        fetch('http://127.0.0.1:8000/first_module/jobseeker/matchuser/', {  // Enter your IP address here
+
+      method: 'POST',
+        headers:{
+        'Content-Type': 'application/json',
+      },
+      mode: 'cors',
+      body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
+    })
+      window.location.href="/"
    }
 
       handleClose() {
@@ -148,10 +180,10 @@ class Navb extends Component {
 
             <Form style={{marginTop:'80px',marginBottom:'20px'}}>
                 <InputLabel id="demo-simple-select-label" style={{fontSize:'14px'}}>E-mail</InputLabel>
-                <input style={{width:'98%', padding:'7px',marginBottom:14,borderRadius:'5px',borderWidth:1}} type="text"  onChange={this.handlerkeyword}></input>
+                <input style={{width:'98%', padding:'7px',marginBottom:14,borderRadius:'5px',borderWidth:1}} type="text"  onChange={this.handleremail}></input>
 
                 <InputLabel id="demo-simple-select-label" style={{fontSize:'14px'}}>Password</InputLabel>
-                <input style={{width:'98%', padding:'7px',marginBottom:14,borderRadius:'5px',borderWidth:1}} type="password"  onChange={this.handlerkeyword}></input>
+                <input style={{width:'98%', padding:'7px',marginBottom:14,borderRadius:'5px',borderWidth:1}} type="password"  onChange={this.handlerpass}></input>
             </Form>
 
             <div style={{display:"inline",position:'absolute',width:'49%'}}>

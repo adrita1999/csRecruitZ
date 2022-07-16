@@ -709,15 +709,59 @@ class postViewsets_for_jobpost(viewsets.ModelViewSet):
                 'status': status.HTTP_204_NO_CONTENT,
                 'data': serializer.data,
 
+
             })
 
+
+
+
+class usercontactViewsets(viewsets.ModelViewSet):
+    queryset = UserContact.objects.all()
+    serializer_class = usercontactSerializer
 
 class jobseekerViewsets(viewsets.ModelViewSet):
     queryset = Jobseeker.objects.all()
     serializer_class = jobseekerSerializer
-class usercontactViewsets(viewsets.ModelViewSet):
-    queryset = UserContact.objects.all()
-    serializer_class = usercontactSerializer
+    isdetails=False
+    email=""
+    password=""
+
+    @action(methods=['post', 'get'], detail=False, url_path='matchuser')
+    def match(self,request):
+        if request.method == 'POST':
+
+            jobseekerViewsets.isdetails=True
+            jobseekerViewsets.email=request.data['email']
+            jobseekerViewsets.password=request.data['password']
+            return Response(status=status.HTTP_204_NO_CONTENT)
+
+        else:
+            if jobseekerViewsets.isdetails==True:
+                print(jobseekerViewsets.email)
+                print(jobseekerViewsets.password)
+                objs = Jobseeker.objects.filter(email=jobseekerViewsets.email,password=jobseekerViewsets.password)
+                str=""
+                if len(objs)==1:
+                    str="success"
+                else :
+                    str="fail"
+                serializer = jobseekerSerializer(objs, many=True)
+                return Response({
+                    'status': status.HTTP_204_NO_CONTENT,
+                    'data': serializer.data,
+                    'response':str,
+
+                })
+            else :
+                return Response({
+                    'status': status.HTTP_204_NO_CONTENT,
+                    'data': None,
+                    'response': "not_submitted",
+
+                })
+            jobseekerViewsets.isdetails=False
+
+
 
 
 class recoViewsets(viewsets.ModelViewSet):
