@@ -324,7 +324,7 @@ handleClick() {
             </div>
        </div>
        <Foot margin_value={172}/>
-       {this.state.redirect && <Navigate to='/joblist' replace={true}/>}
+       {this.state.redirect && <Navigate to='/joblist'/>}
        </body>
        </React.Fragment>
     )
