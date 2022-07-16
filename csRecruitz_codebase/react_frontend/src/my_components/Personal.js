@@ -6,7 +6,6 @@ import pic from './images/pp.JPG'
 import TypeAnimation from 'react-type-animation';
 
 
-import axios from "axios";
 import Sidebar from "./Sidebar";
 import Navb from "./Navb";
 import Foot from "./Foot";
@@ -17,47 +16,25 @@ class Personal extends Component {
 
         this.state = {
             items: [],
-            contacts:[]
+            DataisLoaded:false
             
         };
     }
-    // componentDidMount() {
-    //     fetch(
-    //         "http://127.0.0.1:8000/first_module/jobseeker/")
+    componentDidMount() {
+        fetch(
+            "http://127.0.0.1:8000/first_module/jobseeker/")
 
-    //         .then((res) => res.json())
-    //         .then((json) => {
-    //             this.setState({
-    //                 items: json,
-    //                 DataisLoaded: true
-    //             });
-    //         })
-    //     fetch(
-    //         "http://127.0.0.1:8000/first_module/usercontact/")
+            .then((res) => res.json())
+            .then((json) => {
+                this.setState({
+                    items: json,
+                    DataisLoaded: true
+                });
+            })
+    
+    }
+    
 
-    //         .then((res) => res.json())
-    //         .then((json) => {
-    //             this.setState({
-    //                 contacts: json,
-    //                 DataisLoaded: true
-    //             });
-    //         })
-    // }
-    async componentDidMount() {
-
-        // Make first two requests
-        const [firstResponse, secondResponse] = await Promise.all([
-          axios.get(`http://127.0.0.1:8000/first_module/jobseeker/`),
-          axios.get(`http://127.0.0.1:8000/first_module/usercontact/`)
-        ]);
-      
-        // Update state once with all 3 responses
-        this.setState({
-          items: firstResponse.data,
-          contacts: secondResponse.data,
-        });
-      
-      }
       
     render() {
         const { DataisLoaded, items } = this.state;
@@ -207,9 +184,10 @@ class Personal extends Component {
                     <div className="col-sm-6">
                             <b className= "seems-h1">Mobile number</b>
                             {
-                                (items,contacts) => {
-                                    
-                                }
+                                items.map((item) => {
+                                return(
+                                    <p>01878046439</p>
+                                )})
                             }
 
                         </div>
