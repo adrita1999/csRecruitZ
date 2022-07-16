@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import *
-
+from datetime import date
 class postSerializer(serializers.ModelSerializer):
     class Meta:
         model=Jobpost
@@ -35,6 +35,12 @@ class NewPostSerializer(serializers.ModelSerializer):
 
 class jobseekerSerializer(serializers.ModelSerializer):
     #print("serialiser")
+    age=serializers.SerializerMethodField()
     class Meta:
         model= Jobseeker
         fields='__all__'
+    def get_age(self,obj):
+        today = date.today()
+        day=((today - obj.date_of_birth).days)
+        return day//365
+

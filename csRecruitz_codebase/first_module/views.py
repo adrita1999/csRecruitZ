@@ -8,7 +8,7 @@ from rest_framework import viewsets, status
 from django.db.models import Q
 user1 = Jobseeker(user_id=1, name="Adrita Hossain Nakshi", email="adrita_99@yahoo.com", password="1234", thana="Boalia",
                   district="Rajshahi", division="Rajshahi", father_name="Dr. Md. Elias Hossain",
-                  mother_name="Dr. Zennat Ferdousi", date_of_birth="1999-02-06", self_desc="I am a CS under-graduate.",
+                  mother_name="Dr. Zennat Ferdousi", date_of_birth="1999-02-06", self_desc="I am a CS under-graduate. I love programmimg and I love computers too. Like Steve Jobs, I like to believe 'Everybody should learn to program a computer, because it teaches you how to think.'",
                   nationality="Bangladeshi", nid_number="12345678", field="Teaching", pref_sal="50000",
                   pref_job_ntr="Full-time", pref_org_type="Government", propic="propics_input/nakshi.jpg",
                   resume="resumes_input/nakshi.docx")
