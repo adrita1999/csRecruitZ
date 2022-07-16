@@ -746,6 +746,7 @@ class jobseekerViewsets(viewsets.ModelViewSet):
                 else :
                     str="fail"
                 serializer = jobseekerSerializer(objs, many=True)
+                jobseekerViewsets.isdetails = False
                 return Response({
                     'status': status.HTTP_204_NO_CONTENT,
                     'data': serializer.data,
@@ -753,13 +754,14 @@ class jobseekerViewsets(viewsets.ModelViewSet):
 
                 })
             else :
+                jobseekerViewsets.isdetails = False
                 return Response({
                     'status': status.HTTP_204_NO_CONTENT,
                     'data': None,
                     'response': "not_submitted",
 
                 })
-            jobseekerViewsets.isdetails=False
+
 
 
 
