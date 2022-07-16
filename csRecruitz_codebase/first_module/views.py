@@ -123,10 +123,7 @@ class postViewsets(viewsets.ModelViewSet):
 
 class postViewsets_for_jobpost(viewsets.ModelViewSet):
 
-    # def list(self,request):
-    #     posts = Jobpost.objects.all()
-    #     serializer = postSerializer(posts, many=True)
-    #     return Response(serializer.data)
+
     queryset = NewJobpost.objects.all()
     serializer_class = NewPostSerializer
     cat=""
@@ -135,15 +132,6 @@ class postViewsets_for_jobpost(viewsets.ModelViewSet):
     keyword=""
     nature=""
 
-    # def listy(self):
-    #     # if category != "none":
-    #     #     query_set = NewJobpost.objects.all().filter(category__iexact=category)
-    #     # else:
-    #     #     query_set = NewJobpost.objects.all()
-    #     query_set = NewJobpost.objects.all().filter(category__iexact="Teaching")
-    #     print("bal")
-    #     return Response(self.serializer_class(query_set, many=True).data,
-    #                     status=status.HTTP_200_OK)
 
 
 
@@ -436,18 +424,198 @@ class postViewsets_for_jobpost(viewsets.ModelViewSet):
                                                          employer_id__division__icontains=postViewsets_for_jobpost.keyword)
                                                              | Q(
                                                          employer_id__name__icontains=postViewsets_for_jobpost.keyword)))
-            else:
-                objs=NewJobpost.objects.all()
+            elif postViewsets_for_jobpost.cat == "" and postViewsets_for_jobpost.keyword == "" and postViewsets_for_jobpost.nature == "" and postViewsets_for_jobpost.org != "" and postViewsets_for_jobpost.loc != "":
+                objs = NewJobpost.objects.filter(
+                                                 Q(employer_id__division=postViewsets_for_jobpost.loc),
+                                                 Q(employer_id__org_type=postViewsets_for_jobpost.org))
 
-            # objs = NewJobpost.objects.filter(Q(category=postViewsets_for_jobpost.cat),Q(employer_id__division=postViewsets_for_jobpost.loc),
-            #                                  Q(employer_id__org_type=postViewsets_for_jobpost.org),Q(job_nature=postViewsets_for_jobpost.nature),(Q(title__icontains=postViewsets_for_jobpost.keyword)|Q(category__icontains=postViewsets_for_jobpost.keyword)
-            #                                                                                         |Q(job_context__icontains=postViewsets_for_jobpost.keyword)|Q(job_nature=postViewsets_for_jobpost.keyword)
-            #                                                                                         |Q(job_responsibilities__icontains=postViewsets_for_jobpost.keyword)|Q(edu_requirement__icontains=postViewsets_for_jobpost.keyword)
-            #                                                                                         |Q(additional_requirements__icontains=postViewsets_for_jobpost.keyword) | Q(application_process__icontains=postViewsets_for_jobpost.keyword)
-            #                                                                                         |Q(employer_id__org_type__icontains=postViewsets_for_jobpost.keyword)|Q(employer_id__thana__icontains=postViewsets_for_jobpost.keyword)
-            #                                                                                         |Q(employer_id__district__icontains=postViewsets_for_jobpost.keyword) |Q(employer_id__division__icontains=postViewsets_for_jobpost.keyword)
-            #                                                                                         |Q(employer_id__name__icontains=postViewsets_for_jobpost.keyword)))
 
+            elif postViewsets_for_jobpost.cat == "" and postViewsets_for_jobpost.keyword != "" and postViewsets_for_jobpost.nature == "" and postViewsets_for_jobpost.org == "" and postViewsets_for_jobpost.loc != "":
+                objs = NewJobpost.objects.filter(
+                                                 Q(employer_id__division=postViewsets_for_jobpost.loc),
+                                                 (
+                                                             Q(title__icontains=postViewsets_for_jobpost.keyword) | Q(
+                                                         category__icontains=postViewsets_for_jobpost.keyword)
+                                                             | Q(
+                                                         job_context__icontains=postViewsets_for_jobpost.keyword) | Q(
+                                                         job_nature=postViewsets_for_jobpost.keyword)
+                                                             | Q(
+                                                         job_responsibilities__icontains=postViewsets_for_jobpost.keyword) | Q(
+                                                         edu_requirement__icontains=postViewsets_for_jobpost.keyword)
+                                                             | Q(
+                                                         additional_requirements__icontains=postViewsets_for_jobpost.keyword) | Q(
+                                                         application_process__icontains=postViewsets_for_jobpost.keyword)
+                                                             | Q(
+                                                         employer_id__org_type__icontains=postViewsets_for_jobpost.keyword) | Q(
+                                                         employer_id__thana__icontains=postViewsets_for_jobpost.keyword)
+                                                             | Q(
+                                                         employer_id__district__icontains=postViewsets_for_jobpost.keyword) | Q(
+                                                         employer_id__division__icontains=postViewsets_for_jobpost.keyword)
+                                                             | Q(
+                                                         employer_id__name__icontains=postViewsets_for_jobpost.keyword)))
+
+            elif postViewsets_for_jobpost.cat == "" and postViewsets_for_jobpost.keyword != "" and postViewsets_for_jobpost.nature != "" and postViewsets_for_jobpost.org == "" and postViewsets_for_jobpost.loc == "":
+                objs = NewJobpost.objects.filter(
+
+                                                 Q(job_nature=postViewsets_for_jobpost.nature), (
+                                                             Q(title__icontains=postViewsets_for_jobpost.keyword) | Q(
+                                                         category__icontains=postViewsets_for_jobpost.keyword)
+                                                             | Q(
+                                                         job_context__icontains=postViewsets_for_jobpost.keyword) | Q(
+                                                         job_nature=postViewsets_for_jobpost.keyword)
+                                                             | Q(
+                                                         job_responsibilities__icontains=postViewsets_for_jobpost.keyword) | Q(
+                                                         edu_requirement__icontains=postViewsets_for_jobpost.keyword)
+                                                             | Q(
+                                                         additional_requirements__icontains=postViewsets_for_jobpost.keyword) | Q(
+                                                         application_process__icontains=postViewsets_for_jobpost.keyword)
+                                                             | Q(
+                                                         employer_id__org_type__icontains=postViewsets_for_jobpost.keyword) | Q(
+                                                         employer_id__thana__icontains=postViewsets_for_jobpost.keyword)
+                                                             | Q(
+                                                         employer_id__district__icontains=postViewsets_for_jobpost.keyword) | Q(
+                                                         employer_id__division__icontains=postViewsets_for_jobpost.keyword)
+                                                             | Q(
+                                                         employer_id__name__icontains=postViewsets_for_jobpost.keyword)))
+
+            elif postViewsets_for_jobpost.cat == "" and postViewsets_for_jobpost.keyword != "" and postViewsets_for_jobpost.nature == "" and postViewsets_for_jobpost.org == "" and postViewsets_for_jobpost.loc != "":
+                objs = NewJobpost.objects.filter(
+                                                 Q(employer_id__division=postViewsets_for_jobpost.loc),
+                                                 (
+                                                             Q(title__icontains=postViewsets_for_jobpost.keyword) | Q(
+                                                         category__icontains=postViewsets_for_jobpost.keyword)
+                                                             | Q(
+                                                         job_context__icontains=postViewsets_for_jobpost.keyword) | Q(
+                                                         job_nature=postViewsets_for_jobpost.keyword)
+                                                             | Q(
+                                                         job_responsibilities__icontains=postViewsets_for_jobpost.keyword) | Q(
+                                                         edu_requirement__icontains=postViewsets_for_jobpost.keyword)
+                                                             | Q(
+                                                         additional_requirements__icontains=postViewsets_for_jobpost.keyword) | Q(
+                                                         application_process__icontains=postViewsets_for_jobpost.keyword)
+                                                             | Q(
+                                                         employer_id__org_type__icontains=postViewsets_for_jobpost.keyword) | Q(
+                                                         employer_id__thana__icontains=postViewsets_for_jobpost.keyword)
+                                                             | Q(
+                                                         employer_id__district__icontains=postViewsets_for_jobpost.keyword) | Q(
+                                                         employer_id__division__icontains=postViewsets_for_jobpost.keyword)
+                                                             | Q(
+                                                         employer_id__name__icontains=postViewsets_for_jobpost.keyword)))
+
+            elif postViewsets_for_jobpost.cat == "" and postViewsets_for_jobpost.keyword != "" and postViewsets_for_jobpost.nature == "" and postViewsets_for_jobpost.org != "" and postViewsets_for_jobpost.loc == "":
+                objs = NewJobpost.objects.filter(
+
+                                                 Q(employer_id__org_type=postViewsets_for_jobpost.org),
+                                                  (
+                                                             Q(title__icontains=postViewsets_for_jobpost.keyword) | Q(
+                                                         category__icontains=postViewsets_for_jobpost.keyword)
+                                                             | Q(
+                                                         job_context__icontains=postViewsets_for_jobpost.keyword) | Q(
+                                                         job_nature=postViewsets_for_jobpost.keyword)
+                                                             | Q(
+                                                         job_responsibilities__icontains=postViewsets_for_jobpost.keyword) | Q(
+                                                         edu_requirement__icontains=postViewsets_for_jobpost.keyword)
+                                                             | Q(
+                                                         additional_requirements__icontains=postViewsets_for_jobpost.keyword) | Q(
+                                                         application_process__icontains=postViewsets_for_jobpost.keyword)
+                                                             | Q(
+                                                         employer_id__org_type__icontains=postViewsets_for_jobpost.keyword) | Q(
+                                                         employer_id__thana__icontains=postViewsets_for_jobpost.keyword)
+                                                             | Q(
+                                                         employer_id__district__icontains=postViewsets_for_jobpost.keyword) | Q(
+                                                         employer_id__division__icontains=postViewsets_for_jobpost.keyword)
+                                                             | Q(
+                                                         employer_id__name__icontains=postViewsets_for_jobpost.keyword)))
+
+            elif postViewsets_for_jobpost.cat == "" and postViewsets_for_jobpost.keyword != "" and postViewsets_for_jobpost.nature != "" and postViewsets_for_jobpost.org == "" and postViewsets_for_jobpost.loc == "":
+                objs = NewJobpost.objects.filter(
+
+                                                 Q(job_nature=postViewsets_for_jobpost.nature), (
+                                                             Q(title__icontains=postViewsets_for_jobpost.keyword) | Q(
+                                                         category__icontains=postViewsets_for_jobpost.keyword)
+                                                             | Q(
+                                                         job_context__icontains=postViewsets_for_jobpost.keyword) | Q(
+                                                         job_nature=postViewsets_for_jobpost.keyword)
+                                                             | Q(
+                                                         job_responsibilities__icontains=postViewsets_for_jobpost.keyword) | Q(
+                                                         edu_requirement__icontains=postViewsets_for_jobpost.keyword)
+                                                             | Q(
+                                                         additional_requirements__icontains=postViewsets_for_jobpost.keyword) | Q(
+                                                         application_process__icontains=postViewsets_for_jobpost.keyword)
+                                                             | Q(
+                                                         employer_id__org_type__icontains=postViewsets_for_jobpost.keyword) | Q(
+                                                         employer_id__thana__icontains=postViewsets_for_jobpost.keyword)
+                                                             | Q(
+                                                         employer_id__district__icontains=postViewsets_for_jobpost.keyword) | Q(
+                                                         employer_id__division__icontains=postViewsets_for_jobpost.keyword)
+                                                             | Q(
+                                                         employer_id__name__icontains=postViewsets_for_jobpost.keyword)))
+
+            elif postViewsets_for_jobpost.cat != "" and postViewsets_for_jobpost.keyword == "" and postViewsets_for_jobpost.nature == "" and postViewsets_for_jobpost.org == "" and postViewsets_for_jobpost.loc != "":
+                objs = NewJobpost.objects.filter(Q(category=postViewsets_for_jobpost.cat),
+                                                 Q(employer_id__division=postViewsets_for_jobpost.loc))
+
+
+
+
+            elif postViewsets_for_jobpost.cat != "" and postViewsets_for_jobpost.keyword == "" and postViewsets_for_jobpost.nature == "" and postViewsets_for_jobpost.org != "" and postViewsets_for_jobpost.loc == "":
+                objs = NewJobpost.objects.filter(Q(category=postViewsets_for_jobpost.cat),
+
+                                                 Q(employer_id__org_type=postViewsets_for_jobpost.org))
+
+
+            elif postViewsets_for_jobpost.cat != "" and postViewsets_for_jobpost.keyword == "" and postViewsets_for_jobpost.nature != "" and postViewsets_for_jobpost.org == "" and postViewsets_for_jobpost.loc == "":
+                objs = NewJobpost.objects.filter(Q(category=postViewsets_for_jobpost.cat),
+
+                                                 Q(job_nature=postViewsets_for_jobpost.nature))
+
+
+            elif postViewsets_for_jobpost.cat != "" and postViewsets_for_jobpost.keyword != "" and postViewsets_for_jobpost.nature == "" and postViewsets_for_jobpost.org == "" and postViewsets_for_jobpost.loc == "":
+                objs = NewJobpost.objects.filter(
+                                                 Q(employer_id__division=postViewsets_for_jobpost.loc),
+                                                 Q(employer_id__org_type=postViewsets_for_jobpost.org),
+                                                 Q(job_nature=postViewsets_for_jobpost.nature))
+
+
+            elif postViewsets_for_jobpost.cat == "" and postViewsets_for_jobpost.keyword == "" and postViewsets_for_jobpost.nature == "" and postViewsets_for_jobpost.org == "" and postViewsets_for_jobpost.loc != "":
+                objs = NewJobpost.objects.filter(
+                                                 Q(employer_id__division=postViewsets_for_jobpost.loc)
+                                                 )
+
+
+            elif postViewsets_for_jobpost.cat == "" and postViewsets_for_jobpost.keyword == "" and postViewsets_for_jobpost.nature == "" and postViewsets_for_jobpost.org != "" and postViewsets_for_jobpost.loc == "":
+                objs = NewJobpost.objects.filter(Q(employer_id__org_type=postViewsets_for_jobpost.org))
+            elif postViewsets_for_jobpost.cat == "" and postViewsets_for_jobpost.keyword == "" and postViewsets_for_jobpost.nature != "" and postViewsets_for_jobpost.org == "" and postViewsets_for_jobpost.loc == "":
+                objs = NewJobpost.objects.filter(
+
+                                                 Q(job_nature=postViewsets_for_jobpost.nature))
+
+            elif postViewsets_for_jobpost.cat == "" and postViewsets_for_jobpost.keyword != "" and postViewsets_for_jobpost.nature == "" and postViewsets_for_jobpost.org == "" and postViewsets_for_jobpost.loc == "":
+                objs = NewJobpost.objects.filter(
+                                                             Q(title__icontains=postViewsets_for_jobpost.keyword) | Q(
+                                                         category__icontains=postViewsets_for_jobpost.keyword)
+                                                             | Q(
+                                                         job_context__icontains=postViewsets_for_jobpost.keyword) | Q(
+                                                         job_nature=postViewsets_for_jobpost.keyword)
+                                                             | Q(
+                                                         job_responsibilities__icontains=postViewsets_for_jobpost.keyword) | Q(
+                                                         edu_requirement__icontains=postViewsets_for_jobpost.keyword)
+                                                             | Q(
+                                                         additional_requirements__icontains=postViewsets_for_jobpost.keyword) | Q(
+                                                         application_process__icontains=postViewsets_for_jobpost.keyword)
+                                                             | Q(
+                                                         employer_id__org_type__icontains=postViewsets_for_jobpost.keyword) | Q(
+                                                         employer_id__thana__icontains=postViewsets_for_jobpost.keyword)
+                                                             | Q(
+                                                         employer_id__district__icontains=postViewsets_for_jobpost.keyword) | Q(
+                                                         employer_id__division__icontains=postViewsets_for_jobpost.keyword)
+                                                             | Q(
+                                                         employer_id__name__icontains=postViewsets_for_jobpost.keyword))
+            elif postViewsets_for_jobpost.cat != "" and postViewsets_for_jobpost.keyword == "" and postViewsets_for_jobpost.nature == "" and postViewsets_for_jobpost.org == "" and postViewsets_for_jobpost.loc == "":
+                objs = NewJobpost.objects.filter(Q(category=postViewsets_for_jobpost.cat))
+
+            else :
+                objs = NewJobpost.objects.all()
             serializer = NewPostSerializer(objs, many=True)
             return Response({
                 'status': status.HTTP_204_NO_CONTENT,

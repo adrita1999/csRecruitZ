@@ -83,26 +83,15 @@ const NatureOptions = [
 
 var jsonData = {
     "category":"",
+    "organization":"",
+    "location":"",
+    "keyword":"",
+    "nature":""
   }
 
-var redirect=false
 
-  function handleClick() {
-    //const history = useNavigate();
-    // Send data to the backend via POST
-    fetch('http://127.0.0.1:8000/searchinput/', {  // Enter your IP address here
 
-      method: 'POST',
-        headers:{
-        'Content-Type': 'application/json',
-      },
-      mode: 'cors',
-      body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
-    })
-      redirect=true;
-    console.log(redirect)
-  }
-  
+
 
 export class Home extends Component {
 
@@ -184,7 +173,7 @@ handleClick() {
 
 
   render() {
-        let dir=redirect;
+
         //const { navigation } = this.props;
         //this.setState({navigation})
     return (
@@ -335,7 +324,7 @@ handleClick() {
             </div>
        </div>
        <Foot margin_value={172}/>
-       {dir && <Navigate to='/joblist' replace={true}/>}
+       {this.state.redirect && <Navigate to='/joblist' replace={true}/>}
        </body>
        </React.Fragment>
     )
