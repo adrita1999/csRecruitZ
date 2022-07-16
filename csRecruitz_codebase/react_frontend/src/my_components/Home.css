@@ -194,3 +194,12 @@ body {
   color: white;
   box-shadow: 0 8px 10px 0 rgba(0,0,0,0.24);
 }
+
+.signinmodal{
+    z-index: 2;
+    background: red;
+    position: absolute;
+    height: 300px;
+    width: 300px;
+    left:70%;
+}
