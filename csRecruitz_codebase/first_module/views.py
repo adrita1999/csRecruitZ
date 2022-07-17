@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework import viewsets, status
 from django.db.models import Q
 
+
 user1 = Jobseeker(user_id=1, name="Adrita Hossain Nakshi", email="adrita_99@yahoo.com", password="1234", thana="Boalia",
                   district="Rajshahi", division="Rajshahi", father_name="Dr. Md. Elias Hossain",
                   mother_name="Dr. Zennat Ferdousi", date_of_birth="1999-02-06", self_desc="I am a CS under-graduate. I love programmimg and I love computers too. Like Steve Jobs, I like to believe 'Everybody should learn to program a computer, because it teaches you how to think.'",
