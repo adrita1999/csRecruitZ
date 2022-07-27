@@ -204,6 +204,43 @@ question1 = Question(question_id=1, skill_id=skill1, question_text="The library 
                      mark =10,
                      time_limit="00:01:30")
 question1.save()
+question2 = Question(question_id=2, skill_id=skill1, question_text="In a linked list - ",
+                     optionA=" Each link contains data or a pointer to data",
+                     optionB="Links are stored in an array",
+                     optionC="A array of pointers point to the link",
+                     optionD=" Each link contains a pointer to the next link",
+                     answer=" Each link contains a pointer to the next link",
+                     mark =10,
+                     time_limit="00:01:30")
+question2.save()
+question3 = Question(question_id=3, skill_id=skill1, question_text="In C++, which of the following can legitimately be passed to a function?",
+                     optionA="A constant",
+                     optionB="A variable",
+                     optionC="A structure",
+                     optionD="All of these",
+                     answer="All of these",
+                     mark =10,
+                     time_limit="00:01:30")
+question3.save()
+question4 = Question(question_id=4, skill_id=skill1, question_text="The dot operator connects which of the following two entities? ",
+                     optionA=" Class object and member of that class",
+                     optionB=" Class and member of that class",
+                     optionC="Class object and a class",
+                     optionD="Class member and class object",
+                     answer="Class object and member of that class",
+                     mark =10,
+                     time_limit="00:01:30")
+question4.save()
+question5 = Question(question_id=5, skill_id=skill1, question_text="A static function -  ",
+                     optionA="Should be called when an object is destroyed",
+                     optionB="Can be called using the class name and function",
+                     optionC="Is closely connected with an individual object of a class",
+                     optionD=" Is used when a dummy object must be created",
+                     answer=" Can be called using the class name and function",
+                     mark =10,
+                     time_limit="00:01:30")
+question5.save()
+
 class postViewsets(viewsets.ModelViewSet):
     # def list(self,request):
     #     posts = Jobpost.objects.all()
