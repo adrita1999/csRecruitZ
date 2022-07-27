@@ -192,6 +192,18 @@ jobpost14 = NewJobpost(jobpost_id=14, employer_id=emp7,
 jobpost14.save()
 
 
+skill1 = Skill(skill_id =1, skill_name="c++", gap_between_consecutive_attempts=30)
+skill1.save()
+
+question1 = Question(question_id=1, skill_id=skill1, question_text="The library function exit( ) causes an exit from - ",
+                     optionA="The program in which it occurs",
+                     optionB="The function in which it occurs",
+                     optionC="The block in which it occurs",
+                     optionD="The loop in which it occurs",
+                     answer="The program in which it occurs",
+                     mark =10,
+                     time_limit="00:01:30")
+question1.save()
 class postViewsets(viewsets.ModelViewSet):
     # def list(self,request):
     #     posts = Jobpost.objects.all()
