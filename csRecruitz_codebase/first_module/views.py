@@ -828,6 +828,14 @@ class jobseekerViewsets(viewsets.ModelViewSet):
 
                 })
 
+    @action(methods=['post', 'get'], detail=False, url_path='adduser')
+    def register(self,request):
+        if request.method == 'POST':
+            print(request.data['email'])
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+
 
 
 
