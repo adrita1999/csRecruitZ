@@ -165,13 +165,7 @@ handleChange(event) {
             <div className="form-group">
                 <InputLabel for="gender">Gender:</InputLabel>
                 <Select name="gender" id="gender" styles={dropDownStyle} options={GenderOptions}  placeholder="Enter Gender" openMenuOnFocus isClearable />
-                <input
-              tabIndex={-1}
-              autoComplete="off"
-              style={{ opacity: 0, height: 0 }}
 
-              required
-            />
 
                 <div className="text-danger">{this.state.errors.email}</div>
             </div>
@@ -294,3 +288,11 @@ handleChange(event) {
 
 }
 export default Register;
+
+// <input
+//               tabIndex={-1}
+//               autoComplete="off"
+//               style={{ opacity: 0, height: 0 }}
+//
+//               required
+//             />
