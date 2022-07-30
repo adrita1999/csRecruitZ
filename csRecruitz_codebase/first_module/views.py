@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework import viewsets, status
 from django.db.models import Q
 
+
 user1 = Jobseeker(user_id=1, name="Adrita Hossain Nakshi", email="adrita_99@yahoo.com", password="1234", thana="Boalia",
                   district="Rajshahi", division="Rajshahi", father_name="Dr. Md. Elias Hossain",
                   mother_name="Dr. Zennat Ferdousi", date_of_birth="1999-02-06", self_desc="I am a CS under-graduate. I love programmimg and I love computers too. Like Steve Jobs, I like to believe 'Everybody should learn to program a computer, because it teaches you how to think.'",
@@ -190,6 +191,55 @@ jobpost14 = NewJobpost(jobpost_id=14, employer_id=emp7,
                        application_process="*Photograph must be enclosed with the resume.")
 jobpost14.save()
 
+
+skill1 = Skill(skill_id =1, skill_name="c++", gap_between_consecutive_attempts=30)
+skill1.save()
+
+question1 = Question(question_id=1, skill_id=skill1, question_text="The library function exit( ) causes an exit from - ",
+                     optionA="The program in which it occurs",
+                     optionB="The function in which it occurs",
+                     optionC="The block in which it occurs",
+                     optionD="The loop in which it occurs",
+                     answer="The program in which it occurs",
+                     mark =10,
+                     time_limit="00:01:30")
+question1.save()
+question2 = Question(question_id=2, skill_id=skill1, question_text="In a linked list - ",
+                     optionA=" Each link contains data or a pointer to data",
+                     optionB="Links are stored in an array",
+                     optionC="A array of pointers point to the link",
+                     optionD=" Each link contains a pointer to the next link",
+                     answer=" Each link contains a pointer to the next link",
+                     mark =10,
+                     time_limit="00:01:30")
+question2.save()
+question3 = Question(question_id=3, skill_id=skill1, question_text="In C++, which of the following can legitimately be passed to a function?",
+                     optionA="A constant",
+                     optionB="A variable",
+                     optionC="A structure",
+                     optionD="All of these",
+                     answer="All of these",
+                     mark =10,
+                     time_limit="00:01:30")
+question3.save()
+question4 = Question(question_id=4, skill_id=skill1, question_text="The dot operator connects which of the following two entities? ",
+                     optionA=" Class object and member of that class",
+                     optionB=" Class and member of that class",
+                     optionC="Class object and a class",
+                     optionD="Class member and class object",
+                     answer="Class object and member of that class",
+                     mark =10,
+                     time_limit="00:01:30")
+question4.save()
+question5 = Question(question_id=5, skill_id=skill1, question_text="A static function -  ",
+                     optionA="Should be called when an object is destroyed",
+                     optionB="Can be called using the class name and function",
+                     optionC="Is closely connected with an individual object of a class",
+                     optionD=" Is used when a dummy object must be created",
+                     answer=" Can be called using the class name and function",
+                     mark =10,
+                     time_limit="00:01:30")
+question5.save()
 
 class postViewsets(viewsets.ModelViewSet):
     # def list(self,request):
