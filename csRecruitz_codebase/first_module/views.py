@@ -564,7 +564,6 @@ class jobseekerViewsets(viewsets.ModelViewSet):
     @action(methods=['post', 'get'], detail=False, url_path='matchuser')
     def match(self,request):
         if request.method == 'POST':
-
             jobseekerViewsets.isdetails=True
             jobseekerViewsets.email=request.data['email']
             jobseekerViewsets.password=request.data['password']
