@@ -75,7 +75,7 @@ handleChange(event) {
           errors["email"] = "Please enter valid email address.";
         }
       }
-      
+
       if (typeof input["password"] !== "undefined" && typeof input["confirm_password"] !== "undefined") {
 
         if (input["password"] !== input["confirm_password"]) {
