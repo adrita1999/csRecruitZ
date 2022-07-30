@@ -180,10 +180,10 @@ class Navb extends Component {
 
             <Form style={{marginTop:'80px',marginBottom:'20px'}}>
                 <InputLabel id="demo-simple-select-label" style={{fontSize:'14px'}}>E-mail</InputLabel>
-                <input required={true} style={{width:'98%', padding:'7px',marginBottom:14,borderRadius:'5px',borderWidth:1}} type="text"  onChange={this.handleremail}></input>
+                <input required style={{width:'98%', padding:'7px',marginBottom:14,borderRadius:'5px',borderWidth:1}} type="text"  onChange={this.handleremail}></input>
 
                 <InputLabel id="demo-simple-select-label" style={{fontSize:'14px'}}>Password</InputLabel>
-                <input required={true} style={{width:'98%', padding:'7px',marginBottom:14,borderRadius:'5px',borderWidth:1}} type="password"  onChange={this.handlerpass}></input>
+                <input required style={{width:'98%', padding:'7px',marginBottom:14,borderRadius:'5px',borderWidth:1}} type="password"  onChange={this.handlerpass}></input>
             </Form>
 
             <div style={{display:"inline",position:'absolute',width:'49%'}}>

@@ -165,7 +165,6 @@ componentDidMount() {
                     this.setState({datas: json.data, DataisLoaded: true})
                     console.log(json.data)
                     console.log(json.response)
-                    console.log(this.state.datas.length)
                     if (json.response==="success") {
                          alert("Login Successful")
 
