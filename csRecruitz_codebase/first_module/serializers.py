@@ -50,3 +50,19 @@ class usercontactSerializer(serializers.ModelSerializer):
     class Meta:
         model= UserContact
         fields='__all__'
+
+class jobexpSerializer(serializers.ModelSerializer):
+    #print("serialiser")
+    class Meta:
+        model= JobExperience
+        fields='__all__'
+
+class uskillSerializer(serializers.ModelSerializer):
+    #print("serialiser")
+    skill_name = serializers.SerializerMethodField("get_skill_name")
+    class Meta:
+        model= JobSeekerSkill
+        fields='__all__'
+
+    def get_skill_name(self, obj):
+        return obj.skill_id.skill_name
