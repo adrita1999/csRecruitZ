@@ -1,0 +1,20 @@
+div.content_reg {
+  background-color: #DEE7F4;
+  margin-top: 30px;
+  margin-left: 300px;
+  margin-right: 300px;
+  padding: 1px 16px;
+  height: auto;
+  min-height: 100vh;
+  overflow: hidden;
+  border-radius: 0.7rem 0.7rem 0.7rem 0.7rem;
+  box-shadow: 0.25rem 0.25rem 0.6rem rgba(0,0,0,0.05), 0 0.5rem 1.125rem rgba(75,0,0,0.05);
+
+}
+.seems-h1_reg {
+  margin-top: 1%;
+  color: #410390;
+  font-size: x-large;
+
+
+}

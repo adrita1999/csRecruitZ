@@ -731,7 +731,6 @@ class postViewsets_for_jobpost(viewsets.ModelViewSet):
 
 
 
-
 class usercontactViewsets(viewsets.ModelViewSet):
     queryset = UserContact.objects.all()
     serializer_class = usercontactSerializer
