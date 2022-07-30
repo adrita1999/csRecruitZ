@@ -40,7 +40,7 @@ class Personal extends Component {
         this.state = {
             items: [],
             DataisLoaded:false,
-            editopen:true,
+            editopen:false,
         };
         this.handleClose=this.handleClose.bind(this);
         this.handleClick=this.handleClick.bind(this);
@@ -61,14 +61,14 @@ class Personal extends Component {
     }
 
     handleClose() {
-      this.setState({editopen:false})
+      //this.setState({editopen:false})
       }
 
     handleClick() {
-        this.setState({editopen: true})
+        //this.setState({editopen: true})
    }
     handleSubmitEdit() {
-        console.log("edited")
+       // console.log("edited")
    }
       
     render() {
@@ -299,41 +299,7 @@ class Personal extends Component {
             </div>
 
 
-      <div>
-      <Modal
-        open={this.state.editopen}
-        onClose={this.handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-        style={{background:"rgba(0,0,0,0)"}}
-      >
-        <Box sx={style}>
-            <div style={{display:"inline",position:'absolute',width:'49%'}}>
-                <Typography id="modal-modal-title" variant="h5" component="h2" style={{color:"#410390",fontWeight:"bold",paddingTop:'3px'}}>
-                Edit Information
-              </Typography>
-            </div>
-            <div style={{display:"inline",position:'absolute',width:'49%',left:'54%'}}>
-            </div>
 
-
-            <Form style={{marginTop:'80px',marginBottom:'20px'}}>
-                <InputLabel id="demo-simple-select-label" style={{fontSize:'14px'}}>Name</InputLabel>
-                <input required={true} style={{width:'98%', padding:'7px',marginBottom:14,borderRadius:'5px',borderWidth:1}} type="text"  onChange={this.handleremail}></input>
-            </Form>
-
-            <div style={{display:"inline",position:'absolute',width:'49%'}}>
-            </div>
-            <div style={{display:"inline",position:'absolute',width:'49%',left:'47%'}}>
-                <button className='btn btn-success' style={{marginTop:"6px",width:'45%'}} onClick={this.handleSubmitEdit}>Submit</button>
-            </div>
-            <div style={{height:"50px"}}>
-
-            </div>
-
-        </Box>
-      </Modal>
-    </div>
             <Foot margin_value={172}/>
 
             </body>
@@ -343,3 +309,39 @@ class Personal extends Component {
 }
 
 export default Personal;
+
+// <div>
+//       <Modal
+//         open={this.state.editopen}
+//         onClose={this.handleClose}
+//         aria-labelledby="modal-modal-title"
+//         aria-describedby="modal-modal-description"
+//         style={{background:"rgba(0,0,0,0)"}}
+//       >
+//         <Box sx={style}>
+//             <div style={{display:"inline",position:'absolute',width:'49%'}}>
+//                 <Typography id="modal-modal-title" variant="h5" component="h2" style={{color:"#410390",fontWeight:"bold",paddingTop:'3px'}}>
+//                 Edit Information
+//               </Typography>
+//             </div>
+//             <div style={{display:"inline",position:'absolute',width:'49%',left:'54%'}}>
+//             </div>
+//
+//
+//             <Form style={{marginTop:'80px',marginBottom:'20px'}}>
+//                 <InputLabel id="demo-simple-select-label" style={{fontSize:'14px'}}>Name</InputLabel>
+//                 <input required={true} style={{width:'98%', padding:'7px',marginBottom:14,borderRadius:'5px',borderWidth:1}} type="text"  onChange={this.handleremail}></input>
+//             </Form>
+//
+//             <div style={{display:"inline",position:'absolute',width:'49%'}}>
+//             </div>
+//             <div style={{display:"inline",position:'absolute',width:'49%',left:'47%'}}>
+//                 <button className='btn btn-success' style={{marginTop:"6px",width:'45%'}} onClick={this.handleSubmitEdit}>Submit</button>
+//             </div>
+//             <div style={{height:"50px"}}>
+//
+//             </div>
+//
+//         </Box>
+//       </Modal>
+//     </div>

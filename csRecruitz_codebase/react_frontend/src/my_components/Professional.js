@@ -65,7 +65,7 @@ class Professional extends Component {
 
     }
     render() {
-        if (!this.state.DetailsLoaded1 && !this.state.DetailsLoaded2 && !this.state.DetailsLoaded3) return <Loader/>
+        if (!this.state.DetailsLoaded1 || !this.state.DetailsLoaded2 || !this.state.DetailsLoaded3) return <Loader/>
         return (
             <React.Fragment>
                 <body>
