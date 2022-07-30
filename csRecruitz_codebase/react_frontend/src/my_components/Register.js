@@ -2,12 +2,19 @@ import React, {Component} from "react";
 import Navb from "./Navb";
 import './registration.css';
 import {InputLabel} from "@mui/material";
+var jsonData = {
+    "name":"",
+    "password":"",
+    "email":"",
+    "dob":"",
+  }
 class Register extends  Component {
     constructor() {
     super();
     this.state = {
       input: {},
-      errors: {}
+      errors: {},
+        redirect:false
     };
 
 
@@ -28,13 +35,27 @@ handleChange(event) {
 
     if(this.validate()){
         console.log(this.state);
-
+        jsonData.name=this.state.input["name"];
+        jsonData.email=this.state.input["email"];
+        jsonData.password=this.state.input["password"];
+        jsonData.dob=this.state.input["dob"];
         let input = {};
         input["name"] = "";
         input["email"] = "";
         input["password"] = "";
         input["confirm_password"] = "";
+        input["dob"]="";
         this.setState({input:input});
+        fetch('http://127.0.0.1:8000/first_module/jobseeker/adduser/', {  // Enter your IP address here
+
+      method: 'POST',
+        headers:{
+        'Content-Type': 'application/json',
+      },
+      mode: 'cors',
+      body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
+    })
+    this.setState({'redirect':true})
 
         alert('Demo Form is submited');
     }
@@ -55,10 +76,9 @@ handleChange(event) {
         }
       }
 
-
       if (typeof input["password"] !== "undefined" && typeof input["confirm_password"] !== "undefined") {
 
-        if (input["password"] != input["confirm_password"]) {
+        if (input["password"] !== input["confirm_password"]) {
           isValid = false;
           errors["password"] = "Passwords don't match.";
         }
@@ -91,7 +111,7 @@ handleChange(event) {
             <input
               type="text"
               name="name"
-              value={this.state.input.name}
+
               class="form-control"
               placeholder="Enter name"
               onChange={this.handleChange}
@@ -119,7 +139,7 @@ handleChange(event) {
             <input
               type="password"
               name="password"
-              value={this.state.input.password}
+
               onChange={this.handleChange}
               class="form-control"
               placeholder="Enter password"
@@ -132,7 +152,7 @@ handleChange(event) {
                 <input
                     type="text"
                     name="email"
-                    value={this.state.input.email}
+
                     onChange={this.handleChange}
                     className="form-control"
                     placeholder="Enter email"
@@ -145,7 +165,7 @@ handleChange(event) {
             <input
               type="password"
               name="confirm_password"
-              value={this.state.input.confirm_password}
+
               onChange={this.handleChange}
               class="form-control"
               placeholder="Enter confirm password"
