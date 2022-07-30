@@ -10,15 +10,40 @@ import Sidebar from "./Sidebar";
 import Navb from "./Navb";
 import Foot from "./Foot";
 import Loader from "./loader";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import {ToggleButton, ToggleButtonGroup} from "@mui/material";
+import Form from "react-bootstrap/Form";
+import InputLabel from "@mui/material/InputLabel";
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 500,
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  p:4,
+  backdrop:false,
+  show:true,
+    borderRadius:5,
+    border:0,
+    overflow:'hidden'
+};
+
 class Personal extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
             items: [],
-            DataisLoaded:false
-            
+            DataisLoaded:false,
+            editopen:true,
         };
+        this.handleClose=this.handleClose.bind(this);
+        this.handleClick=this.handleClick.bind(this);
     }
     componentDidMount() {
         fetch(
@@ -34,8 +59,17 @@ class Personal extends Component {
             })
     
     }
-    
 
+    handleClose() {
+      this.setState({editopen:false})
+      }
+
+    handleClick() {
+        this.setState({editopen: true})
+   }
+    handleSubmitEdit() {
+        console.log("edited")
+   }
       
     render() {
         const { DataisLoaded, items } = this.state;
@@ -255,7 +289,7 @@ class Personal extends Component {
 
                 <div className="row">
                     <div className="row_custom">
-                <button className="custom_btn"><AiFillEdit/> Edit Information</button>
+                <button className="custom_btn" onClick={this.handleClick}><AiFillEdit/> Edit Information</button>
                     </div>
 
             </div>
@@ -263,6 +297,43 @@ class Personal extends Component {
             </div>
                 </Animated>
             </div>
+
+
+      <div>
+      <Modal
+        open={this.state.editopen}
+        onClose={this.handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        style={{background:"rgba(0,0,0,0)"}}
+      >
+        <Box sx={style}>
+            <div style={{display:"inline",position:'absolute',width:'49%'}}>
+                <Typography id="modal-modal-title" variant="h5" component="h2" style={{color:"#410390",fontWeight:"bold",paddingTop:'3px'}}>
+                Edit Information
+              </Typography>
+            </div>
+            <div style={{display:"inline",position:'absolute',width:'49%',left:'54%'}}>
+            </div>
+
+
+            <Form style={{marginTop:'80px',marginBottom:'20px'}}>
+                <InputLabel id="demo-simple-select-label" style={{fontSize:'14px'}}>Name</InputLabel>
+                <input required={true} style={{width:'98%', padding:'7px',marginBottom:14,borderRadius:'5px',borderWidth:1}} type="text"  onChange={this.handleremail}></input>
+            </Form>
+
+            <div style={{display:"inline",position:'absolute',width:'49%'}}>
+            </div>
+            <div style={{display:"inline",position:'absolute',width:'49%',left:'47%'}}>
+                <button className='btn btn-success' style={{marginTop:"6px",width:'45%'}} onClick={this.handleSubmitEdit}>Submit</button>
+            </div>
+            <div style={{height:"50px"}}>
+
+            </div>
+
+        </Box>
+      </Modal>
+    </div>
             <Foot margin_value={172}/>
 
             </body>
