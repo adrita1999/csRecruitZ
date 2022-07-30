@@ -50,3 +50,9 @@ class usercontactSerializer(serializers.ModelSerializer):
     class Meta:
         model= UserContact
         fields='__all__'
+
+class jobexpSerializer(serializers.ModelSerializer):
+    #print("serialiser")
+    class Meta:
+        model= JobExperience
+        fields='__all__'

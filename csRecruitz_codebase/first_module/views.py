@@ -241,6 +241,10 @@ question5 = Question(question_id=5, skill_id=skill1, question_text="A static fun
                      mark =10,
                      time_limit="00:01:30")
 question5.save()
+job_exp1=JobExperience(jobexperience_id=1,experience_name="Lecturer",organization_name="UIU",from_year="2017",to_year="2018",user_id=user1)
+job_exp1.save()
+job_exp2=JobExperience(jobexperience_id=2,experience_name="Lecturer",organization_name="Brac University",from_year="2018",to_year="2021",user_id=user1)
+job_exp2.save()
 
 class postViewsets(viewsets.ModelViewSet):
     # def list(self,request):
@@ -863,3 +867,6 @@ class recoViewsets(viewsets.ModelViewSet):
     # deadline par hoise kina
 
 
+class jobexpViewsets(viewsets.ModelViewSet):
+    queryset = JobExperience.objects.filter(user_id=1).order_by('-from_year')
+    serializer_class = jobexpSerializer

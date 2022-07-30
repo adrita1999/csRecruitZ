@@ -11,8 +11,48 @@ import {BiLockAlt} from 'react-icons/bi';
 
 import Navb from "./Navb";
 import Foot from "./Foot";
+import Loader from "./loader";
 class Professional extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            items: [],
+            DetailsLoaded1:false,
+            DetailsLoaded2:false
+
+        };
+      }
+
+    componentDidMount() {
+        const id=1
+        fetch(
+            "http://127.0.0.1:8000/first_module/jobseeker/"+id)
+
+            .then((res) => res.json())
+            .then((json) => {
+                this.setState({
+                    items: json,
+                    DetailsLoaded1:true
+                });
+            console.log(json)
+            console.log(this.state)
+            })
+        fetch(
+            "http://127.0.0.1:8000/first_module/jobexp/")
+
+            .then((res) => res.json())
+            .then((json) => {
+                this.setState({
+                    exps: json,
+                    DetailsLoaded2:true
+                });
+            console.log(json)
+            console.log(this.state)
+            })
+
+    }
     render() {
+        if (!this.state.DetailsLoaded1 && !this.state.DetailsLoaded2) return <Loader/>
         return (
             <React.Fragment>
                 <body>
@@ -27,8 +67,11 @@ class Professional extends Component {
                     <Animated animationIn="slideInUp"  animationInDuration={1800}  isVisible={true}>
                     <div>
                <div className="row_custom">
+
                     <div className="align">
-                    <p><b className="seems-h1">Field of Work: </b>Research and Development</p>
+
+                        <p><b className="seems-h1">Field of Work: </b>{this.state.items.field}</p>
+
                         <button className="icon_btn"><FiEdit2 size={'1.5em'} className="icon_edit"/></button></div>
                    </div>
 
@@ -44,73 +87,21 @@ class Professional extends Component {
                             }}>
 
                                     <div className="border-left pt-2 pl-4 ml-2">
-                                        <div className="position-relative mb-4">
-                                            <FaArrowRight size={'1.5em'} style={{
-                                                color:'#29A335',
-                                                marginLeft:-16,
-                                                display:"inline"
-
-
-                                            }}/>
-
-                                            <b className="seems-h1" style={{
-                                                marginLeft:20,
-                                                display:"inline"
-                                            }}>Web Designer</b>
-                                            <p className="mb-2" style={{
-                                                marginLeft:30,
-
-                                            }}>Soft Company | <small>2000 - 2050</small></p>
-                                            <p style={{
-                                                marginLeft:30,
-
-                                            }}>Tempor eos dolore amet tempor dolor tempor. Dolore ea magna sit amet
+                                        {
+                                            this.state.exps.map((exp) => {
+                                            return(
+                                                <div className="position-relative mb-4">
+                                            <FaArrowRight size={'1.5em'} style={{color:'#29A335', marginLeft:-16, display:"inline"}}/>
+                                            <b className="seems-h1" style={{marginLeft:20, display:"inline"}}>{exp.experience_name}</b>
+                                            <p className="mb-2" style={{marginLeft:30,}}>{exp.organization_name} | <small>{exp.from_year} - {exp.to_year}</small></p>
+                                            <p style={{marginLeft:30,}}>Tempor eos dolore amet tempor dolor tempor. Dolore ea magna sit amet
                                                 dolor eirmod. Eos ipsum est tempor dolor. Clita lorem kasd sed ea lorem
                                                 diam ea lorem eirmod duo sit ipsum stet lorem diam</p>
 
                                         </div>
-                                        <div className="position-relative mb-4">
-                                           <FaArrowRight size={'1.5em'} style={{
-                                                color:'#29A335',
-                                                marginLeft:-16
+                                            )})
+                                         }
 
-                                            }}/>
-                                            <b className="seems-h1" style={{
-                                                marginLeft:20,
-                                                display:"inline"
-                                            }}>Web Designer</b>
-                                            <p className="mb-2" style={{
-                                                marginLeft:30,
-
-                                            }}>Soft Company | <small>2000 - 2050</small></p>
-                                            <p style={{
-                                                marginLeft:30,
-
-                                            }}>Tempor eos dolore amet tempor dolor tempor. Dolore ea magna sit amet
-                                                dolor eirmod. Eos ipsum est tempor dolor. Clita lorem kasd sed ea lorem
-                                                diam ea lorem eirmod duo sit ipsum stet lorem diam</p>
-                                        </div>
-                                        <div className="position-relative mb-4">
-                                            <FaArrowRight size={'1.5em'} style={{
-                                                color:'#29A335',
-                                                marginLeft:-16
-
-                                            }}/>
-                                            <b className="seems-h1" style={{
-                                                marginLeft:20,
-                                                display:"inline"
-                                            }}>Web Designer</b>
-                                            <p className="mb-2" style={{
-                                                marginLeft:30,
-
-                                            }}>Soft Company | <small>2000 - 2050</small></p>
-                                            <p style={{
-                                                marginLeft:30,
-
-                                            }}>Tempor eos dolore amet tempor dolor tempor. Dolore ea magna sit amet
-                                                dolor eirmod. Eos ipsum est tempor dolor. Clita lorem kasd sed ea lorem
-                                                diam ea lorem eirmod duo sit ipsum stet lorem diam</p>
-                                        </div>
                                     </div>
 
                             </div>

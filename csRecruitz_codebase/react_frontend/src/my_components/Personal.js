@@ -30,6 +30,7 @@ class Personal extends Component {
                     items: json,
                     DataisLoaded: true
                 });
+                console.log(this.state)
             })
     
     }

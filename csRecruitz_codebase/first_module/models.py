@@ -133,6 +133,7 @@ class JobShortlist(models.Model):
 
 class JobExperience(models.Model):
     jobexperience_id = models.IntegerField(primary_key=True)
+    user_id = models.ForeignKey(Jobseeker, on_delete=models.CASCADE)
     experience_name = models.CharField(max_length=200)
     organization_name = models.CharField(max_length=200)
     from_year = models.IntegerField()

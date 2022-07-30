@@ -24,6 +24,7 @@ router=DefaultRouter()
 router.register('',postViewsets_for_jobpost, basename='jobposts')
 router.register(r'first_module/jobseeker',jobseekerViewsets)
 router.register(r'first_module/recommendation',recoViewsets)
+router.register(r'first_module/jobexp',jobexpViewsets)
 router.register(r'first_module/usercontact',usercontactViewsets)
 
 
