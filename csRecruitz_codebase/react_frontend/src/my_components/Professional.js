@@ -18,7 +18,8 @@ class Professional extends Component {
         this.state = {
             items: [],
             DetailsLoaded1:false,
-            DetailsLoaded2:false
+            DetailsLoaded2:false,
+            DetailsLoaded3:false,
 
         };
       }
@@ -49,10 +50,22 @@ class Professional extends Component {
             console.log(json)
             console.log(this.state)
             })
+        fetch(
+            "http://127.0.0.1:8000/first_module/uskill/")
+
+            .then((res) => res.json())
+            .then((json) => {
+                this.setState({
+                    skills: json,
+                    DetailsLoaded3:true
+                });
+            console.log(json)
+            console.log(this.state)
+            })
 
     }
     render() {
-        if (!this.state.DetailsLoaded1 && !this.state.DetailsLoaded2) return <Loader/>
+        if (!this.state.DetailsLoaded1 && !this.state.DetailsLoaded2 && !this.state.DetailsLoaded3) return <Loader/>
         return (
             <React.Fragment>
                 <body>
@@ -114,39 +127,24 @@ class Professional extends Component {
                         <h4>Skills:</h4>
                             <button className="icon_btn"><FiEdit2 size={'1.5em'} className="icon_edit"/></button></div>
                         <ol className="gradient-list" >
-                            <li><b className="seems-h1">Python</b><MdFileDownloadDone size={'2em'} style={{
+                            {
+                                            this.state.skills.map((skill) => {
+                                            return(
+                                                <li><b className="seems-h1">{skill.skill_name}</b><MdFileDownloadDone size={'2em'} style={{
                                                 color:'#29A335',
 
                                                 float:"right"
                                             }}/> </li>
+                                            )})
+                             }
+
                             <li><b style={{
                                 fontSize:"large",
                                 color:"orangered"
-                            }}>C++</b><MdFileDownloadDone size={'2em'} style={{
-                                                color:'#29A335',
-
-                                                float:"right"
-                                            }}/></li>
-                            <li><b style={{
-                                fontSize:"large",
-                                color:"blueviolet"
-                            }}>ReactJS</b><button className="custom_btn2">Take Skill Quiz</button></li>
-                            <li><b style={{
-                                fontSize:"large",
-                                color:"purple"
-                            }}>Django</b><MdFileDownloadDone size={'2em'} style={{
-                                                color:'#29A335',
-
-                                                float:"right"
-                                            }}/></li>
-                            <li><b style={{
-                                fontSize:"large",
-                                color:"darkorange"
-                            }}>Java</b><MdFileDownloadDone size={'2em'} style={{
-                                                color:'#29A335',
-
-                                                float:"right"
-                                            }}/></li>
+                            }}>C++</b><MdFileDownloadDone size={'2em'} style={{color:'#29A335', float:"right"}}/></li>
+                            <li><b style={{fontSize:"large", color:"blueviolet"}}>ReactJS</b><button className="custom_btn2">Take Skill Quiz</button></li>
+                            <li><b style={{fontSize:"large", color:"purple"}}>Django</b><MdFileDownloadDone size={'2em'} style={{color:'#29A335', float:"right"}}/></li>
+                            <li><b style={{fontSize:"large", color:"darkorange"}}>Java</b><MdFileDownloadDone size={'2em'} style={{color:'#29A335', float:"right"}}/></li>
 
 
                         </ol>
