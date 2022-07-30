@@ -6,6 +6,7 @@ from rest_framework.decorators import api_view, action
 from rest_framework.response import Response
 from rest_framework import viewsets, status
 from django.db.models import Q
+from datetime import datetime
 
 
 user1 = Jobseeker(user_id=1, name="Adrita Hossain Nakshi", email="adrita_99@yahoo.com", password="1234", thana="Boalia",
@@ -829,11 +830,28 @@ class jobseekerViewsets(viewsets.ModelViewSet):
                 })
 
 
-
-
-
 class recoViewsets(viewsets.ModelViewSet):
-    queryset = NewJobpost.objects.all()
+    userid = 1
+    user = Jobseeker.objects.filter(user_id=userid)
+    usercat = user[0].field #not null
+    userloc = user[0].division #not null
+    usersal = user[0].pref_sal
+    userntr = user[0].pref_job_ntr
+    userorg = user[0].pref_org_type
+    todaydate=datetime.today().strftime('%Y-%m-%d')
+    # queryset = NewJobpost.objects.filter(category = usercat, employer_id__division = userloc, deadline_date__gte=todaydate, job_nature = userntr, salary__gte = usersal, employer_id__org_type = userorg).order_by('-salary')
+    # queryset = NewJobpost.objects.filter(salary__gte=usersal,job_nature=userntr).order_by('-salary')
+    queryset = NewJobpost.objects.filter(deadline_date__gte=todaydate).order_by('-salary')
+
     serializer_class = NewPostSerializer
+    # open to   !!!
+    # preferred sal
+    # pref nature
+    # pref org
+
+    # location
+    # exp       !!!
+    # category
+    # deadline par hoise kina
 
 
