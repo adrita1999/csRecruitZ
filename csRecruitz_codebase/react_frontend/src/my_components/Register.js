@@ -15,7 +15,7 @@ var jsonData = {
 
         // This line disable the blue border
         boxShadow: state.isFocused ? 0 : 0,
-        marginBottom:-20
+        //marginBottom:-20
 
     }),
    dropdownIndicator: (base, state) => ({
@@ -29,6 +29,43 @@ const GenderOptions = [
     { value: 'Female', label: 'Female' },
     { value: 'Others', label: 'Others' }
     ]
+const CatOptions = [
+    { value: 'Teaching', label: 'Teaching' },
+    { value: 'DevOps', label: 'DevOps' },
+    { value: 'Security', label: 'Security' },
+    { value: 'Research and Development', label: 'Research and Development' },
+    { value: 'Programming', label: 'Programming' },
+  ]
+const NatureOptions = [
+    { value: 'Part-time', label: 'Part-time' },
+    { value: 'Full-time', label: 'Full-time' },
+    { value: 'Remote', label: 'Remote' },
+    { value: 'Freelancing', label: 'Freelancing' }
+    ]
+  const OrgOptions = [
+    { value: 'Government', label: 'Government' },
+    { value: 'Semi Government', label: 'Semi Government' },
+    { value: 'NGO', label: 'NGO' },
+    { value: 'Private Firm', label: 'Private Firm' },
+    { value: 'International Agencies', label: 'International Agencies' }
+  ]
+const SkillOptions = [
+    { value: 'Python', label: 'Python' },
+    { value: 'C++', label: 'C++' },
+    { value: 'Angular', label: 'Angular' },
+    { value: 'Django', label: 'Django' },
+    { value: 'Java', label: 'Java' }
+    ]
+const LocationOptions = [
+    { value: 'Dhaka', label: 'Dhaka' },
+    { value: 'Rajshahi', label: 'Rajshahi' },
+    { value: 'Rangpur', label: 'Rangpur' },
+    { value: 'Sylhet', label: 'Sylhet' },
+    { value: 'Khulna', label: 'Khulna' },
+    { value: 'Chittagong', label: 'Chittagong' },
+    { value: 'Mymensingh ', label: 'Mymensingh ' },
+    { value: 'Barishal', label: 'Barishal' }
+  ]
 class Register extends  Component {
     constructor() {
     super();
@@ -60,6 +97,7 @@ handleChange(event) {
   }
   handleSubmit(event) {
     event.preventDefault();
+    console.log("geree");
 
     if(this.validate()){
         console.log(this.state);
@@ -272,12 +310,186 @@ handleChange(event) {
                             onChange={this.handleChange}
                             className="form-control"
                             placeholder="Enter Mother's Name"
-                            id="mother" required/>
+                            id="mother"/>
                     </div>
                 </div>
 
             </div>
 
+
+            <div className="row">
+
+                    <div className="form-group" >
+                        <InputLabel htmlFor="about">Self Description</InputLabel>
+                        <textarea
+                            name="about"
+                            onChange={this.handleChange}
+                            className="form-control"
+                            placeholder="Write Something About Yourself"
+                            id="about"/>
+
+                  </div>
+                </div>
+            <p></p>
+            <p style={{
+            fontSize:16,
+             fontWeight:"bold"
+            }}>Address Information</p>
+            <hr/>
+            <div className="row">
+                <div className="col-sm-6">
+                    <div className="form-group">
+                        <InputLabel htmlFor="street">Street/Road:</InputLabel>
+                        <input
+                            type="text"
+                            name="street"
+
+                            onChange={this.handleChange}
+                            className="form-control"
+                            placeholder="Enter Street Name:"
+                            id="street"/>
+
+                    </div>
+                </div>
+                <div className="col-sm-6">
+                    <div className="form-group">
+                        <InputLabel htmlFor="thana">Thana:</InputLabel>
+                        <input
+                            type="text"
+                            name="thana"
+
+                            onChange={this.handleChange}
+                            className="form-control"
+                            placeholder="Enter Thana"
+                            id="thana"/>
+                    </div>
+                </div>
+
+            </div>
+            <div className="row">
+                <div className="col-sm-6">
+                    <div className="form-group">
+                        <InputLabel htmlFor="dis">District:</InputLabel>
+                        <input
+                            type="text"
+                            name="dis"
+
+                            onChange={this.handleChange}
+                            className="form-control"
+                            placeholder="Enter District:"
+                            id="dis"/>
+
+                    </div>
+                </div>
+                <div className="col-sm-6">
+                    <div className="form-group">
+                        <InputLabel for="gender">Division:</InputLabel>
+                <Select name="loc" id="loc" styles={dropDownStyle} options={LocationOptions}  placeholder="Enter Division" openMenuOnFocus isClearable />
+                    </div>
+                </div>
+
+            </div>
+            <p></p>
+                <p style={{
+              fontSize:18,
+              fontWeight:"bold"
+          }}>Professional Information</p>
+          <hr/>
+            <div className="row">
+            <div className="col-sm-6">
+            <div className="form-group">
+                <InputLabel for="field">Field of Work:</InputLabel>
+                <Select name="field" id="field" styles={dropDownStyle} options={CatOptions}  placeholder="Enter Your Current Field of Work" openMenuOnFocus isClearable />
+
+            </div>
+            </div>
+            <div className="col-sm-6">
+
+                <div className="form-group">
+                <InputLabel for="pref_org">Preferred Organization:</InputLabel>
+                <Select name="pref_org" id="pref_org" styles={dropDownStyle} options={OrgOptions}  placeholder="Enter Your Preferred Organization Type" openMenuOnFocus isClearable />
+
+            </div>
+            </div>
+                </div>
+            <div className="row">
+            <div className="col-sm-6">
+            <div className="form-group">
+                <InputLabel for="pref_nat">Preferred Job Nature:</InputLabel>
+                <Select name="pref_nat" id="pref_nat" styles={dropDownStyle} options={NatureOptions}  placeholder="Enter Your Preferred Job Nature" openMenuOnFocus isClearable />
+
+            </div>
+            </div>
+            <div className="col-sm-6">
+                   <div className="form-group">
+                <InputLabel for="pref_sal">Preferred Salary:</InputLabel>
+                <input
+                    type="number"
+                    name="pref_sal"
+
+                    onChange={this.handleChange}
+                    className="form-control"
+                    placeholder="Enter Your Expected Salary in BDT"
+                    id="pref_sal"/>
+
+            </div>
+
+            </div>
+                </div>
+            <div className="row">
+                 <div className="form-group">
+                 <InputLabel for="skills">Skills:</InputLabel>
+                 <Select name="skills" id="skills" styles={dropDownStyle} options={SkillOptions} isMulti placeholder="Add Your Skills" openMenuOnFocus isClearable />
+
+             </div>
+
+            </div>
+            <div className="row">
+                 <div className="form-group">
+                <InputLabel for="open_skills">Currently Open To:</InputLabel>
+                 <Select name="open_skills" id="open_skills" styles={dropDownStyle} options={SkillOptions} isMulti placeholder="Add Skills that You are Currently Open to Work with " openMenuOnFocus isClearable />
+
+             </div>
+
+            </div>
+             <p></p>
+            <p style={{
+               fontSize:16,
+              fontWeight:"bold"
+          }}>Job Experience <p className="btn btn-success" onClick={() => { this.setState({numDivs: this.state.numDivs+1}); }}>Add</p></p>
+
+         <hr/>
+              <div className="row">
+                  <div className="col-sm-6">
+                 <div className="form-group">
+                <InputLabel for="job_des">Designation:</InputLabel>
+                 <input
+                     type="text"
+                     name="job_des"
+
+                     onChange={this.handleChange}
+                     className="form-control"
+                      placeholder="Enter Your Designation in the Job"
+                     id="job_des"/>
+
+             </div>
+                  </div>
+                  <div className="col-sm-6">
+                 <div className="form-group">
+                <InputLabel for="job_emp">Employer:</InputLabel>
+                 <input
+                     type="text"
+                     name="job_emp"
+
+                     onChange={this.handleChange}
+                     className="form-control"
+                     placeholder="Enter Employer/Organization Name"
+                     id="job_emp"/>
+
+             </div>
+                  </div>
+
+             </div>
 
             <input type="submit" value="Submit" className="btn btn-success" />
         </form>
