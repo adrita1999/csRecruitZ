@@ -22,7 +22,7 @@ class Filter_sidebar extends Component {
             {value:"DevOps"},
             {value: "Teaching"},
             {value: "Security"},
-            {value: "Reasearch and Development"},
+            {value: "Research and Development"},
             {value: "Programming"}
         ],
         filter_title_loc:"Location",

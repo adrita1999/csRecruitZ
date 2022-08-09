@@ -38,7 +38,7 @@ class Jobseeker(User):
     propic = models.ImageField(upload_to='images', null=True)
     date_of_birth = models.DateField()
     nationality = models.CharField(max_length=20)
-    field = models.CharField(max_length=20)
+    field = models.CharField(max_length=40)
     nid_number = models.IntegerField(unique=True)
     pref_job_ntr = models.CharField(max_length=20)
     pref_org_type = models.CharField(max_length=20)
