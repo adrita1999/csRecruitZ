@@ -1,8 +1,29 @@
 import React, {Component} from "react";
 import Navb from "./Navb";
 import './registration.css';
-import {InputLabel} from "@mui/material";
+import {InputLabel, ToggleButton, ToggleButtonGroup} from "@mui/material";
 import Select from "react-select";
+import Foot from "./Foot";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import TypeAnimation from 'react-type-animation';
+import Form from "react-bootstrap/Form";
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 500,
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  p:4,
+  backdrop:false,
+  show:true,
+    borderRadius:5,
+    border:0,
+    overflow:'hidden'
+};
 var jsonData = {
     "name":"",
     "password":"",
@@ -72,12 +93,14 @@ class Register extends  Component {
     this.state = {
       input: {},
       errors: {},
-        redirect:false
+        redirect:false,
+        signinopen:false,
     };
 
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleClose=this.handleClose.bind(this);
   }
 
 handleChange(event) {
@@ -95,10 +118,20 @@ handleChange(event) {
   onBlurHandle(event) {
         event.target.type='text';
   }
+  handleClose() {
+      this.setState({'signinopen':false})
+      console.log(this.state.signinopen)
+      }
+      handleClickNotnow() {
+       window.location.href="/"
+      }
+      handleClickYes() {
+        window.location.href="/register2"
+      }
   handleSubmit(event) {
     event.preventDefault();
     console.log("geree");
-
+     this.setState({signinopen: true});
     if(this.validate()){
         console.log(this.state);
         jsonData.name=this.state.input["name"];
@@ -117,9 +150,10 @@ handleChange(event) {
       mode: 'cors',
       body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
     })
-    this.setState({'redirect':true})
+    this.setState({'redirect':true});
 
-        alert('Demo Form is submited');
+
+        alert('hiii');
     }
   }
 
@@ -177,7 +211,7 @@ handleChange(event) {
               className="form-control"
               placeholder="Enter name"
               onChange={this.handleChange}
-              id="name" required/>
+              id="name" />
 
           </div>
              </div>
@@ -192,7 +226,7 @@ handleChange(event) {
                          placeholder="Enter Date of Birth"
                          onFocus={this.onFocusHandle}
                          onBlur={this.onBlurHandle}
-                         id="dob" required/>
+                         id="dob" />
 
 
                  </div>
@@ -218,7 +252,7 @@ handleChange(event) {
                     onChange={this.handleChange}
                     className="form-control"
                     placeholder="Enter Contact Number"
-                    id="mob" required/>
+                    id="mob" />
 
             </div>
             </div>
@@ -234,7 +268,7 @@ handleChange(event) {
                     onChange={this.handleChange}
                     className="form-control"
                     placeholder="Enter email"
-                    id="email" required/>
+                    id="email" />
 
                 <div className="text-danger">{this.state.errors.email}</div>
             </div>
@@ -249,7 +283,7 @@ handleChange(event) {
                     onChange={this.handleChange}
                     className="form-control"
                     placeholder="Enter NID Number"
-                    id="nid" required/>
+                    id="nid" />
 
             </div>
             </div>
@@ -265,7 +299,7 @@ handleChange(event) {
               onChange={this.handleChange}
               className="form-control"
               placeholder="Enter password"
-              id="password" required/>
+              id="password" />
 
               <div className="text-danger">{this.state.errors.password}</div>
           </div>
@@ -280,8 +314,38 @@ handleChange(event) {
                         onChange={this.handleChange}
                         className="form-control"
                         placeholder="Retype password"
-                        id="confirm_password" required/>
+                        id="confirm_password" />
                 </div>
+                </div>
+
+            </div>
+             <div className="row">
+                <div className="col-sm-6">
+                    <div className="form-group">
+                        <InputLabel htmlFor="nat">Nationality:</InputLabel>
+                        <input
+                            type="text"
+                            name="nat"
+
+                            onChange={this.handleChange}
+                            className="form-control"
+                            placeholder="Enter Your Nationality"
+                            id="nat" />
+
+                    </div>
+                </div>
+                <div className="col-sm-6">
+                    <div className="form-group">
+                        <InputLabel htmlFor="pic">Profile Picture:</InputLabel>
+                        <input
+                            type="file"
+                            name="pic"
+
+                            accept=".png, .jpg, .jpeg"
+                            className="form-control"
+                            placeholder="Add a profile picture"
+                            id="pic"/>
+                    </div>
                 </div>
 
             </div>
@@ -437,63 +501,57 @@ handleChange(event) {
             </div>
                 </div>
             <div className="row">
-                 <div className="form-group">
-                 <InputLabel for="skills">Skills:</InputLabel>
-                 <Select name="skills" id="skills" styles={dropDownStyle} options={SkillOptions} isMulti placeholder="Add Your Skills" openMenuOnFocus isClearable />
+            <input type="submit" value="Proceed To Register" className="btn btn-success sub_btn" />
+                </div>
 
-             </div>
-
-            </div>
-            <div className="row">
-                 <div className="form-group">
-                <InputLabel for="open_skills">Currently Open To:</InputLabel>
-                 <Select name="open_skills" id="open_skills" styles={dropDownStyle} options={SkillOptions} isMulti placeholder="Add Skills that You are Currently Open to Work with " openMenuOnFocus isClearable />
-
-             </div>
-
-            </div>
-             <p></p>
-            <p style={{
-               fontSize:16,
-              fontWeight:"bold"
-          }}>Job Experience <p className="btn btn-success" onClick={() => { this.setState({numDivs: this.state.numDivs+1}); }}>Add</p></p>
-
-         <hr/>
-              <div className="row">
-                  <div className="col-sm-6">
-                 <div className="form-group">
-                <InputLabel for="job_des">Designation:</InputLabel>
-                 <input
-                     type="text"
-                     name="job_des"
-
-                     onChange={this.handleChange}
-                     className="form-control"
-                      placeholder="Enter Your Designation in the Job"
-                     id="job_des"/>
-
-             </div>
-                  </div>
-                  <div className="col-sm-6">
-                 <div className="form-group">
-                <InputLabel for="job_emp">Employer:</InputLabel>
-                 <input
-                     type="text"
-                     name="job_emp"
-
-                     onChange={this.handleChange}
-                     className="form-control"
-                     placeholder="Enter Employer/Organization Name"
-                     id="job_emp"/>
-
-             </div>
-                  </div>
-
-             </div>
-
-            <input type="submit" value="Submit" className="btn btn-success" />
         </form>
       </div>
+                 <div>
+      <Modal
+        open={this.state.signinopen}
+        onClose={this.handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        style={{background:"rgba(0,0,0,0)"}}
+      >
+        <Box sx={style}>
+            <div style={{display:"inline",position:'absolute',width:'49%'}}>
+                <Typography id="modal-modal-title" variant="h5" component="h2" style={{color:"#410390",fontWeight:"bold",paddingTop:'3px'}}>
+
+              </Typography>
+            </div>
+
+
+            <svg className="svg_class" viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg">
+                <g stroke="currentColor" stroke-width="2" fill="none" fill-rule="evenodd" stroke-linecap="round"
+                   stroke-linejoin="round">
+                    <path className="circle"
+                          d="M13 1C6.372583 1 1 6.372583 1 13s5.372583 12 12 12 12-5.372583 12-12S19.627417 1 13 1z"/>
+                    <path className="tick" d="M6.5 13.5L10 17 l8.808621-8.308621"/>
+                </g>
+            </svg>
+            <div style={{marginLeft:60}}>
+            <TypeAnimation
+                cursor={true}
+                sequence={['You have successfully registered', 2000,'']}
+                wrapper="h6"
+                repeat={Infinity}
+
+            />
+                </div>
+
+            <div style={{height:'auto',marginTop:"50px",background:"green",marginLeft:"-33px",marginRight:'-33px',marginBottom:'-43px',paddingLeft:'20px',paddingTop:'3px',paddingBottom:'12px',borderBottomLeftRadius:5,borderBottomRightRadius:5}}>
+                <Typography id="modal-modal-description" sx={{ mt: 2,color:"#ffffff",marginLeft:'30%' }}>
+                    Add More Information?
+                  </Typography>
+                <button style={{marginTop:"10px",width:'80%',height:'40px',marginLeft:'8%',marginBottom:'10px',background:'#FFFFFF',border:0,borderRadius:5,color:'#410390',fontWeight:'bold'}} onClick={this.handleClickYes}>Proceed</button>
+                <button style={{marginTop:"10px",width:'80%',height:'40px',marginLeft:'8%',marginBottom:'30px',background:'#FFFFFF',border:0,borderRadius:5,color:'#410390',fontWeight:'bold'}} onClick={this.handleClickNotnow}>Not Now</button>
+            </div>
+
+        </Box>
+      </Modal>
+    </div>
+            <Foot margin_value={172}/>
             </React.Fragment>
     );
   }

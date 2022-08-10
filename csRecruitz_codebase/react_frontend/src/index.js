@@ -10,6 +10,7 @@ import Professional from "./my_components/Professional";
 import Joblist from "./my_components/jobpostlist";
 import Jobdetails from "./my_components/jobdetails";
 import Register from "./my_components/Register";
+import Register_2 from "./my_components/Register_2";
 
 import Home from "./my_components/Home";
 import Quiz from "./my_components/Quiz"
@@ -24,6 +25,8 @@ root.render(
         <Route path="/professional" element={< Professional/>} />
         <Route path="/joblist" element={< Joblist/>} />
         <Route path="/register" element={< Register/>} />
+        <Route path="/register2" element={< Register_2/>} />
+
         <Route path="/jobdetails" element={< Jobdetails/>} />
         <Route path="/quiz" element={< Quiz/>} />
         <Route path="/tag" element={< Tag/>} />
