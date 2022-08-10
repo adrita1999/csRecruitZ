@@ -13,7 +13,7 @@ class User(models.Model):
     email = models.EmailField(unique=True)
     # address
     thana = models.CharField(max_length=30, blank=True, null=True)
-    district = models.CharField(max_length=30)
+    district = models.CharField(max_length=30, null=True)
     division = models.CharField(max_length=30)
 
 
@@ -32,17 +32,17 @@ class Employer(User):
 
 
 class Jobseeker(User):
-    father_name = models.CharField(max_length=40)
-    mother_name = models.CharField(max_length=40)
-    self_desc = models.CharField(max_length=200)
+    father_name = models.CharField(max_length=40, null=True)
+    mother_name = models.CharField(max_length=40, null=True)
+    self_desc = models.CharField(max_length=200, null=True)
     propic = models.ImageField(upload_to='images', null=True)
     date_of_birth = models.DateField()
     nationality = models.CharField(max_length=20)
     field = models.CharField(max_length=40)
     nid_number = models.IntegerField(unique=True)
-    pref_job_ntr = models.CharField(max_length=20)
-    pref_org_type = models.CharField(max_length=20)
-    pref_sal = models.IntegerField(unique=True)
+    pref_job_ntr = models.CharField(max_length=20, null=True)
+    pref_org_type = models.CharField(max_length=20, null=True)
+    pref_sal = models.IntegerField(null=True)
     resume = models.FileField(upload_to='resumes', null=True)
 
 

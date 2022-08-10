@@ -103,13 +103,19 @@ export class Home extends Component {
         loc :{ value:'Location',label:'Select Location'},
         nature:{ value:'Job Nature',label:'Select Job Nature'},
         redirect:false,
-        datas:[]
+        DetailsLoaded1:false,
+        DetailsLoaded2:false,
+        recos:[],
+        datas:[],
+        redirectReco:false,
+        navlink:"/jobdetails",
     };
 
     constructor(props) {
     super(props);
 
     this.handleClick=this.handleClick.bind(this);
+    this.handleClickReco=this.handleClickReco.bind(this);
   }
 
 
@@ -162,7 +168,7 @@ componentDidMount() {
             .then((res) => res.json())
             .then((json) => {
                 if(json.response !=="not_submitted") {
-                    this.setState({datas: json.data, DataisLoaded: true})
+                    this.setState({datas: json.data, DetailsLoaded1: true})
                     console.log(json.data)
                     console.log(json.response)
                     if (json.response==="success") {
@@ -175,6 +181,15 @@ componentDidMount() {
                 }
                 console.log(json.response)
 
+            })
+    fetch(
+"http://127.0.0.1:8000/first_module/recommendation/",{
+        method:"GET"
+            })
+            .then((res) => res.json())
+            .then((json) => {
+                this.setState({recos: json, DetailsLoaded2: true})
+                console.log(json)
             })
 
     }
@@ -195,13 +210,19 @@ handleClick() {
 
   }
 
-
+handleClickReco(event) {
+        console.log(event.target.id)
+        const concatlink = "/jobdetails?" + event.target.id;
+        this.setState({'navlink':concatlink})
+        this.setState({'redirectReco':true})
+  }
 
   render() {
 
         //const { navigation } = this.props;
         //this.setState({navigation})
       //if (!this.state.DataisLoaded) return <Loader/>
+      if ( !this.state.DetailsLoaded2) return <Loader/>
     return (
        <React.Fragment>
        <body>
@@ -304,47 +325,47 @@ handleClick() {
                 <AnimationOnScroll animateIn="slideInRight" duration={4} delay={100} animateOnce={true}>
 
                 <div id="grad1" className="jobdivhome">
-                    <h4 style={{color:"#000000"}}>Software Engineer</h4>
-                    <h6 style={{color:"black"}}>Optimizely</h6>
+                    <h4 style={{color:"#000000"}}>{this.state.recos[0].title}</h4>
+                    <h6 style={{color:"black"}}>{this.state.recos[0].emp_name}</h6>
 
-                    <button className="float_right_btn_home">View Details</button>
+                    <button id={this.state.recos[0].jobpost_id} className="float_right_btn_home" onClick={this.handleClickReco}>View Details</button>
                 </div>
                 </AnimationOnScroll>
 
                 <AnimationOnScroll animateIn="slideInLeft" duration={3} delay={120} animateOnce={true}>
                 <div id="grad1" className="jobdivhome">
-                    <h4 style={{color:"#000000"}}>Software Engineer</h4>
-                    <h6 style={{color:"black"}}>Optimizely</h6>
+                    <h4 style={{color:"#000000"}}>{this.state.recos[1].title}</h4>
+                    <h6 style={{color:"black"}}>{this.state.recos[1].emp_name}</h6>
 
-                    <button className="float_right_btn_home">View Details</button>
+                    <button id={this.state.recos[1].jobpost_id} className="float_right_btn_home" onClick={this.handleClickReco}>View Details</button>
                 </div>
                 </AnimationOnScroll>
 
                 <AnimationOnScroll animateIn="slideInRight" duration={3} delay={140} animateOnce={true}>
                 <div id="grad1" className="jobdivhome">
-                    <h4 style={{color:"#000000"}}>Software Engineer</h4>
-                    <h6 style={{color:"black"}}>Optimizely</h6>
+                    <h4 style={{color:"#000000"}}>{this.state.recos[2].title}</h4>
+                    <h6 style={{color:"black"}}>{this.state.recos[2].emp_name}</h6>
 
-                    <button className="float_right_btn_home">View Details</button>
+                    <button id={this.state.recos[2].jobpost_id} className="float_right_btn_home" onClick={this.handleClickReco}>View Details</button>
                 </div>
                 </AnimationOnScroll>
 
                 <AnimationOnScroll animateIn="slideInLeft" duration={3} delay={160} animateOnce={true}>
                 <div id="grad1" className="jobdivhome">
-                    <h4 style={{color:"#000000"}}>Software Engineer</h4>
-                    <h6 style={{color:"black"}}>Optimizely</h6>
+                    <h4 style={{color:"#000000"}}>{this.state.recos[3].title}</h4>
+                    <h6 style={{color:"black"}}>{this.state.recos[3].emp_name}</h6>
 
-                    <button className="float_right_btn_home">View Details</button>
+                    <button id={this.state.recos[3].jobpost_id} className="float_right_btn_home" onClick={this.handleClickReco}>View Details</button>
                 </div>
                 </AnimationOnScroll>
 
 
                 <AnimationOnScroll animateIn="slideInRight" duration={3} delay={180} animateOnce={true}>
                 <div id="grad1" className="jobdivhome">
-                    <h4 style={{color:"#000000"}}>Software Engineer</h4>
-                    <h6 style={{color:"black"}}>Optimizely</h6>
+                    <h4 style={{color:"#000000"}}>{this.state.recos[4].title}</h4>
+                    <h6 style={{color:"black"}}>{this.state.recos[4].emp_name}</h6>
 
-                    <button className="float_right_btn_home">View Details</button>
+                    <button id={this.state.recos[4].jobpost_id} className="float_right_btn_home" onClick={this.handleClickReco}>View Details</button>
                 </div>
                 </AnimationOnScroll>
 
@@ -352,6 +373,7 @@ handleClick() {
        </div>
        <Foot margin_value={0}/>
        {this.state.redirect && <Navigate to='/joblist'/>}
+       {this.state.redirectReco && <Navigate to={this.state.navlink}/>}
        </body>
        </React.Fragment>
     )

@@ -614,20 +614,45 @@ class recoViewsets(viewsets.ModelViewSet):
 
     total_user_exp = 0
     all_exp = JobExperience.objects.filter(user_id=userid)
+    hasexp=False
+    if len(all_exp)>0:
+        hasexp=True
     for exp in all_exp:
         expval = exp.to_year - exp.from_year
         total_user_exp = total_user_exp + expval
     # print("total_user_exp:"+str(total_user_exp))
 
     uskill = JobSeekerSkill.objects.filter(user_id=userid)
+    hasuskill = False
+    if len(uskill) > 0:
+        hasuskill = True
     # print("user skills: ")
     # print(uskill)
 
     # queryset = NewJobpost.objects.filter(category = usercat, employer_id__division = userloc, deadline_date__gte=todaydate, job_nature = userntr, salary__gte = usersal, employer_id__org_type = userorg).order_by('-salary')
     # queryset = NewJobpost.objects.filter(salary__gte=usersal,job_nature=userntr).order_by('-salary')
     # qset = NewJobpost.objects.filter(deadline_date__gte=todaydate).order_by('deadline_date')
-    qset = NewJobpost.objects.filter(category = usercat, employer_id__division = userloc, deadline_date__gte=todaydate, job_nature = userntr, salary__gte = usersal, employer_id__org_type = userorg)
-    print("filtered jobs0:")
+    qset=NewJobpost.objects.none()
+    if usersal==None and userntr==None and userorg==None:
+        qset = NewJobpost.objects.filter(category=usercat, employer_id__division=userloc, deadline_date__gte=todaydate)
+    elif usersal==None and userntr==None:
+        qset = NewJobpost.objects.filter(category=usercat, employer_id__division=userloc, deadline_date__gte=todaydate, employer_id__org_type=userorg)
+    elif userntr==None and userorg==None:
+        qset = NewJobpost.objects.filter(category=usercat, employer_id__division=userloc, deadline_date__gte=todaydate, salary__gte=usersal)
+    elif usersal==None and userorg==None:
+        qset = NewJobpost.objects.filter(category=usercat, employer_id__division=userloc, deadline_date__gte=todaydate, job_nature=userntr)
+    elif usersal==None:
+        qset = NewJobpost.objects.filter(category=usercat, employer_id__division=userloc, deadline_date__gte=todaydate,
+                                         job_nature=userntr, employer_id__org_type=userorg)
+    elif userntr==None:
+        qset = NewJobpost.objects.filter(category=usercat, employer_id__division=userloc, deadline_date__gte=todaydate,
+                                         salary__gte=usersal, employer_id__org_type=userorg)
+    elif userorg==None:
+        qset = NewJobpost.objects.filter(category=usercat, employer_id__division=userloc, deadline_date__gte=todaydate,
+                                         job_nature=userntr, salary__gte=usersal)
+    else:
+        qset = NewJobpost.objects.filter(category = usercat, employer_id__division = userloc, deadline_date__gte=todaydate, job_nature = userntr, salary__gte = usersal, employer_id__org_type = userorg)
+    print("filtered jobs0.1:")
     print(qset)
     valid_job_ids = []
     for q in qset:
@@ -637,6 +662,9 @@ class recoViewsets(viewsets.ModelViewSet):
         # print("req_exp:" + str(required_exp))
         if(total_user_exp>=required_exp):
             jskill=JobSkill.objects.filter(jobpost_id=jobid)
+            hasjskill = False
+            if len(jskill) > 0:
+                hasjskill = True
             # print("job skills: ")
             # print(jskill)
             match_out=True
@@ -652,32 +680,36 @@ class recoViewsets(viewsets.ModelViewSet):
                     break
             if match_out==True:
                 valid_job_ids.append(q.jobpost_id)
+    print("filtered jobs0.2:")
+    print(valid_job_ids)
     if len(valid_job_ids)<5:
         print("list choto hoise after first filtering")
-        print("filtered jobs1:")
-        print(valid_job_ids)
+
         totjobs=len(valid_job_ids)
         qset2=NewJobpost.objects.filter(category = usercat, employer_id__division = userloc, deadline_date__gte=todaydate).order_by('-salary')
         for q2 in qset2:
             if totjobs<5:
-                valid_job_ids.append(q2.jobpost_id)
-                totjobs = totjobs + 1
+                if not q2.jobpost_id in valid_job_ids:
+                    valid_job_ids.append(q2.jobpost_id)
+                    totjobs = totjobs + 1
             else:
                 break
+        print("filtered jobs1:")
+        print(valid_job_ids)
         if len(valid_job_ids) < 5:
             print("list choto hoise after second filtering")
-            print("filtered jobs2:")
-            print(valid_job_ids)
             totjobs2 = len(valid_job_ids)
             qset3 = NewJobpost.objects.filter(deadline_date__gte=todaydate).order_by('-salary')
             # print("qset3 length: "+str(len(qset3)))
             for q3 in qset3:
                 if totjobs2 < 5:
-                    valid_job_ids.append(q3.jobpost_id)
-                    totjobs2=totjobs2+1
+                    if not q3.jobpost_id in valid_job_ids:
+                        valid_job_ids.append(q3.jobpost_id)
+                        totjobs2=totjobs2+1
                 else:
                     break
-
+            print("filtered jobs2:")
+            print(valid_job_ids)
     queryset = NewJobpost.objects.filter(jobpost_id__in=valid_job_ids).order_by('-salary')
     print("final jobs:")
     print(queryset)
@@ -711,6 +743,13 @@ user1 = Jobseeker(user_id=1, name="Adrita Hossain Nakshi", email="adrita_99@yaho
                   pref_job_ntr="Full-time", pref_org_type="NGO", propic="propics_input/nakshi.jpg",
                   resume="resumes_input/nakshi.docx")
 user1.save()
+user2 = Jobseeker(user_id=2, name="Simantika Bhattacharjee Dristi", email="1705029@ugrad.cse.buet.ac.bd", password="1234", thana="Lalbag",
+                  district="Dhaka", division="Dhaka", father_name="Pintu Bhattacharjee",
+                  mother_name="Soma Chowdhury", date_of_birth="1998-01-21",
+                  self_desc="I am a CS under-graduate. I believe in hardwork. CSE is my first love and my one and only passion.",
+                  nationality="Bangladeshi", nid_number="12349876", field="Research and Development", propic="propics_input/nakshi.jpg",
+                  resume="resumes_input/nakshi.docx")
+user2.save()
 emp1 = Employer(user_id=2, name="Optimizely", email="optimizely@gmail.com", password="1234", district="Dhaka",
                 division="Dhaka", org_type="NGO", establishment_year="2005")
 emp1.save()
