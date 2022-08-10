@@ -11,6 +11,9 @@ import Joblist from "./my_components/jobpostlist";
 import Jobdetails from "./my_components/jobdetails";
 import Register from "./my_components/Register";
 import Register_2 from "./my_components/Register_2";
+import Register_3 from "./my_components/Register_3";
+import Register_4 from "./my_components/Register_4";
+
 
 import Home from "./my_components/Home";
 import Quiz from "./my_components/Quiz"
@@ -26,6 +29,8 @@ root.render(
         <Route path="/joblist" element={< Joblist/>} />
         <Route path="/register" element={< Register/>} />
         <Route path="/register2" element={< Register_2/>} />
+      <Route path="/register3" element={< Register_3/>} />
+      <Route path="/register4" element={< Register_4/>} />
 
         <Route path="/jobdetails" element={< Jobdetails/>} />
         <Route path="/quiz" element={< Quiz/>} />

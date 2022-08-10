@@ -70,13 +70,7 @@ const NatureOptions = [
     { value: 'Private Firm', label: 'Private Firm' },
     { value: 'International Agencies', label: 'International Agencies' }
   ]
-const SkillOptions = [
-    { value: 'Python', label: 'Python' },
-    { value: 'C++', label: 'C++' },
-    { value: 'Angular', label: 'Angular' },
-    { value: 'Django', label: 'Django' },
-    { value: 'Java', label: 'Java' }
-    ]
+
 const LocationOptions = [
     { value: 'Dhaka', label: 'Dhaka' },
     { value: 'Rajshahi', label: 'Rajshahi' },
