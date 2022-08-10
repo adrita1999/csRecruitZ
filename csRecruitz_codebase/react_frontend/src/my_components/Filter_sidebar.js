@@ -57,7 +57,10 @@ class Filter_sidebar extends Component {
     constructor(props) {
         super(props);
         this.pathaname=window.location.pathname;
-
+    }
+    callback = (value) => {
+        // do something with value in parent component, like save to state
+        console.log("callbackkkkk")
     }
     render() {
         console.log(this.pathaname);
@@ -72,17 +75,19 @@ class Filter_sidebar extends Component {
                         }}/>Filter Jobs</h5>
                 <hr className="hr_style"/>
                 <Animated animationIn="fadeIn"  animationInDuration={1800}  isVisible={true}>
+
                 <div className="category_div">
-                    <Radiobutton values={this.state.job_categories} title={this.state.filter_title_job_cat} default_val={this.state.default_job_cat} />
+                    <Radiobutton values={this.state.job_categories} title={this.state.filter_title_job_cat} default_val={this.state.default_job_cat} filtername="cat" parentCallback={this.callback} />
                 </div>
+
                 <div className="category_div">
                     <Dropdown_my values={this.state.locations} title={this.state.filter_title_loc} default_val={this.state.default_loc} />
                 </div>
                 <div className="category_div">
-                    <Radiobutton values={this.state.job_natures} title={this.state.filter_title_job_ntr} default_val={this.state.default_job_ntr} />
+                    <Radiobutton values={this.state.job_natures} title={this.state.filter_title_job_ntr} default_val={this.state.default_job_ntr} filtername="nat"/>
                 </div>
                 <div className="category_div">
-                    <Radiobutton values={this.state.req_exps} title={this.state.filter_title_req} default_val={this.state.default_req} />
+                    <Radiobutton values={this.state.req_exps} title={this.state.filter_title_req} default_val={this.state.default_req} filtername="exp"/>
                 </div>
                  </Animated>
             </div>
