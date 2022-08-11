@@ -101,33 +101,63 @@ class Personal extends Component {
         event.preventDefault();
         console.log("geree");
         console.log(this.state);
-        jsonData.name=this.state.input["name"];
-        jsonData.age=this.state.input["age"];
-        jsonData.fathername=this.state.input["fathername"];
-        jsonData.mothername=this.state.input["mothername"];
-        jsonData.dob=this.state.input["dob"];
-        jsonData.gender=this.state.input["gender"];
-        jsonData.nationality=this.state.input["nationality"];
-        jsonData.nid=this.state.input["nid"];
-        jsonData.mobile=this.state.input["mobile"];
-        jsonData.email=this.state.input["email"];
-        jsonData.street=this.state.input["street"];
-        jsonData.thana=this.state.input["thana"];
-        jsonData.district=this.state.input["district"];
-        jsonData.division=this.state.input["division"];
-        jsonData.aboutme=this.state.input["aboutme"];
+        if (typeof this.state.input["name"] !== "undefined")  {
+            jsonData.name=this.state.input["name"];
+        }
+        if (typeof this.state.input["age"] !== "undefined")  {
+            jsonData.age=this.state.input["age"];
+        }
+        if (typeof this.state.input["fathername"] !== "undefined")  {
+            jsonData.fathername=this.state.input["fathername"];
+        }
+        if (typeof this.state.input["mothername"] !== "undefined")  {
+            jsonData.mothername=this.state.input["mothername"];
+        }
+        if (typeof this.state.input["dob"] !== "undefined")  {
+            jsonData.dob=this.state.input["dob"];
+        }
+        if (typeof this.state.input["gender"] !== "undefined")  {
+            jsonData.gender=this.state.input["gender"];
+        }
+        if (typeof this.state.input["nationality"] !== "undefined")  {
+            jsonData.nationality=this.state.input["nationality"];
+        }
+        if (typeof this.state.input["nid"] !== "undefined")  {
+            jsonData.nid=this.state.input["nid"];
+        }
+        if (typeof this.state.input["mobile"] !== "undefined")  {
+            jsonData.mobile=this.state.input["mobile"];
+        }
+        if (typeof this.state.input["email"] !== "undefined")  {
+            jsonData.email=this.state.input["email"];
+        }
+        if (typeof this.state.input["street"] !== "undefined")  {
+            jsonData.street=this.state.input["street"];
+        }
+        if (typeof this.state.input["thana"] !== "undefined")  {
+            jsonData.thana=this.state.input["thana"];
+        }
+        if (typeof this.state.input["district"] !== "undefined")  {
+            jsonData.district=this.state.input["district"];
+        }
+        if (typeof this.state.input["division"] !== "undefined")  {
+            jsonData.division=this.state.input["division"];
+        }
+        if (typeof this.state.input["aboutme"] !== "undefined")  {
+            jsonData.aboutme=this.state.input["aboutme"];
+        }
         console.log(jsonData);
         let input = {};
 
-        // this.setState({input:input});
-        // fetch('http://127.0.0.1:8000/first_module/jobseeker/', {  // Enter your IP address here
-        // method: 'POST',
-        // headers:{
-        // 'Content-Type': 'application/json',
-        // },
-        // mode: 'cors',
-        // body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
-        // })
+        this.setState({input:input});
+        fetch('http://127.0.0.1:8000/first_module/jobseeker/editinfo/', {  // Enter your IP address here
+        method: 'POST',
+        headers:{
+        'Content-Type': 'application/json',
+        },
+        mode: 'cors',
+        body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
+        })
         // this.setState({'redirect':true})
         // alert('Demo Form is submited'); 
    }

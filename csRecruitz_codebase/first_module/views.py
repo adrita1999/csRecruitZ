@@ -605,6 +605,24 @@ class jobseekerViewsets(viewsets.ModelViewSet):
             print(request.data['email'])
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+    @action(methods=['post', 'get'], detail=False, url_path='editinfo')
+    def editinfo(self, request):
+        if request.method == 'POST':
+            userid=1
+            print(request.data['name'])
+            print(request.data['age'])
+            print(request.data['fathername'])
+            print(request.data['mothername'])
+            print(request.data['nationality'])
+            print(request.data['nid'])
+            print(request.data['dob'])
+            print(request.data['mobile'])
+            if request.data['nationality'] != "" :
+                obj = Jobseeker.objects.filter(user_id=userid).update(nationality=request.data['nationality'])
+                # obj.refresh_from_db()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 class recoViewsets(viewsets.ModelViewSet):
     #null ar open to dekhte hobe
@@ -786,6 +804,18 @@ emp6.save()
 emp7 = Employer(user_id=8, name="Bangladesh Airforce", email="airbd@gmail.com", password="1234", district="Bogura",
                 division="Rajshahi", org_type="Government", establishment_year="1975")
 emp7.save()
+emp8 = Employer(user_id=9, name="Brac", email="brac@edu.bd", password="1234", district="Dhaka",
+                division="Dhaka", org_type="NGO", establishment_year="1975")
+emp8.save()
+emp9 = Employer(user_id=10, name="UIU", email="uiu@edu.com", password="1234", district="Dhaka",
+                division="Dhaka", org_type="NGO", establishment_year="2000")
+emp9.save()
+emp10 = Employer(user_id=11, name="Samsung", email="samsungrj@gmail.com", password="1234", district="Rajshahi",
+                division="Rajshahi", org_type="Private Firm", establishment_year="2001")
+emp10.save()
+emp11 = Employer(user_id=12, name="Bangladesh Airforce", email="airbdrj@gmail.com", password="1234", district="Rajshahi",
+                division="Rajshahi", org_type="Government", establishment_year="1990")
+emp11.save()
 contact1 = UserContact(user_contact_id=1, user_id=1, contact_no="01878046439")
 contact1.save()
 contact2 = UserContact(user_contact_id=2, user_id=1, contact_no="01718464397")
@@ -1046,6 +1076,66 @@ jobpost14 = NewJobpost(jobpost_id=14, employer_id=emp5,
                        additional_requirements="Ability to communicate clearly and concisely, both orally and in writing.",
                        application_process="*Photograph must be enclosed with the resume.")
 jobpost14.save()
+jobpost15 = NewJobpost(jobpost_id=15, employer_id=emp8,
+                       title="Lecturer",
+                       category="Teaching",
+                       post_date="2022-08-11", deadline_date="2022-09-11", salary=40000, required_experience=1,
+                       vacancies=2,
+                       job_context="Lecturer in CSE,ICT.",
+                       job_nature="Part-time",
+                       job_responsibilities="Assisting with various departmental duties and providing academic support to professors and other staff",
+                       edu_requirement="PhD, Master's equivalent degree in relevant discipline and must have first class/division in all examinations.",
+                       additional_requirements="Publications (Standard/ reputed journal) -Minimum 2-3",
+                       application_process="Send your CV to brac@edu.bd ")
+jobpost15.save()
+jobpost16 = NewJobpost(jobpost_id=16, employer_id=emp9,
+                       title="Professor",
+                       category="Teaching",
+                       post_date="2022-08-13", deadline_date="2022-09-13", salary=60000, required_experience=7,
+                       vacancies=3,
+                       job_context="Associate Professor/ Professor in CSE, ICT.",
+                       job_nature="Part-time",
+                       job_responsibilities="Teaching and supervising undergraduate and graduate students",
+                       edu_requirement="PhD, Master's equivalent degree in relevant discipline and must have first class/division in all examinations.",
+                       additional_requirements="Publications (Standard/ reputed journal) -Minimum 10-12",
+                       application_process="Send your CV to uiu@edu.com ")
+jobpost16.save()
+jobpost17 = NewJobpost(jobpost_id=17, employer_id=emp10,
+                       title="Senior IT Security Engineer",
+                       category="Security",
+                       post_date="2022-08-12", deadline_date="2022-09-12", salary=65000, required_experience=7,
+                       vacancies=1,
+                       job_context="Sumsung is one of the biggest MFIs in the country as well in the world with more than 25 thousand employees serving around 73 lakh clients across the country. Here all the applications are developed by in-house IT team.",
+                       job_nature="Full-time",
+                       job_responsibilities="Manage day-to-day IT security operations.Monitor and analyze data flow to identify and block malicious behaviors and activities.",
+                       edu_requirement="B.Sc./ M.Sc. in CSE/ IT/ MIS/ Software Engineering/ ECE/ EEE or equivalent and relevant engineering degree. Certification on CEH/ CHFI (Preferred)",
+                       additional_requirements="Age at most 40 years.Monitoring and analyzing network traffic, host-based security appliance logs and IDS alerts.xperience in working with applications such as Firewall Software, SIEM, IDS/IPS, PAM, DLP, VA & PT, WAF, Load Balancer etc. is preferred.",
+                       application_process="Apply online ")
+jobpost17.save()
+jobpost18 = NewJobpost(jobpost_id=18, employer_id=emp1,
+                       title="Network & IT Security.",
+                       category="Security",
+                       post_date="2022-08-10", deadline_date="2022-09-10", salary=60000, required_experience=8,
+                       vacancies=2,
+                       job_context="Optimizely is one of the leading ICT System Integration company in Bangladesh providing ICT solutions to its wide customer base in Bangladesh and abroad. Optimizely is looking for the position of `Trainer - Network & IT Security` to assist in its Voice, Network & IT Security Department.",
+                       job_nature="Part-time",
+                       job_responsibilities="Implementing, managing, monitoring, and upgrading security measures for the protection of the organization's data, systems, and networks.",
+                       edu_requirement="B.Sc Engineering in CSE. Certification on CEH/ CHFI (Preferred)",
+                       additional_requirements="Strong understanding of a complete ISP environment is required.In depth knowledge in routing, DNS, MAIL, DHCP, Proxy and Bandwidth management system.",
+                       application_process="Apply online ")
+jobpost18.save()
+jobpost19 = NewJobpost(jobpost_id=19, employer_id=emp11,
+                       title="Junior Programmer.",
+                       category="Programming",
+                       post_date="2022-08-13", deadline_date="2022-09-13", salary=45000, required_experience=1,
+                       vacancies=2,
+                       job_context="We are looking for Junior Programmers with high problem-solving & analytical capability with a minimum of 1-year experience.",
+                       job_nature="Part-time",
+                       job_responsibilities="Continuously discover, evaluate, and implement new technologies to maximize development efficiency.",
+                       edu_requirement="Bachelor's degree in any discipline.",
+                       additional_requirements="Good knowledge of Data Structure & Algorithms.150+ ACM problems solved (Mandatory Requirement).",
+                       application_process="airbdrj@gmail.com ")
+jobpost19.save()
 jskill34 = JobSkill(job_skill_id=34,jobpost_id=jobpost14,skill_id=skill1)
 jskill34.save()
 jskill35 = JobSkill(job_skill_id=35,jobpost_id=jobpost14,skill_id=skill5)
