@@ -214,17 +214,35 @@ handleChange(event) {
         jsonData.mob=this.state.input["mob"];
         jsonData.nid=this.state.input["nid"];
         jsonData.nat=this.state.input["nat"];
-        jsonData.father=this.state.input["father"];
-        jsonData.mother=this.state.input["mother"];
-        jsonData.desc=this.state.input["about"];
-        jsonData.street=this.state.input["street"];
-        jsonData.thana=this.state.input["thana"];
-        jsonData.dis=this.state.input["dis"];
+        if(this.state.input["father"]) {
+            jsonData.father = this.state.input["father"];
+        }
+        if(this.state.input["mother"]) {
+            jsonData.mother = this.state.input["mother"];
+        }
+        if(this.state.input["about"]) {
+            jsonData.desc = this.state.input["about"];
+        }
+        if(this.state.input["street"]) {
+            jsonData.street = this.state.input["street"];
+        }
+        if(this.state.input["thana"]) {
+            jsonData.thana=this.state.input["thana"];
+        }
+        if(this.state.input["district"]) {
+            jsonData.dis = this.state.input["dis"];
+        }
         jsonData.div=this.state.input["div"];
         jsonData.field=this.state.input["field"];
-        jsonData.pref_org=this.state.input["pref_org"];
-        jsonData.pref_nat=this.state.input["pref_nat"];
-        jsonData.pref_sal=this.state.input["pref_sal"];
+        if(this.state.input["pref_org"]) {
+            jsonData.pref_org = this.state.input["pref_org"];
+        }
+        if(this.state.input["pref_nat"]) {
+            jsonData.pref_nat = this.state.input["pref_nat"];
+        }
+        if(this.state.input["pref_sal"]) {
+            jsonData.pref_sal=this.state.input["pref_sal"];
+        }
 
 
         let input = {};

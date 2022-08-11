@@ -685,7 +685,11 @@ class jobseekerViewsets(viewsets.ModelViewSet):
             password=request.data['password']
             email = request.data['email']
             dob=request.data['dob']
-            gender=request.data['gender']
+            gender=""
+            if request.data['gender']!="":
+                gender=request.data['gender']
+            else:
+                gender=None
             mob=request.data['mob']
             nid=int(request.data['nid'])
             nat=request.data['nat']
@@ -704,7 +708,11 @@ class jobseekerViewsets(viewsets.ModelViewSet):
                 desc=request.data['desc']
             else:
                 desc=None
-            street = request.data['street']
+            street=""
+            if request.data['street']!="":
+                street=request.data['street']
+            else:
+                street=None
             thana=""
             if request.data['thana']!="":
                 thana = request.data['thana']
@@ -732,14 +740,16 @@ class jobseekerViewsets(viewsets.ModelViewSet):
                 pref_sal = request.data['pref_sal']
             else:
                 pref_sal = None
-
-            id=Jobseeker.objects.order_by('user_id').first()
+            if len(Jobseeker.objects.all())==0:
+                id=0
+            else:
+                id=Jobseeker.objects.order_by('-user_id').first().user_id
             id=id+1
 
 
             user=Jobseeker(user_id=id,name=name,email=email,password=password,thana=thana,district=dis,division=div,father_name=father,
                            mother_name=mother,date_of_birth=dob,self_desc=desc,nationality=nat,nid_number=nid,field=field,pref_sal=pref_sal,
-                           pref_job_ntr=pref_nat,pref_org_type=pref_org)
+                           pref_job_ntr=pref_nat,pref_org_type=pref_org,gender=gender,contact_no=mob,street=street)
             user.save()
             print(request.data)
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -920,10 +930,61 @@ class jobexpViewsets(viewsets.ModelViewSet):
     queryset = JobExperience.objects.filter().order_by('-from_year')
     serializer_class = jobexpSerializer
 
+    @action(methods=['post', 'get'], detail=False, url_path='addexp')
+    def add_exp(self, request):
+        if request.method == 'POST':
+            des_list=request.data["des"].split("#")
+            emp_list=request.data["emp"].split("#")
+            from_list=request.data["from"].split("#")
+            to_list=request.data["to"].split("#")
+            desc_list = request.data["desc"].split("#")
+            for i in range(len(des_list)):
+                if len(JobExperience.objects.all())==0:
+                    id=0
+                else:
+                    id = JobExperience.objects.order_by('-jobexperience_id').first().jobexperience_id
+                id=id+1
+
+                if desc_list[i]=="?":
+                    description=None
+                else:
+                    description=desc_list[i]
+                job_exp = JobExperience(jobexperience_id=id, experience_name=des_list[i], organization_name=emp_list[i],
+                                         from_year=from_list[i],
+                                         to_year=to_list[i],description=description, user_id_id=1)
+                job_exp.save()
+
+
+            print(request.data)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 class uskillViewsets(viewsets.ModelViewSet):
     queryset = JobSeekerSkill.objects.filter(user_id=1)
     serializer_class = uskillSerializer
+
+    @action(methods=['post', 'get'], detail=False, url_path='addskill')
+    def add_skill(self, request):
+        if request.method == 'POST':
+            skill_list = request.data["skills"].split("#")
+            open_to_list = request.data["open_to"].split("#")
+            for i in range (len(skill_list)):
+                if len(JobSeekerSkill.objects.all())==0:
+                    id=0
+                else:
+                    id = JobSeekerSkill.objects.order_by('-jobseeker_skill_id').first().jobexperience_id
+                id=id+1
+                if(skill_list[i] in open_to_list):
+                    flag=True
+                else:
+                    flag=False
+                objs=Skill.objects.filter(skill_name=skill_list[i])
+                uskill = JobSeekerSkill(jobseeker_skill_id=3, isOpenToWork=flag, skill_id=objs.skill_id, user_id_id=1)
+                uskill.save()
+
+
+
+
 
 
 user1 = Jobseeker(user_id=1, name="Adrita Hossain Nakshi", email="adrita_99@yahoo.com", password="1234", thana="Lalbag",
