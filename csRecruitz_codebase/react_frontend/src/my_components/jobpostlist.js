@@ -72,7 +72,9 @@ var jsonData = {
     "location":"",
     "req_exp":"",
     "filtername":"",
-    "redir_from_home":"false"
+    "redir_from_home":"false",
+    "asc":"",
+    "sortoption":"none"
   }
 class Joblist extends Component {
     pathaname;
@@ -134,6 +136,8 @@ class Joblist extends Component {
         this.handleChangeNat=this.handleChangeNat.bind(this);
         this.handleChangeExp=this.handleChangeExp.bind(this);
         this.handleChangeLoc=this.handleChangeLoc.bind(this);
+        this.handleChangeSortOptions=this.handleChangeSortOptions.bind(this);
+        this.handleClickSortBtn=this.handleClickSortBtn.bind(this);
       }
 
     toggleSort = () => {
@@ -167,7 +171,7 @@ class Joblist extends Component {
         this.setState({'redirect':true})
   }
 
-  handleChangeCat(event) {
+    handleChangeCat(event) {
         console.log("change")
           console.log(event.target.value)
           jsonData.category=event.target.value
@@ -193,7 +197,7 @@ class Joblist extends Component {
       this.state.filter_cat_val=event.target.value;
   }
 
-  handleChangeNat(event) {
+    handleChangeNat(event) {
         console.log("change")
           console.log(event.target.value)
           jsonData.nature=event.target.value
@@ -268,6 +272,72 @@ class Joblist extends Component {
         })
         this.state.filter_loc_val=event.target.value;
   }
+    handleClickSortBtn(event){
+        this.toggleSort()
+        console.log(this.state.asc)
+        if(this.state.asc==true)
+        {
+            jsonData.asc="true";
+        }
+        else
+        {
+            jsonData.asc="false";
+        }
+        console.log("sort btn change")
+        jsonData.filtername="sortbtn"
+        fetch('http://127.0.0.1:8000/searchinput/', {  // Enter your IP address here
+             method: 'POST',
+             headers:{
+             'Content-Type': 'application/json',
+             },
+             mode: 'cors',
+             body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
+        })
+        fetch(
+    "http://127.0.0.1:8000/searchinput/",{
+            method:"GET"
+                })
+                .then((res) => res.json())
+                .then((json) => {
+                    this.setState({datas: json.data, DataisLoaded: true , filter_cat_val:json.cat, filter_nat_val:json.nat, filter_cat_exp:json.exp, filter_cat_loc:json.loc})
+                    console.log(json.data)
+                    this.state.totjobs=json.data.length
+        })
+    }
+    handleChangeSortOptions(event)
+    {
+        if(event)
+        {
+           //console.log(event.value)
+            jsonData.sortoption=event.value
+        }
+        else
+        {
+           //console.log("none")
+            jsonData.sortoption=event.value
+        }
+        console.log("sort option change")
+        jsonData.filtername="sortoption"
+        fetch('http://127.0.0.1:8000/searchinput/', {  // Enter your IP address here
+             method: 'POST',
+             headers:{
+             'Content-Type': 'application/json',
+             },
+             mode: 'cors',
+             body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
+        })
+        fetch(
+    "http://127.0.0.1:8000/searchinput/",{
+            method:"GET"
+                })
+                .then((res) => res.json())
+                .then((json) => {
+                    this.setState({datas: json.data, DataisLoaded: true , filter_cat_val:json.cat, filter_nat_val:json.nat, filter_cat_exp:json.exp, filter_cat_loc:json.loc})
+                    console.log(json.data)
+                    this.state.totjobs=json.data.length
+        })
+
+    }
 
     render() {
         const { DataisLoaded, items } = this.state;
@@ -276,7 +346,6 @@ class Joblist extends Component {
             <React.Fragment>
             <body>
             <Navb/>
-
 
 
 
@@ -382,18 +451,16 @@ class Joblist extends Component {
 
 
 
-
-
             <div className="joblistbgdiv">
                 <div className="click_instruction_div">
                     <h5 >Click at the job title to view details ({this.state.totjobs} jobs found)</h5>
                     <div style={{float:"right",marginTop:-60}}>
                         <p className="sort_by_txt">Sort by</p>
                         <div className="select_sort_div">
-                            <Select2 options={sortOptions} defaultValue="Salary" openMenuOnFocus styles={dropDownStyle} isClearable  placeholder='None...' />
+                            <Select2 options={sortOptions} defaultValue="Salary" openMenuOnFocus styles={dropDownStyle} placeholder='None...' onChange={this.handleChangeSortOptions} />
                         </div>
                         <div className="asc_desc_btn_div">
-                           <button className="asc_desc_btn" onClick={() => this.toggleSort()}>
+                           <button className="asc_desc_btn" onClick={this.handleClickSortBtn}>
                               {this.state.asc ? <HiSortAscending style={{color:"white"}}/> : <HiSortDescending style={{color:"white"}}/>}
                             </button>
                         </div>
@@ -430,12 +497,17 @@ class Joblist extends Component {
                             paddingRight:5,
                             marginTop:-2
                         }}/>{item.salary} BDT</p>
-
+                        <p className="float_right_p2"><FaRegCalendarAlt style={{
+                            color:"#29A335",
+                            paddingRight:5,
+                            marginTop:-2
+                        }}/>Posted On: {item.post_date}</p>
                         <p className="float_right_p"><FaRegCalendarAlt style={{
                             color:"#29A335",
                             paddingRight:5,
                             marginTop:-2
                         }}/>Deadline: {item.deadline_date}</p>
+
 
                         <button id={item.jobpost_id} className="float_right_btn" onClick={this.handleClick}>View Details</button>
                     </div>

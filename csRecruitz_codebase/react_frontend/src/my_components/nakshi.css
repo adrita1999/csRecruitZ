@@ -73,6 +73,10 @@ div.joblistbgdiv {
 }
 .float_right_p {
   float: right;
+  margin-top: -4%;
+}
+.float_right_p2 {
+  float: right;
   margin-top: -6%;
 }
 

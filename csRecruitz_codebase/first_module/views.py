@@ -32,6 +32,8 @@ class postViewsets_for_jobpost(viewsets.ModelViewSet):
     filter_nat = ""
     filter_exp = ""
     filter_loc = ""
+    sort_dir= ""
+    sort_option= ""
     objs_keyword = NewJobpost.objects.none()
 
     @action(methods=['post', 'get'], detail=False, url_path='searchinput')
@@ -66,6 +68,14 @@ class postViewsets_for_jobpost(viewsets.ModelViewSet):
                     postViewsets_for_jobpost.filter_exp =request.data["req_exp"]
                 if request.data['filtername'] == "loc":
                     postViewsets_for_jobpost.filter_loc = request.data["location"]
+                if request.data['filtername'] == "sortbtn":
+                    if request.data["asc"]== "true":
+                        postViewsets_for_jobpost.sort_dir = "asc"
+                    else:
+                        postViewsets_for_jobpost.sort_dir = "desc"
+                if request.data['filtername'] == "sortoption":
+                    postViewsets_for_jobpost.sort_option = request.data["sortoption"]
+
                 return Response(status=status.HTTP_204_NO_CONTENT)
         else:
             if postViewsets_for_jobpost.redir_from_home=="true":
@@ -597,6 +607,22 @@ class postViewsets_for_jobpost(viewsets.ModelViewSet):
                 if postViewsets_for_jobpost.filter_loc!="":
                     objs2=objs2.filter(employer_id__division = postViewsets_for_jobpost.filter_loc)
                 print(objs2)
+                if postViewsets_for_jobpost.sort_option=="Most Recent Post":
+                    if postViewsets_for_jobpost.sort_dir=="asc":
+                        objs2 = objs2.filter().order_by('post_date')
+                    else:
+                        objs2 = objs2.filter().order_by('-post_date')
+                elif postViewsets_for_jobpost.sort_option=="Deadline":
+                    if postViewsets_for_jobpost.sort_dir=="asc":
+                        objs2 = objs2.filter().order_by('deadline_date')
+                    else:
+                        objs2 = objs2.filter().order_by('-deadline_date')
+                elif postViewsets_for_jobpost.sort_option=="Salary":
+                    if postViewsets_for_jobpost.sort_dir=="asc":
+                        objs2 = objs2.filter().order_by('salary')
+                    else:
+                        objs2 = objs2.filter().order_by('-salary')
+
                 serializer = NewPostSerializer(objs2, many=True)
                 return Response({
                     'status': status.HTTP_204_NO_CONTENT,
