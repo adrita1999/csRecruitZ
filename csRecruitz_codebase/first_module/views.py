@@ -624,7 +624,7 @@ class recoViewsets(viewsets.ModelViewSet):
     for exp in all_exp:
         expval = exp.to_year - exp.from_year
         total_user_exp = total_user_exp + expval
-    # print("total_user_exp:"+str(total_user_exp))
+    print("total_user_exp:"+str(total_user_exp))
 
     uskill = JobSeekerSkill.objects.filter(user_id=userid)
     hasuskill = False
@@ -657,10 +657,18 @@ class recoViewsets(viewsets.ModelViewSet):
     else:
         qset = NewJobpost.objects.filter(category = usercat, employer_id__division = userloc, deadline_date__gte=todaydate, job_nature = userntr, salary__gte = usersal, employer_id__org_type = userorg)
     print("filtered jobs0.1:")
+    print("user skills: ")
+    print(uskill)
+
+    queryset = NewJobpost.objects.filter(category = usercat, employer_id__division = userloc, deadline_date__gte=todaydate, job_nature = userntr, salary__gte = usersal, employer_id__org_type = userorg).order_by('-salary')
+    queryset = NewJobpost.objects.filter(salary__gte=usersal,job_nature=userntr).order_by('-salary')
+    qset = NewJobpost.objects.filter(deadline_date__gte=todaydate).order_by('deadline_date')
+    qset = NewJobpost.objects.filter(category = usercat, employer_id__division = userloc, deadline_date__gte=todaydate, job_nature = userntr, salary__gte = usersal, employer_id__org_type = userorg)
+    print("filtered jobs0:")
     print(qset)
     valid_job_ids = []
     for q in qset:
-        # print("job id:"+str(q.jobpost_id))
+        print("job id:"+str(q.jobpost_id))
         jobid=q.jobpost_id
         required_exp=q.required_experience
         # print("req_exp:" + str(required_exp))
@@ -730,7 +738,7 @@ class recoViewsets(viewsets.ModelViewSet):
 
 
 class jobexpViewsets(viewsets.ModelViewSet):
-    queryset = JobExperience.objects.filter(user_id=1).order_by('-from_year')
+    queryset = JobExperience.objects.filter().order_by('-from_year')
     serializer_class = jobexpSerializer
 
 
@@ -743,7 +751,7 @@ user1 = Jobseeker(user_id=1, name="Adrita Hossain Nakshi", email="adrita_99@yaho
                   district="Dhaka", division="Dhaka", father_name="Dr. Md. Elias Hossain",
                   mother_name="Dr. Zennat Ferdousi", date_of_birth="1999-02-06",
                   self_desc="I am a CS under-graduate. I love programmimg and I love computers too. Like Steve Jobs, I like to believe 'Everybody should learn to program a computer, because it teaches you how to think.'",
-                  nationality="Bangladeshi", nid_number="12345678", field="Research and Development", pref_sal="30000",
+                  nationality="Bangladeshi", nid_number="12345678", field="Research", pref_sal="30000",
                   pref_job_ntr="Full-time", pref_org_type="NGO", propic="propics_input/nakshi.jpg",
                   resume="resumes_input/nakshi.docx")
 user1.save()
