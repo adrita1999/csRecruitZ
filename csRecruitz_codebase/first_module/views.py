@@ -29,13 +29,16 @@ class postViewsets_for_jobpost(viewsets.ModelViewSet):
     redir_from_home= "true"
     filtername=""
     filter_cat=""
-    objs = NewJobpost.objects.none()
+    filter_nat = ""
+    filter_exp = ""
+    filter_loc = ""
+    objs_keyword = NewJobpost.objects.none()
 
     @action(methods=['post', 'get'], detail=False, url_path='searchinput')
     def follow(self, request):
 
         if request.method == 'POST':
-            if request.data['redir_from_home']=="true":
+            if request.data['redir_from_home']=="true": # home theke post hoise
                 print(request.data['category'])
                 print(request.data['organization'])
                 print(request.data['location'])
@@ -47,16 +50,51 @@ class postViewsets_for_jobpost(viewsets.ModelViewSet):
                 postViewsets_for_jobpost.keyword = request.data['keyword']
                 postViewsets_for_jobpost.nature = request.data['nature']
                 postViewsets_for_jobpost.redir_from_home = request.data['redir_from_home']
+                postViewsets_for_jobpost.filter_cat = request.data['category']
+                postViewsets_for_jobpost.filter_nat = request.data['nature']
+                postViewsets_for_jobpost.filter_loc = request.data['location']
                 return Response(status=status.HTTP_204_NO_CONTENT)
-            else:
+            else: # filter theke post hoise
                 postViewsets_for_jobpost.redir_from_home = request.data['redir_from_home']
                 postViewsets_for_jobpost.filtername = request.data["filtername"]
                 if request.data['filtername']=="cat":
                     postViewsets_for_jobpost.filter_cat =request.data["category"]
+                if request.data['filtername']=="nat":
+                    postViewsets_for_jobpost.filter_nat =request.data["nature"]
+                if request.data['filtername']=="exp":
+                    postViewsets_for_jobpost.filter_exp =request.data["req_exp"]
+                if request.data['filtername'] == "loc":
+                    postViewsets_for_jobpost.filter_loc = request.data["location"]
                 return Response(status=status.HTTP_204_NO_CONTENT)
         else:
             if postViewsets_for_jobpost.redir_from_home=="true":
                 print("home theke asche")
+                # save search result for keyword
+                if postViewsets_for_jobpost.keyword != "":
+                    postViewsets_for_jobpost.objs_keyword = NewJobpost.objects.filter(
+                        Q(title__icontains=postViewsets_for_jobpost.keyword) | Q(
+                            category__icontains=postViewsets_for_jobpost.keyword)
+                        | Q(
+                            job_context__icontains=postViewsets_for_jobpost.keyword) | Q(
+                            job_nature=postViewsets_for_jobpost.keyword)
+                        | Q(
+                            job_responsibilities__icontains=postViewsets_for_jobpost.keyword) | Q(
+                            edu_requirement__icontains=postViewsets_for_jobpost.keyword)
+                        | Q(
+                            additional_requirements__icontains=postViewsets_for_jobpost.keyword) | Q(
+                            application_process__icontains=postViewsets_for_jobpost.keyword)
+                        | Q(
+                            employer_id__org_type__icontains=postViewsets_for_jobpost.keyword) | Q(
+                            employer_id__thana__icontains=postViewsets_for_jobpost.keyword)
+                        | Q(
+                            employer_id__district__icontains=postViewsets_for_jobpost.keyword) | Q(
+                            employer_id__division__icontains=postViewsets_for_jobpost.keyword)
+                        | Q(
+                            employer_id__name__icontains=postViewsets_for_jobpost.keyword))
+                else:
+                    postViewsets_for_jobpost.objs_keyword = NewJobpost.objects.all()
+                #######################################################################################################################
+
                 if postViewsets_for_jobpost.cat != "" and postViewsets_for_jobpost.keyword != "" and postViewsets_for_jobpost.nature != "" and postViewsets_for_jobpost.org != "" and postViewsets_for_jobpost.loc != "":
                     postViewsets_for_jobpost.objs = NewJobpost.objects.filter(Q(category=postViewsets_for_jobpost.cat),
                                                      Q(employer_id__division=postViewsets_for_jobpost.loc),
@@ -535,25 +573,40 @@ class postViewsets_for_jobpost(viewsets.ModelViewSet):
                 return Response({
                     'status': status.HTTP_204_NO_CONTENT,
                     'data': serializer.data,
-
+                    'cat': postViewsets_for_jobpost.filter_cat,
+                    'nat': postViewsets_for_jobpost.filter_nat,
+                    'exp': postViewsets_for_jobpost.filter_exp,
+                    'loc': postViewsets_for_jobpost.filter_loc,
                 })
             else:
                 print("filter theke asche")
-                objs2=postViewsets_for_jobpost.objs
+                objs2=postViewsets_for_jobpost.objs_keyword
                 if postViewsets_for_jobpost.filter_cat!="":
-                    objs2=postViewsets_for_jobpost.objs.filter(category=postViewsets_for_jobpost.filter_cat)
+                    objs2=postViewsets_for_jobpost.objs_keyword.filter(category=postViewsets_for_jobpost.filter_cat)
+                if postViewsets_for_jobpost.filter_nat!="":
+                    objs2=objs2.filter(job_nature=postViewsets_for_jobpost.filter_nat)
+                if postViewsets_for_jobpost.filter_exp!="":
+                    if postViewsets_for_jobpost.filter_exp=="Upto 1 year":
+                        objs2 = objs2.filter(required_experience__lte=1)
+                    elif postViewsets_for_jobpost.filter_exp=="2-5 years":
+                        objs2 = objs2.filter(required_experience__lte=5)
+                        objs2 = objs2.filter(required_experience__gte=2)
+                    else:
+                        objs2 = objs2.filter(required_experience__gt=5)
+                if postViewsets_for_jobpost.filter_loc!="":
+                    objs2=objs2.filter(employer_id__division = postViewsets_for_jobpost.filter_loc)
                 print(objs2)
                 serializer = NewPostSerializer(objs2, many=True)
                 return Response({
                     'status': status.HTTP_204_NO_CONTENT,
                     'data': serializer.data,
+                    'cat': postViewsets_for_jobpost.filter_cat,
+                    'nat': postViewsets_for_jobpost.filter_nat,
+                    'exp': postViewsets_for_jobpost.filter_exp,
+                    'loc': postViewsets_for_jobpost.filter_loc,
                 })
 
 
-
-class usercontactViewsets(viewsets.ModelViewSet):
-    queryset = UserContact.objects.all()
-    serializer_class = usercontactSerializer
 
 
 class jobseekerViewsets(viewsets.ModelViewSet):
@@ -785,10 +838,7 @@ emp6.save()
 emp7 = Employer(user_id=8, name="Bangladesh Airforce", email="airbd@gmail.com", password="1234", district="Bogura",
                 division="Rajshahi", org_type="Government", establishment_year="1975")
 emp7.save()
-contact1 = UserContact(user_contact_id=1, user_id=1, contact_no="01878046439")
-contact1.save()
-contact2 = UserContact(user_contact_id=2, user_id=1, contact_no="01718464397")
-contact2.save()
+
 skill1 = Skill(skill_id=1, skill_name="Python", gap_between_consecutive_attempts=30)
 skill1.save()
 skill2 = Skill(skill_id=2, skill_name="C++", gap_between_consecutive_attempts=30)

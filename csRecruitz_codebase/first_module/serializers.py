@@ -45,11 +45,6 @@ class jobseekerSerializer(serializers.ModelSerializer):
         return day//365
 
 
-class usercontactSerializer(serializers.ModelSerializer):
-    #print("serialiser")
-    class Meta:
-        model= UserContact
-        fields='__all__'
 
 class jobexpSerializer(serializers.ModelSerializer):
     #print("serialiser")

@@ -11,24 +11,14 @@ class User(models.Model):
     password = models.CharField(max_length=20)
     name = models.CharField(max_length=40)
     email = models.EmailField(unique=True)
+    contact_no=models.CharField(max_length=20)
     # address
+    street = models.CharField(max_length=70, null=True)
     thana = models.CharField(max_length=30, blank=True, null=True)
     district = models.CharField(max_length=30, null=True)
     division = models.CharField(max_length=30)
 
 
-class UserContact(models.Model):
-    user_contact_id = models.IntegerField(primary_key=True)
-    user_id = models.IntegerField()
-    contact_no = models.CharField(max_length=15)
-
-    class Meta:
-        unique_together = (("user_id", "contact_no"),)
-
-
-class Employer(User):
-    org_type = models.CharField(max_length=20)
-    establishment_year = models.IntegerField()
 
 
 class Jobseeker(User):
@@ -38,12 +28,21 @@ class Jobseeker(User):
     propic = models.ImageField(upload_to='images', null=True)
     date_of_birth = models.DateField()
     nationality = models.CharField(max_length=20)
+    gender = models.CharField(max_length=20,null=True)
     field = models.CharField(max_length=40)
     nid_number = models.IntegerField(unique=True)
     pref_job_ntr = models.CharField(max_length=20, null=True)
     pref_org_type = models.CharField(max_length=20, null=True)
     pref_sal = models.IntegerField(null=True)
     resume = models.FileField(upload_to='resumes', null=True)
+
+
+class Employer(User):
+    org_type = models.CharField(max_length=20)
+    establishment_year = models.IntegerField()
+
+
+
 
 
 class Follow(models.Model):

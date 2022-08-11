@@ -9,7 +9,7 @@ import {FaRegMoneyBillAlt} from 'react-icons/fa';
 import {FaRegCalendarAlt} from 'react-icons/fa';
 import Filter_sidebar from "./Filter_sidebar";
 import Navb from "./Navb";
-import Select from "react-select";
+import Select2 from "react-select";
 import {Navigate} from "react-router-dom";
 import {element} from "prop-types";
 import {BallTriangle, Circles, ThreeDots} from 'react-loader-spinner'
@@ -22,6 +22,10 @@ import FormControl from "@mui/material/FormControl";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from '@mui/material/Select';
 
 const sortOptions = [
   { value: "Most Recent Post", label: "Most Recent Post" },
@@ -63,6 +67,9 @@ const boxSX = {
 };
 var jsonData = {
     "category":"",
+    "nature":"",
+    "location":"",
+    "req_exp":"",
     "filtername":"",
     "redir_from_home":"false"
   }
@@ -76,6 +83,7 @@ class Joblist extends Component {
             items: [],
             DataisLoaded: false,
             datas:[],
+            totjobs:0,
             redirect:false,
             navlink:"/jobdetails",
             filter_title_job_cat:"Job Category",
@@ -110,16 +118,21 @@ class Joblist extends Component {
             filter_title_req:"Required Experience",
             default_req:"",
             req_exps:[
-                {value:"1 year"},
+                {value:"Upto 1 year"},
                 {value: "2-5 years"},
                 {value: ">5 years"}
             ],
             filter_cat_val:"",
-
+            filter_nat_val:"",
+            filter_exp_val:"",
+            filter_loc_val:"",
         };
         this.handleClick=this.handleClick.bind(this);
         // this.handleClickCat=this.handleClickCat.bind(this);
         this.handleChangeCat=this.handleChangeCat.bind(this);
+        this.handleChangeNat=this.handleChangeNat.bind(this);
+        this.handleChangeExp=this.handleChangeExp.bind(this);
+        this.handleChangeLoc=this.handleChangeLoc.bind(this);
       }
 
     toggleSort = () => {
@@ -135,9 +148,10 @@ class Joblist extends Component {
             })
             .then((res) => res.json())
             .then((json) => {
-                this.setState({datas: json.data, DataisLoaded: true})
+                this.setState({datas: json.data, DataisLoaded: true, filter_cat_val:json.cat, filter_nat_val:json.nat, filter_cat_exp:json.exp, filter_cat_loc:json.loc})
                 console.log(json.data)
-
+                // console.log(json.data.length)
+                this.state.totjobs=json.data.length
             })
 
     }
@@ -167,11 +181,68 @@ class Joblist extends Component {
                 })
                 .then((res) => res.json())
                 .then((json) => {
-                    this.setState({datas: json.data, DataisLoaded: true})
+                    this.setState({datas: json.data, DataisLoaded: true , filter_cat_val:json.cat, filter_nat_val:json.nat, filter_cat_exp:json.exp, filter_cat_loc:json.loc})
                     console.log(json.data)
-
+                    this.state.totjobs=json.data.length
             })
       this.state.filter_cat_val=event.target.value;
+  }
+
+  handleChangeNat(event) {
+        console.log("change")
+          console.log(event.target.value)
+          jsonData.nature=event.target.value
+          jsonData.filtername="nat"
+          fetch('http://127.0.0.1:8000/searchinput/', {  // Enter your IP address here
+             method: 'POST',
+             headers:{
+             'Content-Type': 'application/json',
+             },
+             mode: 'cors',
+             body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
+          })
+          fetch(
+    "http://127.0.0.1:8000/searchinput/",{
+            method:"GET"
+                })
+                .then((res) => res.json())
+                .then((json) => {
+                    this.setState({datas: json.data, DataisLoaded: true , filter_cat_val:json.cat, filter_nat_val:json.nat, filter_cat_exp:json.exp, filter_cat_loc:json.loc})
+                    console.log(json.data)
+                    this.state.totjobs=json.data.length
+            })
+      this.state.filter_nat_val=event.target.value;
+  }
+    handleChangeExp(event) {
+        console.log("change")
+          console.log(event.target.value)
+          jsonData.req_exp=event.target.value
+          jsonData.filtername="exp"
+          fetch('http://127.0.0.1:8000/searchinput/', {  // Enter your IP address here
+             method: 'POST',
+             headers:{
+             'Content-Type': 'application/json',
+             },
+             mode: 'cors',
+             body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
+          })
+          fetch(
+    "http://127.0.0.1:8000/searchinput/",{
+            method:"GET"
+                })
+                .then((res) => res.json())
+                .then((json) => {
+                    this.setState({datas: json.data, DataisLoaded: true , filter_cat_val:json.cat, filter_nat_val:json.nat, filter_cat_exp:json.exp, filter_cat_loc:json.loc})
+                    console.log(json.data)
+                    this.state.totjobs=json.data.length
+            })
+      this.state.filter_exp_val=event.target.value;
+  }
+    handleChangeLoc(event) {
+        console.log("change")
+        console.log(event.target.value)
+
+        this.state.filter_loc_val=event.target.value;
   }
 
     render() {
@@ -205,9 +276,10 @@ class Joblist extends Component {
                               <RadioGroup
                                 aria-labelledby="demo-radio-buttons-group-label"
                                 name="radio-buttons-group"
+                                defaultValue={this.state.filter_cat_val}
                                 onChange={this.handleChangeCat}>
                                   {this.state.job_categories.map(category => (
-                                      <FormControlLabel value={category.value} control={<Radio sx={{'& .MuiSvgIcon-root': {fontSize: 18,},}} onClick={this.handleClickCat}/>} label={<span className="radio_btn_option">{category.value}</span>}/>
+                                      <FormControlLabel value={category.value} control={<Radio sx={{'& .MuiSvgIcon-root': {fontSize: 18,},}} />} label={<span className="radio_btn_option">{category.value}</span>}/>
                                   ))}
                               </RadioGroup>
                             </FormControl>
@@ -218,10 +290,66 @@ class Joblist extends Component {
                     <Dropdown_my values={this.state.locations} title={this.state.filter_title_loc} default_val={this.state.default_loc} />
                 </div>
                 <div className="category_div">
-                    <Radiobutton values={this.state.job_natures} title={this.state.filter_title_job_ntr} default_val={this.state.default_job_ntr} filtername="nat"/>
+                    <div>
+                        <div className="filter_title_bg_div">
+                            <h6>{this.state.filter_title_loc}</h6>
+                        </div>
+
+                        <Box sx={{ width:263,marginTop:2}}>
+                          <FormControl fullWidth size="small" >
+                            <InputLabel id="demo-simple-select-label">Division</InputLabel>
+                            <Select
+                              labelId="demo-simple-select-label"
+                              id="demo-simple-select"
+                              label="Division"
+                              style={{ height: 38,fontSize:15,paddingTop:4}}
+                            >
+                                {this.state.locations.map(location => (
+                                    <MenuItem value={location.value} sx={{fontSize:12,width:'100%'}}>{location.value}</MenuItem>
+                                  ))}
+                            </Select>
+                          </FormControl>
+                        </Box>
+
+                    </div>
                 </div>
                 <div className="category_div">
-                    <Radiobutton values={this.state.req_exps} title={this.state.filter_title_req} default_val={this.state.default_req} filtername="exp"/>
+                    <div>
+                        <div className="filter_title_bg_div">
+                            <h6>{this.state.filter_title_job_ntr}</h6>
+                        </div>
+
+                        <FormControl >
+                              <RadioGroup
+                                aria-labelledby="demo-radio-buttons-group-label"
+                                name="radio-buttons-group"
+                                defaultValue={this.state.filter_nat_val}
+                                onChange={this.handleChangeNat}>
+                                  {this.state.job_natures.map(category => (
+                                      <FormControlLabel value={category.value} control={<Radio sx={{'& .MuiSvgIcon-root': {fontSize: 18,},}} />} label={<span className="radio_btn_option">{category.value}</span>}/>
+                                  ))}
+                              </RadioGroup>
+                            </FormControl>
+                    </div>
+                </div>
+                <div className="category_div">
+                    <div>
+                        <div className="filter_title_bg_div">
+                            <h6>{this.state.filter_title_req}</h6>
+                        </div>
+
+                        <FormControl >
+                              <RadioGroup
+                                aria-labelledby="demo-radio-buttons-group-label"
+                                name="radio-buttons-group"
+                                defaultValue={this.state.filter_exp_val}
+                                onChange={this.handleChangeExp}>
+                                  {this.state.req_exps.map(category => (
+                                      <FormControlLabel value={category.value} control={<Radio sx={{'& .MuiSvgIcon-root': {fontSize: 18,},}} />} label={<span className="radio_btn_option">{category.value}</span>}/>
+                                  ))}
+                              </RadioGroup>
+                            </FormControl>
+                    </div>
                 </div>
                  </Animated>
             </div>
@@ -234,11 +362,11 @@ class Joblist extends Component {
 
             <div className="joblistbgdiv">
                 <div className="click_instruction_div">
-                    <h5 >Click at the job title to view details</h5>
+                    <h5 >Click at the job title to view details ({this.state.totjobs} jobs found)</h5>
                     <div style={{float:"right",marginTop:-60}}>
                         <p className="sort_by_txt">Sort by</p>
                         <div className="select_sort_div">
-                            <Select options={sortOptions} defaultValue="Salary" openMenuOnFocus styles={dropDownStyle} isClearable  placeholder='None...' />
+                            <Select2 options={sortOptions} defaultValue="Salary" openMenuOnFocus styles={dropDownStyle} isClearable  placeholder='None...' />
                         </div>
                         <div className="asc_desc_btn_div">
                            <button className="asc_desc_btn" onClick={() => this.toggleSort()}>
