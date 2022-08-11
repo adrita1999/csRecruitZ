@@ -22,19 +22,19 @@ import { fontSize } from "@mui/system";
 var jsonData = {
     "name":"",
     "age":"",
-    "fathername":"",
-    "mothername":"",
-    "dob":"",
+    "father_name":"",
+    "mother_name":"",
+    "date_of_birth":"",
     "gender":"",
     "nationality":"",
-    "nid":"",
+    "nid_number":"",
     "mobile":"",
     "email":"",
     "street":"",
     "thana":"",
     "district":"",
     "division":"",
-    "aboutme":"",
+    "self_desc":"",
 
   }
 
@@ -104,60 +104,90 @@ class Personal extends Component {
         if (typeof this.state.input["name"] !== "undefined")  {
             jsonData.name=this.state.input["name"];
         }
+        else{jsonData.name= this.state.items.name;}
         if (typeof this.state.input["age"] !== "undefined")  {
             jsonData.age=this.state.input["age"];
         }
-        if (typeof this.state.input["fathername"] !== "undefined")  {
-            jsonData.fathername=this.state.input["fathername"];
+        else{jsonData.age= this.state.items.age;}
+        if (typeof this.state.input["father_name"] !== "undefined")  {
+            jsonData.father_name=this.state.input["father_name"];
         }
-        if (typeof this.state.input["mothername"] !== "undefined")  {
-            jsonData.mothername=this.state.input["mothername"];
+        else{jsonData.father_name= this.state.items.father_name;}
+
+        if (typeof this.state.input["mother_name"] !== "undefined")  {
+            jsonData.mother_name=this.state.input["mother_name"];
         }
-        if (typeof this.state.input["dob"] !== "undefined")  {
-            jsonData.dob=this.state.input["dob"];
+        else{jsonData.mother_name= this.state.items.mother_name;}
+
+        if (typeof this.state.input["date_of_birth"] !== "undefined")  {
+            jsonData.date_of_birth=this.state.input["date_of_birth"];
         }
+        else{jsonData.date_of_birth= this.state.items.date_of_birth;}
+
         if (typeof this.state.input["gender"] !== "undefined")  {
             jsonData.gender=this.state.input["gender"];
         }
+        else{jsonData.gender= this.state.items.gender;}
+
         if (typeof this.state.input["nationality"] !== "undefined")  {
             jsonData.nationality=this.state.input["nationality"];
         }
-        if (typeof this.state.input["nid"] !== "undefined")  {
-            jsonData.nid=this.state.input["nid"];
+        else{jsonData.nationality= this.state.items.nationality;}
+
+        if (typeof this.state.input["nid_number"] !== "undefined")  {
+            jsonData.nid=this.state.input["nid_number"];
         }
+        else{jsonData.nid_number= this.state.items.nid_number;}
+
         if (typeof this.state.input["mobile"] !== "undefined")  {
             jsonData.mobile=this.state.input["mobile"];
         }
+        else{jsonData.mobile= this.state.items.mobile;}
+
         if (typeof this.state.input["email"] !== "undefined")  {
             jsonData.email=this.state.input["email"];
         }
+        else{jsonData.email= this.state.items.email;}
+
         if (typeof this.state.input["street"] !== "undefined")  {
             jsonData.street=this.state.input["street"];
         }
+        else{jsonData.street= this.state.items.street;}
+
         if (typeof this.state.input["thana"] !== "undefined")  {
             jsonData.thana=this.state.input["thana"];
         }
+        else{jsonData.thana= this.state.items.thana;}
+
         if (typeof this.state.input["district"] !== "undefined")  {
             jsonData.district=this.state.input["district"];
         }
+        else{jsonData.district= this.state.items.district;}
+
         if (typeof this.state.input["division"] !== "undefined")  {
             jsonData.division=this.state.input["division"];
         }
-        if (typeof this.state.input["aboutme"] !== "undefined")  {
-            jsonData.aboutme=this.state.input["aboutme"];
+        else{jsonData.division= this.state.items.division;}
+
+        if (typeof this.state.input["self_desc"] !== "undefined")  {
+            jsonData.aboutme=this.state.input["self_desc"];
         }
+        else{jsonData.self_desc= this.state.items.self_desc;}
+
         console.log(jsonData);
         let input = {};
 
         this.setState({input:input});
-        fetch('http://127.0.0.1:8000/first_module/jobseeker/editinfo/', {  // Enter your IP address here
-        method: 'POST',
+        fetch('http://127.0.0.1:8000/first_module/jobseeker/1/', {  // Enter your IP address here
+        method: 'PUT',
         headers:{
         'Content-Type': 'application/json',
         },
         mode: 'cors',
         body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
         })
+        .then(response=>response.json())
+        .then((data)=>console.log(data));
         // this.setState({'redirect':true})
         // alert('Demo Form is submited'); 
    }
@@ -351,41 +381,41 @@ class Personal extends Component {
                     <div className="col-sm-6">
                         <div className="form-group">
                             <InputLabel style={{color:"black" ,fontWeight:"Bold", fontSize:"15px" }}  for="name">Name:</InputLabel>
-                            <input type="text"  name="name" className="form-control"  defaultValue={items.name} onChange={this.handleChange} id="name" required/>
+                            <input type="text"  name="name" className="form-control"  defaultValue={items.name} onChange={this.handleChange} id="name"/>
                         </div>
                     </div>
                     <div className="col-sm-6">
                         <div className="form-group">
                             <InputLabel style={{color:"black" ,fontWeight:"Bold", fontSize:"15px"}}  for="age">Age:</InputLabel>
-                            <input type="text"  name="age" className="form-control" defaultValue={items.age} onChange={this.handleChange} id="age" required/>
+                            <input type="text"  name="age" className="form-control" defaultValue={items.age} onChange={this.handleChange} id="age" />
                         </div>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-sm-6">
                         <div className="form-group">
-                            <InputLabel style={{color:"black" ,fontWeight:"Bold", fontSize:"15px"}}  for="fathername">Father's name:</InputLabel>
-                            <input type="text"  name="fathername" className="form-control"  defaultValue={items.father_name} onChange={this.handleChange} id="fathername" required/>
+                            <InputLabel style={{color:"black" ,fontWeight:"Bold", fontSize:"15px"}}  for="father_name">Father's name:</InputLabel>
+                            <input type="text"  name="father_name" className="form-control"  defaultValue={items.father_name} onChange={this.handleChange} id="fathername" />
                         </div>
                     </div>
                     <div className="col-sm-6">
                         <div className="form-group">
-                            <InputLabel style={{color:"black" ,fontWeight:"Bold", fontSize:"15px"}}  for="mothername">Mother's name:</InputLabel>
-                            <input type="text"  name="mothername" className="form-control"  defaultValue={items.mother_name} onChange={this.handleChange} id="mothername" required/>
+                            <InputLabel style={{color:"black" ,fontWeight:"Bold", fontSize:"15px"}}  for="mother_name">Mother's name:</InputLabel>
+                            <input type="text"  name="mother_name" className="form-control"  defaultValue={items.mother_name} onChange={this.handleChange} id="mothername" />
                         </div>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-sm-6">
                         <div className="form-group">
-                            <InputLabel style={{color:"black" ,fontWeight:"Bold", fontSize:"15px" }}  for="dob">Date of Birth:</InputLabel>
-                            <input type="text"  name="dob" className="form-control"  defaultValue={items.date_of_birth} onChange={this.handleChange} id="dob" required/>
+                            <InputLabel style={{color:"black" ,fontWeight:"Bold", fontSize:"15px" }}  for="date_of_birth">Date of Birth:</InputLabel>
+                            <input type="text"  name="date_of_birth" className="form-control"  defaultValue={items.date_of_birth} onChange={this.handleChange} id="dob" />
                         </div>
                     </div>
                     <div className="col-sm-6">
                         <div className="form-group">
-                            <InputLabel style={{color:"black" ,fontWeight:"Bold", fontSize:"15px"}}  for="dob">Gender:</InputLabel>
-                            <input type="text"  name="gender" className="form-control"  defaultValue={items.gender} onChange={this.handleChange} id="gender" required/>
+                            <InputLabel style={{color:"black" ,fontWeight:"Bold", fontSize:"15px"}}  for="gender">Gender:</InputLabel>
+                            <input type="text"  name="gender" className="form-control"  defaultValue={items.gender} onChange={this.handleChange} id="gender" />
                         </div>
                     </div>
                 </div>
@@ -393,13 +423,13 @@ class Personal extends Component {
                     <div className="col-sm-6">
                         <div className="form-group">
                             <InputLabel style={{color:"black" ,fontWeight:"Bold", fontSize:"15px"}}  for="nationality">Nationality:</InputLabel>
-                            <input type="text"  name="nationality" className="form-control"  defaultValue={items.nationality} onChange={this.handleChange} id="nationality" required/>
+                            <input type="text"  name="nationality" className="form-control"  defaultValue={items.nationality} onChange={this.handleChange} id="nationality" />
                         </div>
                     </div>
                     <div className="col-sm-6">
                         <div className="form-group">
                             <InputLabel style={{color:"black" ,fontWeight:"Bold", fontSize:"15px"}}  for="nid">NID number:</InputLabel>
-                            <input type="text"  name="nid" className="form-control"  defaultValue={items.nid_number} onChange={this.handleChange} id="nid" required/>
+                            <input type="text"  name="nid_number" className="form-control"  defaultValue={items.nid_number} onChange={this.handleChange} id="nid" />
                         </div>
                     </div>
                 </div>
@@ -407,13 +437,13 @@ class Personal extends Component {
                     <div className="col-sm-6">
                         <div className="form-group">
                             <InputLabel style={{color:"black" ,fontWeight:"Bold", fontSize:"15px"}}  for="mobile">Mobile number:</InputLabel>
-                            <input type="text"  name="mobile" className="form-control"  defaultValue={items.mobile} onChange={this.handleChange} id="mobile" required/>
+                            <input type="text"  name="mobile" className="form-control"  defaultValue={items.mobile} onChange={this.handleChange} id="mobile" />
                         </div>
                     </div>
                     <div className="col-sm-6">
                         <div className="form-group">
                             <InputLabel style={{color:"black" ,fontWeight:"Bold", fontSize:"15px"}}  for="email">Email:</InputLabel>
-                            <input type="text"  name="email" className="form-control"  defaultValue={items.email} onChange={this.handleChange} id="email" required/>
+                            <input type="text"  name="email" className="form-control"  defaultValue={items.email} onChange={this.handleChange} id="email" />
                         </div>
                     </div>
                 </div>
@@ -423,13 +453,13 @@ class Personal extends Component {
                     <div className="col-sm-6">
                         <div className="form-group">
                             <InputLabel style={{color:"black" ,fontWeight:"Bold", fontSize:"15px" }}  for="street">Street:</InputLabel>
-                            <input type="text"  name="street" className="form-control"  defaultValue={items.street} onChange={this.handleChange} id="street" required/>
+                            <input type="text"  name="street" className="form-control"  defaultValue={items.street} onChange={this.handleChange} id="street" />
                         </div>
                     </div>
                     <div className="col-sm-6">
                         <div className="form-group">
                             <InputLabel style={{color:"black" ,fontWeight:"Bold", fontSize:"15px" }}  for="thana">Thana:</InputLabel>
-                            <input type="text"  name="thana" className="form-control"  defaultValue={items.thana} onChange={this.handleChange} id="thana" required/>
+                            <input type="text"  name="thana" className="form-control"  defaultValue={items.thana} onChange={this.handleChange} id="thana" />
                         </div>
                     </div>
                 </div>
@@ -437,13 +467,13 @@ class Personal extends Component {
                     <div className="col-sm-6">
                         <div className="form-group">
                             <InputLabel style={{color:"black" ,fontWeight:"Bold", fontSize:"15px" }}  for="district">District:</InputLabel>
-                            <input type="text"  name="district" className="form-control"  defaultValue={items.district} onChange={this.handleChange} id="district" required/>
+                            <input type="text"  name="district" className="form-control"  defaultValue={items.district} onChange={this.handleChange} id="district" />
                         </div>
                     </div>
                     <div className="col-sm-6">
                         <div className="form-group">
                             <InputLabel style={{color:"black" ,fontWeight:"Bold", fontSize:"15px" }}  for="division">Division:</InputLabel>
-                            <input type="text"  name="division" className="form-control"  defaultValue={items.division} onChange={this.handleChange} id="division" required/>
+                            <input type="text"  name="division" className="form-control"  defaultValue={items.division} onChange={this.handleChange} id="division"/>
                         </div>
                     </div>
                 </div>
@@ -453,7 +483,7 @@ class Personal extends Component {
                     <div className="col-sm-12">
                         <div className="form-group">
 
-                            <textarea style={{width:"100%", height:"80px",boxSizing:"border-box",borderRadius:"4px", borderColor:"#ccc"}}  rows = "5" cols = "60" name = "aboutme"  onChange={this.handleChange} >
+                            <textarea style={{width:"100%", height:"80px",boxSizing:"border-box",borderRadius:"4px", borderColor:"#ccc"}}  rows = "5" cols = "60" name = "self_desc"  onChange={this.handleChange} >
                                 {items.self_desc}
                             </textarea>
                         </div>

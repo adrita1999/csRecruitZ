@@ -718,21 +718,42 @@ class jobseekerViewsets(viewsets.ModelViewSet):
             print(request.data)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-    @action(methods=['post', 'get'], detail=False, url_path='editinfo')
-    def editinfo(self, request):
-        if request.method == 'POST':
-            userid=1
-            print(request.data['name'])
-            print(request.data['age'])
-            print(request.data['fathername'])
-            print(request.data['mothername'])
-            print(request.data['nationality'])
-            print(request.data['nid'])
-            print(request.data['dob'])
-            print(request.data['mobile'])
-            if request.data['nationality'] != "" :
-                obj = Jobseeker.objects.filter(user_id=userid).update(nationality=request.data['nationality'])
-                # obj.refresh_from_db()
+    def update(self, request, pk=None):
+        data_in = request.data
+        print(data_in)
+
+        instance = self.get_object()
+        print(instance.father_name)
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        # serializer.is_valid(raise_exception=True)
+
+        if serializer.is_valid():
+            # lookup_url_kwarg = self.lookup_url_kwarg or self.lookup_field
+            # lookup_value = self.kwargs[lookup_url_kwarg]
+            # extra_kwargs = {self.lookup_field: lookup_value}
+            # serializer.save(**extra_kwargs)
+            print("into")
+            serializer.save()
+            return Response(serializer.data)
+        # data_out = serializer.data
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        # @action(methods=['post', 'get','put'], detail=False, url_path='editinfo')
+    # @action(detail=True, methods=['put'])
+    # def update(self, request, pk=None):
+        # if request.method == 'PUT':
+        #     userid=1
+        #     print(request.data['name'])
+        #     print(request.data['age'])
+        #     print(request.data['fathername'])
+        #     print(request.data['mothername'])
+        #     print(request.data['nationality'])
+        #     print(request.data['nid'])
+        #     print(request.data['dob'])
+        #     print(request.data['mobile'])
+        #     if request.data['nationality'] != "" :
+        #         obj = Jobseeker.objects.filter(user_id=userid).update(nationality=request.data['nationality'])
+        #         # obj.refresh_from_db()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
 
