@@ -45,8 +45,6 @@ class Employer(User):
 
 
 
-
-
 class Follow(models.Model):
     follow_id = models.IntegerField(primary_key=True)
     employer_id = models.ForeignKey(Employer, on_delete=models.CASCADE)

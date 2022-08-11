@@ -53,6 +53,7 @@ class postViewsets_for_jobpost(viewsets.ModelViewSet):
                 postViewsets_for_jobpost.filter_cat = request.data['category']
                 postViewsets_for_jobpost.filter_nat = request.data['nature']
                 postViewsets_for_jobpost.filter_loc = request.data['location']
+                # print(postViewsets_for_jobpost.filter_loc)
                 return Response(status=status.HTTP_204_NO_CONTENT)
             else: # filter theke post hoise
                 postViewsets_for_jobpost.redir_from_home = request.data['redir_from_home']
