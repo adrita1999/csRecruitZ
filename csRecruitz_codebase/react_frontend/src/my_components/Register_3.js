@@ -64,7 +64,7 @@ class Register_3 extends Component {
           jsonData.skills=str1
           jsonData.open_to=str2
           console.log(str2)
-          fetch('http://127.0.0.1:8000/first_module/jobexp/addexp/', {  // Enter your IP address here
+          fetch('http://127.0.0.1:8000/first_module/uskill/addskill/', {  // Enter your IP address here
 
       method: 'POST',
         headers:{
