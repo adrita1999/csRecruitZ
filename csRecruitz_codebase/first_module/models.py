@@ -37,9 +37,11 @@ class Jobseeker(User):
     resume = models.FileField(upload_to='resumes', null=True)
 
 
+
 class Employer(User):
     org_type = models.CharField(max_length=20)
     establishment_year = models.IntegerField()
+
 
 
 

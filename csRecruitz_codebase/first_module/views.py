@@ -654,7 +654,67 @@ class jobseekerViewsets(viewsets.ModelViewSet):
     @action(methods=['post', 'get'], detail=False, url_path='adduser')
     def register(self, request):
         if request.method == 'POST':
-            print(request.data['email'])
+            name=request.data['name']
+            password=request.data['password']
+            email = request.data['email']
+            dob=request.data['dob']
+            gender=request.data['gender']
+            mob=request.data['mob']
+            nid=int(request.data['nid'])
+            nat=request.data['nat']
+            father=""
+            if request.data['father']!="":
+                father=request.data['father']
+            else:
+                father=None
+            mother=""
+            if request.data['mother']!="":
+                mother=request.data['mother']
+            else:
+                mother=None
+            desc=""
+            if request.data['desc']!="":
+                desc=request.data['desc']
+            else:
+                desc=None
+            street = request.data['street']
+            thana=""
+            if request.data['thana']!="":
+                thana = request.data['thana']
+            else:
+                thana=None
+            dis=""
+            if request.data['dis']!="":
+                dis = request.data['dis']
+            else :
+                dis=None
+            div = request.data['div']
+            field=request.data['field']
+            pref_org=""
+            if request.data['pref_org']!="":
+                pref_org=request.data['pref_org']
+            else:
+                pref_org=None
+            pref_nat=""
+            if request.data['pref_nat']!="":
+                pref_nat=request.data['pref_nat']
+            else:
+                pref_nat=None
+            pref_sal = ""
+            if request.data['pref_sal'] != "":
+                pref_sal = request.data['pref_sal']
+            else:
+                pref_sal = None
+
+            id=Jobseeker.objects.order_by('user_id').first()
+            id=id+1
+
+
+            user=Jobseeker(user_id=id,name=name,email=email,password=password,thana=thana,district=dis,division=div,father_name=father,
+                           mother_name=mother,date_of_birth=dob,self_desc=desc,nationality=nat,nid_number=nid,field=field,pref_sal=pref_sal,
+                           pref_job_ntr=pref_nat,pref_org_type=pref_org)
+            user.save()
+            print(request.data)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     @action(methods=['post', 'get'], detail=False, url_path='editinfo')

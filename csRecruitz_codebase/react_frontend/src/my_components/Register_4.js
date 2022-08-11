@@ -48,6 +48,16 @@ class Register_4 extends Component {
 
         return(<React.Fragment>
             <Navb/>
+            <div >
+                <br/><br/>
+                <ul className="list-unstyled multi-steps">
+                    <li >Experiences</li>
+                    <li>Skills and Projects</li>
+                    <li className="is-active"><b style={{
+                        color:"green"
+                    }}>Publications and Licenses</b></li>
+                </ul>
+            </div>
             <Animated animationIn="slideInLeft"  animationInDuration={2000}  isVisible={true}>
             <div className="content_reg_2">
                 <p className="seems-h1_reg"><b> Add Your Publications and Certificates</b></p>

@@ -29,6 +29,21 @@ var jsonData = {
     "password":"",
     "email":"",
     "dob":"",
+    "gender":"",
+    "mob":"",
+    "nid":"",
+    "nat":"",
+    "father":"",
+    "mother":"",
+    "desc":"",
+    "street":"",
+    "thana":"",
+    "dis":"",
+    "div":"",
+    "field":"",
+    "pref_org":"",
+    "pref_nat":"",
+    "pref_sal":""
   }
   const dropDownStyle ={
     control: (base, state) => ({
@@ -95,6 +110,11 @@ class Register extends  Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleClose=this.handleClose.bind(this);
+    this.handleChangeDropGen=this.handleChangeDropGen.bind(this);
+    this.handleChangeDropDiv=this.handleChangeDropDiv.bind(this);
+    this.handleChangeDropNat=this.handleChangeDropNat.bind(this);
+    this.handleChangeDropOrg=this.handleChangeDropOrg.bind(this);
+    this.handleChangeDropField=this.handleChangeDropField.bind(this);
   }
 
 handleChange(event) {
@@ -106,6 +126,58 @@ handleChange(event) {
       input
     });
   }
+  handleChangeDropGen = (event) => {
+        let input = this.state.input;
+
+        console.log(event.value);
+        input["gen"]=event.value;
+        this.setState({
+      input
+    });
+
+  }
+  handleChangeDropDiv = (event) => {
+        let input = this.state.input;
+        //console.log("heree");
+
+        console.log(event.value);
+        input["div"]=event.value;
+        this.setState({
+      input
+    });
+
+  }
+  handleChangeDropNat = (event) => {
+        let input = this.state.input;
+
+        console.log(event.value);
+        input["pref_nat"]=event.value;
+        this.setState({
+      input
+    });
+
+  }
+  handleChangeDropOrg = (event) => {
+        let input = this.state.input;
+
+        console.log(event.value);
+        input["pref_org"]=event.value;
+        this.setState({
+      input
+    });
+
+  }
+  handleChangeDropField = (event) => {
+        let input = this.state.input;
+
+        console.log(event.value);
+        input["field"]=event.value;
+        this.setState({
+      input
+    });
+
+  }
+
   onFocusHandle(event) {
         event.target.type='date';
   }
@@ -128,10 +200,33 @@ handleChange(event) {
      this.setState({signinopen: true});
     if(this.validate()){
         console.log(this.state);
-        jsonData.name=this.state.input["name"];
-        jsonData.email=this.state.input["email"];
+        if(this.state.input["name"]) {
+            jsonData.name=this.state.input["name"];
+        }
+        if(this.state.input["email"]) {
+            jsonData.email = this.state.input["email"];
+        }
         jsonData.password=this.state.input["password"];
         jsonData.dob=this.state.input["dob"];
+        if(this.state.input["gen"]) {
+            jsonData.gender = this.state.input["gen"];
+        }
+        jsonData.mob=this.state.input["mob"];
+        jsonData.nid=this.state.input["nid"];
+        jsonData.nat=this.state.input["nat"];
+        jsonData.father=this.state.input["father"];
+        jsonData.mother=this.state.input["mother"];
+        jsonData.desc=this.state.input["about"];
+        jsonData.street=this.state.input["street"];
+        jsonData.thana=this.state.input["thana"];
+        jsonData.dis=this.state.input["dis"];
+        jsonData.div=this.state.input["div"];
+        jsonData.field=this.state.input["field"];
+        jsonData.pref_org=this.state.input["pref_org"];
+        jsonData.pref_nat=this.state.input["pref_nat"];
+        jsonData.pref_sal=this.state.input["pref_sal"];
+
+
         let input = {};
 
         this.setState({input:input});
@@ -220,6 +315,7 @@ handleChange(event) {
                          placeholder="Enter Date of Birth"
                          onFocus={this.onFocusHandle}
                          onBlur={this.onBlurHandle}
+                         onChange={this.handleChange}
                          id="dob" />
 
 
@@ -230,7 +326,7 @@ handleChange(event) {
             <div className="col-sm-6">
             <div className="form-group">
                 <InputLabel for="gender">Gender:</InputLabel>
-                <Select name="gender" id="gender" styles={dropDownStyle} options={GenderOptions}  placeholder="Enter Gender" openMenuOnFocus isClearable />
+                <Select name="gender" id="gender" styles={dropDownStyle} options={GenderOptions} onChange={this.handleChangeDropGen} placeholder="Enter Gender" openMenuOnFocus isClearable />
 
 
                 <div className="text-danger">{this.state.errors.email}</div>
@@ -441,8 +537,8 @@ handleChange(event) {
                 </div>
                 <div className="col-sm-6">
                     <div className="form-group">
-                        <InputLabel for="gender">Division:</InputLabel>
-                <Select name="loc" id="loc" styles={dropDownStyle} options={LocationOptions}  placeholder="Enter Division" openMenuOnFocus isClearable />
+                        <InputLabel for="loc">Division:</InputLabel>
+                <Select name="loc" id="loc" styles={dropDownStyle} options={LocationOptions} onChange={this.handleChangeDropDiv} placeholder="Enter Division" openMenuOnFocus isClearable />
                     </div>
                 </div>
 
@@ -457,7 +553,7 @@ handleChange(event) {
             <div className="col-sm-6">
             <div className="form-group">
                 <InputLabel for="field">Field of Work:</InputLabel>
-                <Select name="field" id="field" styles={dropDownStyle} options={CatOptions}  placeholder="Enter Your Current Field of Work" openMenuOnFocus isClearable />
+                <Select name="field" id="field" styles={dropDownStyle} options={CatOptions} onChange={this.handleChangeDropField} placeholder="Enter Your Current Field of Work" openMenuOnFocus isClearable />
 
             </div>
             </div>
@@ -465,7 +561,7 @@ handleChange(event) {
 
                 <div className="form-group">
                 <InputLabel for="pref_org">Preferred Organization:</InputLabel>
-                <Select name="pref_org" id="pref_org" styles={dropDownStyle} options={OrgOptions}  placeholder="Enter Your Preferred Organization Type" openMenuOnFocus isClearable />
+                <Select name="pref_org" id="pref_org" styles={dropDownStyle} options={OrgOptions} onChange={this.handleChangeDropOrg} placeholder="Enter Your Preferred Organization Type" openMenuOnFocus isClearable />
 
             </div>
             </div>
@@ -474,7 +570,7 @@ handleChange(event) {
             <div className="col-sm-6">
             <div className="form-group">
                 <InputLabel for="pref_nat">Preferred Job Nature:</InputLabel>
-                <Select name="pref_nat" id="pref_nat" styles={dropDownStyle} options={NatureOptions}  placeholder="Enter Your Preferred Job Nature" openMenuOnFocus isClearable />
+                <Select name="pref_nat" id="pref_nat" styles={dropDownStyle} options={NatureOptions} onChange={this.handleChangeDropNat} placeholder="Enter Your Preferred Job Nature" openMenuOnFocus isClearable />
 
             </div>
             </div>
