@@ -11,20 +11,25 @@ import Filter_sidebar from "./Filter_sidebar";
 import Navb from "./Navb";
 import Select from "react-select"
 import Jobdetailsitems from "./jobdetailsitems";
-import {useParams} from "react-router-dom";
+import {Navigate, useParams} from "react-router-dom";
 import Loader from "./loader";
 import Foot from "./Foot";
 
-
+var jsonData = {
+    "job_id":"",
+    "mount":"",
+  }
 
 class Jobdetails extends Component {
     state={
         items:[],
         DetailesLoaded:false,
         req_exp:"",
+        ifapplied:"",
     }
     constructor(props) {
         super(props);
+        this.handleClickApply=this.handleClickApply.bind(this);
       }
 
     componentDidMount() {
@@ -35,6 +40,8 @@ class Jobdetails extends Component {
         const splitid = url.split("?")
         const id=splitid[1]
         console.log(id)
+        jsonData.job_id=id
+        jsonData.mount="true"
         fetch(
             "http://127.0.0.1:8000/"+id )
 
@@ -47,9 +54,50 @@ class Jobdetails extends Component {
                 console.log(json)
                 const exp_text="At least "+json.required_experience.toString()+" year(s)"
                 this.setState({'req_exp':exp_text})
+                const jid = json.jobpost_id
+                this.setState({'job_id': jid})
+            })
+
+
+            fetch('http://127.0.0.1:8000/first_module/apply/getapplication/', {  // Enter your IP address here
+              method: 'POST',
+                headers:{
+                'Content-Type': 'application/json',
+              },
+              mode: 'cors',
+              body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
+            })
+
+            fetch(
+        "http://127.0.0.1:8000/first_module/apply/getapplication/",{
+            method:"GET"
+            })
+            .then((res) => res.json())
+            .then((json) => {
+                console.log(json.response)
+                if (json.response==="applied") {
+                         this.state.ifapplied=true
+                    }
+                    else {
+                       this.state.ifapplied=false
+                    }
             })
 
     }
+
+    handleClickApply() {
+    jsonData.job_id=this.state.job_id
+    jsonData.mount="false"
+    fetch('http://127.0.0.1:8000/first_module/apply/getapplication/', {  // Enter your IP address here
+      method: 'POST',
+        headers:{
+        'Content-Type': 'application/json',
+      },
+      mode: 'cors',
+      body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
+    })
+    this.setState({'redirect':true})
+  }
 
     render() {
         if (!this.state.DataisLoaded) return <Loader/>
@@ -90,7 +138,8 @@ class Jobdetails extends Component {
                 <p><b>Vacancy:</b> {this.state.items.vacancies}</p>
 
                 <span style={{textAlign:"center"}}>
-                    <button className="job_details_btn">Apply Now</button>
+                    {this.state.ifapplied && <button className="job_details_btn_disabled" disabled={true}>Applied</button>}
+                    {!this.state.ifapplied && <button className="job_details_btn" onClick={this.handleClickApply}>Apply Now</button>}
                     <button className="job_details_btn">Shortlist Job</button>
                     <button className="job_details_btn">Follow Employer</button>
                 </span>

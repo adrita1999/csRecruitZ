@@ -926,6 +926,51 @@ class uskillViewsets(viewsets.ModelViewSet):
     serializer_class = uskillSerializer
 
 
+class applicationViewsets(viewsets.ModelViewSet):
+    queryset = JobApplication.objects.all()
+    serializer_class = applicationSerializer
+    # stat="notapplied"
+    user_id = 1
+    job_id = ""
+
+    @action(methods=['post', 'get'], detail=False, url_path='getapplication')
+    def apply(self, request):
+        if request.method == 'POST':
+            # print(request.data)
+            if request.data['mount']=="true":#mount er shomoy post
+                applicationViewsets.job_id = int(request.data['job_id'])
+            else:#apply er somoy post
+                allapplication = JobApplication.objects.all()
+                app_id = 1
+                if len(allapplication) == 0:
+                    app_id = 1
+                else:
+                    apps = JobApplication.objects.filter().order_by('-application_id')
+                    #print(apps[0].application_id)
+                    app_id = int(apps[0].application_id) + 1
+                now = datetime.now()
+                current_time = now.strftime("%H:%M:%S")
+                print("Current Time =", current_time)
+                todaydate = datetime.today().strftime('%Y-%m-%d')
+                print(app_id)
+                applicationViewsets.job_id=int(request.data['job_id'])
+                application = JobApplication(application_id=int(app_id), user_id_id=int(applicationViewsets.user_id), newjobpost_id_id=int(request.data['job_id']), apply_date=todaydate,apply_time=current_time)
+                application.save()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            str="notapplied"
+            apps = JobApplication.objects.filter(newjobpost_id_id=int(applicationViewsets.job_id),user_id_id=int(applicationViewsets.user_id))
+            print(apps)
+            if len(apps)!=0:
+                str="applied"
+            serializer = applicationSerializer(apps, many=True)
+            return Response({
+                'status': status.HTTP_204_NO_CONTENT,
+                'data':serializer.data,
+                'response': str,
+            })
+
+
 user1 = Jobseeker(user_id=1, name="Adrita Hossain Nakshi", email="adrita_99@yahoo.com", password="1234", thana="Lalbag",
                   district="Dhaka", division="Dhaka", father_name="Dr. Md. Elias Hossain",
                   mother_name="Dr. Zennat Ferdousi", date_of_birth="1999-02-06",
