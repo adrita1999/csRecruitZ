@@ -27,6 +27,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from '@mui/material/Select';
 
+var globalloc=""
 const sortOptions = [
   { value: "Most Recent Post", label: "Most Recent Post" },
   { value: "Deadline", label: "Deadline" },
@@ -150,6 +151,10 @@ class Joblist extends Component {
             .then((json) => {
                 this.setState({datas: json.data, DataisLoaded: true, filter_cat_val:json.cat, filter_nat_val:json.nat, filter_cat_exp:json.exp, filter_cat_loc:json.loc})
                 console.log(json.data)
+                console.log(this.state.filter_cat_loc)
+                this.state.filter_cat_loc=json.loc
+                console.log(this.state.filter_cat_loc)
+                globalloc=json.loc
                 // console.log(json.data.length)
                 this.state.totjobs=json.data.length
             })
@@ -239,9 +244,28 @@ class Joblist extends Component {
       this.state.filter_exp_val=event.target.value;
   }
     handleChangeLoc(event) {
-        console.log("change")
+        console.log("loc change")
         console.log(event.target.value)
-
+        jsonData.location=event.target.value
+        jsonData.filtername="loc"
+        fetch('http://127.0.0.1:8000/searchinput/', {  // Enter your IP address here
+         method: 'POST',
+         headers:{
+         'Content-Type': 'application/json',
+         },
+         mode: 'cors',
+         body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
+        })
+        fetch(
+  "http://127.0.0.1:8000/searchinput/",{
+        method:"GET"
+            })
+            .then((res) => res.json())
+            .then((json) => {
+                this.setState({datas: json.data, DataisLoaded: true , filter_cat_val:json.cat, filter_nat_val:json.nat, filter_cat_exp:json.exp, filter_cat_loc:json.loc})
+                console.log(json.data)
+                this.state.totjobs=json.data.length
+        })
         this.state.filter_loc_val=event.target.value;
   }
 
@@ -277,6 +301,7 @@ class Joblist extends Component {
                                 aria-labelledby="demo-radio-buttons-group-label"
                                 name="radio-buttons-group"
                                 defaultValue={this.state.filter_cat_val}
+                                value={this.state.filter_cat_val}
                                 onChange={this.handleChangeCat}>
                                   {this.state.job_categories.map(category => (
                                       <FormControlLabel value={category.value} control={<Radio sx={{'& .MuiSvgIcon-root': {fontSize: 18,},}} />} label={<span className="radio_btn_option">{category.value}</span>}/>
@@ -286,9 +311,6 @@ class Joblist extends Component {
                     </div>
                 </div>
 
-                <div className="category_div">
-                    <Dropdown_my values={this.state.locations} title={this.state.filter_title_loc} default_val={this.state.default_loc} />
-                </div>
                 <div className="category_div">
                     <div>
                         <div className="filter_title_bg_div">
@@ -301,7 +323,9 @@ class Joblist extends Component {
                             <Select
                               labelId="demo-simple-select-label"
                               id="demo-simple-select"
+                              defaultValue={globalloc}
                               label="Division"
+                              onChange={this.handleChangeLoc}
                               style={{ height: 38,fontSize:15,paddingTop:4}}
                             >
                                 {this.state.locations.map(location => (
