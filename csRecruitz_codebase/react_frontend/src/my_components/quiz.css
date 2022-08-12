@@ -6,7 +6,9 @@
 .title{
     text-align: center;
     background-color: grey;
+    background-color: #410390;
     padding: 10px;
+    border-radius: 5px;;
 }
 .question{
     margin-left: 2%;
@@ -21,6 +23,7 @@
 .lastdiv{
     background-color: white;
     width: 100%;
+    border-radius: 5px;
 
 }
 .countp{
@@ -37,6 +40,8 @@
     margin-right: 5px;
 }
 .btn{
-    float: right;
+    width: 100px;
     margin-right: 20px;
+    margin-left: 600px;
+    margin-top: -100px;
 }

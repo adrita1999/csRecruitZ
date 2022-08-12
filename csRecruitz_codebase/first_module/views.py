@@ -104,7 +104,6 @@ class postViewsets_for_jobpost(viewsets.ModelViewSet):
                             employer_id__name__icontains=postViewsets_for_jobpost.keyword))
                 else:
                     postViewsets_for_jobpost.objs_keyword = NewJobpost.objects.all()
-                #######################################################################################################################
 
                 if postViewsets_for_jobpost.cat != "" and postViewsets_for_jobpost.keyword != "" and postViewsets_for_jobpost.nature != "" and postViewsets_for_jobpost.org != "" and postViewsets_for_jobpost.loc != "":
                     postViewsets_for_jobpost.objs = NewJobpost.objects.filter(Q(category=postViewsets_for_jobpost.cat),
@@ -1065,6 +1064,11 @@ class appliedjobViewsets(viewsets.ModelViewSet):
     user_id=1
     queryset = JobApplication.objects.filter(user_id_id=user_id)
     serializer_class = applicationSerializer
+class questionViewsets(viewsets.ModelViewSet):
+    queryset = Question.objects.filter(skill_id=1)
+    print(queryset)
+    serializer_class = questionSerializer
+
 
 user1 = Jobseeker(user_id=1, name="Adrita Hossain Nakshi", email="adrita_99@yahoo.com", password="1234", thana="Lalbag",
                   district="Dhaka", division="Dhaka", father_name="Dr. Md. Elias Hossain",

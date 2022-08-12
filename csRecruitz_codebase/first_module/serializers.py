@@ -79,3 +79,8 @@ class applicationSerializer(serializers.ModelSerializer):
 
     def get_deadline(self, obj):
         return obj.newjobpost_id.deadline_date
+class questionSerializer(serializers.ModelSerializer):
+    #print("serialiser")
+    class Meta:
+        model= Question
+        fields='__all__'
