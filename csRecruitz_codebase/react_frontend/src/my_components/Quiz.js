@@ -75,7 +75,7 @@ export class Quiz extends Component {
   }
 
   startTimer() {
-    if (this.state.timer == 0 && this.state.seconds > 0) {
+    if (this.state.timer === 0 && this.state.seconds > 0) {
       this.state.timer = setInterval(this.countDown, 1000);
     }
   }
@@ -89,7 +89,7 @@ export class Quiz extends Component {
     });
     
     // Check if we're at zero.
-    if (seconds == 0) { 
+    if (seconds === 0) { 
       clearInterval(this.state.timer);
     }
   }
@@ -174,20 +174,21 @@ export class Quiz extends Component {
                   < Progress percent={this.state.percent} ></Progress>
                   <br/>
                 </div>
-                <div className='lastdiv' style={{backgroundColor:'white'}}>
+                <div className='lastdiv' style={{backgroundColor:'white',marginBottom:"50px"}}>
                     {/* <p className='countp'> question=1/10</p> */}
-                    <p className='time' onLoadStart={this.startTimer}><FaRegClock className='clock'/>
+                    <p className='time' ><FaRegClock className='clock'/>
                      </p>
                      { this.state.time.m === 0 && this.state.time.s === 0
                           ? null
-                          : <p style={{}}
+                          : <p style={{paddingBottom:"30px"}}
                               open={this.state.DataisLoaded}
+                              onLoadStart={this.startTimer}
                               onClose={this.handleClose}>
                               Time: {this.state.time.m}:{this.state.time.s}</p> 
                       }
                     
-                    <button className='btn btn-success' onClick={this.handleNext} style={{width:"100px", marginRight: "20px",marginLeft: "600px", marginTop:"-100px"}}> Next</button>
-                    <button className='btn btn-danger'style={{marginLeft: "750px",marginTop: "-150px"}} onClick={this.handleQuit}> Quit</button>
+                    <button className='btn btn-success' onClick={this.handleNext} style={{width:"100px", marginRight: "150px",marginLeft: "400px", marginTop:"-80px"}}> Next</button>
+                    <button className='btn btn-danger'style={{width:"100px",marginLeft: "500px",marginTop: "-80px"}} onClick={this.handleQuit}> Quit</button>
 
                 </div>
                 
