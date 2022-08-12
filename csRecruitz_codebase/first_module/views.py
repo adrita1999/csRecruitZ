@@ -1000,23 +1000,40 @@ class applicationViewsets(viewsets.ModelViewSet):
             # print(request.data)
             if request.data['mount']=="true":#mount er shomoy post
                 applicationViewsets.job_id = int(request.data['job_id'])
-            else:#apply er somoy post
-                allapplication = JobApplication.objects.all()
-                app_id = 1
-                if len(allapplication) == 0:
+            else:#apply er somoy
+                if request.data['type']=="apply":
+                    allapplication = JobApplication.objects.all()
                     app_id = 1
+                    if len(allapplication) == 0:
+                        app_id = 1
+                    else:
+                        apps = JobApplication.objects.filter().order_by('-application_id')
+                        #print(apps[0].application_id)
+                        app_id = int(apps[0].application_id) + 1
+                    now = datetime.now()
+                    current_time = now.strftime("%H:%M:%S")
+                    print("Current Time =", current_time)
+                    todaydate = datetime.today().strftime('%Y-%m-%d')
+                    print(app_id)
+                    applicationViewsets.job_id=int(request.data['job_id'])
+                    application = JobApplication(application_id=int(app_id), user_id_id=int(applicationViewsets.user_id), newjobpost_id_id=int(request.data['job_id']), apply_date=todaydate,apply_time=current_time)
+                    application.save()
                 else:
-                    apps = JobApplication.objects.filter().order_by('-application_id')
-                    #print(apps[0].application_id)
-                    app_id = int(apps[0].application_id) + 1
-                now = datetime.now()
-                current_time = now.strftime("%H:%M:%S")
-                print("Current Time =", current_time)
-                todaydate = datetime.today().strftime('%Y-%m-%d')
-                print(app_id)
-                applicationViewsets.job_id=int(request.data['job_id'])
-                application = JobApplication(application_id=int(app_id), user_id_id=int(applicationViewsets.user_id), newjobpost_id_id=int(request.data['job_id']), apply_date=todaydate,apply_time=current_time)
-                application.save()
+                    if request.data["ifshortlist"]=="false":
+                        applicationViewsets.job_id = int(request.data['job_id'])
+                        shortlist = JobShortlist.objects.filter(user_id_id=int(applicationViewsets.user_id), newjobpost_id_id=int(request.data['job_id']))
+                        shortlist.delete()
+                    else:
+                        allshortlist=JobShortlist.objects.all()
+                        sh_id=1
+                        if len(allshortlist)==0:
+                            sh_id=1
+                        else:
+                            lists=JobShortlist.objects.filter().order_by('-jobshortlist_id')
+                            sh_id=int(lists[0].jobshortlist_id)+1
+                        applicationViewsets.job_id = int(request.data['job_id'])
+                        shortlist=JobShortlist(jobshortlist_id=int(sh_id),user_id_id=int(applicationViewsets.user_id), newjobpost_id_id=int(request.data['job_id']))
+                        shortlist.save()
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
             str="notapplied"
@@ -1024,11 +1041,19 @@ class applicationViewsets(viewsets.ModelViewSet):
             print(apps)
             if len(apps)!=0:
                 str="applied"
+
+            str2 = "notshortlisted"
+            sh = JobShortlist.objects.filter(newjobpost_id_id=int(applicationViewsets.job_id),
+                                                 user_id_id=int(applicationViewsets.user_id))
+            print(sh)
+            if len(sh) != 0:
+                str2 = "shortlisted"
             serializer = applicationSerializer(apps, many=True)
             return Response({
                 'status': status.HTTP_204_NO_CONTENT,
                 'data':serializer.data,
                 'response': str,
+                'short':str2,
             })
 
 
