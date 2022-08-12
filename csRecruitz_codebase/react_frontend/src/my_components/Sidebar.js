@@ -18,7 +18,7 @@ class Sidebar extends Component {
                 <a  href="/">Upload Resume</a>
                 <a className={this.pathaname==='/professional'?"active":""} href="/professional" >Professional Information</a>
                 <a  href="/applied">Applied Jobs</a>
-                <a  href="/">Shortlisted Jobs</a>
+                <a  href="/shortlisted">Shortlisted Jobs</a>
 
 
             </div>

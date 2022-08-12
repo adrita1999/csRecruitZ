@@ -31,6 +31,7 @@ router.register(r'first_module/apply',applicationViewsets)
 router.register(r'first_module/pub',publicationViewsets)
 
 router.register(r'first_module/appliedjobs',appliedjobViewsets)
+router.register(r'first_module/shortlistedjobs',shortlistedjobViewsets)
 
 
 router.register(r'first_module/question',questionViewsets)
