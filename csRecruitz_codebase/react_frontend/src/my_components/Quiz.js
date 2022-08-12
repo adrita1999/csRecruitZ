@@ -186,8 +186,8 @@ export class Quiz extends Component {
                               Time: {this.state.time.m}:{this.state.time.s}</p> 
                       }
                     
-                    <button className='btn btn-success' onClick={this.handleNext}> Next</button>
-                    <button className='btn btn-danger'style={{marginLeft: "750px",marginTop: "-150px"}}onClick={this.handleQuit}> Quit</button>
+                    <button className='btn btn-success' onClick={this.handleNext} style={{width:"100px", marginRight: "20px",marginLeft: "600px", marginTop:"-100px"}}> Next</button>
+                    <button className='btn btn-danger'style={{marginLeft: "750px",marginTop: "-150px"}} onClick={this.handleQuit}> Quit</button>
 
                 </div>
                 
