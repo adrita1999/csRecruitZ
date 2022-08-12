@@ -144,22 +144,22 @@ class Project(models.Model):
     project_id = models.IntegerField(primary_key=True)
     user_id = models.ForeignKey(Jobseeker, on_delete=models.CASCADE)
     project_name = models.CharField(max_length=200)
-    project_short_desc = models.TextField()
-    project_link = models.CharField(max_length=200)
+    project_short_desc = models.TextField(null=True)
+    project_link = models.CharField(max_length=200,null=True)
 
 
 class Publication(models.Model):
     publication_id = models.IntegerField(primary_key=True)
     user_id = models.ForeignKey(Jobseeker, on_delete=models.CASCADE)
     publication_name = models.CharField(max_length=200)
-    publication_link = models.CharField(max_length=200)
+    publication_link = models.CharField(max_length=200,null=True)
 
 
 class LicenseCertificate(models.Model):
     certificate_id = models.IntegerField(primary_key=True)
     certificate_name = models.CharField(max_length=200)
     issuing_org = models.CharField(max_length=200)
-    certificate_link = models.CharField(max_length=200)
+    certificate_file = models.FileField(null=True)
 
 
 class JobseekerCertificate(models.Model):

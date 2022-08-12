@@ -112,10 +112,18 @@ class Register_2 extends Component {
 
           <hr/>
                 <form onSubmit={this.handleSubmit}>
-                    <div className="row">
+                    <div className="row" style={{
+             marginBottom:5
+         }}>
                   <div className="col-sm-6">
                  <div className="form-group">
-                <InputLabel for="job_des">Designation:</InputLabel>
+                <InputLabel for="job_des">Designation:<sup style={{
+                color:"red",
+                fontSize:16,
+                lineHeight:0,
+                top:-1.4,
+                left:1
+            }}>*</sup></InputLabel>
                  <input
                      type="text"
                      name="job_des_start"
@@ -123,13 +131,19 @@ class Register_2 extends Component {
                      onChange={this.handleChange}
                      className="form-control"
                       placeholder="Enter Your Designation in the Job"
-                     id="job_des" />
+                     id="job_des" required/>
 
              </div>
                   </div>
                   <div className="col-sm-6">
                  <div className="form-group">
-                <InputLabel for="job_emp">Employer:</InputLabel>
+                <InputLabel for="job_emp">Employer:<sup style={{
+                color:"red",
+                fontSize:16,
+                lineHeight:0,
+                top:-1.4,
+                left:1
+            }}>*</sup></InputLabel>
                  <input
                      type="text"
                      name="job_emp_start"
@@ -137,16 +151,24 @@ class Register_2 extends Component {
                      onChange={this.handleChange}
                      className="form-control"
                      placeholder="Enter Employer/Organization Name"
-                     id="job_emp" />
+                     id="job_emp" required />
 
              </div>
                   </div>
 
              </div>
-            <div className="row">
+            <div className="row" style={{
+             marginBottom:5
+         }}>
                   <div className="col-sm-6">
                  <div className="form-group">
-                <InputLabel for="from_year">From Year:</InputLabel>
+                <InputLabel for="from_year">From Year:<sup style={{
+                color:"red",
+                fontSize:16,
+                lineHeight:0,
+                top:-1.4,
+                left:1
+            }}>*</sup></InputLabel>
                  <input
                      type="number"
                      min="1990"
@@ -156,13 +178,19 @@ class Register_2 extends Component {
                      onChange={this.handleChange}
                      className="form-control"
                      placeholder="Enter Your Starting Year"
-                     id="from_year" />
+                     id="from_year" required />
 
              </div>
                   </div>
                  <div className="col-sm-6">
                  <div className="form-group">
-                <InputLabel for="to_year_start">To Year:</InputLabel>
+                <InputLabel for="to_year_start">To Year:<sup style={{
+                color:"red",
+                fontSize:16,
+                lineHeight:0,
+                top:-1.4,
+                left:1
+            }}>*</sup></InputLabel>
                  <input
                      type="number"
                      min="1990"
@@ -172,14 +200,16 @@ class Register_2 extends Component {
                      onChange={this.handleChange}
                      className="form-control"
                      placeholder="Enter Your Finishing Year"
-                     id="to_year" />
+                     id="to_year" required/>
 
              </div>
                   </div>
 
              </div>
 
-            <div className="row">
+            <div className="row" style={{
+             marginBottom:5
+         }}>
 
                     <div className="form-group" >
                         <InputLabel htmlFor="desc">Description</InputLabel>
@@ -196,10 +226,18 @@ class Register_2 extends Component {
     new Array(this.state.numDivs).fill(0).map((item, index) => (
         <div>
             <hr/>
-        <div className="row">
+        <div className="row" style={{
+             marginBottom:5
+         }}>
                   <div className="col-sm-6">
                  <div className="form-group">
-                <InputLabel for="job_des">Designation:</InputLabel>
+                <InputLabel for="job_des">Designation:<sup style={{
+                color:"red",
+                fontSize:16,
+                lineHeight:0,
+                top:-1.4,
+                left:1
+            }}>*</sup></InputLabel>
                  <input
                      type="text"
                      name={"job_des_"+index}
@@ -207,13 +245,19 @@ class Register_2 extends Component {
                      onChange={this.handleChange}
                      className="form-control"
                       placeholder="Enter Your Designation in the Job"
-                     id="job_des" />
+                     id="job_des" required />
 
              </div>
                   </div>
                   <div className="col-sm-6">
                  <div className="form-group">
-                <InputLabel for="job_emp">Employer:</InputLabel>
+                <InputLabel for="job_emp">Employer:<sup style={{
+                color:"red",
+                fontSize:16,
+                lineHeight:0,
+                top:-1.4,
+                left:1
+            }}>*</sup></InputLabel>
                  <input
                      type="text"
                      name={"job_emp_"+index}
@@ -221,16 +265,24 @@ class Register_2 extends Component {
                      onChange={this.handleChange}
                      className="form-control"
                      placeholder="Enter Employer/Organization Name"
-                     id="job_emp" />
+                     id="job_emp" required />
 
              </div>
                   </div>
 
              </div>
-            <div className="row">
+            <div className="row" style={{
+             marginBottom:5
+         }}>
                   <div className="col-sm-6">
                  <div className="form-group">
-                <InputLabel for="from_year">From Year:</InputLabel>
+                <InputLabel for="from_year">From Year:<sup style={{
+                color:"red",
+                fontSize:16,
+                lineHeight:0,
+                top:-1.4,
+                left:1
+            }}>*</sup></InputLabel>
                  <input
                      type="number"
                      min="1990"
@@ -240,13 +292,19 @@ class Register_2 extends Component {
                      onChange={this.handleChange}
                      className="form-control"
                      placeholder="Enter Your Starting Year"
-                     id="from_year" />
+                     id="from_year" required />
 
              </div>
                   </div>
                  <div className="col-sm-6">
                  <div className="form-group">
-                <InputLabel for="to_year">To Year:</InputLabel>
+                <InputLabel for="to_year">To Year:<sup style={{
+                color:"red",
+                fontSize:16,
+                lineHeight:0,
+                top:-1.4,
+                left:1
+            }}>*</sup></InputLabel>
                  <input
                      type="number"
                      min="1990"
@@ -256,14 +314,16 @@ class Register_2 extends Component {
                      onChange={this.handleChange}
                      className="form-control"
                      placeholder="Enter Your Finishing Year"
-                     id="to_year" />
+                     id="to_year" required />
 
              </div>
                   </div>
 
              </div>
 
-            <div className="row">
+            <div className="row" style={{
+             marginBottom:5
+         }}>
 
                     <div className="form-group" >
                         <InputLabel htmlFor="desc">Description</InputLabel>

@@ -307,10 +307,18 @@ handleChange(event) {
           }}>Personal Information</p>
           <hr/>
         <form onSubmit={this.handleSubmit}>
-         <div className="row">
+         <div className="row" style={{
+             marginBottom:5
+         }}>
              <div className="col-sm-6">
           <div className="form-group">
-            <InputLabel for="name">Name:</InputLabel>
+            <InputLabel for="name">Name:<sup style={{
+                color:"red",
+                fontSize:16,
+                lineHeight:0,
+                top:-1.4,
+                left:1
+            }}>*</sup></InputLabel>
             <input
               type="text"
               name="name"
@@ -318,13 +326,19 @@ handleChange(event) {
               className="form-control"
               placeholder="Enter name"
               onChange={this.handleChange}
-              id="name" />
+              id="name" required/>
 
           </div>
              </div>
              <div className="col-sm-6">
                  <div className="form-group">
-                     <InputLabel for="dob">Date of Birth:</InputLabel>
+                     <InputLabel for="dob">Date of Birth:<sup style={{
+                color:"red",
+                fontSize:16,
+                lineHeight:0,
+                top:-1.4,
+                left:1
+            }}>*</sup></InputLabel>
                      <input
                          type="text"
                          name="dob"
@@ -334,13 +348,15 @@ handleChange(event) {
                          onFocus={this.onFocusHandle}
                          onBlur={this.onBlurHandle}
                          onChange={this.handleChange}
-                         id="dob" />
+                         id="dob" required/>
 
 
                  </div>
              </div>
          </div>
-            <div className="row">
+            <div className="row" style={{
+             marginBottom:5
+         }}>
             <div className="col-sm-6">
             <div className="form-group">
                 <InputLabel for="gender">Gender:</InputLabel>
@@ -352,7 +368,13 @@ handleChange(event) {
             </div>
             <div className="col-sm-6">
             <div className="form-group">
-                <InputLabel for="mob">Contact Number:</InputLabel>
+                <InputLabel for="mob">Contact Number:<sup style={{
+                color:"red",
+                fontSize:16,
+                lineHeight:0,
+                top:-1.4,
+                left:1
+            }}>*</sup></InputLabel>
                 <input
                     type="number"
                     name="mob"
@@ -360,15 +382,23 @@ handleChange(event) {
                     onChange={this.handleChange}
                     className="form-control"
                     placeholder="Enter Contact Number"
-                    id="mob" />
+                    id="mob" required />
 
             </div>
             </div>
                 </div>
-            <div className="row">
+            <div className="row" style={{
+             marginBottom:5
+         }}>
             <div className="col-sm-6">
             <div className="form-group">
-                <InputLabel for="email">Email Address:</InputLabel>
+                <InputLabel for="email">Email Address:<sup style={{
+                color:"red",
+                fontSize:16,
+                lineHeight:0,
+                top:-1.4,
+                left:1
+            }}>*</sup></InputLabel>
                 <input
                     type="text"
                     name="email"
@@ -376,14 +406,20 @@ handleChange(event) {
                     onChange={this.handleChange}
                     className="form-control"
                     placeholder="Enter email"
-                    id="email" />
+                    id="email" required />
 
                 <div className="text-danger">{this.state.errors.email}</div>
             </div>
             </div>
             <div className="col-sm-6">
             <div className="form-group">
-                <InputLabel for="nid">NID number:</InputLabel>
+                <InputLabel for="nid">NID number:<sup style={{
+                color:"red",
+                fontSize:16,
+                lineHeight:0,
+                top:-1.4,
+                left:1
+            }}>*</sup></InputLabel>
                 <input
                     type="number"
                     name="nid"
@@ -391,15 +427,23 @@ handleChange(event) {
                     onChange={this.handleChange}
                     className="form-control"
                     placeholder="Enter NID Number"
-                    id="nid" />
+                    id="nid" required />
 
             </div>
             </div>
                 </div>
-            <div className="row">
+            <div className="row" style={{
+             marginBottom:5
+         }}>
              <div className="col-sm-6">
           <div className="form-group">
-            <InputLabel for="password">Password:</InputLabel>
+            <InputLabel for="password">Password:<sup style={{
+                color:"red",
+                fontSize:16,
+                lineHeight:0,
+                top:-1.4,
+                left:1
+            }}>*</sup></InputLabel>
             <input
               type="password"
               name="password"
@@ -407,14 +451,20 @@ handleChange(event) {
               onChange={this.handleChange}
               className="form-control"
               placeholder="Enter password"
-              id="password" />
+              id="password" required/>
 
               <div className="text-danger">{this.state.errors.password}</div>
           </div>
              </div>
                 <div className="col-sm-6">
                 <div className="form-group">
-                    <InputLabel htmlFor="password">Confirm Password:</InputLabel>
+                    <InputLabel htmlFor="password">Confirm Password:<sup style={{
+                color:"red",
+                fontSize:16,
+                lineHeight:0,
+                top:-1.4,
+                left:1
+            }}>*</sup></InputLabel>
                     <input
                         type="password"
                         name="confirm_password"
@@ -422,15 +472,23 @@ handleChange(event) {
                         onChange={this.handleChange}
                         className="form-control"
                         placeholder="Retype password"
-                        id="confirm_password" />
+                        id="confirm_password" required/>
                 </div>
                 </div>
 
             </div>
-             <div className="row">
+             <div className="row" style={{
+             marginBottom:5
+         }}>
                 <div className="col-sm-6">
                     <div className="form-group">
-                        <InputLabel htmlFor="nat">Nationality:</InputLabel>
+                        <InputLabel htmlFor="nat">Nationality:<sup style={{
+                color:"red",
+                fontSize:16,
+                lineHeight:0,
+                top:-1.4,
+                left:1
+            }}>*</sup></InputLabel>
                         <input
                             type="text"
                             name="nat"
@@ -438,7 +496,7 @@ handleChange(event) {
                             onChange={this.handleChange}
                             className="form-control"
                             placeholder="Enter Your Nationality"
-                            id="nat" />
+                            id="nat" required />
 
                     </div>
                 </div>
@@ -457,7 +515,9 @@ handleChange(event) {
                 </div>
 
             </div>
-            <div className="row">
+            <div className="row" style={{
+             marginBottom:5
+         }}>
                 <div className="col-sm-6">
                     <div className="form-group">
                         <InputLabel htmlFor="father">Father's Name:</InputLabel>
@@ -489,7 +549,9 @@ handleChange(event) {
             </div>
 
 
-            <div className="row">
+            <div className="row" style={{
+             marginBottom:5
+         }}>
 
                     <div className="form-group" >
                         <InputLabel htmlFor="about">Self Description</InputLabel>
@@ -508,7 +570,9 @@ handleChange(event) {
              fontWeight:"bold"
             }}>Address Information</p>
             <hr/>
-            <div className="row">
+            <div className="row" style={{
+             marginBottom:5
+         }}>
                 <div className="col-sm-6">
                     <div className="form-group">
                         <InputLabel htmlFor="street">Street/Road:</InputLabel>
@@ -538,7 +602,9 @@ handleChange(event) {
                 </div>
 
             </div>
-            <div className="row">
+            <div className="row" style={{
+             marginBottom:5
+         }}>
                 <div className="col-sm-6">
                     <div className="form-group">
                         <InputLabel htmlFor="dis">District:</InputLabel>
@@ -555,7 +621,13 @@ handleChange(event) {
                 </div>
                 <div className="col-sm-6">
                     <div className="form-group">
-                        <InputLabel for="loc">Division:</InputLabel>
+                        <InputLabel for="loc">Division:<sup style={{
+                color:"red",
+                fontSize:16,
+                lineHeight:0,
+                top:-1.4,
+                left:1
+            }}>*</sup></InputLabel>
                 <Select name="loc" id="loc" styles={dropDownStyle} options={LocationOptions} onChange={this.handleChangeDropDiv} placeholder="Enter Division" openMenuOnFocus isClearable />
                     </div>
                 </div>
@@ -567,10 +639,18 @@ handleChange(event) {
               fontWeight:"bold"
           }}>Professional Information</p>
           <hr/>
-            <div className="row">
+            <div className="row" style={{
+             marginBottom:5
+         }}>
             <div className="col-sm-6">
             <div className="form-group">
-                <InputLabel for="field">Field of Work:</InputLabel>
+                <InputLabel for="field">Field of Work:<sup style={{
+                color:"red",
+                fontSize:16,
+                lineHeight:0,
+                top:-1.4,
+                left:1
+            }}>*</sup></InputLabel>
                 <Select name="field" id="field" styles={dropDownStyle} options={CatOptions} onChange={this.handleChangeDropField} placeholder="Enter Your Current Field of Work" openMenuOnFocus isClearable />
 
             </div>
@@ -584,7 +664,9 @@ handleChange(event) {
             </div>
             </div>
                 </div>
-            <div className="row">
+            <div className="row" style={{
+             marginBottom:5
+         }}>
             <div className="col-sm-6">
             <div className="form-group">
                 <InputLabel for="pref_nat">Preferred Job Nature:</InputLabel>
@@ -608,7 +690,9 @@ handleChange(event) {
 
             </div>
                 </div>
-            <div className="row">
+            <div className="row" style={{
+             marginBottom:5
+         }}>
             <input type="submit" value="Proceed To Register" className="btn btn-success sub_btn" />
                 </div>
 

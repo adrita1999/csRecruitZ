@@ -84,6 +84,9 @@ class Navb extends Component {
     })
       window.location.href="/"
    }
+   Register() {
+         window.location.href="/register"
+   }
 
       handleClose() {
       this.setState({'signinopen':false})
@@ -200,7 +203,7 @@ class Navb extends Component {
                 <Typography id="modal-modal-description" sx={{ mt: 2,color:"#ffffff",marginLeft:'30%' }}>
                     Do not have an account?
                   </Typography>
-                <button style={{marginTop:"10px",width:'80%',height:'40px',marginLeft:'8%',marginBottom:'30px',background:'#FFFFFF',border:0,borderRadius:5,color:'#410390',fontWeight:'bold'}}>Create a new account</button>
+                <button style={{marginTop:"10px",width:'80%',height:'40px',marginLeft:'8%',marginBottom:'30px',background:'#FFFFFF',border:0,borderRadius:5,color:'#410390',fontWeight:'bold'}} onClick={this.Register}>Create a new account</button>
             </div>
 
         </Box>

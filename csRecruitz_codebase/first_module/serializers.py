@@ -61,6 +61,10 @@ class uskillSerializer(serializers.ModelSerializer):
 
     def get_skill_name(self, obj):
         return obj.skill_id.skill_name
+class pub_Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = Publication
+        fields = '__all__'
 
 class applicationSerializer(serializers.ModelSerializer):
     #print("serialiser")

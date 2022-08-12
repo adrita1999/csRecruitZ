@@ -41,11 +41,13 @@ class Register_3 extends Component {
         this.state = {
             selectedOptions: [],
             selectedOptions_2:[],
+            input: {},
             numDivs: 0
         };
         this.handleChangeSkill = this.handleChangeSkill.bind(this);
         this.handleChangeOpenTo =this.handleChangeOpenTo.bind(this);
         this.handleSubmit =this.handleSubmit.bind(this);
+        this.handleChange=this.handleChange.bind(this);
     }
     handleClickSkip() {
        window.location.href="/register4"
@@ -54,6 +56,18 @@ class Register_3 extends Component {
           event.preventDefault();
           var str1=""
           var str2=""
+          var str3=this.state.input["proj_name_start"]
+          var str4=""
+          if(this.state.input["proj_link_start"])  {
+              str4=this.state.input["proj_link_start"]
+          }
+          else str4="?"
+
+          var str5=""
+          if(this.state.input["proj_desc_start"]){
+              str5=this.state.input["proj_desc_start"]
+          }
+          else str5="?"
           for (let i=0;i<this.state.selectedOptions.length;i++) {
               str1=str1+"#"+this.state.selectedOptions[i].value
           }
@@ -64,6 +78,30 @@ class Register_3 extends Component {
           jsonData.skills=str1
           jsonData.open_to=str2
           console.log(str2)
+          for(let i=0;i<this.state.numDivs;i++) {
+              var ind3="proj_name_"+i;
+              var ind4="proj_link_"+i;
+              var ind5="proj_desc_"+i;
+
+
+              str3=str3+"#"+this.state.input[ind3]
+              //str4=str4+" "+this.state.input[ind4]
+              if(this.state.input[ind4]) {
+                  str4 = str4 + "#" + this.state.input[ind4]
+              }
+              else str4=str4+'#'+'?'
+
+              if(this.state.input[ind5]) {
+                  str5 = str5 + "#" + this.state.input[ind5]
+              }
+              else str5=str5+'#'+'?'
+          }
+          console.log(str3)
+          console.log(str4)
+          console.log(str5)
+          jsonData.proj_name=str3
+          jsonData.proj_link=str4
+          jsonData.proj_desc=str5
           fetch('http://127.0.0.1:8000/first_module/uskill/addskill/', {  // Enter your IP address here
 
       method: 'POST',
@@ -73,7 +111,7 @@ class Register_3 extends Component {
       mode: 'cors',
       body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
     })
-          //window.location.href = "/register4"
+          window.location.href = "/register4"
       }
        handleChangeSkill = (selectedOptions) => {
            console.log(selectedOptions)
@@ -83,6 +121,16 @@ class Register_3 extends Component {
            console.log(selectedOptions)
            this.setState({ selectedOptions_2:selectedOptions })
         }
+        handleChange(event) {
+    let input = this.state.input;
+    console.log(event.target.name);
+    input[event.target.name] = event.target.value;
+
+
+    this.setState({
+      input
+    });
+  }
     render() {
 
         return(<React.Fragment>
@@ -109,14 +157,18 @@ class Register_3 extends Component {
                 }}>Skills</p>
                 <hr/>
                  <form onSubmit={this.handleSubmit}>
-                <div className="row">
+                <div className="row" style={{
+             marginBottom:5
+         }}>
                  <div className="form-group">
                  <InputLabel for="skills">Skills:</InputLabel>
                  <Select name="skills" id="skills" styles={dropDownStyle} options={SkillOptions} onChange={this.handleChangeSkill} isMulti placeholder="Add Your Skills" openMenuOnFocus isClearable />
              </div>
 
             </div>
-            <div className="row">
+            <div className="row" style={{
+             marginBottom:5
+         }}>
                  <div className="form-group">
                 <InputLabel for="open_skills">Currently Open To:</InputLabel>
                  <Select name="open_skills" id="open_skills" styles={dropDownStyle} options={this.state.selectedOptions} onChange={this.handleChangeOpenTo} isMulti placeholder="Add Skills that You are Currently Open to Work with " openMenuOnFocus isClearable />
@@ -136,13 +188,21 @@ class Register_3 extends Component {
 
           <hr/>
 
-                    <div className="row">
+                    <div className="row" style={{
+             marginBottom:5
+         }}>
                   <div className="col-sm-6">
                  <div className="form-group">
-                <InputLabel for="job_des">Project Name:</InputLabel>
+                <InputLabel for="job_des">Project Name:<sup style={{
+                color:"red",
+                fontSize:16,
+                lineHeight:0,
+                top:-1.4,
+                left:1
+            }}>*</sup></InputLabel>
                  <input
                      type="text"
-                     name="proj_name"
+                     name="proj_name_start"
 
                      onChange={this.handleChange}
                      className="form-control"
@@ -156,7 +216,7 @@ class Register_3 extends Component {
                 <InputLabel for="proj_link">Project Link:</InputLabel>
                  <input
                      type="url"
-                     name="proj_link"
+                     name="proj_link_start"
 
                      onChange={this.handleChange}
                      className="form-control"
@@ -168,12 +228,14 @@ class Register_3 extends Component {
 
              </div>
 
-            <div className="row">
+            <div className="row" style={{
+             marginBottom:5
+         }}>
 
                     <div className="form-group" >
                         <InputLabel htmlFor="proj_desc">Description</InputLabel>
                         <textarea
-                            name="proj_desc"
+                            name="proj_desc_start"
                             onChange={this.handleChange}
                             className="form-control"
                             placeholder="Write Something About Your Project"
@@ -185,13 +247,21 @@ class Register_3 extends Component {
     new Array(this.state.numDivs).fill(0).map((item, index) => (
         <div>
             <hr/>
-            <div className="row">
+            <div className="row" style={{
+             marginBottom:5
+         }}>
                   <div className="col-sm-6">
                  <div className="form-group">
-                <InputLabel for="job_des">Project Name:</InputLabel>
+                <InputLabel for="job_des">Project Name:<sup style={{
+                color:"red",
+                fontSize:16,
+                lineHeight:0,
+                top:-1.4,
+                left:1
+            }}>*</sup></InputLabel>
                  <input
                      type="text"
-                     name="proj_name"
+                     name={"proj_name_"+index}
 
                      onChange={this.handleChange}
                      className="form-control"
@@ -205,7 +275,7 @@ class Register_3 extends Component {
                 <InputLabel for="proj_link">Project Link:</InputLabel>
                  <input
                      type="url"
-                     name="proj_link"
+                     name={"proj_link_"+index}
 
                      onChange={this.handleChange}
                      className="form-control"
@@ -217,12 +287,14 @@ class Register_3 extends Component {
 
              </div>
 
-            <div className="row">
+            <div className="row" style={{
+             marginBottom:5
+         }}>
 
                     <div className="form-group" >
                         <InputLabel htmlFor="proj_desc">Description</InputLabel>
                         <textarea
-                            name="proj_desc"
+                            name={"proj_desc_"+index}
                             onChange={this.handleChange}
                             className="form-control"
                             placeholder="Write Something About Your Project"

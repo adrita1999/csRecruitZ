@@ -6,13 +6,13 @@ import {MdOutlineAdd} from 'react-icons/md';
 import {Animated} from "react-animated-css";
 import Select from "react-select";
 import {InputLabel, ToggleButton, ToggleButtonGroup} from "@mui/material";
-const SkillOptions = [
-    { value: 'Python', label: 'Python' },
-    { value: 'C++', label: 'C++' },
-    { value: 'Angular', label: 'Angular' },
-    { value: 'Django', label: 'Django' },
-    { value: 'Java', label: 'Java' }
-    ]
+var jsonData = {
+    "pub_name": "",
+    "pub_link": "",
+    "lic_name": "",
+    "lic_org": "",
+}
+
  const dropDownStyle ={
     control: (base, state) => ({
     ...base,
@@ -32,18 +32,79 @@ class Register_4 extends Component {
     constructor() {
         super();
         this.state = {
-
+            input: {},
             numDivs: 0,
             numDivs_2:0
         };
+        this.handleSubmit =this.handleSubmit.bind(this);
+        this.handleChange=this.handleChange.bind(this);
     }
     handleClickSkip() {
        window.location.href="/"
       }
       handleSubmit(event) {
           event.preventDefault();
+          var str1=this.state.input["pub_name_start"];
+          var str2=""
+          if(this.state.input["pub_link_start"]) {
+              str2=this.state.input["pub_link_start"]
+          }
+          else str2="?"
+
+          var str3=this.state.input["lic_name_start"];
+          var str4=this.state.input["lic_org_start"];
+
+          for(let i=0;i<this.state.numDivs;i++) {
+              var ind1="pub_name_"+i;
+              var ind2="pub_link_"+i;
+
+              str1=str1+"#"+this.state.input[ind1]
+
+              if(this.state.input[ind2]) {
+                  str2 = str2 + " " + this.state.input[ind2]
+              }
+              else str2=str2+" "+'?'
+          }
+          for(let i=0;i<this.state.numDivs_2;i++) {
+              var ind3="lic_name_"+i;
+              var ind4="lic_org_"+i;
+
+              str3=str3+"#"+this.state.input[ind3]
+              str4=str4+"#"+this.state.input[ind4]
+
+
+          }
+          console.log(str1)
+          console.log(str2)
+          console.log(str3)
+          console.log(str4)
+
+          jsonData.pub_name=str1
+          jsonData.pub_link=str2
+          jsonData.lic_name=str3
+          jsonData.lic_org=str4
+
+          fetch('http://127.0.0.1:8000/first_module/pub/addpub/', {  // Enter your IP address here
+
+      method: 'POST',
+        headers:{
+        'Content-Type': 'application/json',
+      },
+      mode: 'cors',
+      body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
+    })
           window.location.href = "/"
       }
+      handleChange(event) {
+    let input = this.state.input;
+    console.log(event.target.name);
+    input[event.target.name] = event.target.value;
+
+
+    this.setState({
+      input
+    });
+  }
     render() {
 
         return(<React.Fragment>
@@ -72,14 +133,22 @@ class Register_4 extends Component {
 
           <hr/>
                  <form onSubmit={this.handleSubmit}>
-                <div className="row">
+                <div className="row" style={{
+             marginBottom:5
+         }}>
                     <div className="col-sm-6">
                     <div className="form-group">
-                 <InputLabel for="pub_name">Publication Name</InputLabel>
+                 <InputLabel for="pub_name">Publication Name:<sup style={{
+                color:"red",
+                fontSize:16,
+                lineHeight:0,
+                top:-1.4,
+                left:1
+            }}>*</sup></InputLabel>
 
                  <input
                      type="text"
-                     name="pub_name"
+                     name="pub_name_start"
 
                      onChange={this.handleChange}
                      className="form-control"
@@ -93,12 +162,12 @@ class Register_4 extends Component {
 
                  <input
                      type="url"
-                     name="pubs"
+                     name="pub_link_start"
 
                      onChange={this.handleChange}
                      className="form-control"
                       placeholder="Enter Your Publication's Link"
-                     id="pubs" required/>
+                     id="pubs"/>
              </div>
                     </div>
 
@@ -106,14 +175,22 @@ class Register_4 extends Component {
                      {new Array(this.state.numDivs).fill(0).map((item, index) => (
         <div>
             <hr/>
-            <div className="row">
+            <div className="row" style={{
+             marginBottom:5
+         }}>
                     <div className="col-sm-6">
                     <div className="form-group">
-                 <InputLabel for="pub_name">Publication Name</InputLabel>
+                 <InputLabel for="pub_name">Publication Name:<sup style={{
+                color:"red",
+                fontSize:16,
+                lineHeight:0,
+                top:-1.4,
+                left:1
+            }}>*</sup></InputLabel>
 
                  <input
                      type="text"
-                     name="pub_name"
+                     name={"pub_name_"+index}
 
                      onChange={this.handleChange}
                      className="form-control"
@@ -127,12 +204,12 @@ class Register_4 extends Component {
 
                  <input
                      type="url"
-                     name="pubs"
+                     name={"pub_link_"+index}
 
                      onChange={this.handleChange}
                      className="form-control"
                       placeholder="Enter Your Publication's Link"
-                     id="pubs" required/>
+                     id="pubs"/>
              </div>
                     </div>
 
@@ -154,13 +231,21 @@ class Register_4 extends Component {
 
           <hr/>
 
-                    <div className="row">
+                    <div className="row" style={{
+             marginBottom:5
+         }}>
                   <div className="col-sm-6">
                  <div className="form-group">
-                <InputLabel for="lic_name">License Name:</InputLabel>
+                <InputLabel for="lic_name">License Name:<sup style={{
+                color:"red",
+                fontSize:16,
+                lineHeight:0,
+                top:-1.4,
+                left:1
+            }}>*</sup></InputLabel>
                  <input
                      type="text"
-                     name="lic_name"
+                     name="lic_name_start"
 
                      onChange={this.handleChange}
                      className="form-control"
@@ -171,22 +256,30 @@ class Register_4 extends Component {
                   </div>
                   <div className="col-sm-6">
                  <div className="form-group">
-                <InputLabel for="lic_org">Issuing Organization:</InputLabel>
+                <InputLabel for="lic_org">Issuing Organization:<sup style={{
+                color:"red",
+                fontSize:16,
+                lineHeight:0,
+                top:-1.4,
+                left:1
+            }}>*</sup></InputLabel>
                  <input
                      type="text"
-                     name="lic-org"
+                     name="lic_org_start"
 
                      onChange={this.handleChange}
                      className="form-control"
                      placeholder="Enter Issuing Organization's Name"
-                     id="lic_org" />
+                     id="lic_org" required/>
 
              </div>
                   </div>
 
              </div>
 
-            <div className="row">
+            <div className="row" style={{
+             marginBottom:5
+         }}>
 
                     <div className="form-group" >
                         <InputLabel htmlFor="lic_file">Credential File</InputLabel>
@@ -205,13 +298,21 @@ class Register_4 extends Component {
         <div>
             <hr/>
 
-                    <div className="row">
+                    <div className="row" style={{
+             marginBottom:5
+         }}>
                   <div className="col-sm-6">
                  <div className="form-group">
-                <InputLabel for="lic_name">License Name:</InputLabel>
+                <InputLabel for="lic_name">License Name:<sup style={{
+                color:"red",
+                fontSize:16,
+                lineHeight:0,
+                top:-1.4,
+                left:1
+            }}>*</sup></InputLabel>
                  <input
                      type="text"
-                     name="lic_name"
+                     name={"lic_name_"+index}
 
                      onChange={this.handleChange}
                      className="form-control"
@@ -222,22 +323,30 @@ class Register_4 extends Component {
                   </div>
                   <div className="col-sm-6">
                  <div className="form-group">
-                <InputLabel for="lic_org">Issuing Organization:</InputLabel>
+                <InputLabel for="lic_org">Issuing Organization:<sup style={{
+                color:"red",
+                fontSize:16,
+                lineHeight:0,
+                top:-1.4,
+                left:1
+            }}>*</sup></InputLabel>
                  <input
                      type="text"
-                     name="lic-org"
+                     name={"lic_org_"+index}
 
                      onChange={this.handleChange}
                      className="form-control"
                      placeholder="Enter Issuing Organization's Name"
-                     id="lic_org" />
+                     id="lic_org" required />
 
              </div>
                   </div>
 
              </div>
 
-            <div className="row">
+            <div className="row" style={{
+             marginBottom:5
+         }}>
 
                     <div className="form-group" >
                         <InputLabel htmlFor="lic_file">Credential File</InputLabel>

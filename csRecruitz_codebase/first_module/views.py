@@ -966,9 +966,9 @@ class uskillViewsets(viewsets.ModelViewSet):
     @action(methods=['post', 'get'], detail=False, url_path='addskill')
     def add_skill(self, request):
         if request.method == 'POST':
-            print(request.data['skills'])
+            print(request.data)
             skill_list = request.data['skills'].split("#")
-            print(skill_list)
+
             open_to_list = request.data['open_to'].split("#")
             for i in range (1,len(skill_list)):
                 if len(JobSeekerSkill.objects.all())==0:
@@ -982,14 +982,79 @@ class uskillViewsets(viewsets.ModelViewSet):
                     flag=False
                 print(skill_list[i])
                 objs=Skill.objects.filter(skill_name=skill_list[i])
-                print(len(objs))
+
                 uskill = JobSeekerSkill(jobseeker_skill_id=id, isOpenToWork=flag, skill_id_id=objs[0].skill_id, user_id_id=1)
                 uskill.save()
+            name_list = request.data["proj_name"].split("#")
+            link_list = request.data["proj_link"].split()
+            desc_list = request.data["proj_desc"].split("#")
+
+            for i in range(len(name_list)):
+                if len(Project.objects.all()) == 0:
+                    id = 0
+                else:
+                    id = Project.objects.order_by('-project_id').first().project_id
+                id = id + 1
+
+                if desc_list[i] == "?":
+                    description = None
+                else:
+                    description = desc_list[i]
+                if link_list[i]== "?" :
+                    proj_link=None
+                else:
+                    proj_link=link_list[i]
+                project = Project(project_id=id, project_name=name_list[i], project_link=proj_link,
+                                        project_short_desc=description, user_id_id=1)
+                project.save()
             return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 
+class publicationViewsets(viewsets.ModelViewSet):
+    queryset = Publication.objects.all()
+    serializer_class = pub_Serializer
 
+    @action(methods=['post', 'get'], detail=False, url_path='addpub')
+    def add_pub(self,request):
+        if request.method == 'POST':
+            print(request.data)
+            pub_name_list = request.data["pub_name"].split("#")
+            pub_link_list = request.data["pub_link"].split()
+            lic_name_list = request.data["lic_name"].split("#")
+            lic_org_list = request.data["lic_org"].split("#")
+
+            for i in range(len(pub_name_list)):
+                if len(Publication.objects.all()) == 0:
+                    id = 0
+                else:
+                    id = Publication.objects.order_by('-publication_id').first().publication_id
+                id = id + 1
+
+                if pub_link_list[i] == "?":
+                    link = None
+                else:
+                    link = pub_link_list[i]
+                publi = Publication(publication_id=id,user_id_id=1,publication_name=pub_name_list[i],publication_link=link)
+                publi.save()
+
+            for i in range(len(lic_name_list)):
+                if len(LicenseCertificate.objects.all()) == 0:
+                    id = 0
+                else:
+                    id = LicenseCertificate.objects.order_by('-certificate_id').first().certificate_id
+                id = id + 1
+                lic=LicenseCertificate(certificate_id=id,certificate_name=lic_name_list[i],issuing_org=lic_org_list[i])
+                lic.save()
+                if len(JobseekerCertificate.objects.all()) == 0:
+                    id2 = 0
+                else:
+                    id2 = JobseekerCertificate.objects.order_by('-jobseeker_certificate_id').first().jobseeker_certificate_id
+                id2=id2+1
+                licuser=JobseekerCertificate(jobseeker_certificate_id=id2,certificate_id=lic,user_id_id=1)
+                licuser.save()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class applicationViewsets(viewsets.ModelViewSet):
