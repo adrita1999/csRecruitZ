@@ -4,51 +4,190 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import {Progress} from 'react-sweet-progress';
 import 'react-sweet-progress/lib/style.css';
 import {FaRegClock} from 'react-icons/fa';
+import {FiEdit2} from 'react-icons/fi';
+import Loader from "./loader";
 
 import Navb from "./Navb";
 import Foot from "./Foot";
 
 export class Quiz extends Component {
+  constructor() {
+    super();
+    this.state = {
+      items: [],
+      DataisLoaded:false,
+      time: {},
+      seconds: 90,
+      timer:0,
+      q_id:1,
+      input:{},
+      percent:0,
+    };
+    // this.timer = 0;
+    
+    this.startTimer = this.startTimer.bind(this);
+    this.countDown = this.countDown.bind(this);
+    this.handleNext = this.handleNext.bind(this);
+    this.handleQuit = this.handleQuit.bind(this);
+  }
+  handleNext() {
+    let input = this.state.questions;
+    this.setState({input});
+    this.state.q_id = this.state.q_id +1;
+    console.log(this.state.q_id)
+    console.log(input)
+    this.state.percent = this.state.percent +1;
+  }
+  handleQuit() {
+    window.location.href="/professional"
+  }
+  componentDidMount() {
+    // let timeLeftVar = this.secondsToTime(this.state.seconds);
+    // this.setState({ time: timeLeftVar });
+    fetch(
+      "http://127.0.0.1:8000/first_module/question/")
+
+      .then((res) => res.json())
+      .then((json) => {
+          this.setState({
+              questions: json,
+              DataisLoaded:true,
+          });
+      // console.log(json[0].question_text)
+      console.log(this.state.questions)
+      })
+  }
+  secondsToTime(secs){
+    let hours = Math.floor(secs / (60 * 60));
+
+    let divisor_for_minutes = secs % (60 * 60);
+    let minutes = Math.floor(divisor_for_minutes / 60);
+
+    let divisor_for_seconds = divisor_for_minutes % 60;
+    let seconds = Math.ceil(divisor_for_seconds);
+
+    let obj = {
+      "h": hours,
+      "m": minutes,
+      "s": seconds
+    };
+    return obj;
+  }
+
+  startTimer() {
+    if (this.state.timer == 0 && this.state.seconds > 0) {
+      this.state.timer = setInterval(this.countDown, 1000);
+    }
+  }
+
+  countDown() {
+    // Remove one second, set state so a re-render happens.
+    let seconds = this.state.seconds - 1;
+    this.setState({
+      time: this.secondsToTime(seconds),
+      seconds: seconds,
+    });
+    
+    // Check if we're at zero.
+    if (seconds == 0) { 
+      clearInterval(this.state.timer);
+    }
+  }
+
   render() {
+    const { DataisLoaded, items } = this.state;
+    if (!this.state.DataisLoaded) return <Loader/>
     return (
         <React.Fragment>
-       
        <Navb/>
-       <div className='homebg' style={{
-        backgroundColor:'#DEE7F4',
-       }}>
-            <div className='quiz' style={{
-                backgroundColor:'white'
-            }}>
+       <div className='homebg' style={{backgroundColor:'#DEE7F4',}}>
+            <div className='quiz' style={{ backgroundColor:'white'}}>
                 
-                <h5 className='title'>C++ Assesment</h5>
-                <p className='question' >What is the value of x after running this code? <br/> int x = 10, a = -3;
-                x += a;</p>
-                <hr/>
-                <input type="radio" name="group1" value="" id="rad1"/>
-                <label id='label' for="rad1">7</label>
-                <br/>
-                <hr/>
-                <input type="radio" name="group1" value="" id="rad1"/>
-                <label id='label' for="rad1">3</label>
-                <br/>
-                <hr/>
-                <input type="radio" name="group1" value="" id="rad1"/>
-                <label id='label' for="rad1">13</label>
-                <br/>
-                <hr/>
-                <input type="radio" name="group1" value="" id="rad1"/>
-                <label id='label' for="rad1">-3</label>
-                <br/>
-                <hr/>
+                <div className="row" style={{marginLeft:"0px",marginRight:"0px",borderRadius:"5px" }}>
+                  <h5 className='title'style={{color:'white' }}>C++ Assesment<p style={{float:"right",paddingLeft:"15px"}}>1/10</p></h5>
+                  
+                </div>
+                <div style={{padding:"20px"}}>
+                      {this.state.questions.filter(id => id.question_id == this.state.q_id).map((list) =>{
+                        return (
+                        <p className='question' >
+                          {list.question_text}
+                        </p>
+                        )
+                      }
+                      )}
+                  
+                  <hr/>
+                  <input type="radio" name="group1" value="" id="rad1"/>
+                  <label id='label' for="rad1">
+                    {this.state.questions.filter(id => id.question_id == this.state.q_id).map((list) =>{
+                          return (
+                          <p className='question' >
+                            {list.optionA}
+                          </p>
+                          )
+                        }
+                    )}
+                  </label>
+                  <br/>
+                  <hr/>
+                  <input type="radio" name="group1" value="" id="rad1"/>
+                  <label id='label' for="rad1">
+                    {this.state.questions.filter(id => id.question_id == this.state.q_id).map((list) =>{
+                            return (
+                            <p className='question' >
+                              {list.optionB}
+                            </p>
+                            )
+                          }
+                      )}
+                  </label>
+                  <br/>
+                  <hr/>
+                  <input type="radio" name="group1" value="" id="rad1"/>
+                  <label id='label' for="rad1">
+                    {this.state.questions.filter(id => id.question_id == this.state.q_id).map((list) =>{
+                          return (
+                          <p className='question' >
+                            {list.optionC}
+                          </p>
+                          )
+                        }
+                    )}
+                  </label>
+                  <br/>
+                  <hr/>
+                  <input type="radio" name="group1" value="" id="rad1"/>
+                  <label id='label' for="rad1">
+                    {this.state.questions.filter(id => id.question_id == this.state.q_id).map((list) =>{
+                            return (
+                            <p className='question' >
+                              {list.optionD}
+                            </p>
+                            )
+                          }
+                      )}
+                  </label>
+                  <br/>
+                  <hr/>
 
-                < Progress percent={10} status="success"></Progress>
-                <br/>
-
+                  < Progress percent={this.state.percent} ></Progress>
+                  <br/>
+                </div>
                 <div className='lastdiv' style={{backgroundColor:'white'}}>
-                    <p className='countp'> question=1/10</p>
-                    <p className='time'><FaRegClock className='clock'/>Full time</p>
-                    <button className='btn btn-success'> Next</button>
+                    {/* <p className='countp'> question=1/10</p> */}
+                    <p className='time' onLoadStart={this.startTimer}><FaRegClock className='clock'/>
+                     </p>
+                     { this.state.time.m === 0 && this.state.time.s === 0
+                          ? null
+                          : <p style={{}}
+                              open={this.state.DataisLoaded}
+                              onClose={this.handleClose}>
+                              Time: {this.state.time.m}:{this.state.time.s}</p> 
+                      }
+                    
+                    <button className='btn btn-success' onClick={this.handleNext}> Next</button>
+                    <button className='btn btn-danger'style={{marginLeft: "750px",marginTop: "-150px"}}onClick={this.handleQuit}> Quit</button>
 
                 </div>
                 

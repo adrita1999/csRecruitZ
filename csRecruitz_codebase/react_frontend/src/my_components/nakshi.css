@@ -230,13 +230,13 @@ div.jobdetailsbgdiv {
   float: right;
   width: 23%;
   height: 460px;
-  /*animation: expanddiv 1s ease-out;*/
+  animation: expanddiv 1s ease-out;
 }
 .jobsummaryinsidediv{
   opacity: 1;
   padding-left: 15px;
   padding-top: 12px;
-  /*animation: expandinsidediv 2.5s;*/
+  animation: expandinsidediv 2.5s;
 }
 .job_details_btn {
   width: 80%;

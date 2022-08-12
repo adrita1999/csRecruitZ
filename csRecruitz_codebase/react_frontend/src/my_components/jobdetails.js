@@ -18,18 +18,23 @@ import Foot from "./Foot";
 var jsonData = {
     "job_id":"",
     "mount":"",
+    "type":"",
+    "ifshortlist":""
   }
 
 class Jobdetails extends Component {
     state={
         items:[],
-        DetailesLoaded:false,
+        DetailsLoaded1:false,
+        DetailsLoaded2:false,
         req_exp:"",
         ifapplied:"",
+        ifshortlisted:"",
     }
     constructor(props) {
         super(props);
         this.handleClickApply=this.handleClickApply.bind(this);
+        this.handleClickShortlist=this.handleClickShortlist.bind(this);
       }
 
     componentDidMount() {
@@ -49,7 +54,7 @@ class Jobdetails extends Component {
             .then((json) => {
                 this.setState({
                     items: json,
-                    DataisLoaded: true
+                    DetailsLoaded1: true
                 });
                 console.log(json)
                 const exp_text="At least "+json.required_experience.toString()+" year(s)"
@@ -74,6 +79,9 @@ class Jobdetails extends Component {
             })
             .then((res) => res.json())
             .then((json) => {
+                this.setState({
+                    DetailsLoaded2: true
+                });
                 console.log(json.response)
                 if (json.response==="applied") {
                          this.state.ifapplied=true
@@ -81,6 +89,12 @@ class Jobdetails extends Component {
                     else {
                        this.state.ifapplied=false
                     }
+                if (json.short==="shortlisted") {
+                    this.state.ifshortlisted=true
+                }
+                else {
+                   this.state.ifshortlisted=false
+                }
             })
 
     }
@@ -88,6 +102,32 @@ class Jobdetails extends Component {
     handleClickApply() {
     jsonData.job_id=this.state.job_id
     jsonData.mount="false"
+    jsonData.type="apply"
+    fetch('http://127.0.0.1:8000/first_module/apply/getapplication/', {  // Enter your IP address here
+      method: 'POST',
+        headers:{
+        'Content-Type': 'application/json',
+      },
+      mode: 'cors',
+      body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
+    })
+    this.setState({'redirect':true})
+  }
+
+  handleClickShortlist() {
+    jsonData.job_id=this.state.job_id
+    jsonData.mount="false"
+    jsonData.type="shortlist"
+    this.state.ifshortlisted=!this.state.ifshortlisted
+      if(this.state.ifshortlisted==true)
+      {
+          jsonData.ifshortlist="true"
+      }
+      else
+      {
+          jsonData.ifshortlist="false"
+      }
+    console.log(this.state.ifshortlisted)
     fetch('http://127.0.0.1:8000/first_module/apply/getapplication/', {  // Enter your IP address here
       method: 'POST',
         headers:{
@@ -100,7 +140,7 @@ class Jobdetails extends Component {
   }
 
     render() {
-        if (!this.state.DataisLoaded) return <Loader/>
+        if (!this.state.DetailsLoaded1 || !this.state.DetailsLoaded2) return <Loader/>
         return (
             <React.Fragment>
             <body>
@@ -140,7 +180,8 @@ class Jobdetails extends Component {
                 <span style={{textAlign:"center"}}>
                     {this.state.ifapplied && <button className="job_details_btn_disabled" disabled={true}>Applied</button>}
                     {!this.state.ifapplied && <button className="job_details_btn" onClick={this.handleClickApply}>Apply Now</button>}
-                    <button className="job_details_btn">Shortlist Job</button>
+                    {this.state.ifshortlisted && <button className="job_details_btn" onClick={this.handleClickShortlist}>Shortlisted</button>}
+                    {!this.state.ifshortlisted && <button className="job_details_btn" onClick={this.handleClickShortlist}>Shortlist Job</button>}
                     <button className="job_details_btn">Follow Employer</button>
                 </span>
 
