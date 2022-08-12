@@ -4,7 +4,7 @@ import './Personal.css';
 import {AiFillEdit} from 'react-icons/ai'
 import pic from './images/pp.JPG'
 import TypeAnimation from 'react-type-animation';
-
+import { shadows } from '@mui/system';
 
 import Sidebar from "./Sidebar";
 import Navb from "./Navb";
@@ -52,35 +52,27 @@ const style = {
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
+    backgroundColor: "#3C1173",
     color: theme.palette.common.white,
+      fontSize: 15,
+      fontWeight: "bold",
+      border:1
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
+
   },
 }));
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover,
+    backgroundColor: "#D5ECD1",
   },
   // hide last border
   '&:last-child td, &:last-child th': {
     border: 0,
   },
 }));
-
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
 
 class AppliedJoblist extends Component {
 
@@ -115,7 +107,7 @@ constructor(props) {
     }
 
    render() {
-    // if (!this.state.DataisLoaded) return <Loader/>
+    if (!this.state.DetailsLoaded) return <Loader/>
     return (
         <React.Fragment>
         <body>
@@ -126,8 +118,10 @@ constructor(props) {
             <div className="row" style={{marginLeft:"-13.5%"}}>
                 <h1>Applied Jobs:</h1>
             </div>
-             <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 700 }} aria-label="customized table">
+            <Animated animationIn="slideInUp"  animationInDuration={1800}  isVisible={true}>
+                <div className="tablediv">
+             <TableContainer component={Paper} style={{boxShadow:"rgba(0, 0, 0, 0.35) 0px 5px 15px"}}>
+      <Table sx={{ minWidth: 700}} aria-label="customized table">
         <TableHead>
           <TableRow>
             <StyledTableCell>Job Title</StyledTableCell>
@@ -149,7 +143,7 @@ constructor(props) {
               <StyledTableCell align="right">{row.apply_date}</StyledTableCell>
               <StyledTableCell align="right">{row.apply_time}</StyledTableCell>
                 <StyledTableCell align="right">{row.deadline}</StyledTableCell>
-                <StyledTableCell align="right"><button className="btn-success" id={row.newjobpost_id} onClick={this.handleClickView}>View</button></StyledTableCell>
+                <StyledTableCell align="right"><button className="btn btn-sm btn-success" id={row.newjobpost_id} onClick={this.handleClickView}>View</button></StyledTableCell>
                 {/*<StyledTableCell align="right"><button className="btn-success">Delete</button></StyledTableCell>*/}
 
             </StyledTableRow>
@@ -157,6 +151,8 @@ constructor(props) {
         </TableBody>
       </Table>
     </TableContainer>
+                    </div>
+            </Animated>
         </div>
 
     <Foot margin_value={172}/>
