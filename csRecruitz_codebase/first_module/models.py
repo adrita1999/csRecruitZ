@@ -8,7 +8,7 @@ class Jobpost(models.Model):
 
 class User(models.Model):
     user_id = models.IntegerField(primary_key=True)
-    password = models.CharField(max_length=20)
+    password = models.CharField(max_length=300)
     name = models.CharField(max_length=40)
     email = models.EmailField(unique=True)
     contact_no=models.CharField(max_length=20)
