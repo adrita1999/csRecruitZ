@@ -1061,6 +1061,10 @@ class applicationViewsets(viewsets.ModelViewSet):
                 'short':str2,
             })
 
+class appliedjobViewsets(viewsets.ModelViewSet):
+    user_id=1
+    queryset = JobApplication.objects.filter(user_id_id=user_id)
+    serializer_class = applicationSerializer
 
 user1 = Jobseeker(user_id=1, name="Adrita Hossain Nakshi", email="adrita_99@yahoo.com", password="1234", thana="Lalbag",
                   district="Dhaka", division="Dhaka", father_name="Dr. Md. Elias Hossain",

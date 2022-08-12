@@ -64,6 +64,18 @@ class uskillSerializer(serializers.ModelSerializer):
 
 class applicationSerializer(serializers.ModelSerializer):
     #print("serialiser")
+    job_name = serializers.SerializerMethodField("get_job_name")
+    emp_name = serializers.SerializerMethodField("get_emp_name")
+    deadline = serializers.SerializerMethodField("get_deadline")
     class Meta:
         model= JobApplication
         fields='__all__'
+
+    def get_emp_name(self, obj):
+        return obj.newjobpost_id.employer_id.name
+
+    def get_job_name(self, obj):
+        return obj.newjobpost_id.title
+
+    def get_deadline(self, obj):
+        return obj.newjobpost_id.deadline_date

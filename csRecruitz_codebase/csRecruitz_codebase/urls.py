@@ -27,6 +27,7 @@ router.register(r'first_module/recommendation',recoViewsets)
 router.register(r'first_module/jobexp',jobexpViewsets)
 router.register(r'first_module/uskill',uskillViewsets)
 router.register(r'first_module/apply',applicationViewsets)
+router.register(r'first_module/appliedjobs',appliedjobViewsets)
 
 
 urlpatterns = [

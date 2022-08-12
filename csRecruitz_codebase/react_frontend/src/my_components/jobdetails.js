@@ -25,7 +25,8 @@ var jsonData = {
 class Jobdetails extends Component {
     state={
         items:[],
-        DetailesLoaded:false,
+        DetailsLoaded1:false,
+        DetailsLoaded2:false,
         req_exp:"",
         ifapplied:"",
         ifshortlisted:"",
@@ -53,7 +54,7 @@ class Jobdetails extends Component {
             .then((json) => {
                 this.setState({
                     items: json,
-                    DataisLoaded: true
+                    DetailsLoaded1: true
                 });
                 console.log(json)
                 const exp_text="At least "+json.required_experience.toString()+" year(s)"
@@ -78,6 +79,9 @@ class Jobdetails extends Component {
             })
             .then((res) => res.json())
             .then((json) => {
+                this.setState({
+                    DetailsLoaded2: true
+                });
                 console.log(json.response)
                 if (json.response==="applied") {
                          this.state.ifapplied=true
@@ -136,7 +140,7 @@ class Jobdetails extends Component {
   }
 
     render() {
-        if (!this.state.DataisLoaded) return <Loader/>
+        if (!this.state.DetailsLoaded1 || !this.state.DetailsLoaded2) return <Loader/>
         return (
             <React.Fragment>
             <body>
