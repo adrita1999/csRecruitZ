@@ -966,21 +966,26 @@ class uskillViewsets(viewsets.ModelViewSet):
     @action(methods=['post', 'get'], detail=False, url_path='addskill')
     def add_skill(self, request):
         if request.method == 'POST':
-            skill_list = request.data["skills"].split("#")
-            open_to_list = request.data["open_to"].split("#")
-            for i in range (len(skill_list)):
+            print(request.data['skills'])
+            skill_list = request.data['skills'].split("#")
+            print(skill_list)
+            open_to_list = request.data['open_to'].split("#")
+            for i in range (1,len(skill_list)):
                 if len(JobSeekerSkill.objects.all())==0:
                     id=0
                 else:
-                    id = JobSeekerSkill.objects.order_by('-jobseeker_skill_id').first().jobexperience_id
+                    id = JobSeekerSkill.objects.order_by('-jobseeker_skill_id').first().jobseeker_skill_id
                 id=id+1
                 if(skill_list[i] in open_to_list):
                     flag=True
                 else:
                     flag=False
+                print(skill_list[i])
                 objs=Skill.objects.filter(skill_name=skill_list[i])
-                uskill = JobSeekerSkill(jobseeker_skill_id=3, isOpenToWork=flag, skill_id=objs.skill_id, user_id_id=1)
+                print(len(objs))
+                uskill = JobSeekerSkill(jobseeker_skill_id=id, isOpenToWork=flag, skill_id_id=objs[0].skill_id, user_id_id=1)
                 uskill.save()
+            return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 
