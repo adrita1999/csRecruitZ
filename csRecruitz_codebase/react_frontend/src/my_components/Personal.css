@@ -331,8 +331,6 @@ ol.gradient-list > li + li {
   border: none;
   float: right;
 
-
-
 }
 .personal_div_bg {
   background: #F7FFFF;
@@ -363,7 +361,18 @@ ol.gradient-list > li + li {
   margin-right: 20px;
 
 }
-
+.icon_delete {
+  background-color: transparent;
+  color: #000000;
+}
+.icon_delete:hover {
+  font-size: 17px;
+  color: #CE0303;
+}
+.icon_delete_btn {
+  background-color: transparent;
+  border: none;
+}
 .border-left {
   margin-top: 50px;
   border-left: 2px solid #29A335;
@@ -464,4 +473,9 @@ ol.gradient-list > li + li {
     padding-right: 0;
     border-right: none;
 }
-
+.tablediv{
+  padding-left: 1.3%;
+  padding-right: 1.3%;
+  padding-top: 1.2%;
+  padding-bottom: 2%;
+}

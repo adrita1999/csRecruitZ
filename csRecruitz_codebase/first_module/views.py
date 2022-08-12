@@ -1194,6 +1194,13 @@ class appliedjobViewsets(viewsets.ModelViewSet):
         user_id = 1
     queryset = JobApplication.objects.filter(user_id_id=user_id)
     serializer_class = applicationSerializer
+
+class shortlistedjobViewsets(viewsets.ModelViewSet):
+    user_id=1
+    queryset = JobShortlist.objects.filter(user_id_id=user_id)
+    serializer_class = shortlistSerializer
+
+
 class questionViewsets(viewsets.ModelViewSet):
     queryset = Question.objects.filter(skill_id=1)
     print(queryset)

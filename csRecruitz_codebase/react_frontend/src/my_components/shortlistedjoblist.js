@@ -29,6 +29,9 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import {Navigate} from "react-router-dom";
+import {FaRegClock} from "react-icons/fa";
+import {FiEdit2} from "react-icons/fi";
+import {RiDeleteBin6Line} from "react-icons/ri"
 
 
 
@@ -74,7 +77,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-class AppliedJoblist extends Component {
+class ShortlistedJoblist extends Component {
 
 constructor(props) {
         super(props);
@@ -84,18 +87,24 @@ constructor(props) {
             redirect:false
         };
         this.handleClickView=this.handleClickView.bind(this);
+        this.handleClickDelete=this.handleClickDelete.bind(this);
       }
 
      handleClickView(event) {
-        // console.log(event.target.id)
+        console.log(event.target.id)
         const concatlink = "/jobdetails?" + event.target.id;
         this.setState({'navlink':concatlink})
         this.setState({'redirect':true})
   }
 
+       handleClickDelete(event) {
+        console.log("delete")
+        console.log(event.target.id)
+  }
+
     componentDidMount() {
         fetch(
-            "http://127.0.0.1:8000/first_module/appliedjobs/")
+            "http://127.0.0.1:8000/first_module/shortlistedjobs/")
             .then((res) => res.json())
             .then((json) => {
                 this.setState({
@@ -116,7 +125,7 @@ constructor(props) {
         <Sidebar/>
         <div className="content">
             <div className="row" style={{marginLeft:"-13.5%"}}>
-                <h1>Applied Jobs:</h1>
+                <h1>Shortlisted Jobs:</h1>
             </div>
             <Animated animationIn="slideInUp"  animationInDuration={1800}  isVisible={true}>
                 <div className="tablediv">
@@ -126,25 +135,22 @@ constructor(props) {
           <TableRow>
             <StyledTableCell>Job Title</StyledTableCell>
             <StyledTableCell align="right">Employer Name</StyledTableCell>
-            <StyledTableCell align="right">Application Date</StyledTableCell>
-              <StyledTableCell align="right">Application Time</StyledTableCell>
               <StyledTableCell align="right">Deadline</StyledTableCell>
               <StyledTableCell align="right">View Details</StyledTableCell>
-              {/*<StyledTableCell align="right">Delete</StyledTableCell>*/}
+              <StyledTableCell align="center">Delete</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {this.state.apps.map((row) => (
-            <StyledTableRow key={row.application_id} name={row.application_id}>
+            <StyledTableRow key={row.application_id} name={row.jobshortlist_id}>
               <StyledTableCell component="th" scope="row">
                   {row.job_name}
               </StyledTableCell>
                 <StyledTableCell align="right">{row.emp_name}</StyledTableCell>
-              <StyledTableCell align="right">{row.apply_date}</StyledTableCell>
-              <StyledTableCell align="right">{row.apply_time}</StyledTableCell>
                 <StyledTableCell align="right">{row.deadline}</StyledTableCell>
                 <StyledTableCell align="right"><button className="btn btn-sm btn-success" id={row.newjobpost_id} onClick={this.handleClickView}>View</button></StyledTableCell>
-                {/*<StyledTableCell align="right"><button className="btn-success">Delete</button></StyledTableCell>*/}
+                <StyledTableCell align="center"><button className="icon_delete_btn" id={row.newjobpost_id} onClick={this.handleClickDelete}><RiDeleteBin6Line id={row.newjobpost_id} size={'1.5em'}  className="icon_delete"/></button></StyledTableCell>
+                {/*<StyledTableCell align="right"><button className="btn btn-sm btn-success">Delete</button></StyledTableCell>*/}
 
             </StyledTableRow>
           ))}
@@ -163,7 +169,7 @@ constructor(props) {
 }
 }
 
-export default AppliedJoblist;
+export default ShortlistedJoblist;
 
 //gender,mobile number,street database a dhukate hbe
 // image thikmoto ante hbe

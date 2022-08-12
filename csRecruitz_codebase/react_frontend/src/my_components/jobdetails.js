@@ -103,6 +103,7 @@ class Jobdetails extends Component {
     jsonData.job_id=this.state.job_id
     jsonData.mount="false"
     jsonData.type="apply"
+    this.state.ifapplied=!this.state.ifapplied
     fetch('http://127.0.0.1:8000/first_module/apply/getapplication/', {  // Enter your IP address here
       method: 'POST',
         headers:{
