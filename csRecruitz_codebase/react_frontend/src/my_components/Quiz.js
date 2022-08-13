@@ -9,7 +9,7 @@ import Loader from "./loader";
 
 import Navb from "./Navb";
 import Foot from "./Foot";
-
+const randomID = () => Math.random().toString(36).substring(7);
 export class Quiz extends Component {
   constructor() {
     super();
@@ -22,6 +22,7 @@ export class Quiz extends Component {
       q_id:1,
       input:{},
       percent:0,
+      x:13
     };
     // this.timer = 0;
     
@@ -41,9 +42,26 @@ export class Quiz extends Component {
   handleQuit() {
     window.location.href="/professional"
   }
+  timerExpired()
+  {
+      console.log("timer expired")
+  }
   componentDidMount() {
     // let timeLeftVar = this.secondsToTime(this.state.seconds);
     // this.setState({ time: timeLeftVar });
+    const mountId = randomID();
+    setInterval(() => {
+          // console.log(`${mountId} | updating state`);
+          const state = this.state;
+          if (state.x !== 0)
+          {
+              this.setState({ x: state.x - 1 });
+          }
+          else
+          {
+              this.timerExpired();
+          }
+        }, 1000);
     fetch(
       "http://127.0.0.1:8000/first_module/question/")
 
@@ -192,6 +210,9 @@ export class Quiz extends Component {
 
                 </div>
                 
+            </div>
+         <div>
+                {this.state.x}
             </div>
        </div>
        

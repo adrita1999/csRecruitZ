@@ -364,14 +364,22 @@ ol.gradient-list > li + li {
 .icon_delete {
   background-color: transparent;
   color: #000000;
+  z-index: 0;
 }
 .icon_delete:hover {
   font-size: 17px;
   color: #CE0303;
 }
 .icon_delete_btn {
+  /*background-color: #FACECE;*/
   background-color: transparent;
   border: none;
+  z-index: 5;
+  width: 13px;
+  height:13px;
+  position: absolute;
+  left: 1032px;
+  margin-top: 25px;
 }
 .border-left {
   margin-top: 50px;

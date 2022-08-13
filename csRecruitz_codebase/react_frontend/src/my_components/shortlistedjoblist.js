@@ -100,15 +100,33 @@ constructor(props) {
        handleClickDelete(event) {
         console.log("delete")
         console.log(event.target.id)
+        // fetch('http://127.0.0.1:8000/searchinput/', {  // Enter your IP address here
+        //      method: 'POST',
+        //      headers:{
+        //      'Content-Type': 'application/json',
+        //      },
+        //      mode: 'cors',
+        //      body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
+        //   })
+        //  fetch(
+        // "http://127.0.0.1:8000/first_module/shortlistedjobs/")
+        // .then((res) => res.json())
+        // .then((json) => {
+        //     this.setState({
+        //         apps: json,
+        //         DetailsLoaded:true
+        //     });
+        // console.log(json)
+        //  })
   }
 
     componentDidMount() {
         fetch(
-            "http://127.0.0.1:8000/first_module/shortlistedjobs/")
+            "http://127.0.0.1:8000/first_module/shortlistedjobs/shortlist")
             .then((res) => res.json())
             .then((json) => {
                 this.setState({
-                    apps: json,
+                    apps: json.data,
                     DetailsLoaded:true
                 });
             console.log(json)
@@ -149,8 +167,9 @@ constructor(props) {
                 <StyledTableCell align="right">{row.emp_name}</StyledTableCell>
                 <StyledTableCell align="right">{row.deadline}</StyledTableCell>
                 <StyledTableCell align="right"><button className="btn btn-sm btn-success" id={row.newjobpost_id} onClick={this.handleClickView}>View</button></StyledTableCell>
-                <StyledTableCell align="center"><button className="icon_delete_btn" id={row.newjobpost_id} onClick={this.handleClickDelete}><RiDeleteBin6Line id={row.newjobpost_id} size={'1.5em'}  className="icon_delete"/></button></StyledTableCell>
-                {/*<StyledTableCell align="right"><button className="btn btn-sm btn-success">Delete</button></StyledTableCell>*/}
+                <StyledTableCell align="center"><RiDeleteBin6Line id={row.newjobpost_id} name={row.newjobpost_id} size={'1.5em'}  className="icon_delete"/></StyledTableCell>
+          <button className="icon_delete_btn" name={row.newjobpost_id} id={row.newjobpost_id} onClick={this.handleClickDelete}></button>
+          {/*<StyledTableCell align="right"><button className="btn btn-sm btn-success">Delete</button></StyledTableCell>*/}
 
             </StyledTableRow>
           ))}
