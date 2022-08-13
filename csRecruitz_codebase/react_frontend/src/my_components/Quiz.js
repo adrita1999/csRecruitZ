@@ -9,7 +9,15 @@ import Loader from "./loader";
 
 import Navb from "./Navb";
 import Foot from "./Foot";
+
 const randomID = () => Math.random().toString(36).substring(7);
+
+var jsonData = {
+  "question_id":"",
+  "answer":"",
+}
+
+
 export class Quiz extends Component {
   constructor() {
     super();
@@ -19,7 +27,7 @@ export class Quiz extends Component {
       time: {},
       seconds: 90,
       timer:0,
-      q_id:1,
+      q_id:0,
       input:{},
       percent:0,
       x:13
@@ -30,21 +38,58 @@ export class Quiz extends Component {
     this.countDown = this.countDown.bind(this);
     this.handleNext = this.handleNext.bind(this);
     this.handleQuit = this.handleQuit.bind(this);
+    this.handleFinish = this.handleFinish.bind(this);
+    this.handleAnswer = this.handleAnswer.bind(this);
+
+  }
+  handleAnswer(event){
+    this.state.answer =event.target.value; 
+    this.state.current_q_id = this.state.questions[this.state.q_id].question_id;
+    
+    console.log(this.state.current_q_id);
+    console.log(this.state.answer);
+    this.state.pressed = true;
+
   }
   handleNext() {
-    let input = this.state.questions;
-    this.setState({input});
+    let inp = this.state.questions[this.state.q_id];
+    this.setState({input:inp});
     this.state.q_id = this.state.q_id +1;
-    console.log(this.state.q_id)
-    console.log(input)
-    this.state.percent = this.state.percent +1;
+    this.state.percent = this.state.percent +10;
+
+    console.log(this.state.pressed);
+    this.state.pressed = false;
+    console.log(this.state.pressed);
+    // console.log(this.state.q_id)
+    // console.log(input)
+
+    jsonData.question_id=this.state.current_q_id;
+    jsonData.answer = this.state.answer;
+    console.log(jsonData.question_id)
+    console.log(jsonData.answer)
+    fetch('http://127.0.0.1:8000/first_module/question/answer/', {  // Enter your IP address here
+        method: 'POST',
+        headers:{
+        'Content-Type': 'application/json',
+        },
+        mode: 'cors',
+        body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
+        })
+        .then(response=>response.json())
+        .then((data)=>console.log(data));
+
   }
   handleQuit() {
     window.location.href="/professional"
   }
+
   timerExpired()
   {
       console.log("timer expired")
+  }    
+
+  handleFinish() {
+    window.location.href="/professional"
   }
   componentDidMount() {
     // let timeLeftVar = this.secondsToTime(this.state.seconds);
@@ -71,16 +116,14 @@ export class Quiz extends Component {
               questions: json,
               DataisLoaded:true,
           });
-      // console.log(json[0].question_text)
-      console.log(this.state.questions)
+      // console.log(input.question_text)
+      // console.log(this.state.questions)
       })
   }
   secondsToTime(secs){
     let hours = Math.floor(secs / (60 * 60));
-
     let divisor_for_minutes = secs % (60 * 60);
     let minutes = Math.floor(divisor_for_minutes / 60);
-
     let divisor_for_seconds = divisor_for_minutes % 60;
     let seconds = Math.ceil(divisor_for_seconds);
 
@@ -122,69 +165,67 @@ export class Quiz extends Component {
             <div className='quiz' style={{ backgroundColor:'white'}}>
                 
                 <div className="row" style={{marginLeft:"0px",marginRight:"0px",borderRadius:"5px" }}>
-                  <h5 className='title'style={{color:'white' }}>C++ Assesment<p style={{float:"right",paddingLeft:"15px"}}>1/10</p></h5>
+                  <h5 className='title'style={{color:'white' }}>C++ Assesment<p style={{float:"right",paddingLeft:"15px"}}>{this.state.q_id+1}/10</p></h5>
                   
                 </div>
                 <div style={{padding:"20px"}}>
-                      {this.state.questions.filter(id => id.question_id == this.state.q_id).map((list) =>{
-                        return (
+                      
                         <p className='question' >
-                          {list.question_text}
+                          {this.state.questions[this.state.q_id].question_text}
                         </p>
-                        )
-                      }
-                      )}
+                         
                   
                   <hr/>
-                  <input type="radio" name="group1" value="" id="rad1"/>
+                  {
+                    
+                  }
+                  
+                  <input type="radio" name="group1" value="1" id="rad1" checked={this.state.pressed} onChange={this.handleAnswer} />
                   <label id='label' for="rad1">
-                    {this.state.questions.filter(id => id.question_id == this.state.q_id).map((list) =>{
-                          return (
+                   
+                  <p className='question' >
+                    {this.state.questions[this.state.q_id].optionA}
+                  </p>
+                           
+                  </label>
+                  <br/>
+                  <hr/>
+                  <input type="radio" name="group1" value="2" id="rad1" onChange={this.handleAnswer} autocomplete="off"/>
+                  <label id='label' for="rad1">
+                  {/* {this.state.input.map((list) =>{
+                          return ( */}
                           <p className='question' >
-                            {list.optionA}
+                            {this.state.questions[this.state.q_id].optionB}
                           </p>
-                          )
+                           {/* )
                         }
-                    )}
+                    )}  */}
                   </label>
                   <br/>
                   <hr/>
-                  <input type="radio" name="group1" value="" id="rad1"/>
+                  <input type="radio" name="group1" value="3" id="rad1" onChange={this.handleAnswer} autocomplete="off"/>
                   <label id='label' for="rad1">
-                    {this.state.questions.filter(id => id.question_id == this.state.q_id).map((list) =>{
-                            return (
-                            <p className='question' >
-                              {list.optionB}
-                            </p>
-                            )
-                          }
-                      )}
-                  </label>
-                  <br/>
-                  <hr/>
-                  <input type="radio" name="group1" value="" id="rad1"/>
-                  <label id='label' for="rad1">
-                    {this.state.questions.filter(id => id.question_id == this.state.q_id).map((list) =>{
-                          return (
+                  {/* {this.state.input.map((list) =>{
+                          return ( */}
                           <p className='question' >
-                            {list.optionC}
+                            {this.state.questions[this.state.q_id].optionC}
                           </p>
-                          )
+                           {/* )
                         }
-                    )}
+                    )}  */}
                   </label>
                   <br/>
                   <hr/>
-                  <input type="radio" name="group1" value="" id="rad1"/>
+                  <input type="radio" name="group1" value="4" id="rad1" onChange={this.handleAnswer} autocomplete="off"/>
                   <label id='label' for="rad1">
-                    {this.state.questions.filter(id => id.question_id == this.state.q_id).map((list) =>{
-                            return (
-                            <p className='question' >
-                              {list.optionD}
-                            </p>
-                            )
-                          }
-                      )}
+                  {/* {this.state.input.map((list) =>{
+                          return ( */}
+                          <p className='question' >
+                            {this.state.questions[this.state.q_id].optionD}
+                          </p>
+                           {/* )
+                        }
+                    )}  */}
                   </label>
                   <br/>
                   <hr/>
@@ -204,8 +245,12 @@ export class Quiz extends Component {
                               onClose={this.handleClose}>
                               Time: {this.state.time.m}:{this.state.time.s}</p> 
                       }
-                    
-                    <button className='btn btn-success' onClick={this.handleNext} style={{width:"100px", marginRight: "150px",marginLeft: "400px", marginTop:"-80px"}}> Next</button>
+                    {this.state.q_id === 9 ?
+                        <button className='btn btn-success' onClick={this.handleFinish} style={{width:"100px", marginRight: "150px",marginLeft: "400px", marginTop:"-80px"}}> Finish</button>
+                        :
+                        <button className='btn btn-success' onClick={this.handleNext} style={{width:"100px", marginRight: "150px",marginLeft: "400px", marginTop:"-80px"}}> Next</button>
+
+                    }
                     <button className='btn btn-danger'style={{width:"100px",marginLeft: "500px",marginTop: "-80px"}} onClick={this.handleQuit}> Quit</button>
 
                 </div>

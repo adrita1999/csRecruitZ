@@ -7,8 +7,20 @@ from rest_framework.response import Response
 from rest_framework import viewsets, status
 from django.db.models import Q
 from datetime import datetime
+import hashlib
 
+is_logged_in=False
 
+logged_in_id=-1
+
+reg_id=-1
+def make_pw_hash(password):
+    return hashlib.sha256(str.encode(password)).hexdigest()
+
+def check_pw_hash(password,hash):
+    if make_pw_hash(password)==hash:
+        return True
+    return False
 class postViewsets(viewsets.ModelViewSet):
     # def list(self,request):
     #     posts = Jobpost.objects.all()
@@ -642,6 +654,9 @@ class jobseekerViewsets(viewsets.ModelViewSet):
     email = ""
     password = ""
 
+
+
+
     @action(methods=['post', 'get'], detail=False, url_path='matchuser')
     def match(self, request):
         if request.method == 'POST':
@@ -654,18 +669,27 @@ class jobseekerViewsets(viewsets.ModelViewSet):
             if jobseekerViewsets.isdetails == True:
                 print(jobseekerViewsets.email)
                 print(jobseekerViewsets.password)
-                objs = Jobseeker.objects.filter(email=jobseekerViewsets.email, password=jobseekerViewsets.password)
-                str = ""
+                objs = Jobseeker.objects.filter(email=jobseekerViewsets.email)
+
+
                 if len(objs) == 1:
-                    str = "success"
+                    hash_pass = objs[0].password
+                    if(check_pw_hash(jobseekerViewsets.password,hash_pass)):
+                        string = "success"
+                        global is_logged_in
+                        is_logged_in=True
+                        global logged_in_id
+                        logged_in_id=objs[0].user_id
+                    else:
+                        string="fail"
                 else:
-                    str = "fail"
+                    string = "fail"
                 serializer = jobseekerSerializer(objs, many=True)
                 jobseekerViewsets.isdetails = False
                 return Response({
                     'status': status.HTTP_204_NO_CONTENT,
                     'data': serializer.data,
-                    'response': str,
+                    'response': string,
 
                 })
             else:
@@ -682,6 +706,7 @@ class jobseekerViewsets(viewsets.ModelViewSet):
         if request.method == 'POST':
             name=request.data['name']
             password=request.data['password']
+            password=make_pw_hash(password)
             email = request.data['email']
             dob=request.data['dob']
             gender=""
@@ -744,14 +769,35 @@ class jobseekerViewsets(viewsets.ModelViewSet):
             else:
                 id=Jobseeker.objects.order_by('-user_id').first().user_id
             id=id+1
-
-
+            global reg_id
+            reg_id=id
+            print(reg_id)
             user=Jobseeker(user_id=id,name=name,email=email,password=password,thana=thana,district=dis,division=div,father_name=father,
                            mother_name=mother,date_of_birth=dob,self_desc=desc,nationality=nat,nid_number=nid,field=field,pref_sal=pref_sal,
                            pref_job_ntr=pref_nat,pref_org_type=pref_org,gender=gender,contact_no=mob,street=street)
             user.save()
             print(request.data)
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+    @action(methods=['post', 'get'], detail=False, url_path='get_info')
+    def get_log_in(self, request):
+        global logged_in_id
+
+        if request.method == 'POST':
+            logged_in_id=-1
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+
+            if logged_in_id == -1:
+                res = "No"
+            else:
+                res = "Yes"
+            return Response({
+                'status': status.HTTP_204_NO_CONTENT,
+                'data': None,
+                'response': res,
+
+            })
 
     def update(self, request, pk=None):
         data_in = request.data
@@ -795,7 +841,11 @@ class jobseekerViewsets(viewsets.ModelViewSet):
 
 class recoViewsets(viewsets.ModelViewSet):
     #null ar open to dekhte hobe
-    userid = 1
+    global logged_in_id
+    if logged_in_id==-1:
+        userid=1
+    else:
+        userid = logged_in_id
     user = Jobseeker.objects.filter(user_id=userid)
     usercat = user[0].field  # not null
     userloc = user[0].division  # not null
@@ -926,12 +976,14 @@ class recoViewsets(viewsets.ModelViewSet):
 
 
 class jobexpViewsets(viewsets.ModelViewSet):
+    ############################kora hoynaiiiii#############################33
     queryset = JobExperience.objects.filter().order_by('-from_year')
     serializer_class = jobexpSerializer
 
     @action(methods=['post', 'get'], detail=False, url_path='addexp')
     def add_exp(self, request):
         if request.method == 'POST':
+            global reg_id
             des_list=request.data["des"].split("#")
             emp_list=request.data["emp"].split("#")
             from_list=request.data["from"].split("#")
@@ -950,7 +1002,7 @@ class jobexpViewsets(viewsets.ModelViewSet):
                     description=desc_list[i]
                 job_exp = JobExperience(jobexperience_id=id, experience_name=des_list[i], organization_name=emp_list[i],
                                          from_year=from_list[i],
-                                         to_year=to_list[i],description=description, user_id_id=1)
+                                         to_year=to_list[i],description=description, user_id_id=reg_id)
                 job_exp.save()
 
 
@@ -959,13 +1011,16 @@ class jobexpViewsets(viewsets.ModelViewSet):
 
 
 class uskillViewsets(viewsets.ModelViewSet):
-    queryset = JobSeekerSkill.objects.filter(user_id=1)
+    global logged_in_id
+    queryset = JobSeekerSkill.objects.filter(user_id=logged_in_id)
     serializer_class = uskillSerializer
 
     @action(methods=['post', 'get'], detail=False, url_path='addskill')
     def add_skill(self, request):
         if request.method == 'POST':
             print(request.data)
+            global reg_id
+            print(reg_id)
             skill_list = request.data['skills'].split("#")
 
             open_to_list = request.data['open_to'].split("#")
@@ -982,7 +1037,7 @@ class uskillViewsets(viewsets.ModelViewSet):
                 print(skill_list[i])
                 objs=Skill.objects.filter(skill_name=skill_list[i])
 
-                uskill = JobSeekerSkill(jobseeker_skill_id=id, isOpenToWork=flag, skill_id_id=objs[0].skill_id, user_id_id=1)
+                uskill = JobSeekerSkill(jobseeker_skill_id=id, isOpenToWork=flag, skill_id_id=objs[0].skill_id, user_id_id=reg_id)
                 uskill.save()
             name_list = request.data["proj_name"].split("#")
             link_list = request.data["proj_link"].split()
@@ -1004,13 +1059,14 @@ class uskillViewsets(viewsets.ModelViewSet):
                 else:
                     proj_link=link_list[i]
                 project = Project(project_id=id, project_name=name_list[i], project_link=proj_link,
-                                        project_short_desc=description, user_id_id=1)
+                                        project_short_desc=description, user_id_id=reg_id)
                 project.save()
             return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 
 class publicationViewsets(viewsets.ModelViewSet):
+    #######################kora hoynai###################################3
     queryset = Publication.objects.all()
     serializer_class = pub_Serializer
 
@@ -1018,6 +1074,7 @@ class publicationViewsets(viewsets.ModelViewSet):
     def add_pub(self,request):
         if request.method == 'POST':
             print(request.data)
+            global reg_id
             pub_name_list = request.data["pub_name"].split("#")
             pub_link_list = request.data["pub_link"].split()
             lic_name_list = request.data["lic_name"].split("#")
@@ -1034,7 +1091,7 @@ class publicationViewsets(viewsets.ModelViewSet):
                     link = None
                 else:
                     link = pub_link_list[i]
-                publi = Publication(publication_id=id,user_id_id=1,publication_name=pub_name_list[i],publication_link=link)
+                publi = Publication(publication_id=id,user_id_id=reg_id,publication_name=pub_name_list[i],publication_link=link)
                 publi.save()
 
             for i in range(len(lic_name_list)):
@@ -1050,7 +1107,7 @@ class publicationViewsets(viewsets.ModelViewSet):
                 else:
                     id2 = JobseekerCertificate.objects.order_by('-jobseeker_certificate_id').first().jobseeker_certificate_id
                 id2=id2+1
-                licuser=JobseekerCertificate(jobseeker_certificate_id=id2,certificate_id=lic,user_id_id=1)
+                licuser=JobseekerCertificate(jobseeker_certificate_id=id2,certificate_id=lic,user_id_id=reg_id)
                 licuser.save()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -1060,7 +1117,11 @@ class applicationViewsets(viewsets.ModelViewSet):
     queryset = JobApplication.objects.all()
     serializer_class = applicationSerializer
     # stat="notapplied"
-    user_id = 1
+    global logged_in_id
+    if logged_in_id!=-1:
+        user_id=logged_in_id
+    else:
+        user_id = 1
     job_id = ""
 
     @action(methods=['post', 'get'], detail=False, url_path='getapplication')
@@ -1126,7 +1187,11 @@ class applicationViewsets(viewsets.ModelViewSet):
             })
 
 class appliedjobViewsets(viewsets.ModelViewSet):
-    user_id=1
+    global logged_in_id
+    if logged_in_id != -1:
+        user_id = logged_in_id
+    else:
+        user_id = 1
     queryset = JobApplication.objects.filter(user_id_id=user_id)
     serializer_class = applicationSerializer
 
@@ -1156,7 +1221,34 @@ class questionViewsets(viewsets.ModelViewSet):
     serializer_class = questionSerializer
 
 
-user1 = Jobseeker(user_id=1, name="Adrita Hossain Nakshi", email="adrita_99@yahoo.com", password="1234", thana="Lalbag",
+    question_id = -1
+    answer = ""
+    total_num =0
+
+    @action(methods=['post', 'get'], detail=False, url_path='answer')
+    def answer(self, request):
+        if request.method == 'POST':
+            question_id = request.data["question_id"]
+            answer = request.data["answer"]
+            print(request.data)
+
+            if question_id != -1:
+                obj = Question.objects.filter(pk=question_id)
+                print(obj)
+                if len(obj) == 1:
+                    for id in obj:
+                        ans = id.answer
+                        print(ans)
+                        # if ans == answer:
+                        #     total_num+=1
+                        #     print(total_num)
+                # if answer == obj.answer:
+                #     total_number+=1
+                #     print(total_number)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+pas_temp=make_pw_hash("1234")
+user1 = Jobseeker(user_id=1, name="Adrita Hossain Nakshi", email="adrita_99@yahoo.com", password=pas_temp, thana="Lalbag",
                   district="Dhaka", division="Dhaka", father_name="Dr. Md. Elias Hossain",
                   mother_name="Dr. Zennat Ferdousi", date_of_birth="1999-02-06",
                   self_desc="I am a CS under-graduate. I love programmimg and I love computers too. Like Steve Jobs, I like to believe 'Everybody should learn to program a computer, because it teaches you how to think.'",
@@ -1535,8 +1627,13 @@ question1 = Question(question_id=1, skill_id=skill1,
                      optionB="The function in which it occurs",
                      optionC="The block in which it occurs",
                      optionD="The loop in which it occurs",
-                     answer="The program in which it occurs",
-                     mark=10,
+
+
+                     mark=1,
+
+                     answer="1",
+
+
                      time_limit="00:01:30")
 question1.save()
 question2 = Question(question_id=2, skill_id=skill1, question_text="In a linked list - ",
@@ -1544,8 +1641,13 @@ question2 = Question(question_id=2, skill_id=skill1, question_text="In a linked 
                      optionB="Links are stored in an array",
                      optionC="A array of pointers point to the link",
                      optionD=" Each link contains a pointer to the next link",
-                     answer=" Each link contains a pointer to the next link",
-                     mark=10,
+
+
+                     mark=1,
+
+                     answer="4",
+
+
                      time_limit="00:01:30")
 question2.save()
 question3 = Question(question_id=3, skill_id=skill1,
@@ -1554,8 +1656,13 @@ question3 = Question(question_id=3, skill_id=skill1,
                      optionB="A variable",
                      optionC="A structure",
                      optionD="All of these",
-                     answer="All of these",
-                     mark=10,
+
+
+                     mark=1,
+
+                     answer="4",
+                     
+
                      time_limit="00:01:30")
 question3.save()
 question4 = Question(question_id=4, skill_id=skill1,
@@ -1564,8 +1671,12 @@ question4 = Question(question_id=4, skill_id=skill1,
                      optionB=" Class and member of that class",
                      optionC="Class object and a class",
                      optionD="Class member and class object",
-                     answer="Class object and member of that class",
-                     mark=10,
+
+
+                     mark=1,
+
+                     answer="1",
+
                      time_limit="00:01:30")
 question4.save()
 question5 = Question(question_id=5, skill_id=skill1, question_text="A static function -  ",
@@ -1573,8 +1684,12 @@ question5 = Question(question_id=5, skill_id=skill1, question_text="A static fun
                      optionB="Can be called using the class name and function",
                      optionC="Is closely connected with an individual object of a class",
                      optionD=" Is used when a dummy object must be created",
-                     answer=" Can be called using the class name and function",
-                     mark=10,
+
+
+                     mark=1,
+
+                     answer="2",
+
                      time_limit="00:01:30")
 question5.save()
 job_exp1 = JobExperience(jobexperience_id=1, experience_name="Lecturer", organization_name="UIU", from_year="2017",

@@ -141,8 +141,8 @@ class Professional extends Component {
                             <li><b style={{
                                 fontSize:"large",
                                 color:"orangered"
-                            }}>C++</b><MdFileDownloadDone size={'2em'} style={{color:'#29A335', float:"right"}}/></li>
-                            <li><b style={{fontSize:"large", color:"blueviolet"}}>ReactJS</b><button className="custom_btn2">Take Skill Quiz</button></li>
+                            }}>C++</b><button className="custom_btn2">Take Skill Quiz</button></li>
+                            <li><b style={{fontSize:"large", color:"blueviolet"}}>ReactJS</b><MdFileDownloadDone size={'2em'} style={{color:'#29A335', float:"right"}}/></li>
                             <li><b style={{fontSize:"large", color:"purple"}}>Django</b><MdFileDownloadDone size={'2em'} style={{color:'#29A335', float:"right"}}/></li>
                             <li><b style={{fontSize:"large", color:"darkorange"}}>Java</b><MdFileDownloadDone size={'2em'} style={{color:'#29A335', float:"right"}}/></li>
 

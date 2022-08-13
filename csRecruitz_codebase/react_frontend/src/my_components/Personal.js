@@ -72,6 +72,8 @@ class Personal extends Component {
         this.handleSubmitEdit=this.handleSubmitEdit.bind(this);
     }
     componentDidMount() {
+
+
         fetch(
             "http://127.0.0.1:8000/first_module/jobseeker/1/")
 

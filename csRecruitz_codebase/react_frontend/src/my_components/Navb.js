@@ -11,6 +11,7 @@ import InputLabel from "@mui/material/InputLabel";
 import Form from "react-bootstrap/Form";
 import {ToggleButton, ToggleButtonGroup} from "@mui/material";
 import {Navigate} from "react-router-dom";
+import Loader from "./loader";
 
 const style = {
   position: 'absolute',
@@ -38,7 +39,9 @@ class Navb extends Component {
         signinopen:false,
         userORemp:"Jobseeker",
         email:"",
+        logged_in:"",
         password:"",
+        DetailsLoaded2:false,
         redirect:false,
     }
 
@@ -50,11 +53,52 @@ class Navb extends Component {
     this.handleClickLogin=this.handleClickLogin.bind(this);
     this.handleClose=this.handleClose.bind(this);
     this.handleChangeUser=this.handleChangeUser.bind(this);
+    this.SignOut=this.SignOut.bind(this);
+    this.DashBoard=this.DashBoard.bind(this);
+   }
+   componentDidMount() {
+       // const { id } = useParams()
+       // console.log(id)
+
+       fetch(
+"http://127.0.0.1:8000/first_module/jobseeker/get_info/",{
+        method:"GET"
+            })
+            .then((res) => res.json())
+            .then((json) => {
+                this.setState({DetailsLoaded2: true})
+                if(json.response ==="No") {
+                    this.state.logged_in=false
+
+                }
+                else {
+                    this.state.logged_in=true
+                }
+                console.log(json.response)
+                console.log(this.state.logged_in)
+
+            })
    }
 
     handleClick() {
         this.setState({signinopen: true})
         console.log(this.state.signinopen)
+   }
+   SignOut() {
+
+       console.log(this.state.logged_in)
+       fetch('http://127.0.0.1:8000/first_module/jobseeker/get_info/', {  // Enter your IP address here
+
+      method: 'POST',
+        headers:{
+        'Content-Type': 'application/json',
+      },
+      mode: 'cors',
+      body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
+    })
+       //this.state.logged_in=!this.state.logged_in
+       this.setState({"logged_in":!this.state.logged_in})
+      //window.location.href="/"
    }
 
     handleremail= (event) => {
@@ -98,8 +142,21 @@ class Navb extends Component {
         this.setState({'userORemp':event.target.value})
 
       }
+      DashBoard() {
+
+        if(this.state.logged_in) {
+            window.location.href="/dashboard"
+        }
+          else {
+               alert("Please Log in First to View Dashboard")
+               console.log("hereee")
+              //window.location.href="/"
+
+        }
+      }
 
     render() {
+        if ( !this.state.DetailsLoaded2) return <Loader/>
         return (
             <React.Fragment>
                             <Navbar  expand="lg" sticky="top" style={{
@@ -126,12 +183,12 @@ class Navb extends Component {
                  marginRight:8
 
         }} className="navHover">Home</Nav.Link>
-        <Nav.Link href="/dashboard" style={{
+        <Nav.Link style={{
                  color:"#410390",
                  marginRight:8
 
-        }} className="navHover">Dashboard</Nav.Link>
-        <Nav.Link href="/" style={{
+        }} className="navHover" onClick={this.DashBoard}>Dashboard</Nav.Link>
+        <Nav.Link  style={{
                  color:"#410390",
                  marginRight:8
 
@@ -141,11 +198,17 @@ class Navb extends Component {
                  marginRight:8
 
         }} className="navHover">Contact Us</Nav.Link>
-        <Nav.Link style={{
+        {!this.state.logged_in && <Nav.Link style={{
                  color:"#410390",
                  marginRight:8
 
-        }} className="navHover" onClick={this.handleClick}>Sign In</Nav.Link>
+        }} className="navHover" onClick={this.handleClick}>Sign In</Nav.Link>}
+        {this.state.logged_in && <Nav.Link style={{
+                 color:"#410390",
+                 marginRight:8
+
+        }} className="navHover" onClick={this.SignOut}>Sign Out</Nav.Link>}
+
 
       </Nav>
     </Navbar.Collapse>
