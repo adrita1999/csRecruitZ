@@ -20,6 +20,10 @@ class Professional extends Component {
             DetailsLoaded1:false,
             DetailsLoaded2:false,
             DetailsLoaded3:false,
+            DetailsLoaded4:false,
+            DetailsLoaded5:false,
+            DetailsLoaded6:false,
+
 
         };
       }
@@ -62,10 +66,47 @@ class Professional extends Component {
             console.log(json)
             console.log(this.state)
             })
+        fetch(
+            "http://127.0.0.1:8000/first_module/proj/get_proj")
+
+            .then((res) => res.json())
+            .then((json) => {
+                this.setState({
+                    projects: json,
+                    DetailsLoaded4:true
+                });
+            console.log(json)
+            console.log(this.state)
+            })
+         fetch(
+            "http://127.0.0.1:8000/first_module/pub/get_pub")
+
+            .then((res) => res.json())
+            .then((json) => {
+                this.setState({
+                    pubs: json,
+                    DetailsLoaded5:true
+                });
+            console.log(json)
+            console.log(this.state)
+            })
+        fetch(
+            "http://127.0.0.1:8000/first_module/lic/get_lic")
+
+            .then((res) => res.json())
+            .then((json) => {
+                this.setState({
+                    pubs: json,
+                    DetailsLoaded6:true
+                });
+            console.log(json)
+            console.log(this.state)
+            })
+
 
     }
     render() {
-        if (!this.state.DetailsLoaded1 || !this.state.DetailsLoaded2 || !this.state.DetailsLoaded3) return <Loader/>
+        if (!this.state.DetailsLoaded1 || !this.state.DetailsLoaded2 || !this.state.DetailsLoaded3 || !this.state.DetailsLoaded4 || !this.state.DetailsLoaded5 || !this.state.DetailsLoaded6) return <Loader/>
         return (
             <React.Fragment>
                 <body>

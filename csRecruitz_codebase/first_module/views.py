@@ -1036,8 +1036,9 @@ class recoViewsets(viewsets.ModelViewSet):
 
 
 class jobexpViewsets(viewsets.ModelViewSet):
+    global logged_in_id
     ############################kora hoynaiiiii#############################33
-    queryset = JobExperience.objects.filter().order_by('-from_year')
+    queryset = JobExperience.objects.filter(user_id=logged_in_id).order_by('-from_year')
     serializer_class = jobexpSerializer
 
     @action(methods=['post', 'get'], detail=False, url_path='addexp')
@@ -1172,7 +1173,57 @@ class publicationViewsets(viewsets.ModelViewSet):
 
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+class projectViewsets(viewsets.ModelViewSet):
+    queryset = Project.objects.all()
+    serializer_class = projSerializer
+    @action(methods=['post', 'get'], detail=False, url_path='get_proj')
+    def get_proj(self, request):
+        if request.method == 'POST':
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            global logged_in_id
+            objs = Project.objects.filter(user_id=logged_in_id)
+            serializer = projSerializer(objs, many=True)
 
+            return Response({
+                'status': status.HTTP_204_NO_CONTENT,
+                'data': serializer.data,
+            })
+
+class pubViewsets(viewsets.ModelViewSet):
+    queryset = Publication.objects.all()
+    serializer_class = pub_Serializer
+
+    @action(methods=['post', 'get'], detail=False, url_path='get_pub')
+    def get_pub(self, request):
+        if request.method == 'POST':
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            global logged_in_id
+            objs = Publication.objects.filter(user_id=logged_in_id)
+            serializer = pub_Serializer(objs, many=True)
+
+            return Response({
+                'status': status.HTTP_204_NO_CONTENT,
+                'data': serializer.data,
+            })
+class LicViewsets(viewsets.ModelViewSet):
+    queryset = JobseekerCertificate.objects.all()
+    serializer_class =LicSerializer
+
+    @action(methods=['post', 'get'], detail=False, url_path='get_lic')
+    def get_lic(self, request):
+        if request.method == 'POST':
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            global logged_in_id
+            objs = JobseekerCertificate.objects.filter(user_id=logged_in_id)
+            serializer = LicSerializer(objs, many=True)
+
+            return Response({
+                'status': status.HTTP_204_NO_CONTENT,
+                'data': serializer.data,
+            })
 class applicationViewsets(viewsets.ModelViewSet):
     queryset = JobApplication.objects.all()
     serializer_class = applicationSerializer

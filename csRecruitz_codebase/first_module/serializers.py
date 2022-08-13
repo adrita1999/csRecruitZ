@@ -18,7 +18,25 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model= User
         fields='__all__'
+class projSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= Project
+        fields='__all__'
+class pubSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= Publication
+        fields='__all__'
+class LicSerializer(serializers.ModelSerializer):
+    lic_name = serializers.SerializerMethodField("get_lic_name")
+    lic_org = serializers.SerializerMethodField("get_lic_org")
 
+    class Meta:
+        model= JobseekerCertificate
+        fields='__all__'
+    def get_lic_name(self,obj):
+        return obj.certificate_id.certificate_name
+    def get_lic_org(self,obj):
+        return obj.certificate_id.issuing_org
 class NewPostSerializer(serializers.ModelSerializer):
     #print("serialiser")
     emp_name = serializers.SerializerMethodField("get_emp_name")
