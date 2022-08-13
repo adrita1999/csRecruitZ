@@ -6,6 +6,9 @@ import 'react-sweet-progress/lib/style.css';
 import {FaRegClock} from 'react-icons/fa';
 import {FiEdit2} from 'react-icons/fi';
 import Loader from "./loader";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Radio from "@mui/material/Radio";
 
 import Navb from "./Navb";
 import Foot from "./Foot";
@@ -24,18 +27,20 @@ export class Quiz extends Component {
     this.state = {
       items: [],
       DataisLoaded:false,
-      time: {},
-      seconds: 90,
-      timer:0,
       q_id:0,
       input:{},
       percent:0,
-      x:13
+      x:13,
+      answer:"",
+      questions:[],
+      current_q_id:0,
+ 
+
     };
-    // this.timer = 0;
     
-    this.startTimer = this.startTimer.bind(this);
-    this.countDown = this.countDown.bind(this);
+    
+    // this.startTimer = this.startTimer.bind(this);
+    // this.countDown = this.countDown.bind(this);
     this.handleNext = this.handleNext.bind(this);
     this.handleQuit = this.handleQuit.bind(this);
     this.handleFinish = this.handleFinish.bind(this);
@@ -45,23 +50,21 @@ export class Quiz extends Component {
   handleAnswer(event){
     this.state.answer =event.target.value; 
     this.state.current_q_id = this.state.questions[this.state.q_id].question_id;
-    
     console.log(this.state.current_q_id);
     console.log(this.state.answer);
-    this.state.pressed = true;
+    this.state.pressed = false;
 
   }
+  
   handleNext() {
     let inp = this.state.questions[this.state.q_id];
     this.setState({input:inp});
     this.state.q_id = this.state.q_id +1;
     this.state.percent = this.state.percent +10;
 
-    console.log(this.state.pressed);
-    this.state.pressed = false;
-    console.log(this.state.pressed);
-    // console.log(this.state.q_id)
-    // console.log(input)
+    // console.log(this.state.pressed);
+    this.setState({pressed:false});
+  
 
     jsonData.question_id=this.state.current_q_id;
     jsonData.answer = this.state.answer;
@@ -77,6 +80,7 @@ export class Quiz extends Component {
         })
         .then(response=>response.json())
         .then((data)=>console.log(data));
+    
 
   }
   handleQuit() {
@@ -91,6 +95,7 @@ export class Quiz extends Component {
   handleFinish() {
     window.location.href="/professional"
   }
+
   componentDidMount() {
     // let timeLeftVar = this.secondsToTime(this.state.seconds);
     // this.setState({ time: timeLeftVar });
@@ -120,40 +125,50 @@ export class Quiz extends Component {
       // console.log(this.state.questions)
       })
   }
-  secondsToTime(secs){
-    let hours = Math.floor(secs / (60 * 60));
-    let divisor_for_minutes = secs % (60 * 60);
-    let minutes = Math.floor(divisor_for_minutes / 60);
-    let divisor_for_seconds = divisor_for_minutes % 60;
-    let seconds = Math.ceil(divisor_for_seconds);
 
-    let obj = {
-      "h": hours,
-      "m": minutes,
-      "s": seconds
-    };
-    return obj;
-  }
+  // secondsToTime(secs){
+  //   let hours = Math.floor(secs / (60 * 60));
+  //   let divisor_for_minutes = secs % (60 * 60);
+  //   let minutes = Math.floor(divisor_for_minutes / 60);
+  //   let divisor_for_seconds = divisor_for_minutes % 60;
+  //   let seconds = Math.ceil(divisor_for_seconds);
 
-  startTimer() {
-    if (this.state.timer === 0 && this.state.seconds > 0) {
-      this.state.timer = setInterval(this.countDown, 1000);
-    }
-  }
+  //   let obj = {
+  //     "h": hours,
+  //     "m": minutes,
+  //     "s": seconds
+  //   };
+  //   return obj;
+  // }
+  
 
-  countDown() {
-    // Remove one second, set state so a re-render happens.
-    let seconds = this.state.seconds - 1;
-    this.setState({
-      time: this.secondsToTime(seconds),
-      seconds: seconds,
-    });
-    
+  // startTimer() {
+  //   if (this.state.timer === 0 && this.state.seconds > 0) {
+  //     this.state.timer = setInterval(this.countDown, 1000);
+  //   }
+  // }
+
+  // countDown() {
+  //   // Remove one second, set state so a re-render happens.
+  //   let seconds = this.state.seconds - 1;
+  //   this.setState({
+  //     time: this.secondsToTime(seconds),
+  //     seconds: seconds,
+  //   });
     // Check if we're at zero.
-    if (seconds === 0) { 
-      clearInterval(this.state.timer);
-    }
-  }
+  //   if (seconds === 0) { 
+  //     clearInterval(this.state.timer);
+  //   }
+  //   // rerender(!this.startTimer);
+  // }
+  // render() {
+  //   return(
+  //     <div>
+  //       <button onClick={this.startTimer}>Start</button>
+  //       m: {this.state.time.m} s: {this.state.time.s}
+  //     </div>
+  //   );
+  // }
 
   render() {
     const { DataisLoaded, items } = this.state;
@@ -176,17 +191,12 @@ export class Quiz extends Component {
                          
                   
                   <hr/>
-                  {
+                  <input type="radio" name="group1" value="1" id="rad1" checked={this.state.pressed} onChange={this.handleAnswer}  />
                     
-                  }
-                  
-                  <input type="radio" name="group1" value="1" id="rad1" checked={this.state.pressed} onChange={this.handleAnswer} />
                   <label id='label' for="rad1">
-                   
                   <p className='question' >
                     {this.state.questions[this.state.q_id].optionA}
-                  </p>
-                           
+                  </p> 
                   </label>
                   <br/>
                   <hr/>
@@ -233,31 +243,29 @@ export class Quiz extends Component {
                   < Progress percent={this.state.percent} ></Progress>
                   <br/>
                 </div>
-                <div className='lastdiv' style={{backgroundColor:'white',marginBottom:"50px"}}>
+                <div className='lastdiv' style={{backgroundColor:'white',paddingBottom:"50px"}}>
                     {/* <p className='countp'> question=1/10</p> */}
                     <p className='time' ><FaRegClock className='clock'/>
-                     </p>
-                     { this.state.time.m === 0 && this.state.time.s === 0
+                     </p>{this.state.x}
+                     {/* { this.state.time.m === 0 && this.state.time.s === 0
                           ? null
                           : <p style={{paddingBottom:"30px"}}
                               open={this.state.DataisLoaded}
                               onLoadStart={this.startTimer}
                               onClose={this.handleClose}>
-                              Time: {this.state.time.m}:{this.state.time.s}</p> 
-                      }
+                              Time: {this.state.time.m}:{this.state.time.s}
+                              </p> 
+                      } */}
                     {this.state.q_id === 9 ?
-                        <button className='btn btn-success' onClick={this.handleFinish} style={{width:"100px", marginRight: "150px",marginLeft: "400px", marginTop:"-80px"}}> Finish</button>
+                        <button className='btn btn-success' onClick={this.handleFinish} style={{width:"100px", marginRight: "150px",marginLeft: "400px", marginTop:"0px"}}> Finish</button>
                         :
-                        <button className='btn btn-success' onClick={this.handleNext} style={{width:"100px", marginRight: "150px",marginLeft: "400px", marginTop:"-80px"}}> Next</button>
+                        <button className='btn btn-success' onClick={this.handleNext} style={{width:"100px", marginRight: "150px",marginLeft: "400px", marginTop:"0px"}}> Next</button>
 
                     }
-                    <button className='btn btn-danger'style={{width:"100px",marginLeft: "500px",marginTop: "-80px"}} onClick={this.handleQuit}> Quit</button>
+                    <button className='btn btn-danger'style={{width:"100px",marginLeft: "500px",marginTop: "-37px"}} onClick={this.handleQuit}> Quit</button>
 
                 </div>
                 
-            </div>
-         <div>
-                {this.state.x}
             </div>
        </div>
        
