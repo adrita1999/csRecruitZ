@@ -784,6 +784,40 @@ class jobseekerViewsets(viewsets.ModelViewSet):
         if request.method == 'POST':
 
             print(request.data)
+            name = request.data['name']
+            password = request.data['password']
+            password = make_pw_hash(password)
+            email = request.data['email']
+            mob=request.data['mob']
+            if request.data['est_year']!="":
+                est_year=request.data['est_year']
+            else:
+                est_year=None
+            org=request.data['org']
+            street = ""
+            if request.data['street'] != "":
+                street = request.data['street']
+            else:
+                street = None
+            thana = ""
+            if request.data['thana'] != "":
+                thana = request.data['thana']
+            else:
+                thana = None
+            dis = ""
+            if request.data['dis'] != "":
+                dis = request.data['dis']
+            else:
+                dis = None
+            div = request.data['div']
+            if len(Employer.objects.all())==0:
+                id=0
+            else:
+                id=Employer.objects.order_by('-user_id').first().user_id
+            id=id+1
+
+            employer=Employer(user_id=id,name=name,email=email,password=password,thana=thana,district=dis,division=div,contact_no=mob,street=street,establishment_year=est_year,org_type=org)
+            employer.save()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     @action(methods=['post', 'get'], detail=False, url_path='get_info')
