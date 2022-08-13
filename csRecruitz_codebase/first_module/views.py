@@ -1081,7 +1081,7 @@ class recoViewsets(viewsets.ModelViewSet):
 class jobexpViewsets(viewsets.ModelViewSet):
     global logged_in_id
     ############################kora hoynaiiiii#############################33
-    queryset = JobExperience.objects.filter(user_id=logged_in_id).order_by('-from_year')
+    queryset = JobExperience.objects.all()
     serializer_class = jobexpSerializer
 
     @action(methods=['post', 'get'], detail=False, url_path='addexp')
@@ -1115,7 +1115,7 @@ class jobexpViewsets(viewsets.ModelViewSet):
         else:
             global logged_in_id
             objs = JobExperience.objects.filter(user_id=logged_in_id)
-            serializer = JobExperience(objs, many=True)
+            serializer = jobexpSerializer(objs, many=True)
             return Response({
                 'status': status.HTTP_204_NO_CONTENT,
                 'data': serializer.data,
@@ -1125,7 +1125,7 @@ class jobexpViewsets(viewsets.ModelViewSet):
 
 class uskillViewsets(viewsets.ModelViewSet):
     global logged_in_id
-    queryset = JobSeekerSkill.objects.filter(user_id=logged_in_id)
+    queryset = JobSeekerSkill.objects.all()
     serializer_class = uskillSerializer
 
     @action(methods=['post', 'get'], detail=False, url_path='addskill')
@@ -1175,6 +1175,16 @@ class uskillViewsets(viewsets.ModelViewSet):
                                         project_short_desc=description, user_id_id=reg_id)
                 project.save()
             return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            global logged_in_id
+            print("koooooo" + str(logged_in_id))
+            objs = JobSeekerSkill.objects.filter(user_id=logged_in_id)
+            serializer = uskillSerializer(objs, many=True)
+            return Response({
+                'status': status.HTTP_204_NO_CONTENT,
+                'data': serializer.data,
+            })
+
 
 
 

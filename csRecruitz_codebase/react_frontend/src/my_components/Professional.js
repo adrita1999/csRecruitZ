@@ -31,12 +31,12 @@ class Professional extends Component {
     componentDidMount() {
         const id=1
         fetch(
-            "http://127.0.0.1:8000/first_module/jobseeker/"+id)
+            "http://127.0.0.1:8000/first_module/jobseeker/get_id/")
 
             .then((res) => res.json())
             .then((json) => {
                 this.setState({
-                    items: json,
+                    items: json.data,
                     DetailsLoaded1:true
                 });
             console.log(json)
@@ -48,31 +48,32 @@ class Professional extends Component {
             .then((res) => res.json())
             .then((json) => {
                 this.setState({
-                    exps: json,
+                    exps: json.data,
                     DetailsLoaded2:true
                 });
             console.log(json)
             console.log(this.state)
             })
         fetch(
-            "http://127.0.0.1:8000/first_module/uskill/")
+            "http://127.0.0.1:8000/first_module/uskill/addskill")
 
             .then((res) => res.json())
             .then((json) => {
                 this.setState({
-                    skills: json,
+                    skills: json.data,
                     DetailsLoaded3:true
                 });
             console.log(json)
             console.log(this.state)
             })
+
         fetch(
             "http://127.0.0.1:8000/first_module/proj/get_proj")
 
             .then((res) => res.json())
             .then((json) => {
                 this.setState({
-                    projects: json,
+                    projects: json.data,
                     DetailsLoaded4:true
                 });
             console.log(json)
@@ -84,7 +85,7 @@ class Professional extends Component {
             .then((res) => res.json())
             .then((json) => {
                 this.setState({
-                    pubs: json,
+                    pubs: json.data,
                     DetailsLoaded5:true
                 });
             console.log(json)
@@ -96,7 +97,7 @@ class Professional extends Component {
             .then((res) => res.json())
             .then((json) => {
                 this.setState({
-                    pubs: json,
+                    lics: json.data,
                     DetailsLoaded6:true
                 });
             console.log(json)
@@ -148,9 +149,7 @@ class Professional extends Component {
                                             <FaArrowRight size={'1.5em'} style={{color:'#29A335', marginLeft:-16, display:"inline"}}/>
                                             <b className="seems-h1" style={{marginLeft:20, display:"inline"}}>{exp.experience_name}</b>
                                             <p className="mb-2" style={{marginLeft:30,}}>{exp.organization_name} | <small>{exp.from_year} - {exp.to_year}</small></p>
-                                            <p style={{marginLeft:30,}}>Tempor eos dolore amet tempor dolor tempor. Dolore ea magna sit amet
-                                                dolor eirmod. Eos ipsum est tempor dolor. Clita lorem kasd sed ea lorem
-                                                diam ea lorem eirmod duo sit ipsum stet lorem diam</p>
+                                            <p style={{marginLeft:30,}}>{exp.description}</p>
 
                                         </div>
                                             )})
@@ -200,23 +199,19 @@ class Professional extends Component {
                     </div>
                     <AnimationOnScroll animateIn="bounceInRight" duration={4} delay={100} animateOnce={false}>
                     <ul className="projectlist">
-                        <li><b className="seems-h1"> Gesture Based Mini Piano</b>
-                        <p>Tempor eos dolore amet tempor dolor tempor. Dolore ea magna sit amet
-                                                dolor eirmod. Eos ipsum est tempor dolor. Clita lorem kasd sed ea lorem
-                                                diam ea lorem eirmod duo sit ipsum stet lorem diam</p>
+                        {
+                            this.state.projects.map((proj) => {
+                                return(
+                                <li><b className="seems-h1"> {proj.project_name}</b>
+                                    <p>{proj.project_short_desc}</p>
 
-                            <HiExternalLink size={'1.5em'}/><a href="https://github.com/Dristi123/ishtishon" style={{
-                                marginLeft:2
-                            }}>Visit Project Repository</a>
-                        </li>
-                        <li><b className="seems-h1">Istishon</b>
-                        <p>Tempor eos dolore amet tempor dolor tempor. Dolore ea magna sit amet
-                                                dolor eirmod. Eos ipsum est tempor dolor. Clita lorem kasd sed ea lorem
-                                                diam ea lorem eirmod duo sit ipsum stet lorem diam</p>
-
-                            <HiExternalLink size={'1.5em'}/><a href="https://github.com/Dristi123/ishtishon" style={{
-                                marginLeft:2
-                            }}>Visit Project Repository</a></li>
+                                    <HiExternalLink size={'1.5em'}/><a href={proj.project_link}
+                                                                       style={{
+                                                                           marginLeft: 2
+                                                                       }}>Visit Project Repository</a>
+                                </li>
+                                )})
+                            }
 
                     </ul>
                     </AnimationOnScroll>
@@ -229,22 +224,18 @@ class Professional extends Component {
                     </div>
                     <AnimationOnScroll animateIn="bounceInRight" duration={4} delay={100} animateOnce={false}>
                     <ul className="publist">
-                        <li>
+                        {
+                             this.state.pubs.map((pub) => {
+                                return(
+                            <li>
+                                <HiExternalLink size={'1.5em'}/><a href={pub.publication_link}
+                                                                   style={{
+                                                                       marginLeft: 2
+                                                                   }}>{pub.publication_name}</a>
+                            </li>
+                                    )})
+                        }
 
-                            <HiExternalLink size={'1.5em'}/><a href="https://github.com/Dristi123/ishtishon" style={{
-                                marginLeft:2
-                            }}>Tempor eos dolore amet tempor dolor tempor. Dolore ea magna sit amet
-                                                dolor eirmod. Eos ipsum est tempor dolor. Clita lorem kasd sed ea lorem
-                                                diam ea lorem eirmod duo sit ipsum stet lorem diam</a>
-                        </li>
-                        <li>
-
-                            <HiExternalLink size={'1.5em'}/><a href="https://github.com/Dristi123/ishtishon" style={{
-                                marginLeft:2
-                            }}>Tempor eos dolore amet tempor dolor tempor. Dolore ea magna sit amet
-                                                dolor eirmod. Eos ipsum est tempor dolor. Clita lorem kasd sed ea lorem
-                                                diam ea lorem eirmod duo sit ipsum stet lorem diam</a>
-                        </li>
 
                     </ul>
                     </AnimationOnScroll>
@@ -257,12 +248,15 @@ class Professional extends Component {
                     </div>
                     <AnimationOnScroll animateIn="bounceInRight" duration={4} delay={50} animateOnce={false}>
                     <ul className="publist">
-                        <li><b className="seems-h1">Neural Network and Deep Learning</b>
-                            <button className="custom_btn2">View Credential</button>
-                        <p><small>Coursera</small></p></li>
-                        <li><b className="seems-h1">Neural Network and Deep Learning</b>
-                            <button className="custom_btn2">View Credential</button>
-                        <p><small>Coursera</small></p></li>
+                        {
+                            this.state.lics.map((lic) => {
+                                return(
+                            <li><b className="seems-h1">{lic.lic_name}</b>
+                                <button className="custom_btn2">View Credential</button>
+                                <p><small>{lic.lic_org}</small></p></li>
+                                    )})
+                        }
+
                     </ul>
                      </AnimationOnScroll>
                         <div className="row_custom">
@@ -281,24 +275,30 @@ class Professional extends Component {
                             <div className="row">
                                 <div className="col-sm-12">
                             <b className= "seems-h1">Currently Open To</b><p>
-                                    <div className="round1"><b>C++</b></div>
-                                    <div className="round2"><b>ReactJS</b></div>
-                                    <div className="round3"><b>Django</b></div>
+                                    {
+                                        this.state.skills.map((skill) => {
+                                            if (skill.isOpenToWork)
+                                            return(
+                                                <div className="round1"><b>{skill.skill_name}</b></div>
+
+                                            )})
+                                    }
+
                                 </p>
                         </div>
                                 <div className="col-sm-12">
                                     <b className= "seems-h1">Preferred Salary</b><p>
-                                    BDT 50000
+                                    {this.state.items.pref_sal}
                                     </p>
                                 </div>
                                 <div className="col-sm-12">
                                     <b className= "seems-h1">Preferred Job Nature</b><p>
-                                    Full-time
+                                    {this.state.items.pref_job_ntr}
                                     </p>
                                 </div>
                                 <div className="col-sm-12">
                                     <b className= "seems-h1">Preferred Organization Type</b><p>
-                                    Government Org
+                                    {this.state.items.pref_org_type}
                                     </p>
                                 </div>
                             </div>
