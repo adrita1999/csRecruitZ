@@ -12,6 +12,7 @@ import Radio from "@mui/material/Radio";
 
 import Navb from "./Navb";
 import Foot from "./Foot";
+import FormControl from "@mui/material/FormControl";
 
 const randomID = () => Math.random().toString(36).substring(7);
 
@@ -34,6 +35,7 @@ export class Quiz extends Component {
       answer:"",
       questions:[],
       current_q_id:0,
+        radioval:""
  
 
     };
@@ -45,7 +47,15 @@ export class Quiz extends Component {
     this.handleQuit = this.handleQuit.bind(this);
     this.handleFinish = this.handleFinish.bind(this);
     this.handleAnswer = this.handleAnswer.bind(this);
+    this.handleChangeAns=this.handleChangeAns.bind(this);
+  }
 
+
+  handleChangeAns(event)
+  {
+      this.state.radioval=event.target.value;
+      // console.log(event.target.value)
+      this.setState({radioval:event.target.value})
   }
   handleAnswer(event){
     this.state.answer =event.target.value; 
@@ -64,6 +74,7 @@ export class Quiz extends Component {
 
     // console.log(this.state.pressed);
     this.setState({pressed:false});
+    this.state.radioval="";
   
 
     jsonData.question_id=this.state.current_q_id;
@@ -191,54 +202,68 @@ export class Quiz extends Component {
                          
                   
                   <hr/>
-                  <input type="radio" name="group1" value="1" id="rad1" checked={this.state.pressed} onChange={this.handleAnswer}  />
-                    
-                  <label id='label' for="rad1">
-                  <p className='question' >
-                    {this.state.questions[this.state.q_id].optionA}
-                  </p> 
-                  </label>
-                  <br/>
-                  <hr/>
-                  <input type="radio" name="group1" value="2" id="rad1" onChange={this.handleAnswer} autocomplete="off"/>
-                  <label id='label' for="rad1">
-                  {/* {this.state.input.map((list) =>{
-                          return ( */}
-                          <p className='question' >
-                            {this.state.questions[this.state.q_id].optionB}
-                          </p>
-                           {/* )
-                        }
-                    )}  */}
-                  </label>
-                  <br/>
-                  <hr/>
-                  <input type="radio" name="group1" value="3" id="rad1" onChange={this.handleAnswer} autocomplete="off"/>
-                  <label id='label' for="rad1">
-                  {/* {this.state.input.map((list) =>{
-                          return ( */}
-                          <p className='question' >
-                            {this.state.questions[this.state.q_id].optionC}
-                          </p>
-                           {/* )
-                        }
-                    )}  */}
-                  </label>
-                  <br/>
-                  <hr/>
-                  <input type="radio" name="group1" value="4" id="rad1" onChange={this.handleAnswer} autocomplete="off"/>
-                  <label id='label' for="rad1">
-                  {/* {this.state.input.map((list) =>{
-                          return ( */}
-                          <p className='question' >
-                            {this.state.questions[this.state.q_id].optionD}
-                          </p>
-                           {/* )
-                        }
-                    )}  */}
-                  </label>
-                  <br/>
-                  <hr/>
+                  {/*<input type="radio" name="group1" value="1" id="rad1" checked={this.state.pressed} onChange={this.handleAnswer}  />*/}
+
+                  {/*<label id='label' for="rad1">*/}
+                  {/*<p className='question' >*/}
+                  {/*  {this.state.questions[this.state.q_id].optionA}*/}
+                  {/*</p>*/}
+                  {/*</label>*/}
+                  {/*<br/>*/}
+                  {/*<hr/>*/}
+                  {/*<input type="radio" name="group1" value="2" id="rad1" onChange={this.handleAnswer} autocomplete="off"/>*/}
+                  {/*<label id='label' for="rad1">*/}
+                  {/*/!* {this.state.input.map((list) =>{*/}
+                  {/*        return ( *!/*/}
+                  {/*        <p className='question' >*/}
+                  {/*          {this.state.questions[this.state.q_id].optionB}*/}
+                  {/*        </p>*/}
+                  {/*         /!* )*/}
+                  {/*      }*/}
+                  {/*  )}  *!/*/}
+                  {/*</label>*/}
+                  {/*<br/>*/}
+                  {/*<hr/>*/}
+                  {/*<input type="radio" name="group1" value="3" id="rad1" onChange={this.handleAnswer} autocomplete="off"/>*/}
+                  {/*<label id='label' for="rad1">*/}
+                  {/*/!* {this.state.input.map((list) =>{*/}
+                  {/*        return ( *!/*/}
+                  {/*        <p className='question' >*/}
+                  {/*          {this.state.questions[this.state.q_id].optionC}*/}
+                  {/*        </p>*/}
+                  {/*         /!* )*/}
+                  {/*      }*/}
+                  {/*  )}  *!/*/}
+                  {/*</label>*/}
+                  {/*<br/>*/}
+                  {/*<hr/>*/}
+                  {/*<input type="radio" name="group1" value="4" id="rad1" onChange={this.handleAnswer} autocomplete="off"/>*/}
+                  {/*<label id='label' for="rad1">*/}
+                  {/*/!* {this.state.input.map((list) =>{*/}
+                  {/*        return ( *!/*/}
+                  {/*        <p className='question' >*/}
+                  {/*          {this.state.questions[this.state.q_id].optionD}*/}
+                  {/*        </p>*/}
+                  {/*         /!* )*/}
+                  {/*      }*/}
+                  {/*  )}  *!/*/}
+                  {/*</label>*/}
+                  {/*<br/>*/}
+                  {/*<hr/>*/}
+
+                 <FormControl >
+                      <RadioGroup
+                        aria-labelledby="demo-radio-buttons-group-label"
+                        name="radio-buttons-group"
+                        defaultValue={this.state.radioval}
+                        value={this.state.radioval}
+                        onChange={this.handleChangeAns}>
+                          <FormControlLabel value="1" control={<Radio sx={{'& .MuiSvgIcon-root': {fontSize: 18,},}} />} label={<span className="radio_btn_option">{this.state.questions[this.state.q_id].optionA}</span>}/>
+                          <FormControlLabel value="2" control={<Radio sx={{'& .MuiSvgIcon-root': {fontSize: 18,},}} />} label={<span className="radio_btn_option">{this.state.questions[this.state.q_id].optionB}</span>}/>
+                          <FormControlLabel value="3" control={<Radio sx={{'& .MuiSvgIcon-root': {fontSize: 18,},}} />} label={<span className="radio_btn_option">{this.state.questions[this.state.q_id].optionC}</span>}/>
+                          <FormControlLabel value="4" control={<Radio sx={{'& .MuiSvgIcon-root': {fontSize: 18,},}} />} label={<span className="radio_btn_option">{this.state.questions[this.state.q_id].optionD}</span>}/>
+                      </RadioGroup>
+                  </FormControl>
 
                   < Progress percent={this.state.percent} ></Progress>
                   <br/>
