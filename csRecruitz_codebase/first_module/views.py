@@ -1862,7 +1862,7 @@ question1 = Question(question_id=1, skill_id=skill2,
                      answer="1",
 
 
-                     time_limit="1:30")
+                     time_limit="0:30")
 question1.save()
 question2 = Question(question_id=2, skill_id=skill2, question_text="In a linked list - ",
                      optionA=" Each link contains data or a pointer to data",
@@ -1876,7 +1876,7 @@ question2 = Question(question_id=2, skill_id=skill2, question_text="In a linked 
                      answer="4",
 
 
-                     time_limit="1:30")
+                     time_limit="0:30")
 question2.save()
 question3 = Question(question_id=3, skill_id=skill2,
                      question_text="In C++, which of the following can legitimately be passed to a function?",
@@ -1891,7 +1891,7 @@ question3 = Question(question_id=3, skill_id=skill2,
                      answer="4",
 
 
-                     time_limit="1:30")
+                     time_limit="0:30")
 question3.save()
 question4 = Question(question_id=4, skill_id=skill2,
                      question_text="The dot operator connects which of the following two entities? ",
@@ -1905,7 +1905,7 @@ question4 = Question(question_id=4, skill_id=skill2,
 
                      answer="1",
 
-                     time_limit="1:30")
+                     time_limit="0:30")
 question4.save()
 question5 = Question(question_id=5, skill_id=skill2, question_text="A static function -  ",
                      optionA="Should be called when an object is destroyed",
@@ -1918,7 +1918,7 @@ question5 = Question(question_id=5, skill_id=skill2, question_text="A static fun
 
                      answer="2",
 
-                     time_limit="1:30")
+                     time_limit="0:30")
 question5.save()
 question6 = Question(question_id=6, skill_id=skill2, question_text="Which one of the following is a keyword?",
                      optionA="Size",
@@ -1927,7 +1927,7 @@ question6 = Question(question_id=6, skill_id=skill2, question_text="Which one of
                      optionD="Switch",
                      mark=1,
                      answer="4",
-                     time_limit="1:30")
+                     time_limit="0:30")
 question6.save()
 question7 = Question(question_id=7, skill_id=skill2, question_text="Which of the following is the correct syntax of including a user defined header files in C++?",
                      optionA="#include [userdefined]",
@@ -1936,7 +1936,7 @@ question7 = Question(question_id=7, skill_id=skill2, question_text="Which of the
                      optionD="#include <userdefined>",
                      mark=1,
                      answer="2",
-                     time_limit="1:30")
+                     time_limit="0:30")
 question7.save()
 question8 = Question(question_id=8, skill_id=skill2, question_text="Which of the following is a correct identifier in C++?",
                      optionA="VAR_1234",
@@ -1945,7 +1945,7 @@ question8 = Question(question_id=8, skill_id=skill2, question_text="Which of the
                      optionD="7var_name",
                      mark=2,
                      answer="1",
-                     time_limit="2:00")
+                     time_limit="0:45")
 question8.save()
 question9 = Question(question_id=9, skill_id=skill2, question_text="Which of the following approach is used by C++?",
                      optionA="Left-right",
@@ -1954,7 +1954,7 @@ question9 = Question(question_id=9, skill_id=skill2, question_text="Which of the
                      optionD="Top-down",
                      mark=2,
                      answer="3",
-                     time_limit="2:00")
+                     time_limit="0:45")
 question9.save()
 question10 = Question(question_id=10, skill_id=skill2, question_text="What happens if the following C++ statement is compiled and executed?\n"
                                                                      "int *ptr = NULL;\n"
@@ -1965,7 +1965,7 @@ question10 = Question(question_id=10, skill_id=skill2, question_text="What happe
                      optionD="The program compiled successfully but throws an error during run-time",
                      mark=2,
                      answer="2",
-                     time_limit="2:00")
+                     time_limit="0:45")
 question10.save()
 question11 = Question(question_id=11, skill_id=skill2, question_text="What is the difference between delete and delete[] in C++?",
                      optionA="delete is syntactically correct but delete[] is wrong and hence will give an error if used in any case",
@@ -1974,16 +1974,16 @@ question11 = Question(question_id=11, skill_id=skill2, question_text="What is th
                      optionD="delete is used to delete single object whereas delete[] is used to multiple(array/pointer of) objects",
                      mark=1,
                      answer="4",
-                     time_limit="1:30")
+                     time_limit="0:30")
 question11.save()
-question12 = Question(question_id=12, skill_id=skill2, question_text="What happens if the following program is executed in C and C++?\n #include <stdio.h> \n int main(void){\nint new = 5;\nprintf(\"%d\", new); }",
+question12 = Question(question_id=12, skill_id=skill2, question_text="What happens if the following program is executed in C and C++?\n#include <stdio.h>\nint main(void){\nint new = 5;\nprintf(\"%d\", new); }",
                      optionA="Error in C and successful execution in C++",
                      optionB="Error in both C and C++",
                      optionC="Error in C++ and successful execution in C",
                      optionD="A successful run in both C and C++",
                      mark=2,
                      answer="3",
-                     time_limit="2:00")
+                     time_limit="0:45")
 question12.save()
 question13 = Question(question_id=13, skill_id=skill2, question_text="Which of the following type is provided by C++ but not C?",
                      optionA="double",
@@ -1992,7 +1992,7 @@ question13 = Question(question_id=13, skill_id=skill2, question_text="Which of t
                      optionD="bool",
                      mark=1,
                      answer="4",
-                     time_limit="1:30")
+                     time_limit="0:30")
 question13.save()
 question14 = Question(question_id=14, skill_id=skill2, question_text="By default, all the files in C++ are opened in _________ mode.",
                      optionA="Binary",
@@ -2001,7 +2001,7 @@ question14 = Question(question_id=14, skill_id=skill2, question_text="By default
                      optionD="ISCII",
                      mark=1,
                      answer="3",
-                     time_limit="1:30")
+                     time_limit="0:30")
 question14.save()
 question15 = Question(question_id=15, skill_id=skill2, question_text="What is the size of wchar_t in C++?",
                      optionA="Based on the number of bits in the system",
@@ -2010,7 +2010,7 @@ question15 = Question(question_id=15, skill_id=skill2, question_text="What is th
                      optionD="2",
                      mark=2,
                      answer="1",
-                     time_limit="2:00")
+                     time_limit="0:45")
 question15.save()
 
 
