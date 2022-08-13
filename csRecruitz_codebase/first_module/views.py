@@ -1206,11 +1206,15 @@ class shortlistedjobViewsets(viewsets.ModelViewSet):
     user_id=1
     queryset = JobShortlist.objects.filter(user_id_id=user_id)
     serializer_class = shortlistSerializer
+    job_id=""
     @action(methods=['post', 'get'], detail=False, url_path='shortlist')
     def shortlist(self, request):
         if request.method == 'POST':
-            print(request.data)
-            # postViewsets_for_jobpost.cat = request.data['category']
+            print(request.data["id"])
+            shortlistedjobViewsets.job_id = request.data['id']
+            shortlist = JobShortlist.objects.filter(user_id_id=int(shortlistedjobViewsets.user_id),
+                                                    newjobpost_id_id=int(shortlistedjobViewsets.job_id))
+            shortlist.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
             jobs=JobShortlist.objects.filter(user_id_id=shortlistedjobViewsets.user_id)
@@ -1263,7 +1267,7 @@ user1 = Jobseeker(user_id=1, name="Adrita Hossain Nakshi", email="adrita_99@yaho
                   pref_job_ntr="Full-time", pref_org_type="NGO", propic="propics_input/nakshi.jpg",
                   resume="resumes_input/nakshi.docx")
 user1.save()
-user2 = Jobseeker(user_id=2, name="Simantika Bhattacharjee Dristi", email="1705029@ugrad.cse.buet.ac.bd", password="1234", thana="Lalbag",
+user2 = Jobseeker(user_id=2, name="Simantika Bhattacharjee Dristi", email="1705029@ugrad.cse.buet.ac.bd", password=pas_temp, thana="Lalbag",
                   district="Dhaka", division="Dhaka", father_name="Pintu Bhattacharjee",
                   mother_name="Soma Chowdhury", date_of_birth="1998-01-21",
                   self_desc="I am a CS under-graduate. I believe in hardwork. CSE is my first love and my one and only passion.",
