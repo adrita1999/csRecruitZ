@@ -6,6 +6,9 @@ import 'react-sweet-progress/lib/style.css';
 import {FaRegClock} from 'react-icons/fa';
 import {FiEdit2} from 'react-icons/fi';
 import Loader from "./loader";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Radio from "@mui/material/Radio";
 
 import Navb from "./Navb";
 import Foot from "./Foot";
@@ -30,9 +33,22 @@ export class Quiz extends Component {
       q_id:0,
       input:{},
       percent:0,
-      x:13
+
+      x:13,
+
+      lastOrNot:false,
+      answer:"",
+      questions:[],
+      current_q_id:0,
+      pressed:false,
+      valueA:"",
+      valueB:"",
+      valueC:"",
+      valueD:"",
+
+
     };
-    // this.timer = 0;
+    this.state.timer = 0;
     
     this.startTimer = this.startTimer.bind(this);
     this.countDown = this.countDown.bind(this);
@@ -45,23 +61,21 @@ export class Quiz extends Component {
   handleAnswer(event){
     this.state.answer =event.target.value; 
     this.state.current_q_id = this.state.questions[this.state.q_id].question_id;
-    
     console.log(this.state.current_q_id);
     console.log(this.state.answer);
-    this.state.pressed = true;
+    this.state.pressed = false;
 
   }
+  
   handleNext() {
     let inp = this.state.questions[this.state.q_id];
     this.setState({input:inp});
     this.state.q_id = this.state.q_id +1;
     this.state.percent = this.state.percent +10;
 
-    console.log(this.state.pressed);
-    this.state.pressed = false;
-    console.log(this.state.pressed);
-    // console.log(this.state.q_id)
-    // console.log(input)
+    // console.log(this.state.pressed);
+    this.setState({pressed:false});
+  
 
     jsonData.question_id=this.state.current_q_id;
     jsonData.answer = this.state.answer;
@@ -77,6 +91,7 @@ export class Quiz extends Component {
         })
         .then(response=>response.json())
         .then((data)=>console.log(data));
+    
 
   }
   handleQuit() {
@@ -91,6 +106,7 @@ export class Quiz extends Component {
   handleFinish() {
     window.location.href="/professional"
   }
+
   componentDidMount() {
     // let timeLeftVar = this.secondsToTime(this.state.seconds);
     // this.setState({ time: timeLeftVar });
@@ -120,6 +136,7 @@ export class Quiz extends Component {
       // console.log(this.state.questions)
       })
   }
+
   secondsToTime(secs){
     let hours = Math.floor(secs / (60 * 60));
     let divisor_for_minutes = secs % (60 * 60);
@@ -134,6 +151,23 @@ export class Quiz extends Component {
     };
     return obj;
   }
+  componentDidMount() {
+    let timeLeftVar = this.secondsToTime(this.state.seconds);
+    this.setState({ time: timeLeftVar });
+    fetch(
+      "http://127.0.0.1:8000/first_module/question/")
+
+      .then((res) => res.json())
+      .then((json) => {
+          this.setState({
+              questions: json,
+              DataisLoaded:true,
+          });
+      // console.log(input.question_text)
+      // console.log(this.state.questions)
+      })
+  }
+  
 
   startTimer() {
     if (this.state.timer === 0 && this.state.seconds > 0) {
@@ -148,11 +182,19 @@ export class Quiz extends Component {
       time: this.secondsToTime(seconds),
       seconds: seconds,
     });
-    
     // Check if we're at zero.
     if (seconds === 0) { 
       clearInterval(this.state.timer);
     }
+    // rerender(!this.startTimer);
+  }
+  render() {
+    return(
+      <div>
+        <button onClick={this.startTimer}>Start</button>
+        m: {this.state.time.m} s: {this.state.time.s}
+      </div>
+    );
   }
 
   render() {
@@ -176,17 +218,12 @@ export class Quiz extends Component {
                          
                   
                   <hr/>
-                  {
+                  <input type="radio" name="group1" value="1" id="rad1" onChange={this.handleAnswer}  />
                     
-                  }
-                  
-                  <input type="radio" name="group1" value="1" id="rad1" checked={this.state.pressed} onChange={this.handleAnswer} />
                   <label id='label' for="rad1">
-                   
                   <p className='question' >
                     {this.state.questions[this.state.q_id].optionA}
-                  </p>
-                           
+                  </p> 
                   </label>
                   <br/>
                   <hr/>
