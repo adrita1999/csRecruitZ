@@ -65,6 +65,9 @@ class Personal extends Component {
             DataisLoaded:false,
             editopen:false,
             input:{},
+            id:-1,
+            DataisLoaded2:false,
+            datas:[],
         };
         this.handleClick=this.handleClick.bind(this);
         this.handleClose=this.handleClose.bind(this);
@@ -73,18 +76,34 @@ class Personal extends Component {
     }
     componentDidMount() {
 
-
         fetch(
-            "http://127.0.0.1:8000/first_module/jobseeker/1/")
+            "http://127.0.0.1:8000/first_module/jobseeker/get_id/",{
+            method:"GET"
+                })
+                .then((res) => res.json())
+                .then((json) => {
 
-            .then((res) => res.json())
-            .then((json) => {
-                this.setState({
-                    items: json,
-                    DataisLoaded: true
-                });
-                console.log(this.state)
-            })
+                    this.setState({items: json.data,
+                                    DataisLoaded: true
+                                })
+                    console.log(this.state)
+                    // console.log(json.data);
+                    console.log(json.response);
+                    
+                })
+           ;
+            // console.log(this.state.id)
+        // fetch(
+        //     "http://127.0.0.1:8000/first_module/jobseeker/1/")
+
+        //     .then((res) => res.json())
+        //     .then((json) => {
+        //         this.setState({
+        //             items: json,
+        //             DataisLoaded2: true
+        //         });
+        //         console.log(this.state)
+        //     })
     
     }
     handleClick() {
@@ -229,7 +248,7 @@ class Personal extends Component {
                     
             <TypeAnimation
             cursor={true}
-            sequence={['Research and Development Engineer', 2000, 'Skilled in Cpp, Java and more ',2000,'10 years of work experience',2000,'']}
+            sequence={['Research and Development Engineer', 3000, 'Skilled in Cpp, Java and more ',3000,'10 years of work experience',3000,'']}
             wrapper="h6"
             repeat={Infinity}/>
             </div>
