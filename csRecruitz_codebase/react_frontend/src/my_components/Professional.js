@@ -43,7 +43,7 @@ class Professional extends Component {
             console.log(this.state)
             })
         fetch(
-            "http://127.0.0.1:8000/first_module/jobexp/")
+            "http://127.0.0.1:8000/first_module/jobexp/addexp/")
 
             .then((res) => res.json())
             .then((json) => {

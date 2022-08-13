@@ -1111,7 +1111,16 @@ class jobexpViewsets(viewsets.ModelViewSet):
 
 
             print(request.data)
-        return Response(status=status.HTTP_204_NO_CONTENT)
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            global logged_in_id
+            objs = JobExperience.objects.filter(user_id=logged_in_id)
+            serializer = JobExperience(objs, many=True)
+            return Response({
+                'status': status.HTTP_204_NO_CONTENT,
+                'data': serializer.data,
+            })
+
 
 
 class uskillViewsets(viewsets.ModelViewSet):
@@ -1398,9 +1407,9 @@ class questionViewsets(viewsets.ModelViewSet):
                 id_list.append(tempset[i].question_id)
                 count_2=count_2+1
 
-    # print("it is tempppp")
+    print("it is tempppp")
     queryset = Question.objects.filter(skill_id=skill_id,question_id__in=id_list)
-    #print(queryset)
+    print(queryset)
     #random.shuffle(queryset)
     print(queryset)
     serializer_class = questionSerializer
@@ -1929,7 +1938,7 @@ question7 = Question(question_id=7, skill_id=skill2, question_text="Which of the
                      answer="2",
                      time_limit="1:30")
 question7.save()
-question8 = Question(question_id=8, skill_id=skill2, question_text=" Which of the following is a correct identifier in C++?",
+question8 = Question(question_id=8, skill_id=skill2, question_text="Which of the following is a correct identifier in C++?",
                      optionA="VAR_1234",
                      optionB="$var_name",
                      optionC="7VARNAME",
@@ -1938,7 +1947,7 @@ question8 = Question(question_id=8, skill_id=skill2, question_text=" Which of th
                      answer="1",
                      time_limit="2:00")
 question8.save()
-question9 = Question(question_id=9, skill_id=skill2, question_text=" Which of the following approach is used by C++?",
+question9 = Question(question_id=9, skill_id=skill2, question_text="Which of the following approach is used by C++?",
                      optionA="Left-right",
                      optionB="Right-left",
                      optionC="Bottom-up",
@@ -1947,7 +1956,7 @@ question9 = Question(question_id=9, skill_id=skill2, question_text=" Which of th
                      answer="3",
                      time_limit="2:00")
 question9.save()
-question10 = Question(question_id=10, skill_id=skill2, question_text=" What happens if the following C++ statement is compiled and executed?\n"
+question10 = Question(question_id=10, skill_id=skill2, question_text="What happens if the following C++ statement is compiled and executed?\n"
                                                                      "int *ptr = NULL;\n"
                                                                      "delete ptr;",
                      optionA="The program is not semantically correct",
@@ -1967,7 +1976,7 @@ question11 = Question(question_id=11, skill_id=skill2, question_text="What is th
                      answer="4",
                      time_limit="1:30")
 question11.save()
-question12 = Question(question_id=12, skill_id=skill2, question_text=" What happens if the following program is executed in C and C++?\n #include <stdio.h> \n int main(void){\nint new = 5;\nprintf(\"%d\", new); }",
+question12 = Question(question_id=12, skill_id=skill2, question_text="What happens if the following program is executed in C and C++?\n #include <stdio.h> \n int main(void){\nint new = 5;\nprintf(\"%d\", new); }",
                      optionA="Error in C and successful execution in C++",
                      optionB="Error in both C and C++",
                      optionC="Error in C++ and successful execution in C",

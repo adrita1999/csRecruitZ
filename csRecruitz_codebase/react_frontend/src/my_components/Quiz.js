@@ -191,8 +191,8 @@ export class Quiz extends Component {
                 </div>
                 <div style={{padding:"20px"}}>
                       
-                        <p className='question' >
-                          {this.state.questions[this.state.q_id].question_text}
+                        <p className='question' ><pre>
+                          {this.state.questions[this.state.q_id].question_text}</pre>
                         </p>
                          
                   
