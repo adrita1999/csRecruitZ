@@ -669,7 +669,7 @@ class jobseekerViewsets(viewsets.ModelViewSet):
             if jobseekerViewsets.isdetails == True:
                 print(jobseekerViewsets.email)
                 print(jobseekerViewsets.password)
-                objs = Jobseeker.objects.filter(email=jobseekerViewsets.email)
+                objs = User.objects.filter(email=jobseekerViewsets.email)
 
 
                 if len(objs) == 1:
@@ -684,7 +684,7 @@ class jobseekerViewsets(viewsets.ModelViewSet):
                         string="fail"
                 else:
                     string = "fail"
-                serializer = jobseekerSerializer(objs, many=True)
+                serializer = UserSerializer(objs, many=True)
                 jobseekerViewsets.isdetails = False
                 return Response({
                     'status': status.HTTP_204_NO_CONTENT,
@@ -776,6 +776,13 @@ class jobseekerViewsets(viewsets.ModelViewSet):
                            mother_name=mother,date_of_birth=dob,self_desc=desc,nationality=nat,nid_number=nid,field=field,pref_sal=pref_sal,
                            pref_job_ntr=pref_nat,pref_org_type=pref_org,gender=gender,contact_no=mob,street=street)
             user.save()
+            print(request.data)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    @action(methods=['post', 'get'], detail=False, url_path='addemp')
+    def register(self, request):
+        if request.method == 'POST':
+
             print(request.data)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -1661,7 +1668,7 @@ question3 = Question(question_id=3, skill_id=skill1,
                      mark=1,
 
                      answer="4",
-                     
+
 
                      time_limit="00:01:30")
 question3.save()

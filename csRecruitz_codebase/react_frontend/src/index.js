@@ -13,6 +13,7 @@ import Register from "./my_components/Register";
 import Register_2 from "./my_components/Register_2";
 import Register_3 from "./my_components/Register_3";
 import Register_4 from "./my_components/Register_4";
+import RegisterEmp from "./my_components/Register_emp"
 import Appliedjoblist from "./my_components/appliedjoblist";
 
 
@@ -33,6 +34,7 @@ root.render(
         <Route path="/register2" element={< Register_2/>} />
       <Route path="/register3" element={< Register_3/>} />
       <Route path="/register4" element={< Register_4/>} />
+      <Route path="/register_emp" element={< RegisterEmp/>} />
 
         <Route path="/jobdetails" element={< Jobdetails/>} />
       <Route path="/applied" element={<Appliedjoblist/>} />

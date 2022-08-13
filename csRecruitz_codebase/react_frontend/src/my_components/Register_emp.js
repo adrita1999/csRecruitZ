@@ -28,22 +28,13 @@ var jsonData = {
     "name":"",
     "password":"",
     "email":"",
-    "dob":"",
-    "gender":"",
     "mob":"",
-    "nid":"",
-    "nat":"",
-    "father":"",
-    "mother":"",
-    "desc":"",
     "street":"",
     "thana":"",
     "dis":"",
     "div":"",
-    "field":"",
-    "pref_org":"",
-    "pref_nat":"",
-    "pref_sal":""
+    "org":"",
+    "est_year":"",
   }
   const dropDownStyle ={
     control: (base, state) => ({
@@ -60,25 +51,8 @@ var jsonData = {
     transform: state.selectProps.menuIsOpen ? "rotate(180deg)" : null
    })
 };
-const GenderOptions = [
-    { value: 'Male', label: 'Male' },
-    { value: 'Female', label: 'Female' },
-    { value: 'Others', label: 'Others' }
-    ]
-const CatOptions = [
-    { value: 'Teaching', label: 'Teaching' },
-    { value: 'DevOps', label: 'DevOps' },
-    { value: 'Security', label: 'Security' },
-    { value: 'Research and Development', label: 'Research and Development' },
-    { value: 'Programming', label: 'Programming' },
-  ]
-const NatureOptions = [
-    { value: 'Part-time', label: 'Part-time' },
-    { value: 'Full-time', label: 'Full-time' },
-    { value: 'Remote', label: 'Remote' },
-    { value: 'Freelancing', label: 'Freelancing' }
-    ]
-  const OrgOptions = [
+
+const OrgOptions = [
     { value: 'Government', label: 'Government' },
     { value: 'Semi Government', label: 'Semi Government' },
     { value: 'NGO', label: 'NGO' },
@@ -110,11 +84,8 @@ class Register extends  Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleClose=this.handleClose.bind(this);
-    this.handleChangeDropGen=this.handleChangeDropGen.bind(this);
     this.handleChangeDropDiv=this.handleChangeDropDiv.bind(this);
-    this.handleChangeDropNat=this.handleChangeDropNat.bind(this);
     this.handleChangeDropOrg=this.handleChangeDropOrg.bind(this);
-    this.handleChangeDropField=this.handleChangeDropField.bind(this);
   }
 
 handleChange(event) {
@@ -126,16 +97,7 @@ handleChange(event) {
       input
     });
   }
-  handleChangeDropGen = (event) => {
-        let input = this.state.input;
 
-        console.log(event.value);
-        input["gen"]=event.value;
-        this.setState({
-      input
-    });
-
-  }
   handleChangeDropDiv = (event) => {
         let input = this.state.input;
         //console.log("heree");
@@ -147,53 +109,26 @@ handleChange(event) {
     });
 
   }
-  handleChangeDropNat = (event) => {
-        let input = this.state.input;
-
-        console.log(event.value);
-        input["pref_nat"]=event.value;
-        this.setState({
-      input
-    });
-
-  }
-  handleChangeDropOrg = (event) => {
-        let input = this.state.input;
-
-        console.log(event.value);
-        input["pref_org"]=event.value;
-        this.setState({
-      input
-    });
-
-  }
-  handleChangeDropField = (event) => {
-        let input = this.state.input;
-
-        console.log(event.value);
-        input["field"]=event.value;
-        this.setState({
-      input
-    });
-
-  }
-
-  onFocusHandle(event) {
-        event.target.type='date';
-  }
-  onBlurHandle(event) {
-        event.target.type='text';
-  }
   handleClose() {
       this.setState({'signinopen':false})
       console.log(this.state.signinopen)
       }
-      handleClickNotnow() {
-       window.location.href="/"
-      }
       handleClickYes() {
-        window.location.href="/register2"
+        window.location.href="/"
       }
+
+  handleChangeDropOrg = (event) => {
+        let input = this.state.input;
+
+        console.log(event.value);
+        input["org"]=event.value;
+        this.setState({
+      input
+    });
+
+  }
+
+
   handleSubmit(event) {
     event.preventDefault();
     console.log("geree");
@@ -207,22 +142,10 @@ handleChange(event) {
             jsonData.email = this.state.input["email"];
         }
         jsonData.password=this.state.input["password"];
-        jsonData.dob=this.state.input["dob"];
-        if(this.state.input["gen"]) {
-            jsonData.gender = this.state.input["gen"];
-        }
+
+
         jsonData.mob=this.state.input["mob"];
-        jsonData.nid=this.state.input["nid"];
-        jsonData.nat=this.state.input["nat"];
-        if(this.state.input["father"]) {
-            jsonData.father = this.state.input["father"];
-        }
-        if(this.state.input["mother"]) {
-            jsonData.mother = this.state.input["mother"];
-        }
-        if(this.state.input["about"]) {
-            jsonData.desc = this.state.input["about"];
-        }
+
         if(this.state.input["street"]) {
             jsonData.street = this.state.input["street"];
         }
@@ -233,22 +156,21 @@ handleChange(event) {
             jsonData.dis = this.state.input["dis"];
         }
         jsonData.div=this.state.input["div"];
-        jsonData.field=this.state.input["field"];
-        if(this.state.input["pref_org"]) {
-            jsonData.pref_org = this.state.input["pref_org"];
+
+        if(this.state.input["org"]) {
+            jsonData.org = this.state.input["org"];
         }
-        if(this.state.input["pref_nat"]) {
-            jsonData.pref_nat = this.state.input["pref_nat"];
+        if(this.state.input["est_year"]) {
+            jsonData.est_year = this.state.input["est_year"];
         }
-        if(this.state.input["pref_sal"]) {
-            jsonData.pref_sal=this.state.input["pref_sal"];
-        }
+
+
 
 
         let input = {};
 
         this.setState({input:input});
-        fetch('http://127.0.0.1:8000/first_module/jobseeker/adduser/', {  // Enter your IP address here
+        fetch('http://127.0.0.1:8000/first_module/jobseeker/addemp/', {  // Enter your IP address here
 
       method: 'POST',
         headers:{
@@ -304,13 +226,13 @@ handleChange(event) {
               fontSize:18,
               marginBottom:-10,
               fontWeight:"bold"
-          }}>Personal Information</p>
+          }}>Employer Information</p>
           <hr/>
         <form onSubmit={this.handleSubmit}>
          <div className="row" style={{
              marginBottom:5
          }}>
-             <div className="col-sm-6">
+
           <div className="form-group">
             <InputLabel for="name">Name:<sup style={{
                 color:"red",
@@ -329,43 +251,14 @@ handleChange(event) {
               id="name" required/>
 
           </div>
-             </div>
-             <div className="col-sm-6">
-                 <div className="form-group">
-                     <InputLabel for="dob">Date of Birth:<sup style={{
-                color:"red",
-                fontSize:16,
-                lineHeight:0,
-                top:-1.4,
-                left:1
-            }}>*</sup></InputLabel>
-                     <input
-                         type="text"
-                         name="dob"
-
-                         className="form-control"
-                         placeholder="Enter Date of Birth"
-                         onFocus={this.onFocusHandle}
-                         onBlur={this.onBlurHandle}
-                         onChange={this.handleChange}
-                         id="dob" required/>
 
 
-                 </div>
-             </div>
+
          </div>
             <div className="row" style={{
              marginBottom:5
          }}>
-            <div className="col-sm-6">
-            <div className="form-group">
-                <InputLabel for="gender">Gender:</InputLabel>
-                <Select name="gender" id="gender" styles={dropDownStyle} options={GenderOptions} onChange={this.handleChangeDropGen} placeholder="Enter Gender" openMenuOnFocus isClearable />
 
-
-                <div className="text-danger">{this.state.errors.email}</div>
-            </div>
-            </div>
             <div className="col-sm-6">
             <div className="form-group">
                 <InputLabel for="mob">Contact Number:<sup style={{
@@ -386,11 +279,7 @@ handleChange(event) {
 
             </div>
             </div>
-                </div>
-            <div className="row" style={{
-             marginBottom:5
-         }}>
-            <div className="col-sm-6">
+                   <div className="col-sm-6">
             <div className="form-group">
                 <InputLabel for="email">Email Address:<sup style={{
                 color:"red",
@@ -411,27 +300,8 @@ handleChange(event) {
                 <div className="text-danger">{this.state.errors.email}</div>
             </div>
             </div>
-            <div className="col-sm-6">
-            <div className="form-group">
-                <InputLabel for="nid">NID number:<sup style={{
-                color:"red",
-                fontSize:16,
-                lineHeight:0,
-                top:-1.4,
-                left:1
-            }}>*</sup></InputLabel>
-                <input
-                    type="number"
-                    name="nid"
-
-                    onChange={this.handleChange}
-                    className="form-control"
-                    placeholder="Enter NID Number"
-                    id="nid" required />
-
-            </div>
-            </div>
                 </div>
+
             <div className="row" style={{
              marginBottom:5
          }}>
@@ -477,93 +347,39 @@ handleChange(event) {
                 </div>
 
             </div>
-             <div className="row" style={{
-             marginBottom:5
-         }}>
-                <div className="col-sm-6">
-                    <div className="form-group">
-                        <InputLabel htmlFor="nat">Nationality:<sup style={{
-                color:"red",
-                fontSize:16,
-                lineHeight:0,
-                top:-1.4,
-                left:1
-            }}>*</sup></InputLabel>
-                        <input
-                            type="text"
-                            name="nat"
-
-                            onChange={this.handleChange}
-                            className="form-control"
-                            placeholder="Enter Your Nationality"
-                            id="nat" required />
-
-                    </div>
-                </div>
-                <div className="col-sm-6">
-                    <div className="form-group">
-                        <InputLabel htmlFor="pic">Profile Picture:</InputLabel>
-                        <input
-                            type="file"
-                            name="pic"
-
-                            accept=".png, .jpg, .jpeg"
-                            className="form-control"
-                            placeholder="Add a profile picture"
-                            id="pic"/>
-                    </div>
-                </div>
-
-            </div>
-            <div className="row" style={{
-             marginBottom:5
-         }}>
-                <div className="col-sm-6">
-                    <div className="form-group">
-                        <InputLabel htmlFor="father">Father's Name:</InputLabel>
-                        <input
-                            type="text"
-                            name="father"
-
-                            onChange={this.handleChange}
-                            className="form-control"
-                            placeholder="Enter Father's Name:"
-                            id="father"/>
-
-                    </div>
-                </div>
-                <div className="col-sm-6">
-                    <div className="form-group">
-                        <InputLabel htmlFor="mother">Mother's Name:</InputLabel>
-                        <input
-                            type="text"
-                            name="mother"
-
-                            onChange={this.handleChange}
-                            className="form-control"
-                            placeholder="Enter Mother's Name"
-                            id="mother"/>
-                    </div>
-                </div>
-
-            </div>
-
-
             <div className="row" style={{
              marginBottom:5
          }}>
 
-                    <div className="form-group" >
-                        <InputLabel htmlFor="about">Self Description</InputLabel>
-                        <textarea
-                            name="about"
-                            onChange={this.handleChange}
-                            className="form-control"
-                            placeholder="Write Something About Yourself"
-                            id="about"/>
+           <div className="col-sm-6">
+                 <div className="form-group">
+                <InputLabel for="est_year">Establishment Year:</InputLabel>
+                 <input
+                     type="number"
+                     min="1990"
+                     max="2099"
+                     step="1"
+                     name="est_year"
+                     onChange={this.handleChange}
+                     className="form-control"
+                     placeholder="Enter Your Starting Year"
+                     id="est_year" />
+
 
                   </div>
+            </div>
+            <div className="col-sm-6">
+
+                <div className="form-group">
+                <InputLabel for="pref_org">Organization Type:</InputLabel>
+                <Select name="org" id="org" styles={dropDownStyle} options={OrgOptions} onChange={this.handleChangeDropOrg} placeholder="Enter Your Organization Type" openMenuOnFocus isClearable />
+
+            </div>
+            </div>
                 </div>
+
+
+
             <p></p>
             <p style={{
             fontSize:16,
@@ -633,63 +449,7 @@ handleChange(event) {
                 </div>
 
             </div>
-            <p></p>
-                <p style={{
-              fontSize:18,
-              fontWeight:"bold"
-          }}>Professional Information</p>
-          <hr/>
-            <div className="row" style={{
-             marginBottom:5
-         }}>
-            <div className="col-sm-6">
-            <div className="form-group">
-                <InputLabel for="field">Field of Work:<sup style={{
-                color:"red",
-                fontSize:16,
-                lineHeight:0,
-                top:-1.4,
-                left:1
-            }}>*</sup></InputLabel>
-                <Select name="field" id="field" styles={dropDownStyle} options={CatOptions} onChange={this.handleChangeDropField} placeholder="Enter Your Current Field of Work" openMenuOnFocus isClearable />
 
-            </div>
-            </div>
-            <div className="col-sm-6">
-
-                <div className="form-group">
-                <InputLabel for="pref_org">Preferred Organization:</InputLabel>
-                <Select name="pref_org" id="pref_org" styles={dropDownStyle} options={OrgOptions} onChange={this.handleChangeDropOrg} placeholder="Enter Your Preferred Organization Type" openMenuOnFocus isClearable />
-
-            </div>
-            </div>
-                </div>
-            <div className="row" style={{
-             marginBottom:5
-         }}>
-            <div className="col-sm-6">
-            <div className="form-group">
-                <InputLabel for="pref_nat">Preferred Job Nature:</InputLabel>
-                <Select name="pref_nat" id="pref_nat" styles={dropDownStyle} options={NatureOptions} onChange={this.handleChangeDropNat} placeholder="Enter Your Preferred Job Nature" openMenuOnFocus isClearable />
-
-            </div>
-            </div>
-            <div className="col-sm-6">
-                   <div className="form-group">
-                <InputLabel for="pref_sal">Preferred Salary:</InputLabel>
-                <input
-                    type="number"
-                    name="pref_sal"
-
-                    onChange={this.handleChange}
-                    className="form-control"
-                    placeholder="Enter Your Expected Salary in BDT"
-                    id="pref_sal"/>
-
-            </div>
-
-            </div>
-                </div>
             <div className="row" style={{
              marginBottom:5
          }}>
@@ -697,8 +457,7 @@ handleChange(event) {
                 </div>
 
         </form>
-      </div>
-                 <div>
+          <div>
       <Modal
         open={this.state.signinopen}
         onClose={this.handleClose}
@@ -733,16 +492,16 @@ handleChange(event) {
                 </div>
 
             <div style={{height:'auto',marginTop:"50px",background:"green",marginLeft:"-33px",marginRight:'-33px',marginBottom:'-43px',paddingLeft:'20px',paddingTop:'3px',paddingBottom:'12px',borderBottomLeftRadius:5,borderBottomRightRadius:5}}>
-                <Typography id="modal-modal-description" sx={{ mt: 2,color:"#ffffff",marginLeft:'30%' }}>
-                    Add More Information?
-                  </Typography>
-                <button style={{marginTop:"10px",width:'80%',height:'40px',marginLeft:'8%',marginBottom:'10px',background:'#FFFFFF',border:0,borderRadius:5,color:'#410390',fontWeight:'bold'}} onClick={this.handleClickYes}>Proceed</button>
-                <button style={{marginTop:"10px",width:'80%',height:'40px',marginLeft:'8%',marginBottom:'30px',background:'#FFFFFF',border:0,borderRadius:5,color:'#410390',fontWeight:'bold'}} onClick={this.handleClickNotnow}>Not Now</button>
+
+                <button style={{marginTop:"20px",width:'80%',height:'40px',marginLeft:'8%',marginBottom:'20px',background:'#FFFFFF',border:0,borderRadius:5,color:'#410390',fontWeight:'bold'}} onClick={this.handleClickYes}>Proceed to Home</button>
+
             </div>
 
         </Box>
       </Modal>
     </div>
+      </div>
+
             <Foot margin_value={172}/>
             </React.Fragment>
     );
@@ -751,10 +510,3 @@ handleChange(event) {
 }
 export default Register;
 
-// <input
-//               tabIndex={-1}
-//               autoComplete="off"
-//               style={{ opacity: 0, height: 0 }}
-//
-//               required
-//             />
