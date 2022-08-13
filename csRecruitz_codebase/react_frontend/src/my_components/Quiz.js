@@ -27,31 +27,20 @@ export class Quiz extends Component {
     this.state = {
       items: [],
       DataisLoaded:false,
-      time: {},
-      seconds: 90,
-      timer:0,
       q_id:0,
       input:{},
       percent:0,
-
       x:13,
-
-      lastOrNot:false,
       answer:"",
       questions:[],
       current_q_id:0,
-      pressed:false,
-      valueA:"",
-      valueB:"",
-      valueC:"",
-      valueD:"",
-
+ 
 
     };
-    this.state.timer = 0;
     
-    this.startTimer = this.startTimer.bind(this);
-    this.countDown = this.countDown.bind(this);
+    
+    // this.startTimer = this.startTimer.bind(this);
+    // this.countDown = this.countDown.bind(this);
     this.handleNext = this.handleNext.bind(this);
     this.handleQuit = this.handleQuit.bind(this);
     this.handleFinish = this.handleFinish.bind(this);
@@ -137,65 +126,49 @@ export class Quiz extends Component {
       })
   }
 
-  secondsToTime(secs){
-    let hours = Math.floor(secs / (60 * 60));
-    let divisor_for_minutes = secs % (60 * 60);
-    let minutes = Math.floor(divisor_for_minutes / 60);
-    let divisor_for_seconds = divisor_for_minutes % 60;
-    let seconds = Math.ceil(divisor_for_seconds);
+  // secondsToTime(secs){
+  //   let hours = Math.floor(secs / (60 * 60));
+  //   let divisor_for_minutes = secs % (60 * 60);
+  //   let minutes = Math.floor(divisor_for_minutes / 60);
+  //   let divisor_for_seconds = divisor_for_minutes % 60;
+  //   let seconds = Math.ceil(divisor_for_seconds);
 
-    let obj = {
-      "h": hours,
-      "m": minutes,
-      "s": seconds
-    };
-    return obj;
-  }
-  componentDidMount() {
-    let timeLeftVar = this.secondsToTime(this.state.seconds);
-    this.setState({ time: timeLeftVar });
-    fetch(
-      "http://127.0.0.1:8000/first_module/question/")
-
-      .then((res) => res.json())
-      .then((json) => {
-          this.setState({
-              questions: json,
-              DataisLoaded:true,
-          });
-      // console.log(input.question_text)
-      // console.log(this.state.questions)
-      })
-  }
+  //   let obj = {
+  //     "h": hours,
+  //     "m": minutes,
+  //     "s": seconds
+  //   };
+  //   return obj;
+  // }
   
 
-  startTimer() {
-    if (this.state.timer === 0 && this.state.seconds > 0) {
-      this.state.timer = setInterval(this.countDown, 1000);
-    }
-  }
+  // startTimer() {
+  //   if (this.state.timer === 0 && this.state.seconds > 0) {
+  //     this.state.timer = setInterval(this.countDown, 1000);
+  //   }
+  // }
 
-  countDown() {
-    // Remove one second, set state so a re-render happens.
-    let seconds = this.state.seconds - 1;
-    this.setState({
-      time: this.secondsToTime(seconds),
-      seconds: seconds,
-    });
+  // countDown() {
+  //   // Remove one second, set state so a re-render happens.
+  //   let seconds = this.state.seconds - 1;
+  //   this.setState({
+  //     time: this.secondsToTime(seconds),
+  //     seconds: seconds,
+  //   });
     // Check if we're at zero.
-    if (seconds === 0) { 
-      clearInterval(this.state.timer);
-    }
-    // rerender(!this.startTimer);
-  }
-  render() {
-    return(
-      <div>
-        <button onClick={this.startTimer}>Start</button>
-        m: {this.state.time.m} s: {this.state.time.s}
-      </div>
-    );
-  }
+  //   if (seconds === 0) { 
+  //     clearInterval(this.state.timer);
+  //   }
+  //   // rerender(!this.startTimer);
+  // }
+  // render() {
+  //   return(
+  //     <div>
+  //       <button onClick={this.startTimer}>Start</button>
+  //       m: {this.state.time.m} s: {this.state.time.s}
+  //     </div>
+  //   );
+  // }
 
   render() {
     const { DataisLoaded, items } = this.state;
@@ -218,7 +191,7 @@ export class Quiz extends Component {
                          
                   
                   <hr/>
-                  <input type="radio" name="group1" value="1" id="rad1" onChange={this.handleAnswer}  />
+                  <input type="radio" name="group1" value="1" id="rad1" checked={this.state.pressed} onChange={this.handleAnswer}  />
                     
                   <label id='label' for="rad1">
                   <p className='question' >
@@ -270,31 +243,29 @@ export class Quiz extends Component {
                   < Progress percent={this.state.percent} ></Progress>
                   <br/>
                 </div>
-                <div className='lastdiv' style={{backgroundColor:'white',marginBottom:"50px"}}>
+                <div className='lastdiv' style={{backgroundColor:'white',paddingBottom:"50px"}}>
                     {/* <p className='countp'> question=1/10</p> */}
                     <p className='time' ><FaRegClock className='clock'/>
-                     </p>
-                     { this.state.time.m === 0 && this.state.time.s === 0
+                     </p>{this.state.x}
+                     {/* { this.state.time.m === 0 && this.state.time.s === 0
                           ? null
                           : <p style={{paddingBottom:"30px"}}
                               open={this.state.DataisLoaded}
                               onLoadStart={this.startTimer}
                               onClose={this.handleClose}>
-                              Time: {this.state.time.m}:{this.state.time.s}</p> 
-                      }
+                              Time: {this.state.time.m}:{this.state.time.s}
+                              </p> 
+                      } */}
                     {this.state.q_id === 9 ?
-                        <button className='btn btn-success' onClick={this.handleFinish} style={{width:"100px", marginRight: "150px",marginLeft: "400px", marginTop:"-80px"}}> Finish</button>
+                        <button className='btn btn-success' onClick={this.handleFinish} style={{width:"100px", marginRight: "150px",marginLeft: "400px", marginTop:"0px"}}> Finish</button>
                         :
-                        <button className='btn btn-success' onClick={this.handleNext} style={{width:"100px", marginRight: "150px",marginLeft: "400px", marginTop:"-80px"}}> Next</button>
+                        <button className='btn btn-success' onClick={this.handleNext} style={{width:"100px", marginRight: "150px",marginLeft: "400px", marginTop:"0px"}}> Next</button>
 
                     }
-                    <button className='btn btn-danger'style={{width:"100px",marginLeft: "500px",marginTop: "-80px"}} onClick={this.handleQuit}> Quit</button>
+                    <button className='btn btn-danger'style={{width:"100px",marginLeft: "500px",marginTop: "-37px"}} onClick={this.handleQuit}> Quit</button>
 
                 </div>
                 
-            </div>
-         <div>
-                {this.state.x}
             </div>
        </div>
        
