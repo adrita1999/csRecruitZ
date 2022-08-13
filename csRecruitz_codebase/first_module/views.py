@@ -1206,6 +1206,20 @@ class shortlistedjobViewsets(viewsets.ModelViewSet):
     user_id=1
     queryset = JobShortlist.objects.filter(user_id_id=user_id)
     serializer_class = shortlistSerializer
+    @action(methods=['post', 'get'], detail=False, url_path='shortlist')
+    def shortlist(self, request):
+        if request.method == 'POST':
+            print(request.data)
+            # postViewsets_for_jobpost.cat = request.data['category']
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            jobs=JobShortlist.objects.filter(user_id_id=shortlistedjobViewsets.user_id)
+
+            serializer = shortlistSerializer(jobs, many=True)
+            return Response({
+                'status': status.HTTP_204_NO_CONTENT,
+                'data': serializer.data,
+            })
 
 
 class questionViewsets(viewsets.ModelViewSet):

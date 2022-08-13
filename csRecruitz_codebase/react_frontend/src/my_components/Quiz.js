@@ -10,10 +10,13 @@ import Loader from "./loader";
 import Navb from "./Navb";
 import Foot from "./Foot";
 
+const randomID = () => Math.random().toString(36).substring(7);
+
 var jsonData = {
   "question_id":"",
   "answer":"",
 }
+
 
 export class Quiz extends Component {
   constructor() {
@@ -27,11 +30,7 @@ export class Quiz extends Component {
       q_id:0,
       input:{},
       percent:0,
-      lastOrNot:false,
-      answer:"",
-      questions:[],
-      current_q_id:0,
-      pressed:false,
+      x:13
     };
     // this.timer = 0;
     
@@ -83,12 +82,31 @@ export class Quiz extends Component {
   handleQuit() {
     window.location.href="/professional"
   }
+
+  timerExpired()
+  {
+      console.log("timer expired")
+  }    
+
   handleFinish() {
     window.location.href="/professional"
   }
   componentDidMount() {
     // let timeLeftVar = this.secondsToTime(this.state.seconds);
     // this.setState({ time: timeLeftVar });
+    const mountId = randomID();
+    setInterval(() => {
+          // console.log(`${mountId} | updating state`);
+          const state = this.state;
+          if (state.x !== 0)
+          {
+              this.setState({ x: state.x - 1 });
+          }
+          else
+          {
+              this.timerExpired();
+          }
+        }, 1000);
     fetch(
       "http://127.0.0.1:8000/first_module/question/")
 
@@ -237,6 +255,9 @@ export class Quiz extends Component {
 
                 </div>
                 
+            </div>
+         <div>
+                {this.state.x}
             </div>
        </div>
        
