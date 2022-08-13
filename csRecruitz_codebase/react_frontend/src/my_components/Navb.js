@@ -75,8 +75,8 @@ class Navb extends Component {
                 else {
                     this.state.logged_in=true
                 }
-                console.log(json.response)
-                console.log(this.state.logged_in)
+                // console.log(json.response)
+                // console.log(this.state.logged_in)
 
             })
    }
