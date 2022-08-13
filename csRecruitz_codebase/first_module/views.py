@@ -1205,6 +1205,34 @@ class questionViewsets(viewsets.ModelViewSet):
     queryset = Question.objects.filter(skill_id=1)
     print(queryset)
     serializer_class = questionSerializer
+
+
+    question_id = -1
+    answer = ""
+    total_num =0
+
+    @action(methods=['post', 'get'], detail=False, url_path='answer')
+    def answer(self, request):
+        if request.method == 'POST':
+            question_id = request.data["question_id"]
+            answer = request.data["answer"]
+            print(request.data)
+
+            if question_id != -1:
+                obj = Question.objects.filter(pk=question_id)
+                print(obj)
+                if len(obj) == 1:
+                    for id in obj:
+                        ans = id.answer
+                        print(ans)
+                        # if ans == answer:
+                        #     total_num+=1
+                        #     print(total_num)
+                # if answer == obj.answer:
+                #     total_number+=1
+                #     print(total_number)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 pas_temp=make_pw_hash("1234")
 user1 = Jobseeker(user_id=1, name="Adrita Hossain Nakshi", email="adrita_99@yahoo.com", password=pas_temp, thana="Lalbag",
                   district="Dhaka", division="Dhaka", father_name="Dr. Md. Elias Hossain",
@@ -1585,8 +1613,13 @@ question1 = Question(question_id=1, skill_id=skill1,
                      optionB="The function in which it occurs",
                      optionC="The block in which it occurs",
                      optionD="The loop in which it occurs",
-                     answer="The program in which it occurs",
+
+
                      mark=1,
+
+                     answer="1",
+
+
                      time_limit="00:01:30")
 question1.save()
 question2 = Question(question_id=2, skill_id=skill1, question_text="In a linked list - ",
@@ -1594,8 +1627,13 @@ question2 = Question(question_id=2, skill_id=skill1, question_text="In a linked 
                      optionB="Links are stored in an array",
                      optionC="A array of pointers point to the link",
                      optionD=" Each link contains a pointer to the next link",
-                     answer=" Each link contains a pointer to the next link",
+
+
                      mark=1,
+
+                     answer="4",
+
+
                      time_limit="00:01:30")
 question2.save()
 question3 = Question(question_id=3, skill_id=skill1,
@@ -1604,8 +1642,13 @@ question3 = Question(question_id=3, skill_id=skill1,
                      optionB="A variable",
                      optionC="A structure",
                      optionD="All of these",
-                     answer="All of these",
+
+
                      mark=1,
+
+                     answer="4",
+                     
+
                      time_limit="00:01:30")
 question3.save()
 question4 = Question(question_id=4, skill_id=skill1,
@@ -1614,8 +1657,12 @@ question4 = Question(question_id=4, skill_id=skill1,
                      optionB=" Class and member of that class",
                      optionC="Class object and a class",
                      optionD="Class member and class object",
-                     answer="Class object and member of that class",
+
+
                      mark=1,
+
+                     answer="1",
+
                      time_limit="00:01:30")
 question4.save()
 question5 = Question(question_id=5, skill_id=skill1, question_text="A static function -  ",
@@ -1623,8 +1670,12 @@ question5 = Question(question_id=5, skill_id=skill1, question_text="A static fun
                      optionB="Can be called using the class name and function",
                      optionC="Is closely connected with an individual object of a class",
                      optionD=" Is used when a dummy object must be created",
-                     answer=" Can be called using the class name and function",
+
+
                      mark=1,
+
+                     answer="2",
+
                      time_limit="00:01:30")
 question5.save()
 job_exp1 = JobExperience(jobexperience_id=1, experience_name="Lecturer", organization_name="UIU", from_year="2017",
