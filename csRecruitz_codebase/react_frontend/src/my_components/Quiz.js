@@ -40,11 +40,12 @@ export class Quiz extends Component {
       answer:"",
       questions:[],
       current_q_id:0,
-      pressed:false,
+      pressed:"",
       valueA:"",
       valueB:"",
       valueC:"",
       valueD:"",
+
 
 
     };
@@ -74,7 +75,7 @@ export class Quiz extends Component {
     this.state.percent = this.state.percent +10;
 
     // console.log(this.state.pressed);
-    this.setState({pressed:false});
+    this.setState({"pressed":!this.state.pressed})
   
 
     jsonData.question_id=this.state.current_q_id;
@@ -131,6 +132,7 @@ export class Quiz extends Component {
           this.setState({
               questions: json,
               DataisLoaded:true,
+              pressed:true
           });
       // console.log(input.question_text)
       // console.log(this.state.questions)

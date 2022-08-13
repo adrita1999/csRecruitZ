@@ -1675,7 +1675,7 @@ question1 = Question(question_id=1, skill_id=skill1,
                      answer="1",
 
 
-                     time_limit="00:01:30")
+                     time_limit="1:30")
 question1.save()
 question2 = Question(question_id=2, skill_id=skill1, question_text="In a linked list - ",
                      optionA=" Each link contains data or a pointer to data",
@@ -1689,7 +1689,7 @@ question2 = Question(question_id=2, skill_id=skill1, question_text="In a linked 
                      answer="4",
 
 
-                     time_limit="00:01:30")
+                     time_limit="1:30")
 question2.save()
 question3 = Question(question_id=3, skill_id=skill1,
                      question_text="In C++, which of the following can legitimately be passed to a function?",
@@ -1704,7 +1704,7 @@ question3 = Question(question_id=3, skill_id=skill1,
                      answer="4",
 
 
-                     time_limit="00:01:30")
+                     time_limit="1:30")
 question3.save()
 question4 = Question(question_id=4, skill_id=skill1,
                      question_text="The dot operator connects which of the following two entities? ",
@@ -1718,7 +1718,7 @@ question4 = Question(question_id=4, skill_id=skill1,
 
                      answer="1",
 
-                     time_limit="00:01:30")
+                     time_limit="1:30")
 question4.save()
 question5 = Question(question_id=5, skill_id=skill1, question_text="A static function -  ",
                      optionA="Should be called when an object is destroyed",
@@ -1731,8 +1731,56 @@ question5 = Question(question_id=5, skill_id=skill1, question_text="A static fun
 
                      answer="2",
 
-                     time_limit="00:01:30")
+                     time_limit="1:30")
 question5.save()
+question6 = Question(question_id=6, skill_id=skill1, question_text="Which one of the following is a keyword?",
+                     optionA="Size",
+                     optionB="Key",
+                     optionC="Jump",
+                     optionD="Switch",
+                     mark=1,
+                     answer="4",
+                     time_limit="1:30")
+question6.save()
+question7 = Question(question_id=7, skill_id=skill1, question_text="Which of the following is the correct syntax of including a user defined header files in C++?",
+                     optionA="#include [userdefined]",
+                     optionB="#include “userdefined”",
+                     optionC="#include <userdefined.h>",
+                     optionD="#include <userdefined>",
+                     mark=1,
+                     answer="2",
+                     time_limit="1:30")
+question7.save()
+question8 = Question(question_id=8, skill_id=skill1, question_text=" Which of the following is a correct identifier in C++?",
+                     optionA="VAR_1234",
+                     optionB="$var_name",
+                     optionC="7VARNAME",
+                     optionD="7var_name",
+                     mark=2,
+                     answer="1",
+                     time_limit="2:00")
+question8.save()
+question9 = Question(question_id=9, skill_id=skill1, question_text=" Which of the following approach is used by C++?",
+                     optionA="Left-right",
+                     optionB="Right-left",
+                     optionC="Bottom-up",
+                     optionD="Top-down",
+                     mark=2,
+                     answer="3",
+                     time_limit="2:00")
+question9.save()
+question10 = Question(question_id=10, skill_id=skill1, question_text=" What happens if the following C++ statement is compiled and executed?"
+                                                                     "int *ptr = NULL;"
+                                                                     "delete ptr;",
+                     optionA="The program is not semantically correct",
+                     optionB="The program is compiled and executed successfully",
+                     optionC="The program gives a compile-time error",
+                     optionD="The program compiled successfully but throws an error during run-time",
+                     mark=2,
+                     answer="2",
+                     time_limit="2:00")
+question10.save()
+
 job_exp1 = JobExperience(jobexperience_id=1, experience_name="Lecturer", organization_name="UIU", from_year="2017",
                          to_year="2018", user_id=user1)
 job_exp1.save()
@@ -1749,3 +1797,19 @@ uskill2 = JobSeekerSkill(jobseeker_skill_id=2, isOpenToWork=False, skill_id=skil
 uskill2.save()
 uskill3 = JobSeekerSkill(jobseeker_skill_id=3, isOpenToWork=True, skill_id=skill4, user_id=user1)
 uskill3.save()
+proj=Project(project_id=1,project_name="Istishon",project_link="https://github.com/adrita1999/ishtishon",project_short_desc="This is our 2-2 term project. It is basically a railway ticket booking website",user_id=user1)
+proj.save()
+proj_2=Project(project_id=2,project_name="csRecruitz",project_link="https://github.com/adrita1999/csRecruitZ",project_short_desc="This is our 4-1 term project. It is a job searching website. The development of the project is still ongoing",user_id=user1)
+proj_2.save()
+pub_1=Publication(publication_id=1,publication_name="SentiCR: A customized sentiment analysis tool for code review interactions",publication_link="https://ieeexplore.ieee.org/abstract/document/8115623",user_id=user1)
+pub_1.save()
+pub_2=Publication(publication_id=2,publication_name="Identification and Recognition of Rice Diseases and Pests Using Convolutional Neural Networks",publication_link="https://ui.adsabs.harvard.edu/abs/2018arXiv181201043R/abstract",user_id=user1)
+pub_2.save()
+lic_1=LicenseCertificate(certificate_id=1,certificate_name="IBM Data Science Professional Certificate",issuing_org="Coursera")
+lic_1.save()
+lic_2=LicenseCertificate(certificate_id=2,certificate_name="Deep Learning Specialization",issuing_org="Coursera")
+lic_2.save()
+js_1=JobseekerCertificate(jobseeker_certificate_id=1,certificate_id=lic_1,user_id=user1)
+js_1.save()
+js_2=JobseekerCertificate(jobseeker_certificate_id=2,certificate_id=lic_2,user_id=user1)
+js_2.save()
