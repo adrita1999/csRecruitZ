@@ -55,6 +55,7 @@ class Navb extends Component {
     this.handleChangeUser=this.handleChangeUser.bind(this);
     this.SignOut=this.SignOut.bind(this);
     this.DashBoard=this.DashBoard.bind(this);
+    this.Register=this.Register.bind(this);
    }
    componentDidMount() {
        // const { id } = useParams()
@@ -98,7 +99,7 @@ class Navb extends Component {
     })
        //this.state.logged_in=!this.state.logged_in
        this.setState({"logged_in":!this.state.logged_in})
-      //window.location.href="/"
+      window.location.href="/"
    }
 
     handleremail= (event) => {
@@ -129,7 +130,11 @@ class Navb extends Component {
       window.location.href="/"
    }
    Register() {
-         window.location.href="/register"
+
+         if(this.state.userORemp === "Jobseeker") {
+             window.location.href="/register"
+         }
+         else window.location.href="/register_emp"
    }
 
       handleClose() {

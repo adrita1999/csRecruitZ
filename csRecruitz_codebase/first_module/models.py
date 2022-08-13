@@ -40,7 +40,7 @@ class Jobseeker(User):
 
 class Employer(User):
     org_type = models.CharField(max_length=20)
-    establishment_year = models.IntegerField()
+    establishment_year = models.IntegerField(null=True)
 
 
 
@@ -60,13 +60,13 @@ class NewJobpost(models.Model):
     deadline_date = models.DateField()
     salary = models.IntegerField()
     required_experience = models.IntegerField()
-    vacancies = models.IntegerField()
+    vacancies = models.IntegerField(null=True)
     job_context = models.TextField()
     job_nature = models.TextField()
     job_responsibilities = models.TextField()
     edu_requirement = models.TextField()
-    additional_requirements = models.TextField()
-    application_process = models.TextField()
+    additional_requirements = models.TextField(null=True)
+    application_process = models.TextField(null=True)
 
 
 class Skill(models.Model):
@@ -98,7 +98,7 @@ class Question(models.Model):
     optionD = models.TextField()
     answer = models.TextField()
     mark = models.IntegerField()
-    time_limit = models.TimeField()
+    time_limit = models.CharField(max_length=20)
 
 
 class SkillMarkCutoff(models.Model):
@@ -172,5 +172,5 @@ class Notification(models.Model):
     notification_id = models.IntegerField(primary_key=True)
     user_id = models.ForeignKey(Jobseeker, on_delete=models.CASCADE)
     text = models.CharField(max_length=200)
-    apply_date = models.DateField()
-    apply_time = models.TimeField()
+    noti_date = models.DateField()
+    noti_time = models.TimeField()

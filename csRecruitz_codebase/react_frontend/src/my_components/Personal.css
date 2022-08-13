@@ -371,6 +371,7 @@ ol.gradient-list > li + li {
 }
 .icon_delete_btn {
   background-color: transparent;
+  width:100px;
   border: none;
 }
 .border-left {
