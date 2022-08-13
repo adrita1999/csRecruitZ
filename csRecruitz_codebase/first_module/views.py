@@ -841,6 +841,24 @@ class jobseekerViewsets(viewsets.ModelViewSet):
 
             })
 
+    @action(methods=['post', 'get'], detail=False, url_path='get_id')
+    def get_id(self, request):
+        # global logged_in_id
+        print("logged_in "+str(logged_in_id))
+        if request.method == 'GET':
+            id = Jobseeker.objects.filter(user_ptr_id = logged_in_id)[0]
+
+            print(id.name)
+            serializer = jobseekerSerializer(id, many=False)
+            print(serializer.data)
+            return Response({
+                'status': status.HTTP_204_NO_CONTENT,
+                'data': serializer.data,
+                'response': "hi",
+
+            })
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
     def update(self, request, pk=None):
         data_in = request.data
         print(data_in)
