@@ -1586,7 +1586,7 @@ question1 = Question(question_id=1, skill_id=skill1,
                      optionC="The block in which it occurs",
                      optionD="The loop in which it occurs",
                      answer="The program in which it occurs",
-                     mark=10,
+                     mark=1,
                      time_limit="00:01:30")
 question1.save()
 question2 = Question(question_id=2, skill_id=skill1, question_text="In a linked list - ",
@@ -1595,7 +1595,7 @@ question2 = Question(question_id=2, skill_id=skill1, question_text="In a linked 
                      optionC="A array of pointers point to the link",
                      optionD=" Each link contains a pointer to the next link",
                      answer=" Each link contains a pointer to the next link",
-                     mark=10,
+                     mark=1,
                      time_limit="00:01:30")
 question2.save()
 question3 = Question(question_id=3, skill_id=skill1,
@@ -1605,7 +1605,7 @@ question3 = Question(question_id=3, skill_id=skill1,
                      optionC="A structure",
                      optionD="All of these",
                      answer="All of these",
-                     mark=10,
+                     mark=1,
                      time_limit="00:01:30")
 question3.save()
 question4 = Question(question_id=4, skill_id=skill1,
@@ -1615,7 +1615,7 @@ question4 = Question(question_id=4, skill_id=skill1,
                      optionC="Class object and a class",
                      optionD="Class member and class object",
                      answer="Class object and member of that class",
-                     mark=10,
+                     mark=1,
                      time_limit="00:01:30")
 question4.save()
 question5 = Question(question_id=5, skill_id=skill1, question_text="A static function -  ",
@@ -1624,7 +1624,7 @@ question5 = Question(question_id=5, skill_id=skill1, question_text="A static fun
                      optionC="Is closely connected with an individual object of a class",
                      optionD=" Is used when a dummy object must be created",
                      answer=" Can be called using the class name and function",
-                     mark=10,
+                     mark=1,
                      time_limit="00:01:30")
 question5.save()
 job_exp1 = JobExperience(jobexperience_id=1, experience_name="Lecturer", organization_name="UIU", from_year="2017",

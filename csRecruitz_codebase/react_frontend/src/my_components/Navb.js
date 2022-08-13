@@ -54,6 +54,7 @@ class Navb extends Component {
     this.handleClose=this.handleClose.bind(this);
     this.handleChangeUser=this.handleChangeUser.bind(this);
     this.SignOut=this.SignOut.bind(this);
+    this.DashBoard=this.DashBoard.bind(this);
    }
    componentDidMount() {
        // const { id } = useParams()
@@ -141,6 +142,18 @@ class Navb extends Component {
         this.setState({'userORemp':event.target.value})
 
       }
+      DashBoard() {
+
+        if(this.state.logged_in) {
+            window.location.href="/dashboard"
+        }
+          else {
+               alert("Please Log in First to View Dashboard")
+               console.log("hereee")
+              //window.location.href="/"
+
+        }
+      }
 
     render() {
         if ( !this.state.DetailsLoaded2) return <Loader/>
@@ -170,12 +183,12 @@ class Navb extends Component {
                  marginRight:8
 
         }} className="navHover">Home</Nav.Link>
-        <Nav.Link href="/dashboard" style={{
+        <Nav.Link style={{
                  color:"#410390",
                  marginRight:8
 
-        }} className="navHover">Dashboard</Nav.Link>
-        <Nav.Link href="/" style={{
+        }} className="navHover" onClick={this.DashBoard}>Dashboard</Nav.Link>
+        <Nav.Link  style={{
                  color:"#410390",
                  marginRight:8
 
