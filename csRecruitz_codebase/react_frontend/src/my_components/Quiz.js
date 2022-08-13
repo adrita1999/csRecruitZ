@@ -101,7 +101,8 @@ export class Quiz extends Component {
 
   timerExpired()
   {
-      console.log("timer expired")
+      console.log("timer expired");
+      this.state.x=30;
   }    
 
   handleFinish() {

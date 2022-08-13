@@ -8,6 +8,7 @@ from rest_framework import viewsets, status
 from django.db.models import Q
 from datetime import datetime
 import hashlib
+import random
 
 is_logged_in=False
 
@@ -865,6 +866,24 @@ class jobseekerViewsets(viewsets.ModelViewSet):
 
             })
 
+    @action(methods=['post', 'get'], detail=False, url_path='get_id')
+    def get_id(self, request):
+        # global logged_in_id
+        print("logged_in "+str(logged_in_id))
+        if request.method == 'GET':
+            id = Jobseeker.objects.filter(user_ptr_id = logged_in_id)[0]
+
+            print(id.name)
+            serializer = jobseekerSerializer(id, many=False)
+            print(serializer.data)
+            return Response({
+                'status': status.HTTP_204_NO_CONTENT,
+                'data': serializer.data,
+                'response': "hi",
+
+            })
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
     def update(self, request, pk=None):
         data_in = request.data
         print(data_in)
@@ -1286,9 +1305,35 @@ class shortlistedjobViewsets(viewsets.ModelViewSet):
 
 
 class questionViewsets(viewsets.ModelViewSet):
-    queryset = Question.objects.filter(skill_id=1)
+    tempset=Question.objects.filter(skill_id=1).order_by('?')
+
+    #random.shuffle(tempset)
+    id_list=[]
+    count_1=0
+    count_2=0
+    flag_1=0
+    for i in range(len(tempset)):
+        if flag_1==0:
+            if tempset[i].mark==1:
+                if count_1==6:
+                    flag_1=1
+                else:
+                    id_list.append(tempset[i].question_id)
+                    count_1 = count_1 + 1
+        if tempset[i].mark==2:
+            if count_2==2 and flag_1==1:
+                break
+            else:
+                id_list.append(tempset[i].question_id)
+                count_2=count_2+1
+
+    print("it is tempppp")
+    queryset = Question.objects.filter(skill_id=1,question_id__in=id_list)
+    #print(queryset)
+    #random.shuffle(queryset)
     print(queryset)
     serializer_class = questionSerializer
+
 
 
     question_id = -1
@@ -1798,8 +1843,8 @@ question9 = Question(question_id=9, skill_id=skill1, question_text=" Which of th
                      answer="3",
                      time_limit="2:00")
 question9.save()
-question10 = Question(question_id=10, skill_id=skill1, question_text=" What happens if the following C++ statement is compiled and executed?"
-                                                                     "int *ptr = NULL;"
+question10 = Question(question_id=10, skill_id=skill1, question_text=" What happens if the following C++ statement is compiled and executed?\n"
+                                                                     "int *ptr = NULL;\n"
                                                                      "delete ptr;",
                      optionA="The program is not semantically correct",
                      optionB="The program is compiled and executed successfully",
@@ -1809,6 +1854,53 @@ question10 = Question(question_id=10, skill_id=skill1, question_text=" What happ
                      answer="2",
                      time_limit="2:00")
 question10.save()
+question11 = Question(question_id=11, skill_id=skill1, question_text="What is the difference between delete and delete[] in C++?",
+                     optionA="delete is syntactically correct but delete[] is wrong and hence will give an error if used in any case",
+                     optionB="delete is used to delete normal objects whereas delete[] is used to pointer objects",
+                     optionC="delete is a keyword whereas delete[] is an identifier",
+                     optionD="delete is used to delete single object whereas delete[] is used to multiple(array/pointer of) objects",
+                     mark=1,
+                     answer="4",
+                     time_limit="1:30")
+question11.save()
+question12 = Question(question_id=12, skill_id=skill1, question_text=" What happens if the following program is executed in C and C++?\n #include <stdio.h> \n int main(void){\nint new = 5;\nprintf(\"%d\", new); }",
+                     optionA="Error in C and successful execution in C++",
+                     optionB="Error in both C and C++",
+                     optionC="Error in C++ and successful execution in C",
+                     optionD="A successful run in both C and C++",
+                     mark=2,
+                     answer="3",
+                     time_limit="2:00")
+question12.save()
+question13 = Question(question_id=13, skill_id=skill1, question_text="Which of the following type is provided by C++ but not C?",
+                     optionA="double",
+                     optionB="float",
+                     optionC="int",
+                     optionD="bool",
+                     mark=1,
+                     answer="4",
+                     time_limit="1:30")
+question13.save()
+question14 = Question(question_id=14, skill_id=skill1, question_text="By default, all the files in C++ are opened in _________ mode.",
+                     optionA="Binary",
+                     optionB="VTC",
+                     optionC="Text",
+                     optionD="ISCII",
+                     mark=1,
+                     answer="3",
+                     time_limit="1:30")
+question14.save()
+question15 = Question(question_id=15, skill_id=skill1, question_text="What is the size of wchar_t in C++?",
+                     optionA="Based on the number of bits in the system",
+                     optionB="2 or 4",
+                     optionC="4",
+                     optionD="2",
+                     mark=2,
+                     answer="1",
+                     time_limit="2:00")
+question15.save()
+
+
 
 job_exp1 = JobExperience(jobexperience_id=1, experience_name="Lecturer", organization_name="UIU", from_year="2017",
                          to_year="2018", user_id=user1)
