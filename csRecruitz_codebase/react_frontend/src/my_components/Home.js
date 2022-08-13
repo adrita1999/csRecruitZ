@@ -162,8 +162,38 @@ export class Home extends Component {
       jsonData.keyword=value
     }
 componentDidMount() {
+        console.log("mount hoise")
+         fetch(
+"http://127.0.0.1:8000/first_module/jobseeker/get_info/",{
+        method:"GET"
+            })
+            .then((res) => res.json())
+            .then((json) => {
+                this.setState({DetailsLoaded3: true})
+                if(json.response ==="No") {
+                    this.state.logged_in=false
+                    this.setState({logged_in:false})
+                }
+                else {
+                    this.state.logged_in=true
+                    this.setState({logged_in:true})
+                }
+                console.log(json.response)
+                console.log(this.state.logged_in)
+            })
         fetch(
-"http://127.0.0.1:8000/first_module/jobseeker/matchuser/",{
+"http://127.0.0.1:8000/first_module/recommendation/",{
+        method:"GET"
+            })
+            .then((res) => res.json())
+            .then((json) => {
+                this.setState({recos: json, DetailsLoaded2: true})
+                console.log(json)
+                console.log("reco fetched")
+            })
+
+        fetch(
+    "http://127.0.0.1:8000/first_module/jobseeker/matchuser/",{
         method:"GET"
             })
             .then((res) => res.json())
@@ -174,7 +204,6 @@ componentDidMount() {
                     console.log(json.response)
                     if (json.response==="success") {
                          alert("Login Successful")
-
                     }
                     else {
                        alert("Login Failed.Try Again")
@@ -183,15 +212,8 @@ componentDidMount() {
                 console.log(json.response)
 
             })
-    fetch(
-"http://127.0.0.1:8000/first_module/recommendation/",{
-        method:"GET"
-            })
-            .then((res) => res.json())
-            .then((json) => {
-                this.setState({recos: json, DetailsLoaded2: true})
-                console.log(json)
-            })
+
+
 
     }
 handleClick() {
@@ -223,7 +245,7 @@ handleClickReco(event) {
         //const { navigation } = this.props;
         //this.setState({navigation})
       //if (!this.state.DataisLoaded) return <Loader/>
-      if ( !this.state.DetailsLoaded2) return <Loader/>
+      if ( !this.state.DetailsLoaded2 || !this.state.DetailsLoaded3) return <Loader/>
     return (
        <React.Fragment>
        <body>
@@ -318,7 +340,7 @@ handleClickReco(event) {
 
 
 
-            <div className='recommendationdiv mb-3'>
+           {this.state.logged_in && <div className='recommendationdiv mb-3'>
 
 
                 <h3 style={{fontWeight:'bold',marginLeft:'2%',padding:'15px',textDecorationLine:'underline'}}>Recommended for you</h3>
@@ -370,7 +392,7 @@ handleClickReco(event) {
                 </div>
                 </AnimationOnScroll>
 
-            </div>
+            </div>}
        </div>
        <Foot margin_value={0}/>
        {this.state.redirect && <Navigate to='/joblist'/>}

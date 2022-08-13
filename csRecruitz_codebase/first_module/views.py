@@ -659,10 +659,30 @@ class jobseekerViewsets(viewsets.ModelViewSet):
 
     @action(methods=['post', 'get'], detail=False, url_path='matchuser')
     def match(self, request):
+        global is_logged_in
+        global logged_in_id
         if request.method == 'POST':
             jobseekerViewsets.isdetails = True
             jobseekerViewsets.email = request.data['email']
             jobseekerViewsets.password = request.data['password']
+            objs = User.objects.filter(email=jobseekerViewsets.email)
+            # global is_logged_in
+            # global logged_in_id
+            if len(objs) == 1:
+                print("bal")
+                hash_pass = objs[0].password
+                # global is_logged_in
+                # global logged_in_id
+                if (check_pw_hash(jobseekerViewsets.password, hash_pass)):
+
+                    is_logged_in = True
+
+                    logged_in_id = objs[0].user_id
+                else:
+                    logged_in_id = -1
+            else:
+                logged_in_id = -1
+                print("chal")
             return Response(status=status.HTTP_204_NO_CONTENT)
 
         else:
@@ -676,14 +696,19 @@ class jobseekerViewsets(viewsets.ModelViewSet):
                     hash_pass = objs[0].password
                     if(check_pw_hash(jobseekerViewsets.password,hash_pass)):
                         string = "success"
-                        global is_logged_in
+                        # global is_logged_in
                         is_logged_in=True
-                        global logged_in_id
+                        # global logged_in_id
                         logged_in_id=objs[0].user_id
                     else:
                         string="fail"
                 else:
                     string = "fail"
+                # global logged_in_id
+                # if logged_in_id==-1:
+                #     string="fail"
+                # else:
+                #     string="success"
                 serializer = UserSerializer(objs, many=True)
                 jobseekerViewsets.isdetails = False
                 return Response({
