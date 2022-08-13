@@ -120,7 +120,7 @@ class Navb extends Component {
    handleClickLogin() {
         fetch('http://127.0.0.1:8000/first_module/jobseeker/matchuser/', {  // Enter your IP address here
 
-      method: 'POST',
+        method: 'POST',
         headers:{
         'Content-Type': 'application/json',
       },

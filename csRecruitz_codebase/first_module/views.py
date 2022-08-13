@@ -8,6 +8,7 @@ from rest_framework import viewsets, status
 from django.db.models import Q
 from datetime import datetime
 import hashlib
+import random
 
 is_logged_in=False
 
@@ -1261,9 +1262,35 @@ class shortlistedjobViewsets(viewsets.ModelViewSet):
 
 
 class questionViewsets(viewsets.ModelViewSet):
-    queryset = Question.objects.filter(skill_id=1)
+    tempset=Question.objects.filter(skill_id=1).order_by('?')
+
+    #random.shuffle(tempset)
+    id_list=[]
+    count_1=0
+    count_2=0
+    flag_1=0
+    for i in range(len(tempset)):
+        if flag_1==0:
+            if tempset[i].mark==1:
+                if count_1==6:
+                    flag_1=1
+                else:
+                    id_list.append(tempset[i].question_id)
+                    count_1 = count_1 + 1
+        if tempset[i].mark==2:
+            if count_2==2 and flag_1==1:
+                break
+            else:
+                id_list.append(tempset[i].question_id)
+                count_2=count_2+1
+
+    print("it is tempppp")
+    queryset = Question.objects.filter(skill_id=1,question_id__in=id_list)
+    #print(queryset)
+    #random.shuffle(queryset)
     print(queryset)
     serializer_class = questionSerializer
+
 
 
     question_id = -1
