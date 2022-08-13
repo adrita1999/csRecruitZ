@@ -48,8 +48,7 @@ class Jobdetails extends Component {
         jsonData.job_id=id
         jsonData.mount="true"
         fetch(
-            "http://127.0.0.1:8000/"+id )
-
+            "http://127.0.0.1:8000/"+id)
             .then((res) => res.json())
             .then((json) => {
                 this.setState({

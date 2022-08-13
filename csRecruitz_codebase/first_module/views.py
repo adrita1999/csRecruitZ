@@ -49,6 +49,24 @@ class postViewsets_for_jobpost(viewsets.ModelViewSet):
     sort_option= ""
     objs_keyword = NewJobpost.objects.none()
 
+    @action(methods=['post', 'get'], detail=False, url_path='details')
+    def jobdetails(self, request):
+        global logged_in_id
+        if request.method == 'POST':
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            jobs = NewJobpost.objects.all()
+            serializer = NewPostSerializer(jobs, many=True)
+            if logged_in_id == -1:
+                string = "false"
+            else:
+                string = "true"
+            return Response({
+                'status': status.HTTP_204_NO_CONTENT,
+                'data': serializer.data,
+                'response': string,
+            })
+
     @action(methods=['post', 'get'], detail=False, url_path='searchinput')
     def follow(self, request):
 
@@ -1305,7 +1323,9 @@ class shortlistedjobViewsets(viewsets.ModelViewSet):
 
 
 class questionViewsets(viewsets.ModelViewSet):
-    tempset=Question.objects.filter(skill_id=1).order_by('?')
+    ##################################kon skill er eta dekhate hobe################################
+    skill_id = 2
+    tempset=Question.objects.filter(skill_id=skill_id).order_by('?')
 
     #random.shuffle(tempset)
     id_list=[]
@@ -1327,8 +1347,8 @@ class questionViewsets(viewsets.ModelViewSet):
                 id_list.append(tempset[i].question_id)
                 count_2=count_2+1
 
-    print("it is tempppp")
-    queryset = Question.objects.filter(skill_id=1,question_id__in=id_list)
+    # print("it is tempppp")
+    queryset = Question.objects.filter(skill_id=skill_id,question_id__in=id_list)
     #print(queryset)
     #random.shuffle(queryset)
     print(queryset)
@@ -1338,28 +1358,61 @@ class questionViewsets(viewsets.ModelViewSet):
 
     question_id = -1
     answer = ""
-    total_num =0
+    total_num = 0
 
     @action(methods=['post', 'get'], detail=False, url_path='answer')
     def answer(self, request):
+        global logged_in_id
+        user_id = logged_in_id
         if request.method == 'POST':
-            question_id = request.data["question_id"]
-            answer = request.data["answer"]
-            print(request.data)
+            if request.data['type'] == "next":
+                print("next theke ashche")
+                question_id = request.data["question_id"]
+                answer = request.data["answer"]
+                print(request.data)
 
-            if question_id != -1:
-                obj = Question.objects.filter(pk=question_id)
-                print(obj)
-                if len(obj) == 1:
-                    for id in obj:
-                        ans = id.answer
-                        print(ans)
-                        # if ans == answer:
-                        #     total_num+=1
-                        #     print(total_num)
-                # if answer == obj.answer:
-                #     total_number+=1
-                #     print(total_number)
+                obj = Question.objects.filter(question_id=question_id)
+                correct_ans = obj[0].answer
+                ques_mark = obj[0].mark
+                print(correct_ans)
+
+                if answer == correct_ans:
+                    print("milse")
+                    questionViewsets.total_num = questionViewsets.total_num + ques_mark
+            else:  # finish
+                print("finish theke ashche")
+                question_id = request.data["question_id"]
+                answer = request.data["answer"]
+                print(request.data)
+
+                obj = Question.objects.filter(question_id=question_id)
+                correct_ans = obj[0].answer
+                ques_mark = obj[0].mark
+                print(correct_ans)
+
+                if answer == correct_ans:
+                    print("milse")
+                    questionViewsets.total_num = questionViewsets.total_num + ques_mark
+                print("final marks")
+                print(questionViewsets.total_num)
+                todaydate = datetime.today().strftime('%Y-%m-%d')
+                allass = Assessment.objects.all()
+                ass_id = 1
+                if len(allass) == 0:
+                    ass_id = 1
+                else:
+                    asses = Assessment.objects.filter().order_by('-assessment_id')
+                    ass_id = int(asses[0].assessment_id) + 1
+                jobseekerskill = JobSeekerSkill.objects.filter(user_id_id=user_id,
+                                                               skill_id_id=questionViewsets.skill_id)
+                print("js")
+                print(user_id)
+                print(questionViewsets.skill_id)
+                print(jobseekerskill)
+                jsid = jobseekerskill[0].jobseeker_skill_id
+                assessment = Assessment(assessment_id=int(ass_id), marks_obtained=int(questionViewsets.total_num),
+                                        jobseeker_skill_id_id=int(jsid), date=todaydate)
+                assessment.save()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 pas_temp=make_pw_hash("1234")
@@ -1736,7 +1789,7 @@ jskill34 = JobSkill(job_skill_id=34,jobpost_id=jobpost14,skill_id=skill1)
 jskill34.save()
 jskill35 = JobSkill(job_skill_id=35,jobpost_id=jobpost14,skill_id=skill5)
 jskill35.save()
-question1 = Question(question_id=1, skill_id=skill1,
+question1 = Question(question_id=1, skill_id=skill2,
                      question_text="The library function exit( ) causes an exit from - ",
                      optionA="The program in which it occurs",
                      optionB="The function in which it occurs",
@@ -1751,7 +1804,7 @@ question1 = Question(question_id=1, skill_id=skill1,
 
                      time_limit="1:30")
 question1.save()
-question2 = Question(question_id=2, skill_id=skill1, question_text="In a linked list - ",
+question2 = Question(question_id=2, skill_id=skill2, question_text="In a linked list - ",
                      optionA=" Each link contains data or a pointer to data",
                      optionB="Links are stored in an array",
                      optionC="A array of pointers point to the link",
@@ -1765,7 +1818,7 @@ question2 = Question(question_id=2, skill_id=skill1, question_text="In a linked 
 
                      time_limit="1:30")
 question2.save()
-question3 = Question(question_id=3, skill_id=skill1,
+question3 = Question(question_id=3, skill_id=skill2,
                      question_text="In C++, which of the following can legitimately be passed to a function?",
                      optionA="A constant",
                      optionB="A variable",
@@ -1780,7 +1833,7 @@ question3 = Question(question_id=3, skill_id=skill1,
 
                      time_limit="1:30")
 question3.save()
-question4 = Question(question_id=4, skill_id=skill1,
+question4 = Question(question_id=4, skill_id=skill2,
                      question_text="The dot operator connects which of the following two entities? ",
                      optionA=" Class object and member of that class",
                      optionB=" Class and member of that class",
@@ -1794,7 +1847,7 @@ question4 = Question(question_id=4, skill_id=skill1,
 
                      time_limit="1:30")
 question4.save()
-question5 = Question(question_id=5, skill_id=skill1, question_text="A static function -  ",
+question5 = Question(question_id=5, skill_id=skill2, question_text="A static function -  ",
                      optionA="Should be called when an object is destroyed",
                      optionB="Can be called using the class name and function",
                      optionC="Is closely connected with an individual object of a class",
@@ -1807,7 +1860,7 @@ question5 = Question(question_id=5, skill_id=skill1, question_text="A static fun
 
                      time_limit="1:30")
 question5.save()
-question6 = Question(question_id=6, skill_id=skill1, question_text="Which one of the following is a keyword?",
+question6 = Question(question_id=6, skill_id=skill2, question_text="Which one of the following is a keyword?",
                      optionA="Size",
                      optionB="Key",
                      optionC="Jump",
@@ -1816,7 +1869,7 @@ question6 = Question(question_id=6, skill_id=skill1, question_text="Which one of
                      answer="4",
                      time_limit="1:30")
 question6.save()
-question7 = Question(question_id=7, skill_id=skill1, question_text="Which of the following is the correct syntax of including a user defined header files in C++?",
+question7 = Question(question_id=7, skill_id=skill2, question_text="Which of the following is the correct syntax of including a user defined header files in C++?",
                      optionA="#include [userdefined]",
                      optionB="#include “userdefined”",
                      optionC="#include <userdefined.h>",
@@ -1825,7 +1878,7 @@ question7 = Question(question_id=7, skill_id=skill1, question_text="Which of the
                      answer="2",
                      time_limit="1:30")
 question7.save()
-question8 = Question(question_id=8, skill_id=skill1, question_text=" Which of the following is a correct identifier in C++?",
+question8 = Question(question_id=8, skill_id=skill2, question_text=" Which of the following is a correct identifier in C++?",
                      optionA="VAR_1234",
                      optionB="$var_name",
                      optionC="7VARNAME",
@@ -1834,7 +1887,7 @@ question8 = Question(question_id=8, skill_id=skill1, question_text=" Which of th
                      answer="1",
                      time_limit="2:00")
 question8.save()
-question9 = Question(question_id=9, skill_id=skill1, question_text=" Which of the following approach is used by C++?",
+question9 = Question(question_id=9, skill_id=skill2, question_text=" Which of the following approach is used by C++?",
                      optionA="Left-right",
                      optionB="Right-left",
                      optionC="Bottom-up",
@@ -1843,7 +1896,7 @@ question9 = Question(question_id=9, skill_id=skill1, question_text=" Which of th
                      answer="3",
                      time_limit="2:00")
 question9.save()
-question10 = Question(question_id=10, skill_id=skill1, question_text=" What happens if the following C++ statement is compiled and executed?\n"
+question10 = Question(question_id=10, skill_id=skill2, question_text=" What happens if the following C++ statement is compiled and executed?\n"
                                                                      "int *ptr = NULL;\n"
                                                                      "delete ptr;",
                      optionA="The program is not semantically correct",
@@ -1854,7 +1907,7 @@ question10 = Question(question_id=10, skill_id=skill1, question_text=" What happ
                      answer="2",
                      time_limit="2:00")
 question10.save()
-question11 = Question(question_id=11, skill_id=skill1, question_text="What is the difference between delete and delete[] in C++?",
+question11 = Question(question_id=11, skill_id=skill2, question_text="What is the difference between delete and delete[] in C++?",
                      optionA="delete is syntactically correct but delete[] is wrong and hence will give an error if used in any case",
                      optionB="delete is used to delete normal objects whereas delete[] is used to pointer objects",
                      optionC="delete is a keyword whereas delete[] is an identifier",
@@ -1863,7 +1916,7 @@ question11 = Question(question_id=11, skill_id=skill1, question_text="What is th
                      answer="4",
                      time_limit="1:30")
 question11.save()
-question12 = Question(question_id=12, skill_id=skill1, question_text=" What happens if the following program is executed in C and C++?\n #include <stdio.h> \n int main(void){\nint new = 5;\nprintf(\"%d\", new); }",
+question12 = Question(question_id=12, skill_id=skill2, question_text=" What happens if the following program is executed in C and C++?\n #include <stdio.h> \n int main(void){\nint new = 5;\nprintf(\"%d\", new); }",
                      optionA="Error in C and successful execution in C++",
                      optionB="Error in both C and C++",
                      optionC="Error in C++ and successful execution in C",
@@ -1872,7 +1925,7 @@ question12 = Question(question_id=12, skill_id=skill1, question_text=" What happ
                      answer="3",
                      time_limit="2:00")
 question12.save()
-question13 = Question(question_id=13, skill_id=skill1, question_text="Which of the following type is provided by C++ but not C?",
+question13 = Question(question_id=13, skill_id=skill2, question_text="Which of the following type is provided by C++ but not C?",
                      optionA="double",
                      optionB="float",
                      optionC="int",
@@ -1881,7 +1934,7 @@ question13 = Question(question_id=13, skill_id=skill1, question_text="Which of t
                      answer="4",
                      time_limit="1:30")
 question13.save()
-question14 = Question(question_id=14, skill_id=skill1, question_text="By default, all the files in C++ are opened in _________ mode.",
+question14 = Question(question_id=14, skill_id=skill2, question_text="By default, all the files in C++ are opened in _________ mode.",
                      optionA="Binary",
                      optionB="VTC",
                      optionC="Text",
@@ -1890,7 +1943,7 @@ question14 = Question(question_id=14, skill_id=skill1, question_text="By default
                      answer="3",
                      time_limit="1:30")
 question14.save()
-question15 = Question(question_id=15, skill_id=skill1, question_text="What is the size of wchar_t in C++?",
+question15 = Question(question_id=15, skill_id=skill2, question_text="What is the size of wchar_t in C++?",
                      optionA="Based on the number of bits in the system",
                      optionB="2 or 4",
                      optionC="4",
@@ -1918,6 +1971,8 @@ uskill2 = JobSeekerSkill(jobseeker_skill_id=2, isOpenToWork=False, skill_id=skil
 uskill2.save()
 uskill3 = JobSeekerSkill(jobseeker_skill_id=3, isOpenToWork=True, skill_id=skill4, user_id=user1)
 uskill3.save()
+uskill4 = JobSeekerSkill(jobseeker_skill_id=4, isOpenToWork=True, skill_id=skill2, user_id=user1)
+uskill4.save()
 proj=Project(project_id=1,project_name="Istishon",project_link="https://github.com/adrita1999/ishtishon",project_short_desc="This is our 2-2 term project. It is basically a railway ticket booking website",user_id=user1)
 proj.save()
 proj_2=Project(project_id=2,project_name="csRecruitz",project_link="https://github.com/adrita1999/csRecruitZ",project_short_desc="This is our 4-1 term project. It is a job searching website. The development of the project is still ongoing",user_id=user1)
