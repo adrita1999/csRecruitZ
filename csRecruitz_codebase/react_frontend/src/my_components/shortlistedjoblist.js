@@ -33,7 +33,9 @@ import {FaRegClock} from "react-icons/fa";
 import {FiEdit2} from "react-icons/fi";
 import {RiDeleteBin6Line} from "react-icons/ri"
 
-
+var jsonData = {
+  "id":"",
+}
 
 const style = {
   position: 'absolute',
@@ -100,24 +102,25 @@ constructor(props) {
        handleClickDelete(event) {
         console.log("delete")
         console.log(event.target.id)
-        // fetch('http://127.0.0.1:8000/searchinput/', {  // Enter your IP address here
-        //      method: 'POST',
-        //      headers:{
-        //      'Content-Type': 'application/json',
-        //      },
-        //      mode: 'cors',
-        //      body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
-        //   })
-        //  fetch(
-        // "http://127.0.0.1:8000/first_module/shortlistedjobs/")
-        // .then((res) => res.json())
-        // .then((json) => {
-        //     this.setState({
-        //         apps: json,
-        //         DetailsLoaded:true
-        //     });
-        // console.log(json)
-        //  })
+           jsonData.id=event.target.id
+        fetch('http://127.0.0.1:8000/first_module/shortlistedjobs/shortlist/', {  // Enter your IP address here
+             method: 'POST',
+             headers:{
+             'Content-Type': 'application/json',
+             },
+             mode: 'cors',
+             body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
+          })
+         fetch(
+            "http://127.0.0.1:8000/first_module/shortlistedjobs/shortlist")
+            .then((res) => res.json())
+            .then((json) => {
+                this.setState({
+                    apps: json.data,
+                    DetailsLoaded:true
+                });
+            console.log(json)
+            })
   }
 
     componentDidMount() {

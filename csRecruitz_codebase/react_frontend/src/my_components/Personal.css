@@ -376,11 +376,11 @@ ol.gradient-list > li + li {
   width:100px;
   border: none;
   z-index: 5;
-  width: 13px;
-  height:13px;
+  width: 12px;
+  height:11px;
   position: absolute;
-  left: 1032px;
-  margin-top: 25px;
+  left: 1023px;
+  margin-top: 27px;
 }
 .border-left {
   margin-top: 50px;
