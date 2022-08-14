@@ -120,7 +120,7 @@ export class Quiz extends Component {
           // }
   }
   handleQuit() {
-    window.location.href="/quizresult"
+    window.location.href="/professional"
   }
 
   timerExpired()

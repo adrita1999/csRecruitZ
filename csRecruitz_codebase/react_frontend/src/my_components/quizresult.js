@@ -35,7 +35,11 @@ export class Quizresult extends Component {
       passed:"",
       DetailsLoaded4:false,
     };
-    // this.handleNext = this.handleNext.bind(this);
+    this.handleProf = this.handleProf.bind(this);
+  }
+  handleProf()
+  {
+      window.location.href="/professional"
   }
 
   componentDidMount() {

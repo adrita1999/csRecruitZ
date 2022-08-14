@@ -180,7 +180,7 @@ class Jobdetails extends Component {
                 <span style={{textAlign:"center"}}>
                     {this.state.ifapplied && <button className="job_details_btn_disabled" disabled={true}>Applied</button>}
                     {!this.state.ifapplied && <button className="job_details_btn" onClick={this.handleClickApply}>Apply Now</button>}
-                    {this.state.ifshortlisted && <button className="job_details_btn" onClick={this.handleClickShortlist}>Shortlisted</button>}
+                    {this.state.ifshortlisted && <button className="job_details_btn_short" onClick={this.handleClickShortlist}>Shortlisted</button>}
                     {!this.state.ifshortlisted && <button className="job_details_btn" onClick={this.handleClickShortlist}>Shortlist Job</button>}
                     <button className="job_details_btn">Follow Employer</button>
                 </span>
