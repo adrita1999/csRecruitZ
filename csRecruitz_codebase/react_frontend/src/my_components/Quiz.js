@@ -120,7 +120,7 @@ export class Quiz extends Component {
           // }
   }
   handleQuit() {
-    window.location.href="/professional"
+    window.location.href="/quizresult"
   }
 
   timerExpired()
@@ -149,7 +149,7 @@ export class Quiz extends Component {
                 .then((data)=>console.log(data));
             // this.state.percent = this.state.percent+12.5
               this.setState({percent:this.state.percent+12.5})
-            window.location.href="/professional"
+            window.location.href="//quizresult"
       }
       else {
           this.state.current_q_id = this.state.questions[this.state.q_id].question_id;
@@ -219,7 +219,7 @@ export class Quiz extends Component {
         .then((data)=>console.log(data));
     // this.state.percent = this.state.percent+12.5
       this.setState({percent:this.state.percent+12.5})
-    window.location.href="/professional"
+    window.location.href="/quizresult"
   }
 
   componentDidMount() {

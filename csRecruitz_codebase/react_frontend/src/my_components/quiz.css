@@ -3,12 +3,26 @@
     margin-left: 20%;
     border-radius: 5px;
 }
+.quiz2{
+    width: 30%;
+    margin-left: 36%;
+    border-radius: 5px;
+}
 .title{
     text-align: center;
     background-color: grey;
     background-color: #410390;
     padding: 10px;
     padding-bottom: 0px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.title2{
+    text-align: center;
+    background-color: grey;
+    background-color: #226119;
+    padding: 10px;
+    padding-bottom: 10px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }

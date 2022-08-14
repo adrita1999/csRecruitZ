@@ -22,6 +22,7 @@ import Quiz from "./my_components/Quiz"
 import Tag from "./my_components/Tag.js"
 import "bootstrap/dist/css/bootstrap.min.css";
 import Shortlistedjoblist from "./my_components/shortlistedjoblist";
+import Quizresult from "./my_components/quizresult";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
@@ -40,6 +41,7 @@ root.render(
       <Route path="/applied" element={<Appliedjoblist/>} />
       <Route path="/shortlisted" element={<Shortlistedjoblist/>} />
         <Route path="/quiz" element={< Quiz/>} />
+      <Route path="/quizresult" element={< Quizresult/>} />
         <Route path="/tag" element={< Tag/>} />
     </Routes>
   </BrowserRouter>
