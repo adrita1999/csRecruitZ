@@ -192,7 +192,7 @@ class Professional extends Component {
                             <button className="icon_btn"><FiEdit2 size={'1.5em'} className="icon_edit"/></button></div>
                     </div>
                     </div>
-                    <AnimationOnScroll animateIn="bounceInRight" duration={4} delay={100} animateOnce={false}>
+                    <AnimationOnScroll animateIn="bounceInRight" duration={2} delay={50} animateOnce={true}>
                     <ul className="projectlist">
                         {
                             this.state.projects.map((proj) => {
@@ -217,7 +217,7 @@ class Professional extends Component {
                             <button className="icon_btn"><FiEdit2 size={'1.5em'} className="icon_edit"/></button></div>
                     </div>
                     </div>
-                    <AnimationOnScroll animateIn="bounceInRight" duration={4} delay={100} animateOnce={false}>
+                    <AnimationOnScroll animateIn="bounceInRight" duration={2} delay={50} animateOnce={true}>
                     <ul className="publist">
                         {
                              this.state.pubs.map((pub) => {
@@ -241,7 +241,7 @@ class Professional extends Component {
                             <button className="icon_btn"><FiEdit2 size={'1.5em'} className="icon_edit"/></button></div>
                     </div>
                     </div>
-                    <AnimationOnScroll animateIn="bounceInRight" duration={4} delay={50} animateOnce={false}>
+                    <AnimationOnScroll animateIn="bounceInRight" duration={2} delay={50} animateOnce={true}>
                     <ul className="publist">
                         {
                             this.state.lics.map((lic) => {
