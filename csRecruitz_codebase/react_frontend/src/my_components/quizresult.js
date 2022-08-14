@@ -30,45 +30,38 @@ export class Quizresult extends Component {
   constructor() {
     super();
     this.state = {
-      items: [],
-      DataisLoaded:false,
+      marks:"",
+      per:"",
+      passed:"",
+      DetailsLoaded4:false,
     };
     // this.handleNext = this.handleNext.bind(this);
   }
 
   componentDidMount() {
 
-    // fetch(
-    //   "http://127.0.0.1:8000/first_module/question/")
-    //
-    //   .then((res) => res.json())
-    //   .then((json) => {
-    //       this.setState({
-    //           questions: json,
-    //           DataisLoaded:true,
-    //           pressed:true
-    //       });
-    //
-    //   console.log(json[this.state.q_id].time_limit)
-    //     const questime=json[this.state.q_id].time_limit
-    //     const splittime = questime.split(":")
-    //     const min=splittime[0]
-    //       const sec=splittime[1]
-    //   console.log(min)
-    //     console.log(sec)
-    //       this.setState({min:parseInt(min)})
-    //       this.setState({sec:parseInt(sec)})
-    //       // if(parseInt(sec)===0)
-    //       // {
-    //       //     this.setState({if1digit:true})
-    //       // }
-    //       this.setState({mark:json[this.state.q_id].mark})
-    //   })
+    fetch(
+            "http://127.0.0.1:8000/first_module/question/answer/")
+
+            .then((res) => res.json())
+            .then((json) => {
+                this.setState({
+
+                    marks:json.tot_mark,
+                    per:json.per,
+                    passed:json.res,
+                    DetailsLoaded4:true
+                });
+            console.log(json)
+
+            })
+      console.log(this.state)
   }
 
   render() {
 
     // if (!this.state.DataisLoaded) return <Loader/>
+      if (!this.state.DetailsLoaded4) return <Loader/>
     return (
         <React.Fragment>
        <Navb/>
@@ -79,10 +72,10 @@ export class Quizresult extends Component {
                   <h5 className='title2'style={{color:'white'}}>Assessment Result</h5>
                 </div>
                 <div><CgFileDocument className='markicon' style={{fontSize:"120",color:"#226119",marginLeft:"37%"}}/></div>
-                <div>Total Marks:</div>
-                <div>Marks Percentage:</div>
-                <div><h6>You haved successfully passed the assessment. Your skill is now verified.</h6></div>
-                <div><h6>You haved failed the assessment. Try again later.</h6></div>
+                <div>Total Marks:{this.state.marks}</div>
+                <div>Marks Percentage:{this.state.per}%</div>
+                {this.state.passed==="Passed"&& <div><h6>You haved successfully passed the assessment. Your skill is now verified.</h6></div>}
+                {this.state.passed==="Failed" && <div><h6>You haved failed the assessment. Try again later.</h6></div>}
 
                 <button className='btn btn-primary' onClick={this.handleProf} style={{width:"300px", marginRight: "150px",marginLeft: "400px"}}>Go To Professional Dashboard</button>
 

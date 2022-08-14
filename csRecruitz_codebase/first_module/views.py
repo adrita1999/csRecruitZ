@@ -1483,6 +1483,7 @@ class questionViewsets(viewsets.ModelViewSet):
                 assessment = Assessment(assessment_id=int(ass_id), marks_obtained=int(questionViewsets.total_num),
                                         jobseeker_skill_id_id=int(jsid), date=todaydate)
                 assessment.save()
+                questionViewsets.total_num=0
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
 
@@ -1498,8 +1499,8 @@ class questionViewsets(viewsets.ModelViewSet):
             return Response({
                 'status': status.HTTP_204_NO_CONTENT,
                 'data':serializer.data,
-                'tot_mark': questionViewsets.total_num,
-                'per': str(per),
+                'tot_mark': str(questionViewsets.total_num),
+                'per': str(int(obtained_per)),
                 'res': result,
 
             })
@@ -2080,3 +2081,5 @@ js_1=JobseekerCertificate(jobseeker_certificate_id=1,certificate_id=lic_1,user_i
 js_1.save()
 js_2=JobseekerCertificate(jobseeker_certificate_id=2,certificate_id=lic_2,user_id=user1)
 js_2.save()
+cut=SkillMarkCutoff(cutoff_id=1,skill_id_id=2,cutoff_percentage=80,from_date="1999-02-06",to_date="2024-02-06")
+cut.save()
