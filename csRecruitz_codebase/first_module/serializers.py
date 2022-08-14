@@ -133,3 +133,14 @@ class questionSerializer(serializers.ModelSerializer):
     class Meta:
         model= Question
         fields='__all__'
+class employerSerializer(serializers.ModelSerializer):
+    #print("serialiser")
+    # tot_jobpost = serializers.SerializerMethodField("get_tot_jobpost")
+    class Meta:
+        model= Employer
+        fields='__all__'
+    # def get_tot_jobpost(self,obj):
+    #     total =0
+    #     posts = NewJobpost.objects.filter(employer_id = obj.user_ptr_id)
+    #     total = len(posts)
+    #     return posts

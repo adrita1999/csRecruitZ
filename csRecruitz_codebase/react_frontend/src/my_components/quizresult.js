@@ -35,7 +35,11 @@ export class Quizresult extends Component {
       passed:"",
       DetailsLoaded4:false,
     };
-    // this.handleNext = this.handleNext.bind(this);
+    this.handleProf = this.handleProf.bind(this);
+  }
+  handleProf()
+  {
+      window.location.href="/professional"
   }
 
   componentDidMount() {
@@ -72,13 +76,18 @@ export class Quizresult extends Component {
                   <h5 className='title2'style={{color:'white'}}>Assessment Result</h5>
                 </div>
                 <div><CgFileDocument className='markicon' style={{fontSize:"120",color:"#226119",marginLeft:"37%"}}/></div>
-                <div>Total Marks:{this.state.marks}</div>
-                <div>Marks Percentage:{this.state.per}%</div>
-                {this.state.passed==="Passed"&& <div><h6>You haved successfully passed the assessment. Your skill is now verified.</h6></div>}
-                {this.state.passed==="Failed" && <div><h6>You haved failed the assessment. Try again later.</h6></div>}
 
-                <button className='btn btn-primary' onClick={this.handleProf} style={{width:"300px", marginRight: "150px",marginLeft: "400px"}}>Go To Professional Dashboard</button>
+                <div className="resulttext">
+                    <div>Total Marks: <b>{this.state.marks}</b></div>
+                    <div>Marks Percentage: <b>{this.state.per}%</b></div>
+                    {/* <div><h6 style={{color:"#226119",marginTop:"20px"}}>You have successfully passed the assessment. Your skill is now verified.</h6></div> */}
+                    {/* <div><h6 style={{color:"red",marginTop:"20px"}}>You have failed the assessment. Try again later.</h6></div> */}
+                    {this.state.passed==="Passed"&& <div><h6 style={{color:"#226119",marginTop:"20px"}}>You have successfully passed the assessment. Your skill is now verified.</h6></div>}
+                    {this.state.passed==="Failed" && <div><h6 style={{color:"red",marginTop:"20px"}}>You have failed the assessment. Try again later.</h6></div>}
 
+                </div>
+
+                <button className='btn btn-primary' onClick={this.handleProf} style={{width:"240px", marginRight: "27px",marginLeft: "490px",left:"900px"}}>Go To Professional Dashboard</button>
 
                 </div>
 

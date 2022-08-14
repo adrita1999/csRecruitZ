@@ -255,6 +255,23 @@ div.jobdetailsbgdiv {
   color: white;
   box-shadow: 0 8px 10px 0 rgba(0,0,0,0.24);
 }
+.job_details_btn_short {
+  width: 80%;
+  height: 30px;
+  padding: 0.1%;
+  margin: 5px 5px 5px 8%;
+  background-color:#410390;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  transition-duration: 0.4s;
+  position: relative;
+}
+.job_details_btn_short:hover {
+  background-color: #31105B; /* Green */
+  color: white;
+  box-shadow: 0 8px 10px 0 rgba(0,0,0,0.24);
+}
 .job_details_btn_disabled {
   width: 80%;
   height: 30px;
