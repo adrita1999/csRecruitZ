@@ -138,6 +138,7 @@ body {
     width: 100px;
     display: inline;
     position: absolute;
+    cursor: pointer;
     left: 0%;
 }
 .imageicon_2{
@@ -152,6 +153,7 @@ body {
     width: 100px;
     display: inline;
     position: absolute;
+    cursor: pointer;
     left: 10%;
 }
 .imageicontitle_1{

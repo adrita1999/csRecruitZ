@@ -86,6 +86,8 @@ class postViewsets_for_jobpost(viewsets.ModelViewSet):
                 postViewsets_for_jobpost.filter_cat = request.data['category']
                 postViewsets_for_jobpost.filter_nat = request.data['nature']
                 postViewsets_for_jobpost.filter_loc = request.data['location']
+                postViewsets_for_jobpost.sort_option=request.data['sortoption']
+                postViewsets_for_jobpost.sort_dir="asc"
                 # print(postViewsets_for_jobpost.filter_loc)
                 return Response(status=status.HTTP_204_NO_CONTENT)
             else: # filter theke post hoise
@@ -610,7 +612,14 @@ class postViewsets_for_jobpost(viewsets.ModelViewSet):
                     postViewsets_for_jobpost.objs = NewJobpost.objects.filter(Q(category=postViewsets_for_jobpost.cat))
                 else:
                     postViewsets_for_jobpost.objs = NewJobpost.objects.all()
+                print("iiooooooooooo"+postViewsets_for_jobpost.sort_option)
+                if postViewsets_for_jobpost.sort_option=="Most Recent Post":
+                    print("dhuksereeeeeeeeeeeeeeeeeeeeee")
+                    if postViewsets_for_jobpost.sort_dir=="asc":
+                        postViewsets_for_jobpost.objs = postViewsets_for_jobpost.objs.filter().order_by('-post_date')
+
                 serializer = NewPostSerializer(postViewsets_for_jobpost.objs, many=True)
+
                 return Response({
                     'status': status.HTTP_204_NO_CONTENT,
                     'data': serializer.data,
@@ -637,7 +646,9 @@ class postViewsets_for_jobpost(viewsets.ModelViewSet):
                 if postViewsets_for_jobpost.filter_loc!="":
                     objs2=objs2.filter(employer_id__division = postViewsets_for_jobpost.filter_loc)
                 print(objs2)
+                print(postViewsets_for_jobpost.sort_option)
                 if postViewsets_for_jobpost.sort_option=="Most Recent Post":
+                    print("dhuksereeeeeeeeeeeeeeeeeeeeee")
                     if postViewsets_for_jobpost.sort_dir=="asc":
                         objs2 = objs2.filter().order_by('post_date')
                     else:

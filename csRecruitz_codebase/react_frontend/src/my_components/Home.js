@@ -88,7 +88,10 @@ var jsonData = {
     "location":"",
     "keyword":"",
     "nature":"",
-    "redir_from_home":"true"
+    "redir_from_home":"true",
+    "filtername":"",
+    "sortoption":"",
+    "asc":"",
   }
 
 
@@ -116,6 +119,7 @@ export class Home extends Component {
     super(props);
 
     this.handleClick=this.handleClick.bind(this);
+    this.handleClickNew=this.handleClickNew.bind(this);
     this.handleClickReco=this.handleClickReco.bind(this);
   }
 
@@ -232,6 +236,23 @@ handleClick() {
     this.setState({'redirect':true})
 
   }
+  handleClickNew() {
+        jsonData.filtername="sortoption"
+      jsonData.sortoption="Most Recent Post"
+      jsonData.asc="false"
+
+        fetch('http://127.0.0.1:8000/searchinput/', {  // Enter your IP address here
+
+      method: 'POST',
+        headers:{
+        'Content-Type': 'application/json',
+      },
+      mode: 'cors',
+      body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
+    })
+    this.setState({'redirect':true})
+
+  }
 
 handleClickReco(event) {
         console.log(event.target.id)
@@ -295,7 +316,7 @@ handleClickReco(event) {
             <div className='nicherdiv mb-3'>
                 <div className="icondiv">
                     <div className="icondiv2_1">
-                        <a href=""><img className='imageicon_1' src={vacancy}></img></a>
+                        <a onClick={this.handleClick}><img className='imageicon_1' src={vacancy}></img></a>
                         <h2 className="imageicontitle_1">Vacancies</h2>
                         <div style={{display:"inline",position:"absolute",left:"69%",marginTop:"16px"}}>
                             <AnimatedNumbers
@@ -321,7 +342,7 @@ handleClickReco(event) {
                         </div>
                     </div>
                     <div className="icondiv2_3">
-                        <a href=""><img className='imageicon_3' src={newjob}></img></a>
+                        <a onClick={this.handleClickNew} ><img className='imageicon_3' src={newjob}></img></a>
                         <h2 className="imageicontitle_3">New Jobs</h2>
                         <div style={{display:"inline",position:"absolute",left:"74%",marginTop:"16px"}}>
                             <AnimatedNumbers
