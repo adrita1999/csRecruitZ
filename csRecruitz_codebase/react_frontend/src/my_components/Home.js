@@ -308,7 +308,7 @@ handleClickReco(event) {
                         </div>
                     </div>
                     <div className="icondiv2_2">
-                        <a href=""><img className='imageicon_2' src={company}></img></a>
+                        <a href="/companylist"><img className='imageicon_2' src={company}></img></a>
                         <h2 className="imageicontitle_2">Companies</h2>
                         <div style={{display:"inline",position:"absolute",left:"79%",marginTop:"16px"}}>
                             <AnimatedNumbers

@@ -15,7 +15,7 @@ import Register_3 from "./my_components/Register_3";
 import Register_4 from "./my_components/Register_4";
 import RegisterEmp from "./my_components/Register_emp"
 import Appliedjoblist from "./my_components/appliedjoblist";
-
+import Companylist from "./my_components/companylist";
 
 import Home from "./my_components/Home";
 import Quiz from "./my_components/Quiz"
@@ -27,22 +27,23 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/dashboard" element={<Personal />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/dashboard" element={<Personal />} />
         <Route path="/professional" element={< Professional/>} />
         <Route path="/joblist" element={< Joblist/>} />
         <Route path="/register" element={< Register/>} />
         <Route path="/register2" element={< Register_2/>} />
-      <Route path="/register3" element={< Register_3/>} />
-      <Route path="/register4" element={< Register_4/>} />
-      <Route path="/register_emp" element={< RegisterEmp/>} />
+        <Route path="/register3" element={< Register_3/>} />
+        <Route path="/register4" element={< Register_4/>} />
+        <Route path="/register_emp" element={< RegisterEmp/>} />
 
         <Route path="/jobdetails" element={< Jobdetails/>} />
-      <Route path="/applied" element={<Appliedjoblist/>} />
-      <Route path="/shortlisted" element={<Shortlistedjoblist/>} />
+        <Route path="/applied" element={<Appliedjoblist/>} />
+        <Route path="/shortlisted" element={<Shortlistedjoblist/>} />
         <Route path="/quiz" element={< Quiz/>} />
-      <Route path="/quizresult" element={< Quizresult/>} />
+        <Route path="/quizresult" element={< Quizresult/>} />
         <Route path="/tag" element={< Tag/>} />
+        <Route path="/companylist" element={< Companylist/>} />
     </Routes>
   </BrowserRouter>
 );
