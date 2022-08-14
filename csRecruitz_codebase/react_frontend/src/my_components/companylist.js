@@ -129,8 +129,8 @@ export class companylist extends Component {
         <body>
        <Navb/>
 
-        <Sidebar/>
-        <div className="content">
+        {/* <Sidebar/> */}
+        <div className="content" style={{marginLeft:"10%",marginRight:"10%"}}>
             <div className="row" style={{marginLeft:"-13.5%"}}>
                 <h1>Companies:</h1>
             </div>
@@ -151,7 +151,7 @@ export class companylist extends Component {
           {this.state.items.map((row) => (
             <StyledTableRow key={row.application_id} name={row.jobshortlist_id}>
               <StyledTableCell component="th" scope="row">{row.name} </StyledTableCell>
-                <StyledTableCell align="left">{row.district}, {row.division}</StyledTableCell>
+                <StyledTableCell align="left"> {row.division}</StyledTableCell>
                 <StyledTableCell align="left">{row.org_type}</StyledTableCell>
                 <StyledTableCell align="left"><button className="btn btn-sm btn-success" id={row.user_ptr_id} >View</button></StyledTableCell>
                 {/* <StyledTableCell align="center"><RiDeleteBin6Line id={row.newjobpost_id} name={row.newjobpost_id} size={'1.5em'}  className="icon_delete"/></StyledTableCell> */}
