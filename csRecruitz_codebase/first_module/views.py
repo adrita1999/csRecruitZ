@@ -1494,7 +1494,7 @@ class questionViewsets(viewsets.ModelViewSet):
                 assessment = Assessment(assessment_id=int(ass_id), marks_obtained=int(questionViewsets.total_num),
                                         jobseeker_skill_id_id=int(jsid), date=todaydate)
                 assessment.save()
-                questionViewsets.total_num=0
+                # questionViewsets.total_num=0
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
 
@@ -1506,11 +1506,13 @@ class questionViewsets(viewsets.ModelViewSet):
                 result="Passed"
             else:
                 result="Failed"
+            marks_obtained=str(questionViewsets.total_num)
+            questionViewsets.total_num = 0
             serializer = Cutoff_Serializer(objs, many=True)
             return Response({
                 'status': status.HTTP_204_NO_CONTENT,
                 'data':serializer.data,
-                'tot_mark': str(questionViewsets.total_num),
+                'tot_mark': marks_obtained,
                 'per': str(int(obtained_per)),
                 'res': result,
 
