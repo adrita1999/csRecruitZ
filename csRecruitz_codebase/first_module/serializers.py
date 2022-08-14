@@ -87,6 +87,10 @@ class pub_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Publication
         fields = '__all__'
+class Cutoff_Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = SkillMarkCutoff
+        fields = '__all__'
 
 class applicationSerializer(serializers.ModelSerializer):
     #print("serialiser")
