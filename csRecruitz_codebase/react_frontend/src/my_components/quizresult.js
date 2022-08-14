@@ -79,12 +79,14 @@ export class Quizresult extends Component {
                   <h5 className='title2'style={{color:'white'}}>Assessment Result</h5>
                 </div>
                 <div><CgFileDocument className='markicon' style={{fontSize:"120",color:"#226119",marginLeft:"37%"}}/></div>
-                <div>Total Marks:</div>
-                <div>Marks Percentage:</div>
-                <div><h6>You haved successfully passed the assessment. Your skill is now verified.</h6></div>
-                <div><h6>You haved failed the assessment. Try again later.</h6></div>
+                <div className="resulttext">
+                    <div>Total Marks:</div>
+                    <div>Marks Percentage:</div>
+                    <div><h6 style={{color:"#226119",marginTop:"20px"}}>You have successfully passed the assessment. Your skill is now verified.</h6></div>
+                    <div><h6 style={{color:"red",marginTop:"20px"}}>You have failed the assessment. Try again later.</h6></div>
+                </div>
 
-                <button className='btn btn-primary' onClick={this.handleProf} style={{width:"300px", marginRight: "150px",marginLeft: "400px"}}>Go To Professional Dashboard</button>
+                <button className='btn btn-primary' onClick={this.handleProf} style={{width:"240px", marginRight: "27px",marginLeft: "490px",left:"900px"}}>Go To Professional Dashboard</button>
 
 
                 </div>
