@@ -1520,10 +1520,25 @@ class employerViewsets(viewsets.ModelViewSet):
             serializer = employerSerializer(objs, many=True)
             print("Companies objects: ")
             print(serializer.data)
+            post_jobs = ""
+            i=0
+            for obj in objs:
+                id = obj.user_ptr_id
+                print(id)
+                jobs = NewJobpost.objects.filter(employer_id = id )
+                job_no = len(jobs)
+                # post_jobs = post_jobs+"#"+str(job_no)
+                if i==0:
+                    post_jobs = str(job_no)
+                    i+=1
+                else:
+                    post_jobs = post_jobs + "#" + str(job_no)
+            print(post_jobs)
+
             return Response({
                 'status': status.HTTP_204_NO_CONTENT,
                 'data': serializer.data,
-                'response': "send",
+                'response': post_jobs,
 
             })
         return Response(status=status.HTTP_204_NO_CONTENT)

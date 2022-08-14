@@ -67,7 +67,8 @@ export class companylist extends Component {
         this.state = {
             items: [],
             DetaisLoaded:false,
-            redirect:false
+            redirect:false,
+            tot_posts:[],
         };
         this.handleClickView=this.handleClickView.bind(this);
         this.handleClickDelete=this.handleClickDelete.bind(this);
@@ -118,6 +119,8 @@ export class companylist extends Component {
                     console.log(this.state)
                     console.log(json.data);
                     console.log(json.response);
+                    this.state.tot_posts = json.response.split('#')
+                    console.log(this.state.tot_posts);
                     
                 })
     }
