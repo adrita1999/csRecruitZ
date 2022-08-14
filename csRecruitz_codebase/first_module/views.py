@@ -1483,7 +1483,28 @@ class questionViewsets(viewsets.ModelViewSet):
                 assessment = Assessment(assessment_id=int(ass_id), marks_obtained=int(questionViewsets.total_num),
                                         jobseeker_skill_id_id=int(jsid), date=todaydate)
                 assessment.save()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+
+            todaydate = datetime.today().strftime('%Y-%m-%d')
+            objs=SkillMarkCutoff.objects.filter(skill_id=questionViewsets.skill_id,from_date__lte=todaydate,to_date__gte=todaydate)
+            per=objs[0].cutoff_percentage
+            obtained_per=(questionViewsets.total_num/10)*100
+            if obtained_per>=per:
+                result="Passed"
+            else:
+                result="Failed"
+            serializer = Cutoff_Serializer(objs, many=True)
+            return Response({
+                'status': status.HTTP_204_NO_CONTENT,
+                'data':serializer.data,
+                'tot_mark': questionViewsets.total_num,
+                'per': str(per),
+                'res': result,
+
+            })
+
+
 
 pas_temp=make_pw_hash("1234")
 user1 = Jobseeker(user_id=1, name="Adrita Hossain Nakshi", email="adrita_99@yahoo.com", password=pas_temp, thana="Lalbag",
