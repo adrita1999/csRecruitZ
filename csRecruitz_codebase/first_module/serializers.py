@@ -133,3 +133,8 @@ class questionSerializer(serializers.ModelSerializer):
     class Meta:
         model= Question
         fields='__all__'
+class employerSerializer(serializers.ModelSerializer):
+    #print("serialiser")
+    class Meta:
+        model= Employer
+        fields='__all__'

@@ -1505,6 +1505,28 @@ class questionViewsets(viewsets.ModelViewSet):
 
             })
 
+class employerViewsets(viewsets.ModelViewSet):
+    queryset = Employer.objects.all()
+    serializer_class = employerSerializer
+    isdetails = False
+    email = ""
+    password = ""
+
+    @action(methods=['post', 'get'], detail=False, url_path='get_companies')
+    def get_companies(self, request):
+        print("into get companies")
+        if request.method == 'GET':
+            objs = Employer.objects.all()
+            serializer = employerSerializer(objs, many=True)
+            print("Companies objects: ")
+            print(serializer.data)
+            return Response({
+                'status': status.HTTP_204_NO_CONTENT,
+                'data': serializer.data,
+                'response': "send",
+
+            })
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 pas_temp=make_pw_hash("1234")
