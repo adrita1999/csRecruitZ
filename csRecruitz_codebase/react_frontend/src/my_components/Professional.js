@@ -106,6 +106,9 @@ class Professional extends Component {
 
 
     }
+    To_Quiz() {
+        window.location.href="/quiz"
+    }
     render() {
         if (!this.state.DetailsLoaded1 || !this.state.DetailsLoaded2 || !this.state.DetailsLoaded3 || !this.state.DetailsLoaded4 || !this.state.DetailsLoaded5 || !this.state.DetailsLoaded6) return <Loader/>
         return (
@@ -170,21 +173,13 @@ class Professional extends Component {
                             {
                                             this.state.skills.map((skill) => {
                                             return(
-                                                <li><b className="seems-h1">{skill.skill_name}</b><MdFileDownloadDone size={'2em'} style={{
-                                                color:'#29A335',
-
-                                                float:"right"
-                                            }}/> </li>
+                                                <li><b style={{
+                                                    fontSize:"large",
+                                                    color:"darkorange"
+                                                }}>{skill.skill_name}</b><button className="custom_btn2" onClick={this.To_Quiz}>Take Skill Quiz</button> </li>
                                             )})
                              }
 
-                            <li><b style={{
-                                fontSize:"large",
-                                color:"orangered"
-                            }}>C++</b><button className="custom_btn2">Take Skill Quiz</button></li>
-                            <li><b style={{fontSize:"large", color:"blueviolet"}}>ReactJS</b><MdFileDownloadDone size={'2em'} style={{color:'#29A335', float:"right"}}/></li>
-                            <li><b style={{fontSize:"large", color:"purple"}}>Django</b><MdFileDownloadDone size={'2em'} style={{color:'#29A335', float:"right"}}/></li>
-                            <li><b style={{fontSize:"large", color:"darkorange"}}>Java</b><MdFileDownloadDone size={'2em'} style={{color:'#29A335', float:"right"}}/></li>
 
 
                         </ol>
@@ -319,3 +314,10 @@ class Professional extends Component {
     }
 }
 export default Professional;
+// <li><b style={{
+//                                 fontSize:"large",
+//                                 color:"orangered"
+//                             }}>C++</b><button className="custom_btn2">Take Skill Quiz</button></li>
+//                             <li><b style={{fontSize:"large", color:"blueviolet"}}>ReactJS</b><MdFileDownloadDone size={'2em'} style={{color:'#29A335', float:"right"}}/></li>
+//                             <li><b style={{fontSize:"large", color:"purple"}}>Django</b><MdFileDownloadDone size={'2em'} style={{color:'#29A335', float:"right"}}/></li>
+//                             <li><b style={{fontSize:"large", color:"darkorange"}}>Java</b><MdFileDownloadDone size={'2em'} style={{color:'#29A335', float:"right"}}/></li>

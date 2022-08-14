@@ -210,7 +210,8 @@ class Personal extends Component {
         .then(response=>response.json())
         .then((data)=>console.log(data));
         // this.setState({'redirect':true})
-        // alert('Demo Form is submited'); 
+        // alert('Demo Form is submited');
+        window.location.href="/dashboard"
    }
       
    render() {
