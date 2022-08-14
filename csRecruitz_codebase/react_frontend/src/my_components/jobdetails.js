@@ -30,11 +30,13 @@ class Jobdetails extends Component {
         req_exp:"",
         ifapplied:"",
         ifshortlisted:"",
+        iffollowed:""
     }
     constructor(props) {
         super(props);
         this.handleClickApply=this.handleClickApply.bind(this);
         this.handleClickShortlist=this.handleClickShortlist.bind(this);
+        this.handleClickFollow=this.handleClickFollow.bind(this);
       }
 
     componentDidMount() {
@@ -94,6 +96,7 @@ class Jobdetails extends Component {
                 else {
                    this.state.ifshortlisted=false
                 }
+            //    follow code
             })
 
     }
@@ -139,6 +142,30 @@ class Jobdetails extends Component {
     this.setState({'redirect':true})
   }
 
+  handleClickFollow() {
+    // jsonData.job_id=this.state.job_id
+    // jsonData.mount="false"
+    // jsonData.type="shortlist"
+    this.state.iffollowed=!this.state.iffollowed
+      // if(this.state.ifshortlisted==true)
+      // {
+      //     jsonData.ifshortlist="true"
+      // }
+      // else
+      // {
+      //     jsonData.ifshortlist="false"
+      // }
+    // console.log(this.state.ifshortlisted)
+    // fetch('http://127.0.0.1:8000/first_module/apply/getapplication/', {  // Enter your IP address here
+    //   method: 'POST',
+    //     headers:{
+    //     'Content-Type': 'application/json',
+    //   },
+    //   mode: 'cors',
+    //   body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
+    // })
+    this.setState({'redirect':true})
+  }
     render() {
         if (!this.state.DetailsLoaded1 || !this.state.DetailsLoaded2) return <Loader/>
         return (
@@ -182,7 +209,9 @@ class Jobdetails extends Component {
                     {!this.state.ifapplied && <button className="job_details_btn" onClick={this.handleClickApply}>Apply Now</button>}
                     {this.state.ifshortlisted && <button className="job_details_btn_short" onClick={this.handleClickShortlist}>Shortlisted</button>}
                     {!this.state.ifshortlisted && <button className="job_details_btn" onClick={this.handleClickShortlist}>Shortlist Job</button>}
-                    <button className="job_details_btn">Follow Employer</button>
+                    {this.state.iffollowed && <button className="job_details_btn_short" onClick={this.handleClickFollow}>Unfollow Employer</button>}
+                    {!this.state.iffollowed && <button className="job_details_btn" onClick={this.handleClickFollow}>Follow Employer</button>}
+                    {/*<button className="job_details_btn">Follow Employer</button>*/}
                 </span>
 
 

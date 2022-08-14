@@ -67,7 +67,8 @@ export class companylist extends Component {
         this.state = {
             items: [],
             DetaisLoaded:false,
-            redirect:false
+            redirect:false,
+            tot_posts:[],
         };
         this.handleClickView=this.handleClickView.bind(this);
         this.handleClickDelete=this.handleClickDelete.bind(this);
@@ -118,6 +119,8 @@ export class companylist extends Component {
                     console.log(this.state)
                     console.log(json.data);
                     console.log(json.response);
+                    this.state.tot_posts = json.response.split('#')
+                    console.log(this.state.tot_posts);
                     
                 })
     }
@@ -140,19 +143,23 @@ export class companylist extends Component {
       <Table sx={{ minWidth: 700}} aria-label="customized table">
         <TableHead>
           <TableRow>
-            {/* <StyledTableCell>Job Title</StyledTableCell> */}
+            
             <StyledTableCell align="left">Employer Name</StyledTableCell>
               <StyledTableCell align="left">Location</StyledTableCell>
               <StyledTableCell align="left">Organization type</StyledTableCell>
+              <StyledTableCell align="left">Total Job Post</StyledTableCell>
               <StyledTableCell align="right">View Details</StyledTableCell>
+
           </TableRow>
         </TableHead>
         <TableBody>
-          {this.state.items.map((row) => (
+          {this.state.items.map((row, i) => (
             <StyledTableRow key={row.application_id} name={row.jobshortlist_id}>
               <StyledTableCell component="th" scope="row">{row.name} </StyledTableCell>
                 <StyledTableCell align="left"> {row.division}</StyledTableCell>
                 <StyledTableCell align="left">{row.org_type}</StyledTableCell>
+                <StyledTableCell align="left"> {this.state.tot_posts[i]}</StyledTableCell>
+
                 <StyledTableCell align="left"><button className="btn btn-sm btn-success" id={row.user_ptr_id} >View</button></StyledTableCell>
                 {/* <StyledTableCell align="center"><RiDeleteBin6Line id={row.newjobpost_id} name={row.newjobpost_id} size={'1.5em'}  className="icon_delete"/></StyledTableCell> */}
           {/* <button className="icon_delete_btn" name={row.user_prt_id} id={row.user_prt_id} ></button> */}
