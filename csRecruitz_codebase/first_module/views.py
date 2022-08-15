@@ -835,7 +835,7 @@ class jobseekerViewsets(viewsets.ModelViewSet):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     @action(methods=['post', 'get'], detail=False, url_path='addemp')
-    def register(self, request):
+    def register_emp(self, request):
         if request.method == 'POST':
 
             print(request.data)
@@ -1578,7 +1578,7 @@ user1 = Jobseeker(user_id=1, name="Adrita Hossain Nakshi", email="adrita_99@yaho
                   district="Dhaka", division="Dhaka", father_name="Dr. Md. Elias Hossain",
                   mother_name="Dr. Zennat Ferdousi", date_of_birth="1999-02-06",
                   self_desc="I am a CS under-graduate. I love programmimg and I love computers too. Like Steve Jobs, I like to believe 'Everybody should learn to program a computer, because it teaches you how to think.'",
-                  nationality="Bangladeshi", nid_number="12345678", field="Research", pref_sal="30000",
+                  nationality="Bangladeshi", nid_number="12345678", field="Research and Development", pref_sal="30000",
                   pref_job_ntr="Full-time", pref_org_type="NGO", propic="propics_input/nakshi.jpg",
                   resume="resumes_input/nakshi.docx")
 user1.save()
@@ -1589,40 +1589,40 @@ user2 = Jobseeker(user_id=2, name="Simantika Bhattacharjee Dristi", email="17050
                   nationality="Bangladeshi", nid_number="12349876", field="Research and Development", propic="propics_input/nakshi.jpg",
                   resume="resumes_input/nakshi.docx")
 user2.save()
-emp1 = Employer(user_id=2, name="Optimizely", email="optimizely@gmail.com", password="1234", district="Dhaka",
+emp1 = Employer(user_id=3, name="Optimizely", email="optimizely@gmail.com", password="1234", district="Dhaka",
                 division="Dhaka", org_type="NGO", establishment_year="2005")
 emp1.save()
-emp2 = Employer(user_id=3, name="Kona SL", email="kona@yahoo.com", password="1234", district="Kishoreganj",
+emp2 = Employer(user_id=4, name="Kona SL", email="kona@yahoo.com", password="1234", district="Kishoreganj",
                 division="Dhaka",
                 org_type="NGO", establishment_year="2001")
 emp2.save()
-emp3 = Employer(user_id=4, name="Data Edge Ltd", email="dataedge@gmail.com", password="1234", district="Sunamganj",
+emp3 = Employer(user_id=5, name="Data Edge Ltd", email="dataedge@gmail.com", password="1234", district="Sunamganj",
                 division="Sylhet", org_type="NGO", establishment_year="1996")
 emp3.save()
-emp4 = Employer(user_id=5, name="Samsung", email="samsung@gmail.com", password="1234", district="Cox's Bazar",
+emp4 = Employer(user_id=6, name="Samsung", email="samsung@gmail.com", password="1234", district="Cox's Bazar",
                 division="Chattogram", org_type="NGO", establishment_year="1981")
 emp4.save()
-emp5 = Employer(user_id=6, name="Intelligent Machines Limited", email="iml@gmail.com", password="1234",
+emp5 = Employer(user_id=7, name="Intelligent Machines Limited", email="iml@gmail.com", password="1234",
                 district="Rangpur", division="Rangpur", org_type="NGO", establishment_year="2015")
 emp5.save()
-emp6 = Employer(user_id=7, name="BEPRC", email="beprc@gmail.com", password="1234", district="Netrokona",
+emp6 = Employer(user_id=8, name="BEPRC", email="beprc@gmail.com", password="1234", district="Netrokona",
                 division="Mymensingh",
                 org_type="Government", establishment_year="1998")
 emp6.save()
-emp7 = Employer(user_id=8, name="Bangladesh Airforce", email="airbd@gmail.com", password="1234", district="Bogura",
+emp7 = Employer(user_id=9, name="Bangladesh Airforce", email="airbd@gmail.com", password="1234", district="Bogura",
                 division="Rajshahi", org_type="Government", establishment_year="1975")
 emp7.save()
 
-emp8 = Employer(user_id=9, name="Brac", email="brac@edu.bd", password="1234", district="Dhaka",
+emp8 = Employer(user_id=10, name="Brac", email="brac@edu.bd", password="1234", district="Dhaka",
                 division="Dhaka", org_type="NGO", establishment_year="1975")
 emp8.save()
-emp9 = Employer(user_id=10, name="UIU", email="uiu@edu.com", password="1234", district="Dhaka",
+emp9 = Employer(user_id=11, name="UIU", email="uiu@edu.com", password="1234", district="Dhaka",
                 division="Dhaka", org_type="NGO", establishment_year="2000")
 emp9.save()
-emp10 = Employer(user_id=11, name="Samsung", email="samsungrj@gmail.com", password="1234", district="Rajshahi",
+emp10 = Employer(user_id=12, name="Samsung", email="samsungrj@gmail.com", password="1234", district="Rajshahi",
                 division="Rajshahi", org_type="Private Firm", establishment_year="2001")
 emp10.save()
-emp11 = Employer(user_id=12, name="Bangladesh Airforce", email="airbdrj@gmail.com", password="1234", district="Rajshahi",
+emp11 = Employer(user_id=13, name="Bangladesh Airforce", email="airbdrj@gmail.com", password="1234", district="Rajshahi",
                 division="Rajshahi", org_type="Government", establishment_year="1990")
 emp11.save()
 

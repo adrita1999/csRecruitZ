@@ -197,8 +197,9 @@ handleChange(event) {
   handleSubmit(event) {
     event.preventDefault();
     console.log("geree");
-     this.setState({signinopen: true});
+
     if(this.validate()){
+
         console.log(this.state);
         if(this.state.input["name"]) {
             jsonData.name=this.state.input["name"];
@@ -258,7 +259,7 @@ handleChange(event) {
       body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
     })
     this.setState({'redirect':true});
-
+    this.setState({signinopen: true});
 
 
     }
