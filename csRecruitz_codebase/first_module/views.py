@@ -683,10 +683,27 @@ class postViewsets_for_jobpost(viewsets.ModelViewSet):
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
             jobs = NewJobpost.objects.filter(employer_id_id=emp_id)
+            # print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+            # print(jobs)
+            appstr=""
+            for job in jobs:
+                jobid=job.jobpost_id
+                # print("~~~~~~~~~~~~~~~~~~~~")
+                # print(jobid)
+                apps=JobApplication.objects.filter(newjobpost_id_id=jobid)
+                num=len(apps)
+                # print("num")
+                if appstr=="":
+                    appstr = appstr +  str(num)
+                else:
+                    appstr = appstr + "#" + str(num)
+
+            # print(appstr)
             serializer = NewPostSerializer(jobs, many=True)
             return Response({
                 'status': status.HTTP_204_NO_CONTENT,
                 'data': serializer.data,
+                'response': appstr,
             })
 
 

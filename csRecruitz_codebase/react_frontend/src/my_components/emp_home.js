@@ -15,10 +15,11 @@ import { AnimationOnScroll } from 'react-animation-on-scroll';
 import Select, { StylesConfig }  from 'react-select'
 
 import {HiLocationMarker} from "react-icons/hi";
-import {FaRegClock} from 'react-icons/fa';
+import {FaPlus} from 'react-icons/fa';
 import {FaRegMoneyBillAlt} from 'react-icons/fa';
 import {FaRegCalendarAlt} from 'react-icons/fa';
-
+import {FaSearch} from 'react-icons/fa';
+import {GrFormAdd} from 'react-icons/gr';
 import Navb from "./Navb";
 import Foot from "./Foot";
 import {Navigate} from "react-router-dom";
@@ -71,6 +72,7 @@ export class EmpHome extends Component {
         redirect:false,
         DetailsLoaded1:false,
         DetailsLoaded2:false,
+        DetailsLoaded3:false,
         navlink:"/jobdetails",
     };
 
@@ -110,12 +112,15 @@ componentDidMount() {
                     DetailsLoaded2:true
                 });
             console.log(json)
+            var appnostr=json.response.split('#')
+                this.setState({appno:appnostr,DetailsLoaded3:true})
+
             //console.log(this.state)
             })
     }
 
   render() {
-      if ( !this.state.DetailsLoaded1 ||!this.state.DetailsLoaded2) return <Loader/>
+      if ( !this.state.DetailsLoaded1 ||!this.state.DetailsLoaded2 || !this.state.DetailsLoaded3) return <Loader/>
     return (
        <React.Fragment>
        <body>
@@ -136,6 +141,15 @@ componentDidMount() {
                 <div className='listheading'>
                 <h4>List of all job posts:</h4>
                 </div>
+                <div>
+                    <button className="btn btn-success" style={{float:"right",left:"64%",marginTop:'-38px',position:"absolute"}}><FaPlus style={{fontSize:"16",fontWeight:"bold",color:"white",marginLeft:"-1px",paddingRight:"5px",marginTop:"-3px"}}/>Add new job post</button>
+                    <FaSearch style={{fontSize:"24",float:"right",left:"76.5%",marginTop:'-32px',position:"absolute",color:"#29A335"}}/>
+                    <Form >
+                        {/*<InputLabel id="demo-simple-select-label">Search by keyword</InputLabel>*/}
+                        <input style={{width:'1202px', padding:'7px',marginBottom:14,borderRadius:'5px',borderWidth:1,width:"15%",float:"right",marginTop:"-40px",marginRight:"19px"}} type="text"  onChange={this.handlerkeyword} placeholder='Search by job title...'></input>
+                    </Form>
+                </div>
+
 
              <div className="jobtabledivemp">
              <TableContainer component={Paper} style={{boxShadow:"rgba(0, 0, 0, 0.35) 0px 5px 15px"}}>
@@ -152,14 +166,14 @@ componentDidMount() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {this.state.jobs.map((row) => (
+          {this.state.jobs.map((row,i) => (
             <StyledTableRow key={row.jobpost_id} name={row.jobpost_id}>
               <StyledTableCell component="th" scope="row">
                   <b>{row.title}</b>
               </StyledTableCell>
                 <StyledTableCell align="right">{row.post_date}</StyledTableCell>
               <StyledTableCell align="right">{row.deadline_date}</StyledTableCell>
-              <StyledTableCell align="right">{row.tot_applicants}</StyledTableCell>
+              <StyledTableCell align="right">{this.state.appno[i]}</StyledTableCell>
                 <StyledTableCell align="right"><button className="btn btn-sm btn-success" id={row.newjobpost_id}>View</button></StyledTableCell>
                 {/*<StyledTableCell align="right"><button className="btn-success">Delete</button></StyledTableCell>*/}
 
