@@ -18,6 +18,7 @@ import Appliedjoblist from "./my_components/appliedjoblist";
 import Companylist from "./my_components/companylist";
 
 import Home from "./my_components/Home";
+import EmpHome from "./my_components/emp_home";
 import Quiz from "./my_components/Quiz"
 import Tag from "./my_components/Tag.js"
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -44,6 +45,7 @@ root.render(
         <Route path="/quizresult" element={< Quizresult/>} />
         <Route path="/tag" element={< Tag/>} />
         <Route path="/companylist" element={< Companylist/>} />
+        <Route path="/emp" element={< EmpHome/>} />
     </Routes>
   </BrowserRouter>
 );

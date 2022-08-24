@@ -10,10 +10,7 @@ class postSerializer(serializers.ModelSerializer):
     #
     # def update(self, instance, validated_data):
     #     instance.title=validated_data.get('title',instance.title)
-class EmployerSerializer(serializers.ModelSerializer):
-    class Meta:
-        model= Employer
-        fields='__all__'
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model= User
@@ -42,6 +39,7 @@ class NewPostSerializer(serializers.ModelSerializer):
     emp_name = serializers.SerializerMethodField("get_emp_name")
     emp_district = serializers.SerializerMethodField("get_emp_district")
     emp_division = serializers.SerializerMethodField("get_emp_division")
+    tot_applicants = serializers.SerializerMethodField("get_tot_applicants")
     class Meta:
         model= NewJobpost
         fields='__all__'
@@ -54,6 +52,9 @@ class NewPostSerializer(serializers.ModelSerializer):
 
     def get_emp_division(self, obj):
         return obj.employer_id.division
+
+    def get_tot_applicants(self, obj):
+        return 5
 
 class jobseekerSerializer(serializers.ModelSerializer):
     #print("serialiser")
@@ -133,8 +134,9 @@ class questionSerializer(serializers.ModelSerializer):
     class Meta:
         model= Question
         fields='__all__'
+
+
 class employerSerializer(serializers.ModelSerializer):
-    #print("serialiser")
     # tot_jobpost = serializers.SerializerMethodField("get_tot_jobpost")
     class Meta:
         model= Employer
