@@ -146,6 +146,7 @@ class Project(models.Model):
     project_name = models.CharField(max_length=200)
     project_short_desc = models.TextField(null=True)
     project_link = models.CharField(max_length=200,null=True)
+    language= models.TextField(null=True)
 
 
 class Publication(models.Model):
@@ -153,6 +154,8 @@ class Publication(models.Model):
     user_id = models.ForeignKey(Jobseeker, on_delete=models.CASCADE)
     publication_name = models.CharField(max_length=200)
     publication_link = models.CharField(max_length=200,null=True)
+    venue = models.TextField(null=True)
+    publication_year=models.DateField(null=True)
 
 
 class LicenseCertificate(models.Model):
