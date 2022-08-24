@@ -12,6 +12,57 @@ import {BiLockAlt} from 'react-icons/bi';
 import Navb from "./Navb";
 import Foot from "./Foot";
 import Loader from "./loader";
+
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import Select, { StylesConfig }  from 'react-select'
+
+const dropDownStyle ={
+    control: (base, state) => ({
+    ...base,
+        borderColor:'#000000',
+        borderWidth:1,
+        
+        // position:'absolute',
+        // This line disable the blue border
+        boxShadow: state.isFocused ? 0 : 0,
+        '&:hover': {
+        borderColor: state.isFocused ? '#000000' : '#000000'}
+    }),
+   dropdownIndicator: (base, state) => ({
+    ...base,
+    transition: "all .2s ease",
+    transform: state.selectProps.menuIsOpen ? "rotate(180deg)" : null
+   })
+};
+
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 600,
+    
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    p:4,
+    backdrop:false,
+    paddingTop:'10px',
+    paddingBottom:'10px',
+    show:true,
+      borderRadius:5,
+      border:0,
+      overflow:'auto'
+  };
+  const CatOptions = [
+    { value: 'Teaching', label: 'Teaching' },
+    { value: 'DevOps', label: 'DevOps' },
+    { value: 'Security', label: 'Security' },
+    { value: 'Research and Development', label: 'Research and Development' },
+    { value: 'Programming', label: 'Programming' },
+  ]
+
 class Professional extends Component {
     constructor(props) {
         super(props);
@@ -23,11 +74,38 @@ class Professional extends Component {
             DetailsLoaded4:false,
             DetailsLoaded5:false,
             DetailsLoaded6:false,
-
-
+            field_of_work:false,
+            experience:false,
+            skill:false,
+            project:false,
         };
-      }
+        this.handleField=this.handleField.bind(this);
+        this.handleExperience=this.handleExperience.bind(this);
+        this.handleSkill=this.handleSkill.bind(this);
+        this.handleProject=this.handleProject.bind(this);
+        this.handleClose=this.handleClose.bind(this);
 
+      }
+    handleField(){
+        this.setState({field_of_work: true})
+        console.log(this.state.field_of_work);
+    }
+    handleExperience(){
+        window.location.href="/experienceEdit"
+
+    }
+    handleSkill(){
+        this.setState({skill: true})
+
+    }
+    handleProject()
+    {
+        this.setState({project: true})
+
+    }
+    handleClose() {
+        this.setState({field_of_work:false})
+      }
     componentDidMount() {
         const id=1
         fetch(
@@ -103,8 +181,6 @@ class Professional extends Component {
             console.log(json)
             console.log(this.state)
             })
-
-
     }
     To_Quiz() {
         window.location.href="/quiz"
@@ -130,14 +206,15 @@ class Professional extends Component {
 
                         <p><b className="seems-h1">Field of Work: </b>{this.state.items.field}</p>
 
-                        <button className="icon_btn"><FiEdit2 size={'1.5em'} className="icon_edit"/></button></div>
+                        <button className="icon_btn" onClick={this.handleField}><FiEdit2 size={'1.5em'} className="icon_edit"/></button>
+                    </div>
                    </div>
 
                 <div className="row_custom">
                     <div className="row">
                         <div className="align">
                         <h4>Job Experience:</h4>
-                            <button className="icon_btn"><FiEdit2 size={'1.5em'} className="icon_edit"/></button></div>
+                            <button className="icon_btn" onClick={this.handleExperience}><FiEdit2 size={'1.5em'} className="icon_edit"/></button></div>
                         <div className="container ">
 
                             <div className="row px-3" style={{
@@ -299,17 +376,78 @@ class Professional extends Component {
                             </div>
                         </div>
                             </div>
-                </div>
+        </div>
+        </Animated>
+        </div>
+
+        <Modal
+        open={this.state.field_of_work}
+        onClose={this.handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        style={{background:"rgba(0,0,0,0)"}} 
+      >
+        <Box sx={style}>
+        <div className='col-md-3' style={{width: "50%", paddingRight:"12px"}}>
+
+            <InputLabel id="demo-simple-select-label">Field of work</InputLabel>
+            <Select styles={dropDownStyle} options={CatOptions} value={""}  onChange={this.handler} isClearable  />
+        </div> 
+        <button className='btn btn-success' style={{marginTop:"-40px",width:"20%",marginRight:"-2px"}} >Submit</button>
 
 
+                
+        </Box>
+        </Modal> 
+        <Modal
+            open={this.state.experience}
+            onClose={this.handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+            style={{background:"rgba(0,0,0,0)"}} 
+        >
+            <Box sx={style}>
+            
+                    {
+                        this.state.exps.map((i,exp) => {
+                        return(
+                            <div className='row' style={{width: "100%", paddingRight:"12px"}}>
+                                <div className="col-sm-6">
+                                <div className="position-relative mb-4">
+                                <InputLabel style={{color:"black" ,fontWeight:"Bold", fontSize:"15px"}}>Experience Name:</InputLabel>
+                                <input type="text"  name="experience_name" className="form-control"  defaultValue={exp.experience_name} onChange={this.handleChange} id="ex_name" />
+                                </div>
+                                </div>
+                                <div className="col-sm-3">
+                                <div className="position-relative mb-4">
+                                <InputLabel style={{color:"black" ,fontWeight:"Bold", fontSize:"15px"}}>From:</InputLabel>
+                                <input type="text"  name="experience_name" className="form-control"  defaultValue={exp.experience_name} onChange={this.handleChange} id="ex_name" />
+                                </div>
+                                </div>
+                                <div className="col-sm-3">
+                                <div className="position-relative mb-4">
+                                <InputLabel style={{color:"black" ,fontWeight:"Bold", fontSize:"15px"}}>To:</InputLabel>
+                                <input type="text"  name="experience_name" className="form-control"  defaultValue={exp.experience_name} onChange={this.handleChange} id="ex_name" />
+                                </div>
+                                </div>
+                            </div> 
+                        )})
+                        }
 
-                    </Animated>
-                    </div>
+              
+            <div>
+                <button className='btn btn-success' style={{marginTop:"0px",width:"20%",marginRight:"-2px"}} >Submit</button>
 
-                 <Foot margin_value={172}/>
+            </div>
 
-                </body>
-            </React.Fragment>
+
+                    
+            </Box>
+        </Modal> 
+        <Foot margin_value={172}/>
+
+        </body>
+        </React.Fragment>
         )
     }
 }
