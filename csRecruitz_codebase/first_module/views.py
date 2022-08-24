@@ -674,7 +674,19 @@ class postViewsets_for_jobpost(viewsets.ModelViewSet):
                     'loc': postViewsets_for_jobpost.filter_loc,
                 })
 
-
+    @action(methods=['post', 'get'], detail=False, url_path='empjobs')
+    def get_all_jobs_emp(self, request):
+        global logged_in_id
+        emp_id=3
+        if request.method == 'POST':
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            jobs = NewJobpost.objects.filter(employer_id_id=emp_id)
+            serializer = NewPostSerializer(jobs, many=True)
+            return Response({
+                'status': status.HTTP_204_NO_CONTENT,
+                'data': serializer.data,
+            })
 
 
 class jobseekerViewsets(viewsets.ModelViewSet):
@@ -1556,6 +1568,20 @@ class employerViewsets(viewsets.ModelViewSet):
             })
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+    @action(methods=['post', 'get'], detail=False, url_path='emp')
+    def get_employer(self, request):
+        print("if er age")
+        if request.method == 'GET':
+            print("getttttt")
+            empid = 3
+            emp = Employer.objects.filter(user_ptr_id=empid)
+            serializer = employerSerializer(emp, many=True)
+            # print(serializer.data)
+            return Response({
+                'status': status.HTTP_204_NO_CONTENT,
+                'data': serializer.data,
+            })
+        return Response(status=status.HTTP_204_NO_CONTENT)
     # @action(methods=['post', 'get'], detail=False, url_path='get_jobpost')
     # def get_jobpost(self, request):
     #     print("into get job post")
