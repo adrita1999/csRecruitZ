@@ -4,6 +4,7 @@ import Foot from "./Foot";
 import {Animated} from "react-animated-css";
 import {MdOutlineAdd} from 'react-icons/md'
 import {InputLabel, ToggleButton, ToggleButtonGroup} from "@mui/material";
+import Loader from "./loader";
 var jsonData = {
     "des": "",
     "emp": "",
@@ -17,10 +18,18 @@ class ExperienceEdit extends Component {
         this.state = {
             input: {},
             items: [],
-            numDivs: 0
+            numDivs: 0,
+            DetailsLoaded1:false,
+            DetailsLoaded2:false,
+            DetailsLoaded3:false,
+            DetailsLoaded4:false,
+            DetailsLoaded5:false,
+            DetailsLoaded6:false,
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit =this.handleSubmit.bind(this);
+        this.handleClickSkip =this.handleClickSkip.bind(this);
+
     }
     handleClickSkip() {
        window.location.href="/register3"
@@ -163,8 +172,10 @@ class ExperienceEdit extends Component {
 
 
     render() {
+        if (!this.state.DetailsLoaded1 || !this.state.DetailsLoaded2 || !this.state.DetailsLoaded3 || !this.state.DetailsLoaded4 || !this.state.DetailsLoaded5 || !this.state.DetailsLoaded6) return <Loader/>
 
-        return(<React.Fragment>
+        return(
+            <React.Fragment>
             <Navb/>
 
             <Animated animationIn="slideInLeft"  animationInDuration={2000}  isVisible={true}>
@@ -178,9 +189,10 @@ class ExperienceEdit extends Component {
                 }}>Job Experience <p className="btn add_btn" onClick={() => { this.setState({numDivs: this.state.numDivs+1}); }}><MdOutlineAdd size={'1.3em'}/>Add More</p></p>
                 <hr/>
                 <form onSubmit={this.handleSubmit}>
-                    {/* {
-                        this.state.exps.map((i,exp) => {
-                            return(
+                    {
+                        this.state.exps.map((exp) => {
+                           return(
+                            <div>
                                 <div className="row" style={{marginBottom:5}}>
                                     <div className="col-sm-6">
                                         <div className="form-group">
@@ -191,62 +203,68 @@ class ExperienceEdit extends Component {
                                     <div className="col-sm-6">
                                         <div className="form-group">
                                         <InputLabel for="job_emp">Employer:</InputLabel>
-                                        <input type="text" name="job_emp_start"  onChange={this.handleChange} className="form-control" placeholder="Enter Employer/Organization Name"  id="job_emp" required />
+                                        <input type="text" name="job_emp_start" defaultValue={exp.organization_name} onChange={this.handleChange} className="form-control" placeholder="Enter Employer/Organization Name"  id="job_emp" required />
                                         </div>
                                     </div>
-                                 </div>
-                                
+                                </div>
+                                <div className="row" style={{marginBottom:5  }}>
+                                    <div className="col-sm-6">
+                                        <div className="form-group">
+                                            <InputLabel for="from_year">From Year:</InputLabel>
+                                            <input
+                                                type="number"
+                                                defaultValue={exp.from_year}
+                                                min="1990"
+                                                max="2099"
+                                                step="1"
+                                                name="from_year_start"
+                                                onChange={this.handleChange}
+                                                className="form-control"
+                                                placeholder="Enter Your Starting Year"
+                                                id="from_year" required />
+
+                                        </div>
+                                    </div>
+                                    <div className="col-sm-6">
+                                        <div className="form-group">
+                                            <InputLabel for="to_year_start">To Year:</InputLabel>
+                                            <input
+                                                type="number"
+                                                defaultValue={exp.to_year}
+                                                min="1990"
+                                                max="2099"
+                                                step="1"
+                                                name="to_year_start"
+                                                onChange={this.handleChange}
+                                                className="form-control"
+                                                placeholder="Enter Your Finishing Year"
+                                                id="to_year" required/>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="row" style={{marginBottom:5 }}>
+                                    <div className="form-group" >
+                                        <InputLabel htmlFor="desc">Description</InputLabel>
+                                        <textarea
+                                            name="desc_start"
+                                            defaultValue={exp.desc_start}
+                                            onChange={this.handleChange}
+                                            className="form-control"
+                                            placeholder="Write Something About Your Experience"
+                                            id="desc"/>
+
+                                    </div>
+                                </div>
+                                <hr/>
+                            </div>
+                                 
                                 
                         )})
-                    } */}
+                    } 
                     
-                    <div className="row" style={{marginBottom:5  }}>
-                         <div className="col-sm-6">
-                            <div className="form-group">
-                                <InputLabel for="from_year">From Year:</InputLabel>
-                                 <input
-                                    type="number"
-                                    min="1990"
-                                    max="2099"
-                                    step="1"
-                                    name="from_year_start"
-                                    onChange={this.handleChange}
-                                    className="form-control"
-                                    placeholder="Enter Your Starting Year"
-                                    id="from_year" required />
-
-                            </div>
-                        </div>
-                        <div className="col-sm-6">
-                            <div className="form-group">
-                                <InputLabel for="to_year_start">To Year:</InputLabel>
-                                <input
-                                    type="number"
-                                    min="1990"
-                                    max="2099"
-                                    step="1"
-                                    name="to_year_start"
-                                    onChange={this.handleChange}
-                                    className="form-control"
-                                    placeholder="Enter Your Finishing Year"
-                                    id="to_year" required/>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="row" style={{marginBottom:5 }}>
-                        <div className="form-group" >
-                            <InputLabel htmlFor="desc">Description</InputLabel>
-                            <textarea
-                                name="desc_start"
-                                onChange={this.handleChange}
-                                className="form-control"
-                                placeholder="Write Something About Your Experience"
-                                id="desc"/>
-
-                        </div>
-                     </div>
+                    
                     {
                         new Array(this.state.numDivs).fill(0).map((item, index) =>
                         (
