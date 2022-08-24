@@ -22,6 +22,7 @@ def check_pw_hash(password,hash):
     if make_pw_hash(password)==hash:
         return True
     return False
+
 class postViewsets(viewsets.ModelViewSet):
     # def list(self,request):
     #     posts = Jobpost.objects.all()
