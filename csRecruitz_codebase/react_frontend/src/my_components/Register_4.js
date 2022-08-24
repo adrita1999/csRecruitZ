@@ -96,6 +96,7 @@ class Register_4 extends Component {
           window.location.href = "/"
       }
       handleChange(event) {
+
     let input = this.state.input;
     console.log(event.target.name);
     input[event.target.name] = event.target.value;
@@ -104,6 +105,9 @@ class Register_4 extends Component {
     this.setState({
       input
     });
+  }
+  handleChangeFile(event) {
+        console.log(event.target.files)
   }
     render() {
 
@@ -286,9 +290,10 @@ class Register_4 extends Component {
                         <input
                             type="file"
                             name="lic_file"
-                            onChange={this.handleChange}
+                            onChange={this.handleChangeFile}
                             className="form-control"
                             placeholder="Upload Credential"
+                            multiple="multiple"
                             id="lic_file"/>
 
                   </div>

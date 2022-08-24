@@ -8,6 +8,11 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import TypeAnimation from 'react-type-animation';
+
+
+import {storage} from "./Firebase";
+
+import { ref, uploadBytes } from "firebase/storage";
 import Form from "react-bootstrap/Form";
 const style = {
   position: 'absolute',
@@ -24,6 +29,7 @@ const style = {
     border:0,
     overflow:'hidden'
 };
+
 var jsonData = {
     "name":"",
     "password":"",
@@ -104,6 +110,7 @@ class Register extends  Component {
       errors: {},
         redirect:false,
         signinopen:false,
+        pdfpath:"",
     };
 
 
@@ -116,7 +123,24 @@ class Register extends  Component {
     this.handleChangeDropOrg=this.handleChangeDropOrg.bind(this);
     this.handleChangeDropField=this.handleChangeDropField.bind(this);
   }
+componentDidMount() {
+        console.log("mount hoise")
+        //var  referenc=ref(storage,"pdfs/temp.pdf/")
+        //referenc.getDownloadURL().then(url=>{
+        //console.log(url);
+    // storage.ref('pdfs').child('temp.pdf').getDownloadURL().then(
+    //     url=>{
+    //         console.log(url);
+    //     }
+    // )
+    storage.ref("pdfs/temp.pdf").getDownloadURL().then(url=>{
+          console.log(url);
+          this.setState({pdfpath:url});
+        })
 
+
+
+    }
 handleChange(event) {
     let input = this.state.input;
     input[event.target.name] = event.target.value;
@@ -663,6 +687,12 @@ handleChange(event) {
                 <Select name="pref_org" id="pref_org" styles={dropDownStyle} options={OrgOptions} onChange={this.handleChangeDropOrg} placeholder="Enter Your Preferred Organization Type" openMenuOnFocus isClearable />
 
             </div>
+                <div>
+                    <object data={this.state.pdfpath} type="application/pdf" width="500px" height="600px">
+  <p>Your web browser doesn't have a PDF plugin.
+   <a href={this.state.pdfpath}>click here to download the PDF file.</a></p>
+</object>
+                    </div>
             </div>
                 </div>
             <div className="row" style={{
