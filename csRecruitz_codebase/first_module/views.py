@@ -48,6 +48,7 @@ class postViewsets_for_jobpost(viewsets.ModelViewSet):
     filter_loc = ""
     sort_dir= ""
     sort_option= ""
+    search_str=""
     objs_keyword = NewJobpost.objects.none()
 
     @action(methods=['post', 'get'], detail=False, url_path='details')
@@ -680,9 +681,11 @@ class postViewsets_for_jobpost(viewsets.ModelViewSet):
         global logged_in_id
         emp_id=3
         if request.method == 'POST':
+            postViewsets_for_jobpost.search_str=request.data["search_str"]
+
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
-            jobs = NewJobpost.objects.filter(employer_id_id=emp_id)
+            jobs = NewJobpost.objects.filter(employer_id_id=emp_id,title__icontains=postViewsets_for_jobpost.search_str)
             # print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
             # print(jobs)
             appstr=""

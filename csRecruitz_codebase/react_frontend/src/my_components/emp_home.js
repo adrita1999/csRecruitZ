@@ -62,7 +62,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 var jsonData = {
-  }
+  "search_str":"",
+}
 
 
 
@@ -78,17 +79,59 @@ export class EmpHome extends Component {
 
     constructor(props) {
     super(props);
+    this.handleSearch=this.handleSearch.bind(this);
 
-    // this.handleClick=this.handleClick.bind(this);
-    // this.handleClickNew=this.handleClickNew.bind(this);
-    // this.handleClickReco=this.handleClickReco.bind(this);
   }
 
+handleSearch(event)
+{
+    //console.log(event.target.value)
+    if(event.target.value)
+    {
+        jsonData.search_str=event.target.value
+    }
+    else
+    {
+        jsonData.search_str=""
+    }
 
+    fetch('http://127.0.0.1:8000/empjobs/', {  // Enter your IP address here
+    method: 'POST',
+    headers:{
+    'Content-Type': 'application/json',
+    },
+    mode: 'cors',
+    body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
+    })
+
+    fetch(
+            "http://127.0.0.1:8000/empjobs")
+
+            .then((res) => res.json())
+            .then((json) => {
+                this.setState({
+                    jobs: json.data,
+                    DetailsLoaded2:true
+                });
+            console.log(json)
+            var appnostr=json.response.split('#')
+                this.setState({appno:appnostr,DetailsLoaded3:true})
+
+            //console.log(this.state)
+    })
+}
 
 componentDidMount() {
-        //console.log("mount hoise")
-        //this.setState({DetailsLoaded1:true})
+        jsonData.search_str=""
+        fetch('http://127.0.0.1:8000/empjobs/', {  // Enter your IP address here
+        method: 'POST',
+        headers:{
+        'Content-Type': 'application/json',
+        },
+        mode: 'cors',
+        body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
+        })
+
          fetch(
             "http://127.0.0.1:8000/first_module/employer/emp/")
 
@@ -144,10 +187,10 @@ componentDidMount() {
                 <div>
                     <button className="btn btn-success" style={{float:"right",left:"64%",marginTop:'-38px',position:"absolute"}}><FaPlus style={{fontSize:"16",fontWeight:"bold",color:"white",marginLeft:"-1px",paddingRight:"5px",marginTop:"-3px"}}/>Add new job post</button>
                     <FaSearch style={{fontSize:"24",float:"right",left:"76.5%",marginTop:'-32px',position:"absolute",color:"#29A335"}}/>
-                    <Form >
+                    {/*<Form >*/}
                         {/*<InputLabel id="demo-simple-select-label">Search by keyword</InputLabel>*/}
-                        <input style={{width:'1202px', padding:'7px',marginBottom:14,borderRadius:'5px',borderWidth:1,width:"15%",float:"right",marginTop:"-40px",marginRight:"19px"}} type="text"  onChange={this.handlerkeyword} placeholder='Search by job title...'></input>
-                    </Form>
+                        <input style={{padding:'7px',marginBottom:14,borderRadius:'5px',borderWidth:1,width:"15%",float:"right",marginTop:"-40px",marginRight:"19px"}} type="text"  onChange={this.handleSearch} placeholder='Search by job title...'></input>
+                    {/*</Form>*/}
                 </div>
 
 
