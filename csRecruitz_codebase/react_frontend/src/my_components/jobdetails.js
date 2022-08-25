@@ -72,6 +72,7 @@ class Jobdetails extends Component {
         pubs:[],
         lics:[],
         file_array:[],
+        res_array:[],
         DetailsLoaded1:false,
         DetailsLoaded2:false,
         DetailsLoaded4:false,
@@ -92,12 +93,60 @@ class Jobdetails extends Component {
         this.handleClose=this.handleClose.bind(this);
         this.handleChangeFile=this.handleChangeFile.bind(this);
         this.ClearAll=this.ClearAll.bind(this);
+        this.handleChangeResume=this.handleChangeResume.bind(this);
+        this.ClearResume=this.ClearResume.bind(this);
+        this.handleChangeDropProj=this.handleChangeDropProj.bind(this);
+        this.handleChangeDropPub=this.handleChangeDropPub.bind(this);
+        this.handleChangeDropLic=this.handleChangeDropLic.bind(this);
+
+      }
+      handleChangeDropProj(event) {
+
+      }
+      handleChangeDropPub(event) {
+
+      }
+      handleChangeDropLic(event) {
+
+      }
+      ClearResume(event) {
+            this.setState({
+                res_array:[]
+            })
       }
       ClearAll(event) {
         dummy_files=[];
         this.setState({
             file_array:[]
         })
+      }
+      handleChangeResume(event) {
+        let dummy_res=[];
+        if(event.target.files[0]) {
+              var path='resumes/'+event.target.files[0].name;
+              var link_to_pdf="";
+              storage.ref(path).put(
+                  event.target.files[0]
+              ).then(snap => {
+                      storage.ref(path).getDownloadURL().then(url => {
+                          console.log(url);
+                          link_to_pdf=url;
+                          let obj={
+                          "name":event.target.files[0].name,
+                          "link":link_to_pdf
+                        }
+                        dummy_res.push(obj);
+                      this.setState({
+                    res_array:dummy_res,
+                })
+                          event.target.value=null;
+
+                      })
+
+                  }
+              )
+          }
+
       }
       handleChangeFile(event) {
           if (event.target.files[0]) {
@@ -407,7 +456,7 @@ class Jobdetails extends Component {
                     <div className="col-sm-12">
                         <div className="form-group">
                             <InputLabel style={{color:"black" ,fontWeight:"Bold", fontSize:"15px", marginBottom:"10px" }}  for="name">Select Projects that you want to highlight:</InputLabel>
-                            <Select name="proj" id="proj" styles={dropDownStyle} options={this.state.proj_options} onChange={this.handleChangeDropDiv} placeholder="Enter Projects" isMulti openMenuOnFocus isClearable />
+                            <Select name="proj" id="proj" styles={dropDownStyle} options={this.state.proj_options} onChange={this.handleChangeDropProj} placeholder="Enter Projects" isMulti openMenuOnFocus isClearable />
                         </div>
                     </div>
 
@@ -419,7 +468,7 @@ class Jobdetails extends Component {
                     <div className="col-sm-12">
                         <div className="form-group">
                             <InputLabel style={{color:"black" ,fontWeight:"Bold", fontSize:"15px", marginBottom:"10px" }}  for="name">Select Publications that you want to highlight:</InputLabel>
-                            <Select name="pub" id="pub" styles={dropDownStyle} options={this.state.pub_options} onChange={this.handleChangeDropDiv} placeholder="Enter Publications"  isMulti openMenuOnFocus isClearable />
+                            <Select name="pub" id="pub" styles={dropDownStyle} options={this.state.pub_options} onChange={this.handleChangeDropPub} placeholder="Enter Publications"  isMulti openMenuOnFocus isClearable />
                         </div>
                     </div>
 
@@ -431,7 +480,7 @@ class Jobdetails extends Component {
                     <div className="col-sm-12">
                         <div className="form-group">
                             <InputLabel style={{color:"black" ,fontWeight:"Bold", fontSize:"15px", marginBottom:"10px" }}  for="name">Select Credentials that you want to highlight:</InputLabel>
-                            <Select name="lic" id="lic" styles={dropDownStyle} options={this.state.lic_options} onChange={this.handleChangeDropDiv} placeholder="Enter Credentials" isMulti openMenuOnFocus isClearable />
+                            <Select name="lic" id="lic" styles={dropDownStyle} options={this.state.lic_options} onChange={this.handleChangeDropLic} placeholder="Enter Credentials" isMulti openMenuOnFocus isClearable />
                         </div>
                     </div>
 
@@ -454,7 +503,7 @@ class Jobdetails extends Component {
                         {this.state.file_array.map((files,index) => {
 
                                 { if(index===0) return(
-                                <div style={{marginTop:10}}><a href={files.link} target="_blank">{files.name}</a><button className="clear_btn" onClick={this.ClearAll}><ImCross className="cross"/>Clear All</button></div>
+                                <div style={{marginTop:10}}><div><a href={files.link} target="_blank">{files.name}</a></div><button className="clear_btn" onClick={this.ClearAll}><ImCross className="cross"/>Clear All</button></div>
                                     )
                                 }
                             { if(index!==0) return(
@@ -478,12 +527,26 @@ class Jobdetails extends Component {
                         <input
                             type="file"
                             name="cv"
-                            onChange={this.handleChangeFile}
+                            onChange={this.handleChangeResume}
                             className="form-control"
                             placeholder="Upload Resume"
 
                             id="cv"/>
                         </div>
+                        {this.state.res_array.map((files,index) => {
+
+                                { if(index===0) return(
+                                    <div style={{marginTop:10}}><div><a href={files.link} target="_blank">{files.name}</a></div><button className="clear_btn" onClick={this.ClearResume}><ImCross className="cross"/>Clear</button></div>
+                                    )
+                                }
+                            { if(index!==0) return(
+                                <div style={{marginTop:10}}><a href={files.link} target="_blank">{files.name}</a></div>
+                                    )
+                            }
+
+                        })
+
+                        }
                     </div>
 
                 </div>
