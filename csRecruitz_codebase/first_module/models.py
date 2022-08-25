@@ -123,6 +123,7 @@ class JobApplication(models.Model):
     highlighted_publications=models.TextField(null=True)
     highlighted_lics = models.TextField(null=True)
     extra_certificates = models.TextField(null=True)
+    resume_link=models.TextField(null=True)
     newjobpost_id = models.ForeignKey(NewJobpost, on_delete=models.CASCADE)
     apply_date = models.DateField()
     apply_time = models.TimeField()

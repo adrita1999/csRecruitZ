@@ -351,7 +351,7 @@ class Register_4 extends Component {
               })
 
 
-          //window.location.href = "/"
+          window.location.href = "/"
       }
       handleChange(event) {
 

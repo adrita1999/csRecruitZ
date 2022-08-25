@@ -137,9 +137,6 @@ componentDidMount() {
           console.log(url);
           this.setState({pdfpath:url});
         })
-
-
-
     }
 handleChange(event) {
     let input = this.state.input;
