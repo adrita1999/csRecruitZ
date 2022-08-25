@@ -16,7 +16,8 @@ import Loader from "./loader";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
-import Select, { StylesConfig }  from 'react-select'
+import Select, { StylesConfig }  from 'react-select';
+import {Button, Collapse} from 'react-bootstrap'
 
 const dropDownStyle ={
     control: (base, state) => ({
@@ -62,12 +63,15 @@ const style = {
     { value: 'Research and Development', label: 'Research and Development' },
     { value: 'Programming', label: 'Programming' },
   ]
-
+  var jsonData = {
+    "field":"",
+}
 class Professional extends Component {
     constructor(props) {
         super(props);
         this.state = {
             items: [],
+            logged_in_id:0,
             DetailsLoaded1:false,
             DetailsLoaded2:false,
             DetailsLoaded3:false,
@@ -78,17 +82,41 @@ class Professional extends Component {
             experience:false,
             skill:false,
             project:false,
+            cat: { value: '' },
+
         };
         this.handleField=this.handleField.bind(this);
+        this.handleFieldSubmit=this.handleFieldSubmit.bind(this);
+
         this.handleExperience=this.handleExperience.bind(this);
         this.handleSkill=this.handleSkill.bind(this);
         this.handleProject=this.handleProject.bind(this);
         this.handleClose=this.handleClose.bind(this);
 
-      }
+    }
+    handler = (event) => {
+        const value = event.value
+        console.log(value)
+        this.state.cat.value=value
+        jsonData.field=value
+    }
     handleField(){
         this.setState({field_of_work: true})
         console.log(this.state.field_of_work);
+    }
+    handleFieldSubmit(){
+        console.log(this.state.items.user_id)
+        fetch(`http://127.0.0.1:8000/first_module/jobseeker/${this.state.items.user_id}/`, {  // Enter your IP address here
+        method: 'PUT',
+        headers:{
+        'Content-Type': 'application/json',
+        },
+        mode: 'cors',
+        body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
+        })
+        .then(response=>response.json())
+        .then((data)=>console.log(data));
+        window.location.href="/professional"
     }
     handleExperience(){
         window.location.href="/experienceEdit"
@@ -118,7 +146,7 @@ class Professional extends Component {
                     DetailsLoaded1:true
                 });
             console.log(json)
-            console.log(this.state)
+            // console.log(this.state)
             })
         fetch(
             "http://127.0.0.1:8000/first_module/jobexp/addexp/")
@@ -129,8 +157,8 @@ class Professional extends Component {
                     exps: json.data,
                     DetailsLoaded2:true
                 });
-            console.log(json)
-            console.log(this.state)
+            // console.log(json)
+            // console.log(this.state)
             })
         fetch(
             "http://127.0.0.1:8000/first_module/uskill/addskill")
@@ -141,8 +169,8 @@ class Professional extends Component {
                     skills: json.data,
                     DetailsLoaded3:true
                 });
-            console.log(json)
-            console.log(this.state)
+            // console.log(json)
+            // console.log(this.state)
             })
 
         fetch(
@@ -154,8 +182,8 @@ class Professional extends Component {
                     projects: json.data,
                     DetailsLoaded4:true
                 });
-            console.log(json)
-            console.log(this.state)
+            // console.log(json)
+            // console.log(this.state)
             })
          fetch(
             "http://127.0.0.1:8000/first_module/pub/get_pub")
@@ -166,8 +194,8 @@ class Professional extends Component {
                     pubs: json.data,
                     DetailsLoaded5:true
                 });
-            console.log(json)
-            console.log(this.state)
+            // console.log(json)
+            // console.log(this.state)
             })
         fetch(
             "http://127.0.0.1:8000/first_module/lic/get_lic")
@@ -178,9 +206,13 @@ class Professional extends Component {
                     lics: json.data,
                     DetailsLoaded6:true
                 });
-            console.log(json)
-            console.log(this.state)
+            // console.log(json)
+            // console.log(this.state)
+            //  this.setState({logged_in_id:this.items.user_id})
+            console.log(this.state.items.user_id)
+
             })
+           
     }
     To_Quiz() {
         window.location.href="/quiz"
@@ -388,62 +420,20 @@ class Professional extends Component {
         style={{background:"rgba(0,0,0,0)"}} 
       >
         <Box sx={style}>
-        <div className='col-md-3' style={{width: "50%", paddingRight:"12px"}}>
+            <div className='row' >
+                 <div className='col-md-9' style={{width: "80%", paddingRight:"12px"}}>
+                    <InputLabel id="demo-simple-select-label">Field of work</InputLabel>
+                    <Select styles={dropDownStyle} options={CatOptions} value={this.state.cat}  onChange={this.handler} isClearable  />
+                </div>
+                <div>
+                    <button className='btn btn-success' onClick={this.handleFieldSubmit} style={{marginTop:"-38px",width:"20%",marginRight:"-2px"}} >Submit</button>         
 
-            <InputLabel id="demo-simple-select-label">Field of work</InputLabel>
-            <Select styles={dropDownStyle} options={CatOptions} value={""}  onChange={this.handler} isClearable  />
-        </div> 
-        <button className='btn btn-success' style={{marginTop:"-40px",width:"20%",marginRight:"-2px"}} >Submit</button>
+                </div>
 
-
-                
+            </div> 
         </Box>
         </Modal> 
-        <Modal
-            open={this.state.experience}
-            onClose={this.handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-            style={{background:"rgba(0,0,0,0)"}} 
-        >
-            <Box sx={style}>
-            
-                    {
-                        this.state.exps.map((i,exp) => {
-                        return(
-                            <div className='row' style={{width: "100%", paddingRight:"12px"}}>
-                                <div className="col-sm-6">
-                                <div className="position-relative mb-4">
-                                <InputLabel style={{color:"black" ,fontWeight:"Bold", fontSize:"15px"}}>Experience Name:</InputLabel>
-                                <input type="text"  name="experience_name" className="form-control"  defaultValue={exp.experience_name} onChange={this.handleChange} id="ex_name" />
-                                </div>
-                                </div>
-                                <div className="col-sm-3">
-                                <div className="position-relative mb-4">
-                                <InputLabel style={{color:"black" ,fontWeight:"Bold", fontSize:"15px"}}>From:</InputLabel>
-                                <input type="text"  name="experience_name" className="form-control"  defaultValue={exp.experience_name} onChange={this.handleChange} id="ex_name" />
-                                </div>
-                                </div>
-                                <div className="col-sm-3">
-                                <div className="position-relative mb-4">
-                                <InputLabel style={{color:"black" ,fontWeight:"Bold", fontSize:"15px"}}>To:</InputLabel>
-                                <input type="text"  name="experience_name" className="form-control"  defaultValue={exp.experience_name} onChange={this.handleChange} id="ex_name" />
-                                </div>
-                                </div>
-                            </div> 
-                        )})
-                        }
-
-              
-            <div>
-                <button className='btn btn-success' style={{marginTop:"0px",width:"20%",marginRight:"-2px"}} >Submit</button>
-
-            </div>
-
-
-                    
-            </Box>
-        </Modal> 
+        
         <Foot margin_value={172}/>
 
         </body>
