@@ -101,6 +101,7 @@ class applicationSerializer(serializers.ModelSerializer):
     #print("serialiser")
     job_name = serializers.SerializerMethodField("get_job_name")
     emp_name = serializers.SerializerMethodField("get_emp_name")
+    app_name = serializers.SerializerMethodField("get_app_name")
     deadline = serializers.SerializerMethodField("get_deadline")
     class Meta:
         model= JobApplication
@@ -108,6 +109,9 @@ class applicationSerializer(serializers.ModelSerializer):
 
     def get_emp_name(self, obj):
         return obj.newjobpost_id.employer_id.name
+
+    def get_app_name(self, obj):
+        return obj.user_id.name
 
     def get_job_name(self, obj):
         return obj.newjobpost_id.title

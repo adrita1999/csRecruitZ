@@ -84,6 +84,7 @@ class Jobdetails extends Component {
         ifshortlisted:"",
         iffollowed:""
     }
+
     constructor(props) {
         super(props);
         this.handleClickApply=this.handleClickApply.bind(this);
@@ -216,6 +217,7 @@ class Jobdetails extends Component {
    }
     handleClose() {
       this.setState({editopen:false})
+
     }
 
     componentDidMount() {

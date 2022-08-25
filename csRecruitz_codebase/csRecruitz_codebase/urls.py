@@ -37,6 +37,7 @@ router.register(r'first_module/shortlistedjobs', shortlistedjobViewsets)
 
 router.register(r'first_module/question', questionViewsets)
 router.register(r'first_module/employer', employerViewsets)
+router.register(r'first_module/employerpanel', empApplicantViewsets)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

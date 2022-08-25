@@ -260,7 +260,7 @@ export class Quiz extends Component {
               DataisLoaded:true,
               pressed:true
           });
-
+        console.log(json)
       console.log(json[this.state.q_id].time_limit)
         const questime=json[this.state.q_id].time_limit
         const splittime = questime.split(":")

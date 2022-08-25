@@ -20,6 +20,7 @@ import Companylist from "./my_components/companylist";
 import Home from "./my_components/Home";
 import EmpHome from "./my_components/emp_home";
 import Quiz from "./my_components/Quiz"
+import Applicantlist from "./my_components/applicantlist";
 import Tag from "./my_components/Tag.js"
 import "bootstrap/dist/css/bootstrap.min.css";
 import Shortlistedjoblist from "./my_components/shortlistedjoblist";
@@ -50,6 +51,7 @@ root.render(
         <Route path="/tag" element={< Tag/>} />
         <Route path="/companylist" element={< Companylist/>} />
         <Route path="/emp" element={< EmpHome/>} />
+        <Route path="/applicants" element={< Applicantlist/>} />
         <Route path="/experienceEdit" element={< ExperienceEdit/>} />
         <Route path="/editskill" element={< EditSkill/>} />
         <Route path="/userprofile" element={< UserProfile/>} />
