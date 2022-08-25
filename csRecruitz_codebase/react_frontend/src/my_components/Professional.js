@@ -247,7 +247,7 @@ class Professional extends Component {
                             this.state.lics.map((lic) => {
                                 return(
                             <li><b className="seems-h1">{lic.lic_name}</b>
-                                <button className="custom_btn2">View Credential</button>
+                                <a href={lic.lic_link} className="cred_tag" target="_blank">View Credential</a>
                                 <p><small>{lic.lic_org}</small></p></li>
                                     )})
                         }

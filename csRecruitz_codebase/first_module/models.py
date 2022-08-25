@@ -119,6 +119,10 @@ class Assessment(models.Model):
 class JobApplication(models.Model):
     application_id = models.IntegerField(primary_key=True)
     user_id = models.ForeignKey(Jobseeker, on_delete=models.CASCADE)
+    highlighted_projects=models.TextField(null=True)
+    highlighted_publications=models.TextField(null=True)
+    highlighted_lics = models.TextField(null=True)
+    extra_certificates = models.TextField(null=True)
     newjobpost_id = models.ForeignKey(NewJobpost, on_delete=models.CASCADE)
     apply_date = models.DateField()
     apply_time = models.TimeField()
@@ -162,7 +166,7 @@ class LicenseCertificate(models.Model):
     certificate_id = models.IntegerField(primary_key=True)
     certificate_name = models.CharField(max_length=200)
     issuing_org = models.CharField(max_length=200)
-    certificate_file = models.FileField(null=True)
+    certificate_link = models.CharField(max_length=200,null=True)
 
 
 class JobseekerCertificate(models.Model):

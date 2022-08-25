@@ -476,7 +476,9 @@ ol.gradient-list > li + li {
     padding-right: 15px;
     border-right: 1px solid rgba(255, 255, 255, .1);
 }
-
+.cred_tag {
+  float: right;
+}
 .footer .footer-menu a:last-child {
     margin-right: 0;
     padding-right: 0;
