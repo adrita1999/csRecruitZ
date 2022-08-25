@@ -74,13 +74,23 @@ export class EmpHome extends Component {
         DetailsLoaded1:false,
         DetailsLoaded2:false,
         DetailsLoaded3:false,
-        navlink:"/jobdetails",
+        navlink:"/applicants",
+
     };
 
     constructor(props) {
     super(props);
     this.handleSearch=this.handleSearch.bind(this);
+    this.handleClickApplicant=this.handleClickApplicant.bind(this);
 
+  }
+
+  handleClickApplicant(event)
+  {
+        // console.log(event.target.id)
+        const concatlink = "/applicants?" + event.target.id;
+        this.setState({'navlink':concatlink})
+        this.setState({'redirect':true})
   }
 
 handleSearch(event)
@@ -217,7 +227,7 @@ componentDidMount() {
                 <StyledTableCell align="right">{row.post_date}</StyledTableCell>
               <StyledTableCell align="right">{row.deadline_date}</StyledTableCell>
               <StyledTableCell align="right">{this.state.appno[i]}</StyledTableCell>
-                <StyledTableCell align="right"><button className="btn btn-sm btn-success" id={row.newjobpost_id}>View</button></StyledTableCell>
+                <StyledTableCell align="right"><button className="btn btn-sm btn-success" id={row.jobpost_id} onClick={this.handleClickApplicant}>View</button></StyledTableCell>
                 {/*<StyledTableCell align="right"><button className="btn-success">Delete</button></StyledTableCell>*/}
 
             </StyledTableRow>
@@ -232,8 +242,7 @@ componentDidMount() {
 
        </div>
        <Foot margin_value={0}/>
-       {this.state.redirect && <Navigate to='/joblist'/>}
-       {this.state.redirectReco && <Navigate to={this.state.navlink}/>}
+       {this.state.redirect && <Navigate to={this.state.navlink}/>}
        </body>
        </React.Fragment>
     )

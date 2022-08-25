@@ -32,12 +32,13 @@ class Jobdetails extends Component {
         ifshortlisted:"",
         iffollowed:""
     }
+
     constructor(props) {
         super(props);
         this.handleClickApply=this.handleClickApply.bind(this);
         this.handleClickShortlist=this.handleClickShortlist.bind(this);
         this.handleClickFollow=this.handleClickFollow.bind(this);
-      }
+    }
 
     componentDidMount() {
         // const { id } = useParams()

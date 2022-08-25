@@ -1446,6 +1446,7 @@ class questionViewsets(viewsets.ModelViewSet):
     count_1=0
     count_2=0
     flag_1=0
+    flag_2 = 0
     for i in range(len(tempset)):
         if flag_1==0:
             if tempset[i].mark==1:
@@ -1454,12 +1455,15 @@ class questionViewsets(viewsets.ModelViewSet):
                 else:
                     id_list.append(tempset[i].question_id)
                     count_1 = count_1 + 1
-        if tempset[i].mark==2:
-            if count_2==2 and flag_1==1:
-                break
-            else:
-                id_list.append(tempset[i].question_id)
-                count_2=count_2+1
+        if flag_2 == 0:
+            if tempset[i].mark==2:
+                if count_2==2:
+                    flag_2=1
+                else:
+                    id_list.append(tempset[i].question_id)
+                    count_2=count_2+1
+        if flag_1==1 and flag_2==1:
+            break
 
     print("it is tempppp")
     queryset = Question.objects.filter(skill_id=skill_id,question_id__in=id_list)
@@ -1493,6 +1497,9 @@ class questionViewsets(viewsets.ModelViewSet):
                 if answer == correct_ans:
                     print("milse")
                     questionViewsets.total_num = questionViewsets.total_num + ques_mark
+                else:
+                    print("milenai")
+                print(questionViewsets.total_num)
             else:  # finish
                 print("finish theke ashche")
                 question_id = request.data["question_id"]
@@ -1507,6 +1514,9 @@ class questionViewsets(viewsets.ModelViewSet):
                 if answer == correct_ans:
                     print("milse")
                     questionViewsets.total_num = questionViewsets.total_num + ques_mark
+                else:
+                    print("milenai")
+                print(questionViewsets.total_num)
                 print("final marks")
                 print(questionViewsets.total_num)
                 todaydate = datetime.today().strftime('%Y-%m-%d')
@@ -1619,6 +1629,165 @@ class employerViewsets(viewsets.ModelViewSet):
     #         })
     #     return Response(status=status.HTTP_204_NO_CONTENT)
 
+class empApplicantViewsets(viewsets.ModelViewSet):
+    global logged_in_id
+    if logged_in_id != -1:
+        user_id = logged_in_id
+    else:
+        user_id = 1
+    queryset = JobApplication.objects.all()
+    serializer_class = applicationSerializer
+    job_id=""
+    filtername = ""
+    filter_cat = ""
+    filter_exp = ""
+
+    @action(methods=['post', 'get'], detail=False, url_path='applist')
+    def get_applist(self, request):
+        if request.method == 'POST':
+            empApplicantViewsets.job_id=request.data["job_id"]
+            postViewsets_for_jobpost.filtername = request.data["filtername"]
+            if request.data['filtername'] == "cat":
+                postViewsets_for_jobpost.filter_cat = request.data["category"]
+                # print(request.data["category"])
+            if request.data['filtername'] == "exp":
+                postViewsets_for_jobpost.filter_exp = request.data["req_exp"]
+                # print(request.data["req_exp"])
+            if request.data['filtername'] == "mount":
+                postViewsets_for_jobpost.filter_cat=""
+                postViewsets_for_jobpost.filter_exp=""
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            apps = JobApplication.objects.filter(newjobpost_id_id=int(empApplicantViewsets.job_id))
+            applicant_ids=[]
+            valid_applicant_ids = []
+            for app in apps:
+                applicant_ids.append(app.user_id_id)
+            print(applicant_ids)
+            for id in applicant_ids:
+                flag1=False
+                flag2=False
+                if postViewsets_for_jobpost.filter_cat != "":
+                    print(postViewsets_for_jobpost.filter_cat)
+                    temp = Jobseeker.objects.filter(user_ptr_id=int(id))
+                    if temp[0].field==postViewsets_for_jobpost.filter_cat:
+                        flag1=True
+                else:
+                    flag1=True
+
+                if postViewsets_for_jobpost.filter_exp != "":
+                    total_user_exp = 0
+                    all_exp = JobExperience.objects.filter(user_id=int(id))
+                    for exp in all_exp:
+                        expval = exp.to_year - exp.from_year
+                        total_user_exp = total_user_exp + expval
+                    # print("total_user_exp:" + str(total_user_exp))
+                    if postViewsets_for_jobpost.filter_exp == "Minimum 1 year":
+                        if total_user_exp>=1:
+                            flag2=True
+                    elif postViewsets_for_jobpost.filter_exp == "Minimum 3 years":
+                        if total_user_exp >= 3:
+                            flag2 = True
+                    else:
+                        if total_user_exp >= 5:
+                            flag2 = True
+                else:
+                    flag2 = True
+                if flag1 and flag2:
+                    valid_applicant_ids.append(int(id))
+            print(valid_applicant_ids)
+
+            apps2 = JobApplication.objects.filter(user_id_id__in=valid_applicant_ids,newjobpost_id_id=int(empApplicantViewsets.job_id)).order_by("application_id")
+            print("~~applicants~~")
+            print(apps2)
+
+            markarr=[]
+
+            jobskills=JobSkill.objects.filter(jobpost_id_id=int(empApplicantViewsets.job_id))
+            # print(jobskills)
+            idx=0
+            for app in apps2:#for each applicant
+                uid=int(app.user_id_id)
+                # print(uid)
+                tempmark=0
+                #skill based mark
+                for js in jobskills:#for each jobskill
+                    jsid=int(js.skill_id_id)
+                    #check if jobskill is present in uskill and he is open to that
+                    user_skill=JobSeekerSkill.objects.filter(user_id_id=uid,skill_id_id=jsid,isOpenToWork=True)
+                    skillflag=False
+                    usid=0
+                    if len(user_skill)!=0:
+                        skillflag=True
+                        usid=int(user_skill[0].jobseeker_skill_id)
+                    # print(skillflag)
+                    if skillflag: #user has that skill, check if he has given assessment and passed
+                        assflag=False
+                        ass=Assessment.objects.filter(jobseeker_skill_id_id=usid).order_by("-date")
+                        if len(ass)!=0:
+                            assflag=True
+                            assmark=ass[0].marks_obtained
+                            asspercent=assmark*10
+                        if assflag: #user has given assessment, check cutoff mark
+                            # print("ass dise")
+                            todaydate = datetime.today().strftime('%Y-%m-%d')
+                            cutoff=SkillMarkCutoff.objects.filter(skill_id_id=jsid,to_date__gte=todaydate,from_date__lte=todaydate)
+                            cutoffmark=cutoff[0].cutoff_percentage
+                            # print("cutoffmark")
+                            # print(cutoffmark)
+                            if asspercent>=cutoffmark:
+                                tempmark=tempmark+10
+                #field based mark
+                tempjob=NewJobpost.objects.filter(jobpost_id=int(empApplicantViewsets.job_id))
+                job_cat=tempjob[0].category
+
+                tempuser=Jobseeker.objects.filter(user_ptr_id=uid)
+                user_cat=tempuser[0].field
+
+                if job_cat==user_cat:
+                    tempmark=tempmark+10
+
+                #exp based mark
+                total_user_exp = 0
+                all_exp = JobExperience.objects.filter(user_id=uid)
+                for exp in all_exp:
+                    expval = exp.to_year - exp.from_year
+                    total_user_exp = total_user_exp + expval
+
+                job_req=tempjob[0].required_experience
+                if total_user_exp>=job_req:
+                    tempmark=tempmark+total_user_exp
+
+
+                markarr.append((int(tempmark),idx))
+                idx=idx+1
+
+            # print(markarr)
+            markarr.sort(reverse=True)
+            # print(markarr)
+
+            listapp = []
+            for m in markarr:
+                mark_idx=m[1]
+                # print(mark_idx)
+                listapp.append(apps2[mark_idx])
+
+
+            # listapp=[]
+            # for i in range(len(apps2)):
+            #     listapp.append(apps2[i])
+
+
+            serializer = applicationSerializer(listapp, many=True)
+
+            return Response({
+                'status': status.HTTP_204_NO_CONTENT,
+                'data': serializer.data,
+                'cat': postViewsets_for_jobpost.filter_cat,
+                'exp': postViewsets_for_jobpost.filter_exp,
+            })
+
+
 
 pas_temp=make_pw_hash("1234")
 user1 = Jobseeker(user_id=1, name="Adrita Hossain Nakshi", email="adrita_99@yahoo.com", password=pas_temp, thana="Lalbag",
@@ -1633,10 +1802,10 @@ user2 = Jobseeker(user_id=2, name="Simantika Bhattacharjee Dristi", email="17050
                   district="Dhaka", division="Dhaka", father_name="Pintu Bhattacharjee",
                   mother_name="Soma Chowdhury", date_of_birth="1998-01-21",
                   self_desc="I am a CS under-graduate. I believe in hardwork. CSE is my first love and my one and only passion.",
-                  nationality="Bangladeshi", nid_number="12349876", field="Research and Development", propic="propics_input/nakshi.jpg",
+                  nationality="Bangladeshi", nid_number="12349876", field="Teaching", propic="propics_input/nakshi.jpg",
                   resume="resumes_input/nakshi.docx")
 user2.save()
-emp1 = Employer(user_id=3, name="Optimizely", email="optimizely@gmail.com", password="1234", district="Dhaka",
+emp1 = Employer(user_id=3, name="Optimizely", email="optimizely@gmail.com", password=pas_temp, district="Dhaka",
                 division="Dhaka", org_type="NGO", establishment_year="2005")
 emp1.save()
 emp2 = Employer(user_id=4, name="Kona SL", email="kona@yahoo.com", password="1234", district="Kishoreganj",
@@ -1918,6 +2087,7 @@ jskill32 = JobSkill(job_skill_id=32,jobpost_id=jobpost13,skill_id=skill1)
 jskill32.save()
 jskill33 = JobSkill(job_skill_id=33,jobpost_id=jobpost13,skill_id=skill5)
 jskill33.save()
+
 jobpost14 = NewJobpost(jobpost_id=14, employer_id=emp5,
                        title="Senior Developer (Software)",
                        category="DevOps",
@@ -1994,6 +2164,8 @@ jskill34 = JobSkill(job_skill_id=34,jobpost_id=jobpost14,skill_id=skill1)
 jskill34.save()
 jskill35 = JobSkill(job_skill_id=35,jobpost_id=jobpost14,skill_id=skill5)
 jskill35.save()
+jskill36 = JobSkill(job_skill_id=36,jobpost_id=jobpost1,skill_id=skill2)
+jskill36.save()
 question1 = Question(question_id=1, skill_id=skill2,
                      question_text="The library function exit( ) causes an exit from - ",
                      optionA="The program in which it occurs",
@@ -2178,6 +2350,10 @@ uskill3 = JobSeekerSkill(jobseeker_skill_id=3, isOpenToWork=True, skill_id=skill
 uskill3.save()
 uskill4 = JobSeekerSkill(jobseeker_skill_id=4, isOpenToWork=True, skill_id=skill2, user_id=user1)
 uskill4.save()
+uskill5 = JobSeekerSkill(jobseeker_skill_id=5, isOpenToWork=True, skill_id=skill2, user_id=user2)
+uskill5.save()
+uskill6 = JobSeekerSkill(jobseeker_skill_id=6, isOpenToWork=True, skill_id=skill1, user_id=user2)
+uskill6.save()
 proj=Project(project_id=1,project_name="Istishon",project_link="https://github.com/adrita1999/ishtishon",project_short_desc="This is our 2-2 term project. It is basically a railway ticket booking website",user_id=user1)
 proj.save()
 proj_2=Project(project_id=2,project_name="csRecruitz",project_link="https://github.com/adrita1999/csRecruitZ",project_short_desc="This is our 4-1 term project. It is a job searching website. The development of the project is still ongoing",user_id=user1)
@@ -2194,5 +2370,25 @@ js_1=JobseekerCertificate(jobseeker_certificate_id=1,certificate_id=lic_1,user_i
 js_1.save()
 js_2=JobseekerCertificate(jobseeker_certificate_id=2,certificate_id=lic_2,user_id=user1)
 js_2.save()
-cut=SkillMarkCutoff(cutoff_id=1,skill_id_id=2,cutoff_percentage=80,from_date="1999-02-06",to_date="2024-02-06")
-cut.save()
+cut1=SkillMarkCutoff(cutoff_id=1,skill_id_id=2,cutoff_percentage=80,from_date="1999-02-06",to_date="2024-02-06")
+cut1.save()
+cut2=SkillMarkCutoff(cutoff_id=2,skill_id_id=1,cutoff_percentage=80,from_date="1999-02-06",to_date="2024-02-06")
+cut2.save()
+jobapp1=JobApplication(application_id=1,apply_date="2022-08-25",apply_time="03:42:07",newjobpost_id=jobpost8,user_id=user1)
+jobapp1.save()
+jobapp2=JobApplication(application_id=2,apply_date="2022-08-25",apply_time="03:45:07",newjobpost_id=jobpost8,user_id=user2)
+jobapp2.save()
+jobapp3=JobApplication(application_id=3,apply_date="2022-08-25",apply_time="16:09:34",newjobpost_id=jobpost3,user_id=user1)
+jobapp3.save()
+jobapp4=JobApplication(application_id=4,apply_date="2022-08-25",apply_time="23:04:40",newjobpost_id=jobpost1,user_id=user1)
+jobapp4.save()
+jobapp5=JobApplication(application_id=5,apply_date="2022-08-25",apply_time="23:08:40",newjobpost_id=jobpost1,user_id=user2)
+jobapp5.save()
+ass1=Assessment(assessment_id=1,marks_obtained=8,date="2022-08-26",jobseeker_skill_id=uskill4)
+ass1.save()
+ass2=Assessment(assessment_id=2,marks_obtained=7,date="2022-08-26",jobseeker_skill_id=uskill5)
+ass2.save()
+ass3=Assessment(assessment_id=3,marks_obtained=9,date="2022-08-26",jobseeker_skill_id=uskill1)
+ass3.save()
+ass4=Assessment(assessment_id=4,marks_obtained=8,date="2022-08-26",jobseeker_skill_id=uskill6)
+ass4.save()
