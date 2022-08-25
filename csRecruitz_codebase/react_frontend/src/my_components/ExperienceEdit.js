@@ -169,8 +169,6 @@ class ExperienceEdit extends Component {
 
 
     }
-
-
     render() {
         if (!this.state.DetailsLoaded1 || !this.state.DetailsLoaded2 || !this.state.DetailsLoaded3 || !this.state.DetailsLoaded4 || !this.state.DetailsLoaded5 || !this.state.DetailsLoaded6) return <Loader/>
 

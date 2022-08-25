@@ -79,7 +79,7 @@ var jsonDataSkill = {
     "skill_name":"",
 
 }
-class Professional extends Component {
+class UserProfessional extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -101,14 +101,7 @@ class Professional extends Component {
             selectedOptions:[],
 
         };
-        this.handleField=this.handleField.bind(this);
-        this.handleFieldSubmit=this.handleFieldSubmit.bind(this);
-
-        this.handleExperience=this.handleExperience.bind(this);
-        this.handleSkill=this.handleSkill.bind(this);
-        this.handleChangeSkill=this.handleChangeSkill.bind(this);
-        this.handleProject=this.handleProject.bind(this);
-        this.handleClose=this.handleClose.bind(this);
+       
 
     }
     handler = (event) => {
@@ -117,77 +110,6 @@ class Professional extends Component {
         this.state.cat.value=value
         this.state.cat.label=value
         jsonData.field=value
-    }
-    handleField(){
-        this.setState({field_of_work: true})
-        console.log(this.state.field_of_work);
-    }
-    handleFieldSubmit(){
-        console.log(this.state.items.user_id)
-        fetch(`http://127.0.0.1:8000/first_module/jobseeker/${this.state.items.user_id}/`, {  // Enter your IP address here
-        method: 'PUT',
-        headers:{
-        'Content-Type': 'application/json',
-        },
-        mode: 'cors',
-        body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
-        })
-        .then(response=>response.json())
-        .then((data)=>console.log(data));
-        window.location.href="/professional"
-    }
-    handleExperience(){
-        window.location.href="/experienceEdit"
-
-    }
-    handleSkill(){
-        this.setState({skill: true})
-        // window.location.href="/editskill"
-        console.log("size"+this.state.skills.length)
-        for (let i=0;i<this.state.skills.length;i++) {
-
-            console.log(this.state.skills[i].skill_name)
-            this.state.selectedOption.value=this.state.skills[i].skill_name;
-            this.state.selectedOption.label=this.state.skills[i].skill_name;
-            console.log(this.state.selectedOption);
-            this.state.selectedOptions[i] = this.state.selectedOption;
-            // this.setState({selectedOptions[i]:this.state.selectedOption})
-            console.log(this.state.selectedOptions[i]);
-            // this.setState({ selectedOptions:[this.state.selectedOptions,this.state.selectedOption ] })
-        }
-        console.log(this.state.selectedOptions)
-    }
-    handleChangeSkill = (selectedOptions) => {
-        console.log(selectedOptions)
-        this.setState({ selectedOptions :selectedOptions })
-     }
-    handleProject()
-    {
-        this.setState({project: true})
-
-    }
-    handleClose() {
-        this.setState({field_of_work:false})
-        this.setState({project: false})
-        this.setState({skill: false})
-    }
-    handleSubmit(event) {
-        event.preventDefault();
-        var str1="";
-        for (let i=0;i<this.state.selectedOptions.length;i++) {
-            str1=str1+"#"+this.state.selectedOptions[i].value
-        }
-        console.log(str1)
-        jsonData.skills=str1
-        fetch('http://127.0.0.1:8000/first_module/uskill/addskill/', {  // Enter your IP address here
-
-            method: 'POST',
-            headers:{
-            'Content-Type': 'application/json',
-            },
-            mode: 'cors',
-            body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
-        })
     }
     componentDidMount() {
         const id=1
@@ -279,7 +201,10 @@ class Professional extends Component {
                 <body>
                 <Navb/>
 
-                <Sidebar/>
+                <div className="sidebar">
+                    <a className={this.pathaname==='/userprofile'?"active":""} href="/userprofile" >Personal Information</a>
+                    <a className={this.pathaname==='/userprofessional'?"active":""} href="/userprofessional" >Professional Information</a>
+            </div>
                 <div className="content">
 
                 <div className="row" style={{
@@ -288,12 +213,8 @@ class Professional extends Component {
                     <Animated animationIn="slideInUp"  animationInDuration={1800}  isVisible={true}>
                     <div>
                <div className="row_custom">
-
                     <div className="align">
-
                         <p><b className="seems-h1">Field of Work: </b>{this.state.items.field}</p>
-
-                        <button className="icon_btn" onClick={this.handleField}><FiEdit2 size={'1.5em'} className="icon_edit"/></button>
                     </div>
                    </div>
 
@@ -301,7 +222,7 @@ class Professional extends Component {
                     <div className="row">
                         <div className="align">
                         <h4>Job Experience:</h4>
-                            <button className="icon_btn" onClick={this.handleExperience}><FiEdit2 size={'1.5em'} className="icon_edit"/></button></div>
+                        </div>
                         <div className="container ">
 
                             <div className="row px-3" style={{
@@ -332,7 +253,7 @@ class Professional extends Component {
                     <div className="row">
                         <div className="align">
                         <h4>Skills:</h4>
-                            <button className="icon_btn" onClick={this.handleSkill}><FiEdit2 size={'1.5em'} className="icon_edit"/></button></div>
+                            </div>
                         <ol className="gradient-list" >
                             {
                                             this.state.skills.map((skill) => {
@@ -340,7 +261,7 @@ class Professional extends Component {
                                                 <li><b style={{
                                                     fontSize:"large",
                                                     color:"darkorange"
-                                                }}>{skill.skill_name}</b><button className="custom_btn2" onClick={this.To_Quiz}>Take Skill Quiz</button> </li>
+                                                }}>{skill.skill_name}</b> </li>
                                             )})
                              }
 
@@ -353,7 +274,7 @@ class Professional extends Component {
                     <div className="row">
                         <div className="align">
                         <h4>Projects:</h4>
-                            <button className="icon_btn"><FiEdit2 size={'1.5em'} className="icon_edit"/></button></div>
+                            </div>
                     </div>
                     </div>
                     <AnimationOnScroll animateIn="bounceInRight" duration={2} delay={50} animateOnce={true}>
@@ -378,7 +299,7 @@ class Professional extends Component {
                     <div className="row">
                         <div className="align">
                         <h4>Publications:</h4>
-                            <button className="icon_btn"><FiEdit2 size={'1.5em'} className="icon_edit"/></button></div>
+                            </div>
                     </div>
                     </div>
                     <AnimationOnScroll animateIn="bounceInRight" duration={2} delay={50} animateOnce={true}>
@@ -402,7 +323,7 @@ class Professional extends Component {
                     <div className="row">
                         <div className="align">
                         <h4>Licenses and Certificates:</h4>
-                            <button className="icon_btn"><FiEdit2 size={'1.5em'} className="icon_edit"/></button></div>
+                            </div>
                     </div>
                     </div>
                     <AnimationOnScroll animateIn="bounceInRight" duration={2} delay={50} animateOnce={true}>
@@ -418,98 +339,12 @@ class Professional extends Component {
 
                     </ul>
                      </AnimationOnScroll>
-                        <div className="row_custom">
-                    <div className="row">
-                        <div className="align">
-                        <h4>Personal Preferences:</h4>
-                            <button className="icon_btn"><FiEdit2 size={'1.5em'} className="icon_edit"/></button></div>
-                            <p>Private to you <BiLockAlt size={'1.2em'} style={{
-                                marginTop:-3
-                            }}/></p>
-                    </div>
-                    </div>
-                        <div className="row_custom">
-
-                        <div className="prof_div_bg ">
-                            <div className="row">
-                                <div className="col-sm-12">
-                            <b className= "seems-h1">Currently Open To</b><p>
-                                    {
-                                        this.state.skills.map((skill) => {
-                                            if (skill.isOpenToWork)
-                                            return(
-                                                <div className="round1"><b>{skill.skill_name}</b></div>
-
-                                            )})
-                                    }
-
-                                </p>
-                        </div>
-                                <div className="col-sm-12">
-                                    <b className= "seems-h1">Preferred Salary</b><p>
-                                    {this.state.items.pref_sal}
-                                    </p>
-                                </div>
-                                <div className="col-sm-12">
-                                    <b className= "seems-h1">Preferred Job Nature</b><p>
-                                    {this.state.items.pref_job_ntr}
-                                    </p>
-                                </div>
-                                <div className="col-sm-12">
-                                    <b className= "seems-h1">Preferred Organization Type</b><p>
-                                    {this.state.items.pref_org_type}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                            </div>
+                        
+                    
         </div>
         </Animated>
         </div>
 
-        <Modal
-        open={this.state.field_of_work}
-        onClose={this.handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-        style={{background:"rgba(0,0,0,0)"}} 
-      >
-        <Box sx={style}>
-            <div className='row' >
-                 <div className='col-md-9' style={{width: "80%", paddingRight:"12px"}}>
-                    <InputLabel id="demo-simple-select-label">Field of work</InputLabel>
-                    <Select styles={dropDownStyle} options={CatOptions} value={this.state.cat}  onChange={this.handler} isClearable  />
-                </div>
-                <div>
-                    <button className='btn btn-success' onClick={this.handleFieldSubmit} style={{marginTop:"-38px",width:"20%",marginRight:"-2px"}} >Submit</button>         
-
-                </div>
-
-            </div> 
-        </Box>
-        </Modal> 
-
-        <Modal
-        open={this.state.skill}
-        onClose={this.handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-        style={{background:"rgba(0,0,0,0)"}} 
-      >
-        <Box sx={style}>
-            <div className='row' >
-                 <div className='col-md-9' style={{width: "80%", paddingRight:"12px"}}>
-                    <InputLabel id="demo-simple-select-label">Skills</InputLabel>
-                    <Select name="skills" id="skills" styles={dropDownStyle} value={this.state.selectedOptions} options={SkillOptions} onChange={this.handleChangeSkill} isMulti placeholder="Add Your Skills" openMenuOnFocus isClearable />
-                </div>
-                <div>
-                    <button className='btn btn-success'  style={{marginTop:"-38px",width:"20%",marginRight:"-2px"}} >Submit</button>         
-
-                </div>
-
-            </div> 
-        </Box>
-        </Modal> 
         
         <Foot margin_value={172}/>
 
@@ -518,7 +353,7 @@ class Professional extends Component {
         )
     }
 }
-export default Professional;
+export default UserProfessional;
 // <li><b style={{
 //                                 fontSize:"large",
 //                                 color:"orangered"

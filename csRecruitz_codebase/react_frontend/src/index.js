@@ -25,6 +25,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Shortlistedjoblist from "./my_components/shortlistedjoblist";
 import Quizresult from "./my_components/quizresult";
 import ExperienceEdit from './my_components/ExperienceEdit';
+import EditSkill from './my_components/EditSkill';
+import UserProfile from './my_components/UserProfile';
+import UserProfessional from './my_components/UserProfessional';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
@@ -48,6 +51,10 @@ root.render(
         <Route path="/companylist" element={< Companylist/>} />
         <Route path="/emp" element={< EmpHome/>} />
         <Route path="/experienceEdit" element={< ExperienceEdit/>} />
+        <Route path="/editskill" element={< EditSkill/>} />
+        <Route path="/userprofile" element={< UserProfile/>} />
+        <Route path="/userprofessional" element={< UserProfessional/>} />
+
 
     </Routes>
   </BrowserRouter>
