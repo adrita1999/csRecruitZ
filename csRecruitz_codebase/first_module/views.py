@@ -1143,7 +1143,6 @@ class jobexpViewsets(viewsets.ModelViewSet):
                 else:
                     id = JobExperience.objects.order_by('-jobexperience_id').first().jobexperience_id
                 id=id+1
-
                 if desc_list[i]=="?":
                     description=None
                 else:
@@ -1152,7 +1151,6 @@ class jobexpViewsets(viewsets.ModelViewSet):
                                          from_year=from_list[i],
                                          to_year=to_list[i],description=description, user_id_id=reg_id)
                 job_exp.save()
-
 
             print(request.data)
             return Response(status=status.HTTP_204_NO_CONTENT)
@@ -1164,6 +1162,64 @@ class jobexpViewsets(viewsets.ModelViewSet):
                 'status': status.HTTP_204_NO_CONTENT,
                 'data': serializer.data,
             })
+
+    @action(methods=['post', 'get'], detail=False, url_path='addexp2')
+    def add_exp2(self, request):
+        if request.method == 'POST':
+            # global logged_in_id
+            des_list = request.data["des"].split("#")
+            emp_list = request.data["emp"].split("#")
+            from_list = request.data["from"].split("#")
+            to_list = request.data["to"].split("#")
+            desc_list = request.data["desc"].split("#")
+
+            for i in range(len(des_list)):
+                if len(JobExperience.objects.all()) == 0:
+                    id = 0
+                else:
+                    id = JobExperience.objects.order_by('-jobexperience_id').first().jobexperience_id
+                id = id + 1
+                if desc_list[i] == "?":
+                    description = None
+                else:
+                    description = desc_list[i]
+                print(id)
+                print(des_list[i])
+                print(emp_list[i])
+                print(from_list[i])
+                print(to_list[i])
+                print(description)
+                print(logged_in_id)
+                job_exp = JobExperience(jobexperience_id=id, experience_name=des_list[i], organization_name=emp_list[i],
+                                        from_year=from_list[i],
+                                        to_year=to_list[i], description=description, user_id_id=logged_in_id)
+                job_exp.save()
+                print(JobExperience.objects.filter(jobexperience_id=id))
+
+            print(request.data)
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            # global logged_in_id
+            objs = JobExperience.objects.filter(user_id=logged_in_id)
+            serializer = jobexpSerializer(objs, many=True)
+            return Response({
+                'status': status.HTTP_204_NO_CONTENT,
+                'data': serializer.data,
+            })
+    def update(self, request, pk=None):
+        data_in = request.data
+        print(data_in)
+        instance = self.get_object()
+        print(instance.jobexperience_id)
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        # serializer.is_valid(raise_exception=True)
+
+        if serializer.is_valid():
+            print("into")
+            serializer.save()
+            return Response(serializer.data)
+        # data_out = serializer.data
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 
