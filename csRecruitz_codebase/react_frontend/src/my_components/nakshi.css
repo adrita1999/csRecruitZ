@@ -142,7 +142,22 @@ div.joblistbgdiv {
   left:47%;
   position:absolute;
 }
+.clear_btn {
+  height: 35px;
+  width:100px;
+  position: absolute;
+  margin-left: 344px;
+  margin-top: 5px;
+  background: red;
+  color: white;
+  border-color: transparent;
+  border-radius: 4px;
 
+}
+.cross{
+  margin-right: 5px;
+  margin-bottom: 2px;
+}
 .click_instruction_div {
   background: #F7F9FB;
   padding: 1.5% 2% 0.9% 2%;

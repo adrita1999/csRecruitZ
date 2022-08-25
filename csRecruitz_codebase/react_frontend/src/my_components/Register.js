@@ -137,9 +137,6 @@ componentDidMount() {
           console.log(url);
           this.setState({pdfpath:url});
         })
-
-
-
     }
 handleChange(event) {
     let input = this.state.input;
@@ -688,10 +685,8 @@ handleChange(event) {
 
             </div>
                 <div>
-                    <object data={this.state.pdfpath} type="application/pdf" width="500px" height="600px">
-  <p>Your web browser doesn't have a PDF plugin.
-   <a href={this.state.pdfpath}>click here to download the PDF file.</a></p>
-</object>
+
+   <a href={this.state.pdfpath} target="_blank">temp.pdf</a>
                     </div>
             </div>
                 </div>

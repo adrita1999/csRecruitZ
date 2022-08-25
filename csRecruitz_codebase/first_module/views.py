@@ -9,14 +9,14 @@ from django.db.models import Q
 from datetime import datetime
 import hashlib
 import random
-#hiiiii
+# #hiiiii
 is_logged_in=False
-
+#
 logged_in_id=-1
-
+#
 reg_id=-1
 def make_pw_hash(password):
-    return hashlib.sha256(str.encode(password)).hexdigest()
+   return hashlib.sha256(str.encode(password)).hexdigest()
 
 def check_pw_hash(password,hash):
     if make_pw_hash(password)==hash:
@@ -852,10 +852,10 @@ class jobseekerViewsets(viewsets.ModelViewSet):
                 pref_sal = request.data['pref_sal']
             else:
                 pref_sal = None
-            if len(Jobseeker.objects.all())==0:
+            if len(User.objects.all())==0:
                 id=0
             else:
-                id=Jobseeker.objects.order_by('-user_id').first().user_id
+                id=User.objects.order_by('-user_id').first().user_id
             id=id+1
             global reg_id
             reg_id=id
@@ -898,10 +898,10 @@ class jobseekerViewsets(viewsets.ModelViewSet):
             else:
                 dis = None
             div = request.data['div']
-            if len(Employer.objects.all())==0:
+            if len(User.objects.all())==0:
                 id=0
             else:
-                id=Employer.objects.order_by('-user_id').first().user_id
+                id=User.objects.order_by('-user_id').first().user_id
             id=id+1
 
             employer=Employer(user_id=id,name=name,email=email,password=password,thana=thana,district=dis,division=div,contact_no=mob,street=street,establishment_year=est_year,org_type=org)
@@ -1143,7 +1143,6 @@ class jobexpViewsets(viewsets.ModelViewSet):
                 else:
                     id = JobExperience.objects.order_by('-jobexperience_id').first().jobexperience_id
                 id=id+1
-
                 if desc_list[i]=="?":
                     description=None
                 else:
@@ -1152,7 +1151,6 @@ class jobexpViewsets(viewsets.ModelViewSet):
                                          from_year=from_list[i],
                                          to_year=to_list[i],description=description, user_id_id=reg_id)
                 job_exp.save()
-
 
             print(request.data)
             return Response(status=status.HTTP_204_NO_CONTENT)
@@ -1164,6 +1162,64 @@ class jobexpViewsets(viewsets.ModelViewSet):
                 'status': status.HTTP_204_NO_CONTENT,
                 'data': serializer.data,
             })
+
+    @action(methods=['post', 'get'], detail=False, url_path='addexp2')
+    def add_exp2(self, request):
+        if request.method == 'POST':
+            # global logged_in_id
+            des_list = request.data["des"].split("#")
+            emp_list = request.data["emp"].split("#")
+            from_list = request.data["from"].split("#")
+            to_list = request.data["to"].split("#")
+            desc_list = request.data["desc"].split("#")
+
+            for i in range(len(des_list)):
+                if len(JobExperience.objects.all()) == 0:
+                    id = 0
+                else:
+                    id = JobExperience.objects.order_by('-jobexperience_id').first().jobexperience_id
+                id = id + 1
+                if desc_list[i] == "?":
+                    description = None
+                else:
+                    description = desc_list[i]
+                print(id)
+                print(des_list[i])
+                print(emp_list[i])
+                print(from_list[i])
+                print(to_list[i])
+                print(description)
+                print(logged_in_id)
+                job_exp = JobExperience(jobexperience_id=id, experience_name=des_list[i], organization_name=emp_list[i],
+                                        from_year=from_list[i],
+                                        to_year=to_list[i], description=description, user_id_id=logged_in_id)
+                job_exp.save()
+                print(JobExperience.objects.filter(jobexperience_id=id))
+
+            print(request.data)
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            # global logged_in_id
+            objs = JobExperience.objects.filter(user_id=logged_in_id)
+            serializer = jobexpSerializer(objs, many=True)
+            return Response({
+                'status': status.HTTP_204_NO_CONTENT,
+                'data': serializer.data,
+            })
+    def update(self, request, pk=None):
+        data_in = request.data
+        print(data_in)
+        instance = self.get_object()
+        print(instance.jobexperience_id)
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        # serializer.is_valid(raise_exception=True)
+
+        if serializer.is_valid():
+            print("into")
+            serializer.save()
+            return Response(serializer.data)
+        # data_out = serializer.data
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 
@@ -1232,52 +1288,16 @@ class uskillViewsets(viewsets.ModelViewSet):
 
 
 
-class publicationViewsets(viewsets.ModelViewSet):
-    #######################kora hoynai###################################3
-    queryset = Publication.objects.all()
-    serializer_class = pub_Serializer
+# class publicationViewsets(viewsets.ModelViewSet):
+#     #######################kora hoynai###################################3
+#     queryset = Publication.objects.all()
+#     serializer_class = pub_Serializer
 
-    @action(methods=['post', 'get'], detail=False, url_path='addpub')
-    def add_pub(self,request):
-        if request.method == 'POST':
-            print(request.data)
-            global reg_id
-            pub_name_list = request.data["pub_name"].split("#")
-            pub_link_list = request.data["pub_link"].split()
-            lic_name_list = request.data["lic_name"].split("#")
-            lic_org_list = request.data["lic_org"].split("#")
 
-            for i in range(len(pub_name_list)):
-                if len(Publication.objects.all()) == 0:
-                    id = 0
-                else:
-                    id = Publication.objects.order_by('-publication_id').first().publication_id
-                id = id + 1
 
-                if pub_link_list[i] == "?":
-                    link = None
-                else:
-                    link = pub_link_list[i]
-                publi = Publication(publication_id=id,user_id_id=reg_id,publication_name=pub_name_list[i],publication_link=link)
-                publi.save()
 
-            for i in range(len(lic_name_list)):
-                if len(LicenseCertificate.objects.all()) == 0:
-                    id = 0
-                else:
-                    id = LicenseCertificate.objects.order_by('-certificate_id').first().certificate_id
-                id = id + 1
-                lic=LicenseCertificate(certificate_id=id,certificate_name=lic_name_list[i],issuing_org=lic_org_list[i])
-                lic.save()
-                if len(JobseekerCertificate.objects.all()) == 0:
-                    id2 = 0
-                else:
-                    id2 = JobseekerCertificate.objects.order_by('-jobseeker_certificate_id').first().jobseeker_certificate_id
-                id2=id2+1
-                licuser=JobseekerCertificate(jobseeker_certificate_id=id2,certificate_id=lic,user_id_id=reg_id)
-                licuser.save()
 
-        return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 class projectViewsets(viewsets.ModelViewSet):
     queryset = Project.objects.all()
@@ -1313,6 +1333,60 @@ class pubViewsets(viewsets.ModelViewSet):
                 'status': status.HTTP_204_NO_CONTENT,
                 'data': serializer.data,
             })
+
+    @action(methods=['post', 'get'], detail=False, url_path='addpub')
+    def add_pub(self, request):
+        if request.method == 'POST':
+            print(request.data)
+            global reg_id
+            pub_name_list = request.data["pub_name"].split("#")
+            pub_link_list = request.data["pub_link"].split()
+
+
+            for i in range(len(pub_name_list)):
+                if len(Publication.objects.all()) == 0:
+                    id = 0
+                else:
+                    id = Publication.objects.order_by('-publication_id').first().publication_id
+                id = id + 1
+
+                if pub_link_list[i] == "?":
+                    link = None
+                else:
+                    link = pub_link_list[i]
+                publi = Publication(publication_id=id, user_id_id=reg_id, publication_name=pub_name_list[i],
+                                    publication_link=link)
+                publi.save()
+
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    @action(methods=['post', 'get'], detail=False, url_path='addlic')
+    def add_lic(self, request):
+        if request.method == 'POST':
+            print(request.data)
+            lic_name = request.data["lic_name"]
+            lic_org = request.data["lic_org"]
+            lic_link=request.data["lic_link"]
+
+            if len(LicenseCertificate.objects.all()) == 0:
+                id = 0
+            else:
+                id = LicenseCertificate.objects.order_by('-certificate_id').first().certificate_id
+            id = id + 1
+            lic = LicenseCertificate(certificate_id=id, certificate_name=lic_name,
+                                         issuing_org=lic_org,certificate_link=
+                                         lic_link)
+            lic.save()
+            if len(JobseekerCertificate.objects.all()) == 0:
+                id2 = 0
+            else:
+                id2 = JobseekerCertificate.objects.order_by(
+                        '-jobseeker_certificate_id').first().jobseeker_certificate_id
+            id2 = id2 + 1
+            licuser = JobseekerCertificate(jobseeker_certificate_id=id2, certificate_id=lic, user_id_id=reg_id)
+            licuser.save()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 class LicViewsets(viewsets.ModelViewSet):
     queryset = JobseekerCertificate.objects.all()
     serializer_class =LicSerializer
@@ -1329,6 +1403,20 @@ class LicViewsets(viewsets.ModelViewSet):
             return Response({
                 'status': status.HTTP_204_NO_CONTENT,
                 'data': serializer.data,
+            })
+
+    @action(methods=['post', 'get'], detail=False, url_path='get_lic_id')
+    def get_license(self, request):
+        if request.method == 'POST':
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            if len(LicenseCertificate.objects.all()) == 0:
+                id = 0
+            else:
+                id = LicenseCertificate.objects.order_by('-certificate_id').first().certificate_id
+            return Response({
+                'status': status.HTTP_204_NO_CONTENT,
+                'total_certis':str(id),
             })
 class applicationViewsets(viewsets.ModelViewSet):
     queryset = JobApplication.objects.all()
@@ -1786,8 +1874,6 @@ class empApplicantViewsets(viewsets.ModelViewSet):
                 'cat': postViewsets_for_jobpost.filter_cat,
                 'exp': postViewsets_for_jobpost.filter_exp,
             })
-
-
 
 pas_temp=make_pw_hash("1234")
 user1 = Jobseeker(user_id=1, name="Adrita Hossain Nakshi", email="adrita_99@yahoo.com", password=pas_temp, thana="Lalbag",
@@ -2362,9 +2448,9 @@ pub_1=Publication(publication_id=1,publication_name="SentiCR: A customized senti
 pub_1.save()
 pub_2=Publication(publication_id=2,publication_name="Identification and Recognition of Rice Diseases and Pests Using Convolutional Neural Networks",publication_link="https://ui.adsabs.harvard.edu/abs/2018arXiv181201043R/abstract",user_id=user1)
 pub_2.save()
-lic_1=LicenseCertificate(certificate_id=1,certificate_name="IBM Data Science Professional Certificate",issuing_org="Coursera")
+lic_1=LicenseCertificate(certificate_id=1,certificate_name="IBM Data Science Professional Certificate",issuing_org="Coursera",certificate_link="https://firebasestorage.googleapis.com/v0/b/csrecruitz-fd59e.appspot.com/o/license%2F3.pdf?alt=media&token=e84efa7c-4941-4c18-a5f5-19fee62766df")
 lic_1.save()
-lic_2=LicenseCertificate(certificate_id=2,certificate_name="Deep Learning Specialization",issuing_org="Coursera")
+lic_2=LicenseCertificate(certificate_id=2,certificate_name="Deep Learning Specialization",issuing_org="Coursera",certificate_link="https://firebasestorage.googleapis.com/v0/b/csrecruitz-fd59e.appspot.com/o/license%2F4.pdf?alt=media&token=7e67c375-7003-4300-9fe8-d5e9d6ada15f")
 lic_2.save()
 js_1=JobseekerCertificate(jobseeker_certificate_id=1,certificate_id=lic_1,user_id=user1)
 js_1.save()
