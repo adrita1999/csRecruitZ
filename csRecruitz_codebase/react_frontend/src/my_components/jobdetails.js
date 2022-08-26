@@ -368,6 +368,7 @@ class Jobdetails extends Component {
       mode: 'cors',
       body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
     })
+        window.location.href="/"
     // this.setState({'redirect':true})
   }
 

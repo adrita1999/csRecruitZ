@@ -29,6 +29,7 @@ import ExperienceEdit from './my_components/ExperienceEdit';
 import EditSkill from './my_components/EditSkill';
 import UserProfile from './my_components/UserProfile';
 import UserProfessional from './my_components/UserProfessional';
+import JobseekerPreview from "./my_components/JobseekerPreview";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
@@ -56,6 +57,7 @@ root.render(
         <Route path="/editskill" element={< EditSkill/>} />
         <Route path="/userprofile" element={< UserProfile/>} />
         <Route path="/userprofessional" element={< UserProfessional/>} />
+        <Route path="/userPrev" element={< JobseekerPreview/>} />
 
 
     </Routes>

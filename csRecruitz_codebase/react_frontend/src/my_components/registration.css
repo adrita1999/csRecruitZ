@@ -11,6 +11,80 @@ div.content_reg {
   box-shadow: 0.25rem 0.25rem 0.6rem rgba(0,0,0,0.05), 0 0.5rem 1.125rem rgba(75,0,0,0.05);
 
 }
+.content_reg_prev {
+  background-color: white;
+  margin-top: 30px;
+  margin-left: 300px;
+  margin-right: 300px;
+  padding: 1px 16px;
+  height: auto;
+  min-height: 100vh;
+  overflow: hidden;
+  border-radius: 0.7rem 0.7rem 0.7rem 0.7rem;
+  box-shadow: 0.25rem 0.25rem 0.6rem rgba(0,0,0,0.05), 0 0.5rem 1.125rem rgba(75,0,0,0.05);
+
+}
+.tablediv_2{
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 1.2%;
+  padding-bottom: 2%;
+}
+.prev_body{
+  background: #DEE7F4;
+  margin: 0px;
+  padding-bottom: 80px;
+  padding-top: 30px;
+
+  margin-top: -30px;
+
+}
+.hprojlist {
+  margin-top: -3px;
+  margin-left: -3.2%;
+  list-style-type: none;
+}
+.cred_tag_2 {
+  float: right;
+}
+.hliclist {
+  margin-top: -3px;
+  margin-left: -3.2%;
+  list-style-type: none;
+}
+.hliclist li {
+  background: #e6fff3;
+  border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  box-shadow: 0.1rem 0.1rem 0.6rem rgba(0,0,0,0.05), 0 0.1rem 1.125rem rgba(75,0,0,0.05);
+  margin-top: 1rem;
+  margin-left: 30px;
+  min-height: 4rem;
+  padding: 0.6rem 0.6rem 0.6rem 0.6rem;
+  position: relative;
+  width: 100%;
+}
+.hprojlist li {
+  background: #e6fff3;
+  border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  box-shadow: 0.1rem 0.1rem 0.6rem rgba(0,0,0,0.05), 0 0.1rem 1.125rem rgba(75,0,0,0.05);
+  margin-top: 1rem;
+  margin-left: 30px;
+  min-height: 6rem;
+  padding: 0.6rem 0.6rem 0.6rem 0.6rem;
+  position: relative;
+  width: 100%;
+}
+.edit_btn{
+
+  width:200px;
+  margin-top: 31px;
+  margin-left: 490px;
+  position: absolute;
+  transition-duration: 0.4s;
+}
+.edit_btn:hover  {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
 div.content_reg_2 {
   background-color: #DEE7F4;
   margin-top: 30px;
@@ -29,6 +103,7 @@ div.content_reg_2 {
   width:200px;
   margin-left: 705px;
   margin-bottom: 120px;
+
   transition-duration: 0.4s;
 }
 .sub_btn:hover  {
