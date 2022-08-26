@@ -23,7 +23,7 @@ var jsonData = {
     "type":""
 }
 
-
+const skill_from = JSON.parse(localStorage.getItem("skill"))
 export class Quiz extends Component {
   constructor() {
     super();
@@ -250,31 +250,33 @@ export class Quiz extends Component {
               }
           }
         }, 1000);
+    
     fetch(
-      "http://127.0.0.1:8000/first_module/question/")
+      "http://127.0.0.1:8000/first_module/question/questionselect/")
 
       .then((res) => res.json())
       .then((json) => {
+
           this.setState({
-              questions: json,
+              questions: json.data,
               DataisLoaded:true,
               pressed:true
           });
-        console.log(json)
+      console.log(json.data)
       console.log(json[this.state.q_id].time_limit)
-        const questime=json[this.state.q_id].time_limit
-        const splittime = questime.split(":")
-        const min=splittime[0]
-          const sec=splittime[1]
+      const questime=json[this.state.q_id].time_limit
+      const splittime = questime.split(":")
+      const min=splittime[0]
+      const sec=splittime[1]
       console.log(min)
-        console.log(sec)
-          this.setState({min:parseInt(min)})
-          this.setState({sec:parseInt(sec)})
-          // if(parseInt(sec)===0)
-          // {
-          //     this.setState({if1digit:true})
-          // }
-          this.setState({mark:json[this.state.q_id].mark})
+      console.log(sec)
+      this.setState({min:parseInt(min)})
+      this.setState({sec:parseInt(sec)})
+      // if(parseInt(sec)===0)
+      // {
+      //     this.setState({if1digit:true})
+      // }
+      this.setState({mark:json[this.state.q_id].mark})
       })
   }
 
@@ -288,7 +290,7 @@ export class Quiz extends Component {
             <div className='quiz' style={{ backgroundColor:'white',marginTop:"10px",boxShadow:"rgba(0, 0, 0, 0.35) 0px 5px 15px"}}>
                 
                 <div className="row" style={{marginLeft:"0px",marginRight:"0px",borderRadius:"5px" }}>
-                  <h5 className='title'style={{color:'white'}}>C++ Assessment<p style={{float:"right",paddingLeft:"15px",paddingRight:"10px"}}>{this.state.q_id+1}/8</p></h5>
+                  <h5 className='title'style={{color:'white'}}>{skill_from.skill_name}<p style={{float:"right",paddingLeft:"15px",paddingRight:"10px"}}>{this.state.q_id+1}/8</p></h5>
                 </div>
                 <div style={{padding:"20px"}}>
                         <p className='question' ><pre>
