@@ -34,6 +34,9 @@ import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
 import {styled} from "@mui/material/styles";
 import TableCell, {tableCellClasses} from "@mui/material/TableCell";
+import { TagsInput } from "react-tag-input-component";
+import ReactDOM from "react-dom";
+import {FaSearch} from 'react-icons/fa';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -65,13 +68,15 @@ var jsonData = {
     "job_id":"",
     "filtername":"",
     "category":"",
-    "req_exp":""
+    "req_exp":"",
+    "keywords":[]
   }
 class Applicantlist extends Component {
     pathaname;
     constructor(props) {
         super(props);
         this.pathaname=window.location.pathname;
+
         this.state = {
             asc: true,
             items: [],
@@ -96,11 +101,14 @@ class Applicantlist extends Component {
                 {value: "Minimum 3 years"},
                 {value: "Minimum 5 years"}
             ],
+            filter_title_search:"Keyword Search",
             filter_cat_val:"",
             filter_exp_val:"",
+            filter_src_val:[]
         };
         this.handleChangeCat=this.handleChangeCat.bind(this);
         this.handleChangeExp=this.handleChangeExp.bind(this);
+        this.handleChangeSrc=this.handleChangeSrc.bind(this);
       }
 
     componentDidMount() {
@@ -151,7 +159,6 @@ class Applicantlist extends Component {
 
     }
 
-
     handleChangeCat(event) {
 
         this.setState({filter_cat_val:event.target.value})
@@ -184,6 +191,32 @@ class Applicantlist extends Component {
 
           jsonData.req_exp=event.target.value
           jsonData.filtername="exp"
+
+        fetch('http://127.0.0.1:8000/first_module/employerpanel/applist/', {  // Enter your IP address here
+              method: 'POST',
+                headers:{
+                'Content-Type': 'application/json',
+              },
+              mode: 'cors',
+              body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
+            })
+
+                fetch(
+"http://127.0.0.1:8000/first_module/employerpanel/applist/",{
+        method:"GET"
+            })
+            .then((res) => res.json())
+            .then((json) => {
+                this.setState({apps: json.data, DetailsLoaded: true})
+                console.log(json.data)
+            })
+  }
+  handleChangeSrc(event) {
+      this.setState({filter_src_val:event})
+      console.log(event)
+
+          jsonData.keywords=event
+          jsonData.filtername="keyword"
 
         fetch('http://127.0.0.1:8000/first_module/employerpanel/applist/', {  // Enter your IP address here
               method: 'POST',
@@ -264,7 +297,16 @@ class Applicantlist extends Component {
                               </RadioGroup>
                             </FormControl>
                     </div>
+                    </div>
+                <div className="category_div">
+                <div>
+                    <div className="filter_title_bg_div">
+                        <h6>{this.state.filter_title_search}</h6>
+                    </div>
+
+
                 </div>
+            </div>
                  </Animated>
             </div>
 
@@ -275,10 +317,31 @@ class Applicantlist extends Component {
 
 
             <div className="joblistbgdiv">
-                <div className="app_instruction_div">
-                    <h5 >Applicants list (sorted according to best match)</h5>
+                <div>
+                      {/*<h1>Add Fruits</h1>*/}
+                    <h6 style={{color:"#000000"}}><FaSearch style={{fontSize:"22",marginTop:"-2px",paddingRight:"5px",color:"#29A335"}}/>Keyword Search</h6>
 
+                      {/*<pre>{JSON.stringify(this.state.filter_src_val)}</pre>*/}
+
+                      <TagsInput
+                        value={this.state.filter_src_val}
+                        onChange={this.handleChangeSrc}
+                        name="fruits"
+                        placeHolder="Press enter to add new keyword"
+                        style={{backgroundColor: "#FFFFFF",color:"#DEE7F4",placeholderColor:"#DEE7F4",width:"30%",height:"30%"}}
+                      />
+                      {/*<em>press enter to add new tag</em>*/}
+                    </div>
+
+                <div style={{marginTop:"17px",marginBottom:"-5px"}}>
+                    <h4>Applicants list (sorted according to best match)</h4>
                 </div>
+
+
+                {/*<div className="app_instruction_div">*/}
+                {/*    <h5 >Applicants list (sorted according to best match)</h5>*/}
+
+                {/*</div>*/}
 
 
 

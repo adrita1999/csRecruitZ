@@ -1764,6 +1764,7 @@ class empApplicantViewsets(viewsets.ModelViewSet):
     filtername = ""
     filter_cat = ""
     filter_exp = ""
+    filter_keyword_arr=[]
 
     @action(methods=['post', 'get'], detail=False, url_path='applist')
     def get_applist(self, request):
@@ -1776,9 +1777,13 @@ class empApplicantViewsets(viewsets.ModelViewSet):
             if request.data['filtername'] == "exp":
                 postViewsets_for_jobpost.filter_exp = request.data["req_exp"]
                 # print(request.data["req_exp"])
+            if request.data['filtername'] == "keyword":
+                postViewsets_for_jobpost.filter_keyword_arr = request.data["keywords"]
+                # print(request.data["req_exp"])
             if request.data['filtername'] == "mount":
                 postViewsets_for_jobpost.filter_cat=""
                 postViewsets_for_jobpost.filter_exp=""
+                postViewsets_for_jobpost.filter_keyword_arr=[]
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
             apps = JobApplication.objects.filter(newjobpost_id_id=int(empApplicantViewsets.job_id))
@@ -1788,8 +1793,10 @@ class empApplicantViewsets(viewsets.ModelViewSet):
                 applicant_ids.append(app.user_id_id)
             print(applicant_ids)
             for id in applicant_ids:
+                print("applicant  "+str(id))
                 flag1=False
                 flag2=False
+                flag3=False
                 if postViewsets_for_jobpost.filter_cat != "":
                     print(postViewsets_for_jobpost.filter_cat)
                     temp = Jobseeker.objects.filter(user_ptr_id=int(id))
@@ -1816,7 +1823,93 @@ class empApplicantViewsets(viewsets.ModelViewSet):
                             flag2 = True
                 else:
                     flag2 = True
-                if flag1 and flag2:
+
+                if len(postViewsets_for_jobpost.filter_keyword_arr)!=0:
+                    print(postViewsets_for_jobpost.filter_keyword_arr)
+                    keycheckarr=[]
+                    for key in postViewsets_for_jobpost.filter_keyword_arr:
+                        print("loop")
+                        print(keycheckarr)
+                        #name check
+                        namecheck = Jobseeker.objects.filter(user_ptr_id=int(id),name__icontains=key)
+                        if len(namecheck)!=0:
+                            keycheckarr.append(True)
+                            print("name check")
+                            print(keycheckarr)
+                            continue
+                        #street check
+                        streetcheck = Jobseeker.objects.filter(user_ptr_id=int(id),street__icontains=key)
+                        if len(streetcheck)!=0:
+                            keycheckarr.append(True)
+                            print("s check")
+                            print(keycheckarr)
+                            continue
+                        #thana check
+                        thanacheck = Jobseeker.objects.filter(user_ptr_id=int(id),thana__icontains=key)
+                        if len(thanacheck)!=0:
+                            keycheckarr.append(True)
+                            print("th check")
+                            print(keycheckarr)
+                            continue
+                        #sdistrict check
+                        discheck = Jobseeker.objects.filter(user_ptr_id=int(id),district__icontains=key)
+                        if len(discheck)!=0:
+                            keycheckarr.append(True)
+                            print("ds check")
+                            print(keycheckarr)
+                            continue
+                        #division check
+                        divcheck = Jobseeker.objects.filter(user_ptr_id=int(id),division__icontains=key)
+                        if len(divcheck)!=0:
+                            keycheckarr.append(True)
+                            print("dv check")
+                            print(keycheckarr)
+                            continue
+                        # self desc check
+                        desccheck = Jobseeker.objects.filter(user_ptr_id=int(id), self_desc__icontains=key)
+                        if len(desccheck) != 0:
+                            keycheckarr.append(True)
+                            print("desc check")
+                            print(keycheckarr)
+                            continue
+                        # nationality check
+                        natiocheck = Jobseeker.objects.filter(user_ptr_id=int(id), nationality__icontains=key)
+                        if len(natiocheck) != 0:
+                            keycheckarr.append(True)
+                            print("nt check")
+                            print(keycheckarr)
+                            continue
+                        # field check
+                        fieldcheck = Jobseeker.objects.filter(user_ptr_id=int(id), field__icontains=key)
+                        if len(fieldcheck) != 0:
+                            keycheckarr.append(True)
+                            print("f check")
+                            print(keycheckarr)
+                            continue
+                        # skill check
+                        skillcheck = JobSeekerSkill.objects.filter(user_id_id=int(id), skill_id__skill_name__icontains=key)
+                        if len(skillcheck) != 0:
+                            print("skill check")
+                            keycheckarr.append(True)
+                            print(keycheckarr)
+                            continue
+                        print("false dhukche")
+                        keycheckarr.append(False)
+                        print(keycheckarr)
+                    print("keycheck")
+                    print(keycheckarr)
+                    tempflag=True
+                    for f in keycheckarr:
+                        if f==False:
+                            tempflag=False
+                            break
+                    flag3=tempflag
+                    print("flag3")
+                    print(flag3)
+                else:
+                    flag3=True
+
+                if flag1 and flag2 and flag3:
                     valid_applicant_ids.append(int(id))
             print(valid_applicant_ids)
 
