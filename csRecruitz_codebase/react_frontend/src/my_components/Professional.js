@@ -19,6 +19,8 @@ import InputLabel from "@mui/material/InputLabel";
 import Select, { StylesConfig }  from 'react-select';
 import {Button, Collapse} from 'react-bootstrap'
 
+
+// window.myGlobalSkill = ""; 
 const dropDownStyle ={
     control: (base, state) => ({
     ...base,
@@ -269,7 +271,21 @@ class Professional extends Component {
             })
            
     }
-    To_Quiz() {
+    To_Quiz(value) {
+        localStorage.setItem("skill",JSON.stringify(value));
+        jsonDataSkill.jobseeker_skill_id = value.jobseeker_skill_id
+        jsonDataSkill.skill_id = value.skill_id
+        jsonDataSkill.skill_name = value.skill_name
+        jsonDataSkill.user_id = value.user_id
+        console.log(value)
+        fetch('http://127.0.0.1:8000/first_module/question/skillid/', {  // Enter your IP address here
+            method: 'POST',
+            headers:{
+            'Content-Type': 'application/json',
+            },
+            mode: 'cors',
+            body: JSON.stringify(jsonDataSkill) // body data type must match "Content-Type" header
+            })
         window.location.href="/quiz"
     }
     render() {
@@ -337,10 +353,14 @@ class Professional extends Component {
                             {
                                             this.state.skills.map((skill) => {
                                             return(
-                                                <li><b style={{
-                                                    fontSize:"large",
-                                                    color:"darkorange"
-                                                }}>{skill.skill_name}</b><button className="custom_btn2" onClick={this.To_Quiz}>Take Skill Quiz</button> </li>
+                                                <li>
+                                                    <b style={{
+                                                            fontSize:"large",
+                                                            color:"darkorange"
+                                                        }}>{skill.skill_name}
+                                                    </b>
+                                                <button className="custom_btn2" onClick={()=>{this.To_Quiz(skill)}}>Take Skill Quiz</button>
+                                                 </li>
                                             )})
                              }
 

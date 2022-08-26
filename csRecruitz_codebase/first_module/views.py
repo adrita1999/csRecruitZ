@@ -1561,40 +1561,64 @@ class shortlistedjobViewsets(viewsets.ModelViewSet):
 
 class questionViewsets(viewsets.ModelViewSet):
     ##################################kon skill er eta dekhate hobe################################
-    skill_id = 2
-    tempset=Question.objects.filter(skill_id=skill_id).order_by('?')
+    skill_id =2
 
-    #random.shuffle(tempset)
-    id_list=[]
-    count_1=0
-    count_2=0
-    flag_1=0
-    flag_2 = 0
-    for i in range(len(tempset)):
-        if flag_1==0:
-            if tempset[i].mark==1:
-                if count_1==6:
-                    flag_1=1
-                else:
-                    id_list.append(tempset[i].question_id)
-                    count_1 = count_1 + 1
-        if flag_2 == 0:
-            if tempset[i].mark==2:
-                if count_2==2:
-                    flag_2=1
-                else:
-                    id_list.append(tempset[i].question_id)
-                    count_2=count_2+1
-        if flag_1==1 and flag_2==1:
-            break
+    @action(methods=['post', 'get'], detail=False, url_path='skillid')
+    def skillid(self, request):
+        if request.method == 'POST':
+            id = request.data['skill_id']
+            print(request.data)
+            print(str(id))
+            questionViewsets.skill_id = int(id)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
-    print("it is tempppp")
-    queryset = Question.objects.filter(skill_id=skill_id,question_id__in=id_list)
-    print(queryset)
-    #random.shuffle(queryset)
+    queryset= Question.objects.filter(skill_id=skill_id)
     print(queryset)
     serializer_class = questionSerializer
 
+    @action(methods=['post', 'get'], detail=False, url_path='questionselect')
+    def questionselect(self, request):
+        if request.method == 'GET':
+            print(questionViewsets.skill_id)
+            id = questionViewsets.skill_id
+            tempset = Question.objects.filter(skill_id =id).order_by('?')
+            print(tempset)
+            id_list = []
+            count_1 = 0
+            count_2 = 0
+            flag_1 = 0
+            flag_2 = 0
+            for i in range(len(tempset)):
+                if flag_1 == 0:
+                    if tempset[i].mark == 1:
+                        if count_1 == 6:
+                            flag_1 = 1
+                        else:
+                            id_list.append(tempset[i].question_id)
+                            count_1 = count_1 + 1
+                if flag_2 == 0:
+                    if tempset[i].mark == 2:
+                        if count_2 == 2:
+                            flag_2 = 1
+                        else:
+                            id_list.append(tempset[i].question_id)
+                            count_2 = count_2 + 1
+                if flag_1 == 1 and flag_2 == 1:
+                    break
+
+            print("it is tempppp")
+            obj = Question.objects.filter(skill_id=id, question_id__in=id_list)
+
+            # random.shuffle(queryset)
+            serializer_class = questionSerializer
+            serializer = questionSerializer(obj, many=True)
+            print(serializer.data)
+            return Response({
+                'status': status.HTTP_204_NO_CONTENT,
+                'data': serializer.data,
+            })
+        else :
+            return Response(status=status.HTTP_204_NO_CONTENT)
 
 
     question_id = -1
@@ -1684,6 +1708,15 @@ class questionViewsets(viewsets.ModelViewSet):
 
             })
 
+
+
+    # @action(methods=['post', 'get'], detail=False, url_path='specificquestions')
+    # def specificquestions(self, request):
+
+
+
+
+
 class employerViewsets(viewsets.ModelViewSet):
     queryset = Employer.objects.all()
     serializer_class = employerSerializer
@@ -1764,6 +1797,7 @@ class empApplicantViewsets(viewsets.ModelViewSet):
     filtername = ""
     filter_cat = ""
     filter_exp = ""
+    filter_keyword_arr=[]
 
     @action(methods=['post', 'get'], detail=False, url_path='applist')
     def get_applist(self, request):
@@ -1776,9 +1810,13 @@ class empApplicantViewsets(viewsets.ModelViewSet):
             if request.data['filtername'] == "exp":
                 postViewsets_for_jobpost.filter_exp = request.data["req_exp"]
                 # print(request.data["req_exp"])
+            if request.data['filtername'] == "keyword":
+                postViewsets_for_jobpost.filter_keyword_arr = request.data["keywords"]
+                # print(request.data["req_exp"])
             if request.data['filtername'] == "mount":
                 postViewsets_for_jobpost.filter_cat=""
                 postViewsets_for_jobpost.filter_exp=""
+                postViewsets_for_jobpost.filter_keyword_arr=[]
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
             apps = JobApplication.objects.filter(newjobpost_id_id=int(empApplicantViewsets.job_id))
@@ -1788,8 +1826,10 @@ class empApplicantViewsets(viewsets.ModelViewSet):
                 applicant_ids.append(app.user_id_id)
             print(applicant_ids)
             for id in applicant_ids:
+                print("applicant  "+str(id))
                 flag1=False
                 flag2=False
+                flag3=False
                 if postViewsets_for_jobpost.filter_cat != "":
                     print(postViewsets_for_jobpost.filter_cat)
                     temp = Jobseeker.objects.filter(user_ptr_id=int(id))
@@ -1816,7 +1856,93 @@ class empApplicantViewsets(viewsets.ModelViewSet):
                             flag2 = True
                 else:
                     flag2 = True
-                if flag1 and flag2:
+
+                if len(postViewsets_for_jobpost.filter_keyword_arr)!=0:
+                    print(postViewsets_for_jobpost.filter_keyword_arr)
+                    keycheckarr=[]
+                    for key in postViewsets_for_jobpost.filter_keyword_arr:
+                        print("loop")
+                        print(keycheckarr)
+                        #name check
+                        namecheck = Jobseeker.objects.filter(user_ptr_id=int(id),name__icontains=key)
+                        if len(namecheck)!=0:
+                            keycheckarr.append(True)
+                            print("name check")
+                            print(keycheckarr)
+                            continue
+                        #street check
+                        streetcheck = Jobseeker.objects.filter(user_ptr_id=int(id),street__icontains=key)
+                        if len(streetcheck)!=0:
+                            keycheckarr.append(True)
+                            print("s check")
+                            print(keycheckarr)
+                            continue
+                        #thana check
+                        thanacheck = Jobseeker.objects.filter(user_ptr_id=int(id),thana__icontains=key)
+                        if len(thanacheck)!=0:
+                            keycheckarr.append(True)
+                            print("th check")
+                            print(keycheckarr)
+                            continue
+                        #sdistrict check
+                        discheck = Jobseeker.objects.filter(user_ptr_id=int(id),district__icontains=key)
+                        if len(discheck)!=0:
+                            keycheckarr.append(True)
+                            print("ds check")
+                            print(keycheckarr)
+                            continue
+                        #division check
+                        divcheck = Jobseeker.objects.filter(user_ptr_id=int(id),division__icontains=key)
+                        if len(divcheck)!=0:
+                            keycheckarr.append(True)
+                            print("dv check")
+                            print(keycheckarr)
+                            continue
+                        # self desc check
+                        desccheck = Jobseeker.objects.filter(user_ptr_id=int(id), self_desc__icontains=key)
+                        if len(desccheck) != 0:
+                            keycheckarr.append(True)
+                            print("desc check")
+                            print(keycheckarr)
+                            continue
+                        # nationality check
+                        natiocheck = Jobseeker.objects.filter(user_ptr_id=int(id), nationality__icontains=key)
+                        if len(natiocheck) != 0:
+                            keycheckarr.append(True)
+                            print("nt check")
+                            print(keycheckarr)
+                            continue
+                        # field check
+                        fieldcheck = Jobseeker.objects.filter(user_ptr_id=int(id), field__icontains=key)
+                        if len(fieldcheck) != 0:
+                            keycheckarr.append(True)
+                            print("f check")
+                            print(keycheckarr)
+                            continue
+                        # skill check
+                        skillcheck = JobSeekerSkill.objects.filter(user_id_id=int(id), skill_id__skill_name__icontains=key)
+                        if len(skillcheck) != 0:
+                            print("skill check")
+                            keycheckarr.append(True)
+                            print(keycheckarr)
+                            continue
+                        print("false dhukche")
+                        keycheckarr.append(False)
+                        print(keycheckarr)
+                    print("keycheck")
+                    print(keycheckarr)
+                    tempflag=True
+                    for f in keycheckarr:
+                        if f==False:
+                            tempflag=False
+                            break
+                    flag3=tempflag
+                    print("flag3")
+                    print(flag3)
+                else:
+                    flag3=True
+
+                if flag1 and flag2 and flag3:
                     valid_applicant_ids.append(int(id))
             print(valid_applicant_ids)
 
@@ -2450,8 +2576,131 @@ question15 = Question(question_id=15, skill_id=skill2, question_text="What is th
                      answer="1",
                      time_limit="0:45")
 question15.save()
-
-
+question16 = Question(question_id=16, skill_id=skill1, question_text="What will be the value of the following Python expression? 4 + 3 % 5",
+                     optionA="7",
+                     optionB="2",
+                     optionC="4",
+                     optionD="1",
+                     mark=2,
+                     answer="1",
+                     time_limit="0:45")
+question16.save()
+question17 = Question(question_id=17, skill_id=skill1,
+                      question_text="Which of the following character is used to give single-line comments in Python?",
+                     optionA="//",
+                     optionB="#",
+                     optionC="!",
+                     optionD="/*",
+                     mark=2,
+                     answer="2",
+                     time_limit="0:45")
+question17.save()
+question18 = Question(question_id=18, skill_id=skill1, question_text=" What will be the output of the following Python code?\n"
+                                                                     "i=1\n"
+                                                                     "while True:\n"
+                                                                     "if i%3 == 0:\n"
+                                                                     "print(i)\n"
+                                                                     "i+=1",
+                     optionA="1 2 3",
+                     optionB="error",
+                     optionC="1 2",
+                     optionD="none of the mentioned",
+                     mark=2,
+                     answer="2",
+                     time_limit="0:45")
+question18.save()
+question19 = Question(question_id=19, skill_id=skill1, question_text="What is the order of precedence in python?",
+                     optionA="Exponential, Parentheses, Multiplication, Division, Addition, Subtraction",
+                     optionB="Exponential, Parentheses, Division, Multiplication, Addition, Subtraction",
+                     optionC="Parentheses, Exponential, Multiplication, Division, Subtraction, Addition",
+                     optionD="Parentheses, Exponential, Multiplication, Division, Addition, Subtraction",
+                     mark=1,
+                     answer="4",
+                     time_limit="0:30")
+question19.save()
+question20 = Question(question_id=20, skill_id=skill1, question_text="What are the values of the following Python expressions?\n"
+                                                                     " 2**(3**2)\n"
+                                                                     "(2**3)**2\n"
+                                                                     "2**3**2",
+                     optionA="512, 64, 512",
+                     optionB="512, 512, 512",
+                     optionC="64, 512, 64",
+                     optionD="64, 64, 64",
+                     mark=2,
+                     answer="1",
+                     time_limit="0:45")
+question20.save()
+question21 = Question(question_id=21, skill_id=skill1, question_text="What will be the output of the following Python code snippet if x=1?\n"
+                                                                     "x<<2",
+                     optionA="4",
+                     optionB="2",
+                     optionC="1",
+                     optionD="8",
+                     mark=2,
+                     answer="1",
+                     time_limit="0:45")
+question21.save()
+question22 = Question(question_id=22, skill_id=skill1,
+                     question_text=" Which of the following is the truncation division operator in Python?",
+                     optionA="|",
+                     optionB="//",
+                     optionC=" /",
+                     optionD=" %",
+                     mark=1,
+                     answer="2",
+                     time_limit="0:30")
+question22.save()
+question23 = Question(question_id=23, skill_id=skill1,
+                     question_text="Which of the following functions is a built-in function in python?",
+                     optionA="factorial()",
+                     optionB="print()",
+                     optionC="seed()",
+                     optionD="sqrt()",
+                     mark=1,
+                     answer="2",
+                     time_limit="0:30")
+question23.save()
+question24 = Question(question_id=24, skill_id=skill1,
+                     question_text="What will be the output of the following Python function?\n"
+                                   "min(max(False,-3,-4), 2,7)",
+                     optionA="-4",
+                     optionB="-3",
+                     optionC="2",
+                     optionD="False",
+                     mark=2,
+                     answer="4",
+                     time_limit="0:45")
+question24.save()
+question25 = Question(question_id=25, skill_id=skill1,
+                     question_text="Which keyword is used for function in Python language?",
+                     optionA="Function",
+                     optionB="Def",
+                     optionC="Fun",
+                     optionD="Define",
+                     mark=1,
+                     answer="2",
+                     time_limit="0:30")
+question25.save()
+question26 = Question(question_id=26, skill_id=skill1,
+                     question_text="Which one of the following is not a keyword in Python language?",
+                     optionA="pass",
+                     optionB="eval",
+                     optionC="assert",
+                     optionD="nonlocal",
+                     mark=1,
+                     answer="2",
+                     time_limit="0:30")
+question26.save()
+question27 = Question(question_id=27, skill_id=skill1,
+                     question_text=" Which type of Programming does Python support?",
+                     optionA="object-oriented programming",
+                     optionB="structured programming",
+                     optionC="functional programming",
+                     optionD="all of the mentioned",
+                     mark=1,
+                     answer="4",
+                     time_limit="0:30")
+question27.save()
 
 job_exp1 = JobExperience(jobexperience_id=1, experience_name="Lecturer", organization_name="UIU", from_year="2017",
                          to_year="2018", user_id=user1)
