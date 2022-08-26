@@ -1437,6 +1437,40 @@ class applicationViewsets(viewsets.ModelViewSet):
                 applicationViewsets.job_id = int(request.data['job_id'])
             else:#apply er somoy
                 if request.data['type']=="apply":
+                    print(request.data)
+                    proj_list = request.data['projs'].split("#")
+                    proj_id_list=""
+                    pub_id_list = ""
+                    lic_id_list = ""
+                    pub_list=request.data['pubs'].split("#")
+                    lic_list=request.data['lics'].split("#")
+                    for i in range(1,len(proj_list)):
+                        objs=Project.objects.filter(
+                            project_name=proj_list[i]
+                        )
+                        print("etaaaaaaaaa"+proj_list[i])
+                        print(len(objs))
+                        proj_id=objs[0].project_id
+
+                        print(proj_id)
+                        print("idddddddddddd"+str(proj_id))
+                        proj_id_list=proj_id_list+"#"+str(proj_id)
+
+                    for i in range(1,len(pub_list)):
+                        objs=Publication.objects.filter(
+                            publication_name=pub_list[i]
+                        )
+                        pub_id=objs[0].publication_id
+                        pub_id_list=pub_id_list+"#"+str(pub_id)
+
+                    for i in range(1,len(lic_list)):
+                        objs=LicenseCertificate.objects.filter(
+                            certificate_name=lic_list[i]
+                        )
+                        lic_id=objs[0].certificate_id
+                        lic_id_list=lic_id_list+"#"+str(lic_id)
+
+
                     allapplication = JobApplication.objects.all()
                     app_id = 1
                     if len(allapplication) == 0:
@@ -1451,7 +1485,8 @@ class applicationViewsets(viewsets.ModelViewSet):
                     todaydate = datetime.today().strftime('%Y-%m-%d')
                     print(app_id)
                     applicationViewsets.job_id=int(request.data['job_id'])
-                    application = JobApplication(application_id=int(app_id), user_id_id=int(applicationViewsets.user_id), newjobpost_id_id=int(request.data['job_id']), apply_date=todaydate,apply_time=current_time)
+                    application = JobApplication(application_id=int(app_id), user_id_id=int(applicationViewsets.user_id), newjobpost_id_id=int(request.data['job_id']), apply_date=todaydate,apply_time=current_time,highlighted_projects=proj_id_list
+                                                 ,highlighted_publications=pub_id_list,highlighted_lics=lic_id_list,extra_certificates=request.data['extras'],resume_link=request.data['resume'])
                     application.save()
                 else:
                     if request.data["ifshortlist"]=="false":
@@ -1471,11 +1506,11 @@ class applicationViewsets(viewsets.ModelViewSet):
                         shortlist.save()
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
-            str="notapplied"
+            str1="notapplied"
             apps = JobApplication.objects.filter(newjobpost_id_id=int(applicationViewsets.job_id),user_id_id=int(applicationViewsets.user_id))
             print(apps)
             if len(apps)!=0:
-                str="applied"
+                str1="applied"
 
             str2 = "notshortlisted"
             sh = JobShortlist.objects.filter(newjobpost_id_id=int(applicationViewsets.job_id),
@@ -1487,7 +1522,7 @@ class applicationViewsets(viewsets.ModelViewSet):
             return Response({
                 'status': status.HTTP_204_NO_CONTENT,
                 'data':serializer.data,
-                'response': str,
+                'response': str1,
                 'short':str2,
             })
 

@@ -26,7 +26,12 @@ var jsonData = {
     "job_id":"",
     "mount":"",
     "type":"",
-    "ifshortlist":""
+    "ifshortlist":"",
+    "projs":"",
+    "pubs":"",
+    "lics":"",
+    "extras":"",
+    "resume":""
   }
   const dropDownStyle ={
     control: (base, state) => ({
@@ -69,6 +74,9 @@ class Jobdetails extends Component {
         pub_options:[],
         lic_options:[],
         projects:[],
+        selected_projs:[],
+        selected_pubs:[],
+        selected_lics:[],
         pubs:[],
         lics:[],
         file_array:[],
@@ -101,14 +109,15 @@ class Jobdetails extends Component {
         this.handleChangeDropLic=this.handleChangeDropLic.bind(this);
 
       }
-      handleChangeDropProj(event) {
+      handleChangeDropProj= (selectedOptions) => {
+        this.setState({ selected_projs :selectedOptions })
 
       }
-      handleChangeDropPub(event) {
-
+      handleChangeDropPub= (selectedOptions) => {
+         this.setState({ selected_pubs :selectedOptions })
       }
-      handleChangeDropLic(event) {
-
+      handleChangeDropLic= (selectedOptions) => {
+         this.setState({ selected_lics :selectedOptions })
       }
       ClearResume(event) {
             this.setState({
@@ -326,15 +335,39 @@ class Jobdetails extends Component {
     jsonData.job_id=this.state.job_id
     jsonData.mount="false"
     jsonData.type="apply"
+        var str1=""
+        for (let i=0;i<this.state.selected_projs.length;i++) {
+              str1=str1+"#"+this.state.selected_projs[i].value
+          }
+        jsonData.projs=str1;
+        var str2=""
+        for (let i=0;i<this.state.selected_pubs.length;i++) {
+              str2=str2+"#"+this.state.selected_pubs[i].value
+          }
+        jsonData.pubs=str2;
+        var str3=""
+        for (let i=0;i<this.state.selected_lics.length;i++) {
+              str3=str3+"#"+this.state.selected_lics[i].value
+          }
+        jsonData.lics=str3;
+        var str4=""
+        for (let i=0;i<this.state.file_array.length;i++) {
+              str4=str4+" "+this.state.file_array[i].link;
+          }
+        jsonData.extras=str4;
+        var str5=this.state.res_array[0].link;
+
+        jsonData.resume=str5;
+
     //this.state.ifapplied=!this.state.ifapplied
-    // fetch('http://127.0.0.1:8000/first_module/apply/getapplication/', {  // Enter your IP address here
-    //   method: 'POST',
-    //     headers:{
-    //     'Content-Type': 'application/json',
-    //   },
-    //   mode: 'cors',
-    //   body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
-    // })
+    fetch('http://127.0.0.1:8000/first_module/apply/getapplication/', {  // Enter your IP address here
+      method: 'POST',
+        headers:{
+        'Content-Type': 'application/json',
+      },
+      mode: 'cors',
+      body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
+    })
     // this.setState({'redirect':true})
   }
 
@@ -553,7 +586,7 @@ class Jobdetails extends Component {
 
                 </div>
 
-                <button className='btn btn-success' style={{marginTop:"5px",width:"20%",marginRight:"-2px", marginBottom:"10px"}} onClick={this.handleSubmitEdit}>Submit</button>
+                <button className='btn btn-success' style={{marginTop:"5px",width:"20%",marginRight:"-2px", marginBottom:"10px"}} onClick={this.handleClickApply}>Submit</button>
 
         </Box>
 
