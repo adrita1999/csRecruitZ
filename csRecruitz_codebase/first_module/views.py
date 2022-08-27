@@ -1422,15 +1422,21 @@ class applicationViewsets(viewsets.ModelViewSet):
     queryset = JobApplication.objects.all()
     serializer_class = applicationSerializer
     # stat="notapplied"
-    global logged_in_id
-    if logged_in_id!=-1:
-        user_id=logged_in_id
-    else:
-        user_id = 1
+
+    # global logged_in_id
+    # if logged_in_id!=-1:
+    #     user_id=logged_in_id
+    # else:
+    #     user_id = 1
     job_id = ""
 
     @action(methods=['post', 'get'], detail=False, url_path='getapplication')
     def apply(self, request):
+        global logged_in_id
+        if logged_in_id != -1:
+            logged_user_id = logged_in_id
+        else:
+            logged_user_id = 1
         if request.method == 'POST':
             # print(request.data)
             if request.data['mount']=="true":#mount er shomoy post
@@ -1484,14 +1490,19 @@ class applicationViewsets(viewsets.ModelViewSet):
                     print("Current Time =", current_time)
                     todaydate = datetime.today().strftime('%Y-%m-%d')
                     print(app_id)
+                    if request.data['resume']== "":
+                        res=None
+                    else:
+                        res=request.data['resume']
+
                     applicationViewsets.job_id=int(request.data['job_id'])
-                    application = JobApplication(application_id=int(app_id), user_id_id=int(applicationViewsets.user_id), newjobpost_id_id=int(request.data['job_id']), apply_date=todaydate,apply_time=current_time,highlighted_projects=proj_id_list
-                                                 ,highlighted_publications=pub_id_list,highlighted_lics=lic_id_list,extra_certificates=request.data['extras'],resume_link=request.data['resume'])
+                    application = JobApplication(application_id=int(app_id), user_id_id=int(logged_user_id), newjobpost_id_id=int(request.data['job_id']), apply_date=todaydate,apply_time=current_time,highlighted_projects=proj_id_list
+                                                 ,highlighted_publications=pub_id_list,highlighted_lics=lic_id_list,extra_certificates=request.data['extras'],resume_link=res)
                     application.save()
                 else:
                     if request.data["ifshortlist"]=="false":
                         applicationViewsets.job_id = int(request.data['job_id'])
-                        shortlist = JobShortlist.objects.filter(user_id_id=int(applicationViewsets.user_id), newjobpost_id_id=int(request.data['job_id']))
+                        shortlist = JobShortlist.objects.filter(user_id_id=int(logged_user_id), newjobpost_id_id=int(request.data['job_id']))
                         shortlist.delete()
                     else:
                         allshortlist=JobShortlist.objects.all()
@@ -1502,19 +1513,19 @@ class applicationViewsets(viewsets.ModelViewSet):
                             lists=JobShortlist.objects.filter().order_by('-jobshortlist_id')
                             sh_id=int(lists[0].jobshortlist_id)+1
                         applicationViewsets.job_id = int(request.data['job_id'])
-                        shortlist=JobShortlist(jobshortlist_id=int(sh_id),user_id_id=int(applicationViewsets.user_id), newjobpost_id_id=int(request.data['job_id']))
+                        shortlist=JobShortlist(jobshortlist_id=int(sh_id),user_id_id=int(logged_user_id), newjobpost_id_id=int(request.data['job_id']))
                         shortlist.save()
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
             str1="notapplied"
-            apps = JobApplication.objects.filter(newjobpost_id_id=int(applicationViewsets.job_id),user_id_id=int(applicationViewsets.user_id))
+            apps = JobApplication.objects.filter(newjobpost_id_id=int(applicationViewsets.job_id),user_id_id=int(logged_user_id))
             print(apps)
             if len(apps)!=0:
                 str1="applied"
 
             str2 = "notshortlisted"
             sh = JobShortlist.objects.filter(newjobpost_id_id=int(applicationViewsets.job_id),
-                                                 user_id_id=int(applicationViewsets.user_id))
+                                                 user_id_id=int(logged_user_id))
             print(sh)
             if len(sh) != 0:
                 str2 = "shortlisted"
@@ -1525,6 +1536,95 @@ class applicationViewsets(viewsets.ModelViewSet):
                 'response': str1,
                 'short':str2,
             })
+
+    @action(methods=['post', 'get'], detail=False, url_path='get_app_info')
+    def get_app_info(self,request):
+        global logged_in_id
+        if logged_in_id != -1:
+            logged_user_id = logged_in_id
+        else:
+            logged_user_id = 1
+        if request.method=='POST':
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else :
+            if len(JobApplication.objects.all()) == 0:
+                id = 0
+            else:
+                id = JobApplication.objects.order_by('-application_id').first().application_id
+            obj=JobApplication.objects.filter(application_id=id)
+            proj_conc=obj[0].highlighted_projects.split("#")
+            proj_ids=[]
+            for i in range(1,len(proj_conc)):
+                proj_ids.append(int(proj_conc[i]))
+            projects=Project.objects.filter(project_id__in=proj_ids)
+            print(projects)
+            pub_conc = obj[0].highlighted_publications.split("#")
+            pub_ids = []
+            for i in range(1, len(pub_conc)):
+                pub_ids.append(int(pub_conc[i]))
+            publications = Publication.objects.filter(publication_id__in=pub_ids)
+            print(publications)
+            lic_conc = obj[0].highlighted_lics.split("#")
+            lic_ids = []
+            for i in range(1, len(lic_conc)):
+                lic_ids.append(int(lic_conc[i]))
+            licenses = LicenseCertificate.objects.filter(certificate_id__in=lic_ids)
+            print(licenses)
+            experiences=JobExperience.objects.filter(user_id_id=obj[0].user_id_id)
+            print(experiences)
+            ver_skills_ids=[]
+            ver_skills=JobSeekerSkill.objects.filter(user_id_id=int(logged_user_id))
+            for vs in ver_skills:  # for each jobskill
+                vsid = int(vs.skill_id_id)
+                # check if jobskill is present in uskill and he is open to that
+                user_skill = JobSeekerSkill.objects.filter(user_id_id=int(logged_user_id), skill_id_id=vsid)
+                skillflag = False
+                usid = 0
+                if len(user_skill) != 0:
+                    skillflag = True
+                    usid = int(user_skill[0].jobseeker_skill_id)
+                # print(skillflag)
+                if skillflag:  # user has that skill, check if he has given assessment and passed
+                    assflag = False
+                    ass = Assessment.objects.filter(jobseeker_skill_id_id=usid).order_by("-date")
+                    if len(ass) != 0:
+                        assflag = True
+                        assmark = ass[0].marks_obtained
+                        asspercent = assmark * 10
+                    if assflag:  # user has given assessment, check cutoff mark
+                        # print("ass dise")
+                        todaydate = datetime.today().strftime('%Y-%m-%d')
+                        cutoff = SkillMarkCutoff.objects.filter(skill_id_id=vsid, to_date__gte=todaydate,
+                                                                from_date__lte=todaydate)
+                        cutoffmark = cutoff[0].cutoff_percentage
+                        # print("cutoffmark")
+                        # print(cutoffmark)
+                        if asspercent >= cutoffmark:
+                            ver_skills_ids.append(vsid)
+
+            ver_skilles_to_send=Skill.objects.filter(skill_id__in=ver_skills_ids)
+
+
+
+
+
+
+            serializer=projSerializer(projects,many=True)
+            serializer_1=pubSerializer(publications,many=True)
+            serializer_2=certiSerializer(licenses,many=True)
+            serializer_3 = jobexpSerializer(experiences, many=True)
+            serializer_4 = SkillSerializer(ver_skilles_to_send, many=True)
+            return Response({
+                'status': status.HTTP_204_NO_CONTENT,
+                'data': serializer.data,
+                'data_1': serializer_1.data,
+                'data_2' :serializer_2.data,
+                'data_3': serializer_3.data,
+                'resume': obj[0].resume_link,
+                'data_4':serializer_4.data,
+                'extras' :obj[0].extra_certificates,
+            })
+
 
 class appliedjobViewsets(viewsets.ModelViewSet):
     global logged_in_id
@@ -2037,7 +2137,7 @@ class empApplicantViewsets(viewsets.ModelViewSet):
             })
 
 pas_temp=make_pw_hash("1234")
-user1 = Jobseeker(user_id=1, name="Adrita Hossain Nakshi", email="adrita_99@yahoo.com", password=pas_temp, thana="Lalbag",
+user1 = Jobseeker(user_id=1, name="Adrita Hossain Nakshi", email="adrita_99@yahoo.com", password=pas_temp, thana="Lalbag",contact_no="01871666053",
                   district="Dhaka", division="Dhaka", father_name="Dr. Md. Elias Hossain",
                   mother_name="Dr. Zennat Ferdousi", date_of_birth="1999-02-06",
                   self_desc="I am a CS under-graduate. I love programmimg and I love computers too. Like Steve Jobs, I like to believe 'Everybody should learn to program a computer, because it teaches you how to think.'",

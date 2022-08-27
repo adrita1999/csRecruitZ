@@ -3,7 +3,7 @@ import {Animated} from "react-animated-css";
 import './Personal.css';
 import {AiFillEdit} from 'react-icons/ai'
 import pic from './images/pp.JPG'
-import {TypeAnimation} from 'react-type-animation';
+import TypeAnimation from 'react-type-animation';
 
 
 import Sidebar from "./Sidebar";

@@ -133,6 +133,7 @@ class Jobdetails extends Component {
       handleChangeResume(event) {
         let dummy_res=[];
         if(event.target.files[0]) {
+            console.log("resumeeeeeeee")
               var path='resumes/'+event.target.files[0].name;
               var link_to_pdf="";
               storage.ref(path).put(
@@ -160,6 +161,7 @@ class Jobdetails extends Component {
       }
       handleChangeFile(event) {
           if (event.target.files[0]) {
+              console.log("extrasssssssss");
 
               var path='extras/'+event.target.files[0].name;
               var link_to_pdf="";
@@ -355,7 +357,11 @@ class Jobdetails extends Component {
               str4=str4+" "+this.state.file_array[i].link;
           }
         jsonData.extras=str4;
-        var str5=this.state.res_array[0].link;
+        var str5=""
+        if(this.state.res_array[0]) {
+             str5= this.state.res_array[0].link;
+        }
+
 
         jsonData.resume=str5;
 
@@ -368,7 +374,7 @@ class Jobdetails extends Component {
       mode: 'cors',
       body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
     })
-        window.location.href="/"
+        window.location.href="/userprev"
     // this.setState({'redirect':true})
   }
 

@@ -23,6 +23,10 @@ class pubSerializer(serializers.ModelSerializer):
     class Meta:
         model= Publication
         fields='__all__'
+class certiSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= LicenseCertificate
+        fields='__all__'
 class LicSerializer(serializers.ModelSerializer):
     lic_name = serializers.SerializerMethodField("get_lic_name")
     lic_org = serializers.SerializerMethodField("get_lic_org")
@@ -96,7 +100,10 @@ class Cutoff_Serializer(serializers.ModelSerializer):
     class Meta:
         model = SkillMarkCutoff
         fields = '__all__'
-
+class SkillSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Skill
+        fields = '__all__'
 class applicationSerializer(serializers.ModelSerializer):
     #print("serialiser")
     job_name = serializers.SerializerMethodField("get_job_name")
