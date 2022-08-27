@@ -18,6 +18,7 @@ import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import Select, { StylesConfig }  from 'react-select';
 import {Button, Collapse} from 'react-bootstrap'
+import TypeAnimation from "react-type-animation";
 
 const dropDownStyle ={
     control: (base, state) => ({
@@ -231,10 +232,46 @@ class UserProfessional extends Component {
             </div>
                 <div className="content">
 
-                <div className="row" style={{
-                    marginLeft:"-13.5%"
-                }}> <h1>Professional Information:</h1></div>
+
                     <Animated animationIn="slideInUp"  animationInDuration={1800}  isVisible={true}>
+                        <div className="row_custom">
+                <div className="personal_div_bg2">
+            <div className="row" style={{
+                display:"flex",
+                flexFlow:"row"
+            }}>
+
+                    <img  src={this.state.items[0].propic} alt="Profile Pic" style={{
+                        height:120,
+                        width:140,
+                        borderRadius:"50%"
+                    }}/>
+
+
+                <div style ={{
+                display:"inline-block",
+                    marginTop:30
+                }}>
+
+                    <p style={{
+                        fontSize:24
+                    }}><b>{this.state.items[0].name}</b></p>
+
+            <TypeAnimation
+            cursor={true}
+            sequence={['Research and Development Engineer', 3000, 'Skilled in Cpp, Java and more ',3000,'10 years of work experience',3000,'']}
+            wrapper="h6"
+            repeat={Infinity}/>
+            </div>
+            </div>
+                </div>
+                </div>
+                        <div className="row" style={{
+                    marginLeft:"-13.5%"
+                }}> <h3 style={{
+                    marginLeft:155,
+                    marginTop:10
+                        }}>Professional Information:</h3></div>
                     <div>
                <div className="row_custom">
                     <div className="align">

@@ -42,9 +42,6 @@ class Employer(User):
     org_type = models.CharField(max_length=20)
     establishment_year = models.IntegerField(null=True)
 
-
-
-
 class Follow(models.Model):
     follow_id = models.IntegerField(primary_key=True)
     employer_id = models.ForeignKey(Employer, on_delete=models.CASCADE)
