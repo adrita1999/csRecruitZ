@@ -16,7 +16,22 @@ div.content_reg {
   margin-top: 30px;
   margin-left: 300px;
   margin-right: 300px;
-  padding: 1px 16px;
+  padding: 10px 25px;
+  height: auto;
+  min-height: 100vh;
+  overflow: hidden;
+  border-radius: 0.7rem 0.7rem 0.7rem 0.7rem;
+  box-shadow: 0.25rem 0.25rem 0.6rem rgba(0,0,0,0.05), 0 0.5rem 1.125rem rgba(75,0,0,0.05);
+
+}
+
+.content_reg_prev2 {
+  background-color: white;
+  margin-top: 30px;
+  margin-left: 300px;
+  margin-right: 300px;
+  padding: 10px 25px;
+  padding-bottom: 30px;
   height: auto;
   min-height: 100vh;
   overflow: hidden;
@@ -78,7 +93,7 @@ div.content_reg {
 
   width:200px;
   margin-top: 31px;
-  margin-left: 490px;
+  margin-left: 470px;
   position: absolute;
   transition-duration: 0.4s;
 }
@@ -101,7 +116,7 @@ div.content_reg_2 {
 .sub_btn {
   margin-top: 30px;
   width:200px;
-  margin-left: 705px;
+  margin-left: 690px;
   margin-bottom: 120px;
 
   transition-duration: 0.4s;

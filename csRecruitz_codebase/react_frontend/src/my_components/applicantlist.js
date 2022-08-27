@@ -83,7 +83,7 @@ class Applicantlist extends Component {
             DetailsLoaded: false,
             redirect1:false,
             redirect2:false,
-            navlink1:"/jobdetails",
+            navlink1:"/empprev",
             navlink2:"/jobdetails",
             filter_title_job_cat:"Field of Work",
             default_job_cat:"DevOps",
@@ -109,25 +109,11 @@ class Applicantlist extends Component {
         this.handleChangeCat=this.handleChangeCat.bind(this);
         this.handleChangeExp=this.handleChangeExp.bind(this);
         this.handleChangeSrc=this.handleChangeSrc.bind(this);
+        this.handleClickPrev=this.handleClickPrev.bind(this);
+        this.handleClickProfile=this.handleClickProfile.bind(this);
       }
 
     componentDidMount() {
-//         fetch(
-// "http://127.0.0.1:8000/searchinput/",{
-//         method:"GET"
-//             })
-//             .then((res) => res.json())
-//             .then((json) => {
-//                 this.setState({datas: json.data, DataisLoaded: true, filter_cat_val:json.cat, filter_nat_val:json.nat, filter_cat_exp:json.exp, filter_cat_loc:json.loc})
-//                 console.log(json.data)
-//                 console.log(this.state.filter_cat_loc)
-//                 this.state.filter_cat_loc=json.loc
-//                 console.log(this.state.filter_cat_loc)
-//                 globalloc=json.loc
-//                 // console.log(json.data.length)
-//                 this.state.totjobs=json.data.length
-//             })
-
         console.log(window.location.href)
         const url=window.location.href
         const splitid = url.split("?")
@@ -238,6 +224,19 @@ class Applicantlist extends Component {
             })
   }
 
+    handleClickPrev(event) {
+    console.log(event.target.id)
+    const concatlink = "/empprev?" + event.target.id;
+    this.setState({'navlink1':concatlink})
+    this.setState({'redirect1':true})
+    }
+
+    handleClickProfile(event) {
+    // console.log(event.target.id)
+    // const concatlink = "/jobdetails?" + event.target.id;
+    // this.setState({'navlink2':concatlink})
+    // this.setState({'redirect2':true})
+    }
 
     render() {
         const { DataisLoaded, items } = this.state;
@@ -298,15 +297,7 @@ class Applicantlist extends Component {
                             </FormControl>
                     </div>
                     </div>
-                <div className="category_div">
-                <div>
-                    <div className="filter_title_bg_div">
-                        <h6>{this.state.filter_title_search}</h6>
-                    </div>
 
-
-                </div>
-            </div>
                  </Animated>
             </div>
 
@@ -371,8 +362,8 @@ class Applicantlist extends Component {
                   <b>{row.app_name}</b>
               </StyledTableCell>
               <StyledTableCell align="center">{row.apply_date}</StyledTableCell>
-              <StyledTableCell align="right"><button className="btn btn-sm btn-success"  onClick={this.handleClickApplicant}>Summary</button></StyledTableCell>
-              <StyledTableCell align="right"><button className="btn btn-sm btn-success"  onClick={this.handleClickApplicant}>Profile</button></StyledTableCell>
+              <StyledTableCell align="right"><button className="btn btn-sm btn-success" id={row.user_id} onClick={this.handleClickPrev}>Summary</button></StyledTableCell>
+              <StyledTableCell align="right"><button className="btn btn-sm btn-success" id={row.application_id} onClick={this.handleClickProfile}>Profile</button></StyledTableCell>
 
 
 
@@ -387,7 +378,8 @@ class Applicantlist extends Component {
                 </Animated>
             </div>
             <Foot margin_value={40}/>
-            {this.state.redirect && <Navigate to={this.state.navlink}/>}
+            {this.state.redirect1 && <Navigate to={this.state.navlink1}/>}
+            {this.state.redirect2 && <Navigate to={this.state.navlink2}/>}
             </body>
                 </React.Fragment>
         )
