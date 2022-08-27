@@ -122,6 +122,7 @@ var jsonDataPref={
 }
 var jsonDataSkillEdit = {
     "skills":"",
+    "currentSkills":"",
 }
 
 class Professional extends Component {
@@ -147,6 +148,7 @@ class Professional extends Component {
             cat: { value: '',label:'' },
             selectedOption: { value: '',label:'' },
             selectedOptions:[],
+            selectedOptions2:[],
             verify:[],
 
         };
@@ -164,6 +166,7 @@ class Professional extends Component {
         this.handleLicense=this.handleLicense.bind(this);
         this.handlePublication=this.handlePublication.bind(this);
         this.handleClose=this.handleClose.bind(this);
+        this.handleChangeOpenTo=this.handleChangeOpenTo.bind(this);
 
     }
     handler = (event) => {
@@ -262,6 +265,10 @@ class Professional extends Component {
         console.log(selectedOptions)
         this.setState({ selectedOptions :selectedOptions })
      }
+     handleChangeOpenTo = (selectedOptions) => {
+        console.log(selectedOptions)
+        this.setState({ selectedOptions_2:selectedOptions })
+     }
     handleProject()
     {
         this.setState({project: true})
@@ -278,20 +285,27 @@ class Professional extends Component {
     handleSubmitSkill(event) {
         event.preventDefault();
         var str1="";
+        var str2="";
         for (let i=0;i<this.state.selectedOptions.length;i++) {
             str1=str1+"#"+this.state.selectedOptions[i].value
         }
+        for (let i=0;i<this.state.selectedOptions_2.length;i++) {
+            str2=str2+"#"+this.state.selectedOptions_2[i].value
+        }
         console.log(str1)
         jsonDataSkillEdit.skills=str1
-        fetch('http://127.0.0.1:8000/first_module/uskill/addskill/', {  // Enter your IP address here
+        jsonDataSkillEdit.currentSkills=str2
+        fetch('http://127.0.0.1:8000/first_module/uskill/editskill/', {  // Enter your IP address here
 
             method: 'POST',
             headers:{
             'Content-Type': 'application/json',
             },
             mode: 'cors',
-            body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
+            body: JSON.stringify(jsonDataSkillEdit) // body data type must match "Content-Type" header
         })
+        window.location.href="/professional"
+
     }
     componentDidMount() {
         const id=1
@@ -682,8 +696,12 @@ class Professional extends Component {
                     <InputLabel id="demo-simple-select-label">Skills</InputLabel>
                     <Select name="skills" id="skills" styles={dropDownStyle} value={this.state.selectedOptions} options={SkillOptions} onChange={this.handleChangeSkill} isMulti placeholder="Add Your Skills" openMenuOnFocus isClearable />
                 </div>
+                <div className='col-md-9' style={{width: "80%", paddingRight:"12px"}}>
+                    <InputLabel id="demo-simple-select-label">Current Skills</InputLabel>
+                    <Select name="open_skills" id="open_skills" styles={dropDownStyle}  options={this.state.selectedOptions} onChange={this.handleChangeOpenTo} isMulti placeholder="Add Your Skills" openMenuOnFocus isClearable />
+                </div>
                 <div>
-                    <button className='btn btn-success'  style={{marginTop:"-38px",width:"20%",marginRight:"-2px"}} >Submit</button>         
+                    <button className='btn btn-success' onClick={this.handleSubmitSkill}  style={{marginTop:"-38px",width:"20%",marginRight:"-2px"}} >Submit</button>         
 
                 </div>
 

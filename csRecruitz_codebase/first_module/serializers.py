@@ -120,6 +120,7 @@ class applicationSerializer(serializers.ModelSerializer):
 
     def get_emp_id(self, obj):
         return obj.newjobpost_id.employer_id_id
+
     def get_app_name(self, obj):
         return obj.user_id.name
 

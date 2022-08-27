@@ -1400,6 +1400,57 @@ class uskillViewsets(viewsets.ModelViewSet):
     queryset = JobSeekerSkill.objects.all()
     serializer_class = uskillSerializer
 
+    @action(methods=['post', 'get'], detail=False, url_path='editskill')
+    def edit_skill(self, request):
+        if request.method == 'POST':
+            global reg_id
+            print(request.data)
+            print(reg_id)
+            skill_list = request.data['skills'].split("#")
+            open_to_list = request.data['currentSkills'].split("#")
+            print(skill_list)
+            print(open_to_list)
+            # shortlist = JobShortlist.objects.filter(user_id_id=int(logged_user_id),
+            #                                         newjobpost_id_id=int(request.data['job_id']))
+            # shortlist.delete()
+            print(len(JobSeekerSkill.objects.all()))
+            # for i in range (1,len(skill_list)):
+            #     temp = Skill.objects.filter(skill_name=skill_list[i])
+            #     if len(temp) == 0:
+            #         continue
+            #     else:
+            #         id = int(temp[0].skill_id)
+            #         obj =  JobSeekerSkill.objects.filter(skill_id_id = id, user_id = logged_in_id)
+            #         obj.delete()
+
+            objs =  JobSeekerSkill.objects.filter( user_id = logged_in_id)
+            objs.delete()
+
+            print(len(JobSeekerSkill.objects.all()))
+            for i in range(1, len(skill_list)):
+                if len(JobSeekerSkill.objects.all()) == 0:
+                    id = 0
+                else:
+                    id = JobSeekerSkill.objects.order_by('-jobseeker_skill_id').first().jobseeker_skill_id
+                id = id + 1
+                if (skill_list[i] in open_to_list):
+                    flag = True
+                else:
+                    flag = False
+                print(skill_list[i])
+                objs = Skill.objects.filter(skill_name=skill_list[i])
+                print(objs)
+                print(objs[0].skill_id)
+                uskill = JobSeekerSkill(jobseeker_skill_id=id, isOpenToWork=flag, skill_id_id=objs[0].skill_id,
+                                        user_id_id=logged_in_id)
+                uskill.save()
+
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            return Response({
+                'status': status.HTTP_204_NO_CONTENT,
+            })
+
     @action(methods=['post', 'get'], detail=False, url_path='addskill')
     def add_skill(self, request):
         if request.method == 'POST':
@@ -1407,7 +1458,6 @@ class uskillViewsets(viewsets.ModelViewSet):
             global reg_id
             print(reg_id)
             skill_list = request.data['skills'].split("#")
-
             open_to_list = request.data['open_to'].split("#")
             for i in range (1,len(skill_list)):
                 if len(JobSeekerSkill.objects.all())==0:
@@ -2783,7 +2833,7 @@ pas_temp=make_pw_hash("1234")
 user1 = Jobseeker(user_id=1, name="Adrita Hossain Nakshi", email="adrita_99@yahoo.com", password=pas_temp, thana="Lalbag",contact_no="01871666053",
                   district="Dhaka", division="Dhaka", father_name="Dr. Md. Elias Hossain",
                   mother_name="Dr. Zennat Ferdousi", date_of_birth="1999-02-06",
-                  self_desc="I am a CS under-graduate. I love programmimg and I love computers too. Like Steve Jobs, I like to believe 'Everybody should learn to program a computer, because it teaches you how to think.'",
+                  self_desc="I am a CS under-graduate. I love programming. I am keen to learning. Like Steve Jobs, I like to believe 'Everybody should learn to program a computer, because it teaches you how to think.'",
                   nationality="Bangladeshi", nid_number="12345678", field="Research and Development", pref_sal="30000",
                   pref_job_ntr="Full-time", pref_org_type="NGO", propic="https://firebasestorage.googleapis.com/v0/b/csrecruitz-fd59e.appspot.com/o/images%2Fnakshi.jpg?alt=media&token=0fd92bf9-8418-432c-9d7c-9a03291ab619",
                   resume="resumes_input/nakshi.docx")
@@ -2791,7 +2841,7 @@ user1.save()
 user2 = Jobseeker(user_id=2, name="Simantika Bhattacharjee Dristi", email="1705029@ugrad.cse.buet.ac.bd", password=pas_temp, thana="Lalbag",
                   district="Dhaka", division="Dhaka", father_name="Pintu Bhattacharjee",
                   mother_name="Soma Chowdhury", date_of_birth="1998-01-21",
-                  self_desc="I am a CS under-graduate. I believe in hardwork. CSE is my first love and my one and only passion.",
+                  self_desc="I am studying in CSE, BUET. I am good at programming. CSE is my first love and my one and only passion.",
                   nationality="Bangladeshi", nid_number="12349876", field="Teaching", propic="https://firebasestorage.googleapis.com/v0/b/csrecruitz-fd59e.appspot.com/o/images%2F154617714_2792879197694937_5512096372900003083_n%20(2).jpg?alt=media&token=4730bdb0-7979-424d-bbbd-eeb6e11425f6",
                   resume="resumes_input/nakshi.docx")
 user2.save()
