@@ -1490,13 +1490,47 @@ class projectViewsets(viewsets.ModelViewSet):
 class pubViewsets(viewsets.ModelViewSet):
     queryset = Publication.objects.all()
     serializer_class = pub_Serializer
-
+    global logged_in_id
     @action(methods=['post', 'get'], detail=False, url_path='get_pub')
     def get_pub(self, request):
+        user_id = logged_in_id
         if request.method == 'POST':
+            global reg_id
+            pub_name = request.data["pub_name"].split("#")
+            pub_link = request.data["pub_link"].split("#")
+            venue = request.data["venue"].split("#")
+            yr = request.data["yr"].split("#")
+            print(pub_name)
+            for i in range(len(pub_name)):
+                if len(Publication.objects.all()) == 0:
+                    id = 0
+                else:
+                    id = Publication.objects.order_by('-publication_id').first().publication_id
+                id = id + 1
+                if pub_link[i] == "?":
+                    plink = None
+                else:
+                    plink = pub_link[i]
+                if venue[i] == "?":
+                   v = None
+                else:
+                    v= venue[i]
+                if yr[i] == "?":
+                    year= None
+                else:
+                    year= yr[i]
+                print(id)
+                pub = Publication(publication_id=id, publication_name=pub_name[i],
+                               publication_link=plink,
+                               venue=v,
+                               publication_year=year,
+                               user_id_id=user_id)
+                pub.save()
+
+            print(request.data)
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
-            global logged_in_id
+
             objs = Publication.objects.filter(user_id=logged_in_id)
             serializer = pub_Serializer(objs, many=True)
 
@@ -1504,6 +1538,20 @@ class pubViewsets(viewsets.ModelViewSet):
                 'status': status.HTTP_204_NO_CONTENT,
                 'data': serializer.data,
             })
+    def update(self, request, pk=None):
+        data_in = request.data
+        print(data_in)
+        instance = self.get_object()
+        print(instance.publication_year)
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        # serializer.is_valid(raise_exception=True)
+
+        if serializer.is_valid():
+            print("into")
+            serializer.save()
+            return Response(serializer.data)
+        # data_out = serializer.data
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     @action(methods=['post', 'get'], detail=False, url_path='addpub')
     def add_pub(self, request):
