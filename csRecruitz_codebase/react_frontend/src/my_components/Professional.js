@@ -59,6 +59,23 @@ const style = {
       border:0,
       overflow: 'visible'
   };
+const stylepref = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 600,
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    p:4,
+    backdrop:false,
+    paddingTop:'10px',
+    paddingBottom:'10px',
+    show:true,
+      borderRadius:5,
+      border:0,
+      overflow: 'visible'
+  };
   const CatOptions = [
     { value: 'Teaching', label: 'Teaching' },
     { value: 'DevOps', label: 'DevOps' },
@@ -686,7 +703,7 @@ class Professional extends Component {
             aria-describedby="modal-modal-description"
             style={{background:"rgba(0,0,0,0)"}}
           >
-            <Box sx={style}>
+            <Box sx={stylepref}>
                     <div className="row" style={{marginBottom:"10px" }}>
                         <p className="seems-h1_reg" style={{marginBottom:"10px" }}><b> Personal Preferences </b></p>
                         <div className="col-sm-12">
