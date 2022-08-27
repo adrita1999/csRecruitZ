@@ -29,7 +29,6 @@ router.register(r'first_module/proj', projectViewsets)
 router.register(r'first_module/pub', pubViewsets)
 router.register(r'first_module/lic', LicViewsets)
 router.register(r'first_module/apply', applicationViewsets)
-
 router.register(r'first_module/appliedjobs', appliedjobViewsets)
 router.register(r'first_module/shortlistedjobs', shortlistedjobViewsets)
 
@@ -38,6 +37,9 @@ router.register(r'first_module/employer', employerViewsets)
 router.register(r'first_module/employerpanel', empApplicantViewsets)
 router.register(r'first_module/assesment', assesmentViewsets)
 router.register(r'first_module/cutoff', cutoffViewsets)
+
+router.register(r'first_module/licenseandcerti', licAndcertiViewsets)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('',home),

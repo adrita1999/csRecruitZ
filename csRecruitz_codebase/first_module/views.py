@@ -772,11 +772,11 @@ class postViewsets_for_jobpost(viewsets.ModelViewSet):
                 print("step3")
                 postViewsets_for_jobpost.j_edu = request.data["j_edu"]
                 if request.data["j_add"]!="":
-                    postViewsets_for_jobpost.j_add = int(request.data["j_add"])
+                    postViewsets_for_jobpost.j_add = (request.data["j_add"])
                 else:
                     postViewsets_for_jobpost.j_add =None
                 if request.data["j_apply"]!="":
-                    postViewsets_for_jobpost.j_apply = int(request.data["j_apply"])
+                    postViewsets_for_jobpost.j_apply = (request.data["j_apply"])
                 else:
                     postViewsets_for_jobpost.j_apply =None
 
@@ -796,7 +796,7 @@ class postViewsets_for_jobpost(viewsets.ModelViewSet):
                                    required_experience=postViewsets_for_jobpost.j_exp,vacancies=postViewsets_for_jobpost.j_vacancy,
                                    job_context=postViewsets_for_jobpost.j_context,job_nature=postViewsets_for_jobpost.j_nat,
                                    job_responsibilities=postViewsets_for_jobpost.j_res,edu_requirement=postViewsets_for_jobpost.j_edu,
-                                   additional_requirements=postViewsets_for_jobpost.j_add,application_process=postViewsets_for_jobpost.j_app)
+                                   additional_requirements=postViewsets_for_jobpost.j_add,application_process=postViewsets_for_jobpost.j_apply)
                 newpost.save()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -1428,21 +1428,43 @@ class uskillViewsets(viewsets.ModelViewSet):
 #     queryset = Publication.objects.all()
 #     serializer_class = pub_Serializer
 
-
-
-
-
-
-
 class projectViewsets(viewsets.ModelViewSet):
     queryset = Project.objects.all()
     serializer_class = projSerializer
+    global logged_in_id
     @action(methods=['post', 'get'], detail=False, url_path='get_proj')
     def get_proj(self, request):
+        # global logged_in_id
+        user_id = logged_in_id
         if request.method == 'POST':
+            global reg_id
+            project_name = request.data["project_name"].split("#")
+            project_link = request.data["project_link"].split("#")
+            language = request.data["language"].split("#")
+            desc_list = request.data["desc"].split("#")
+            print(project_name)
+            for i in range(len(project_name)):
+                if len(Project.objects.all()) == 0:
+                    id = 0
+                else:
+                    id = Project.objects.order_by('-project_id').first().project_id
+                id = id + 1
+                if desc_list[i] == "?":
+                    description = None
+                else:
+                    description = desc_list[i]
+                print(id)
+                proj = Project(project_id = id, project_name=project_name[i],
+                                        project_short_desc=desc_list[i],
+                                        project_link=project_link[i],
+                                        language  = language[i],
+                                         user_id_id=user_id)
+                proj.save()
+
+            print(request.data)
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
-            global logged_in_id
+
             objs = Project.objects.filter(user_id=logged_in_id)
             serializer = projSerializer(objs, many=True)
 
@@ -1450,6 +1472,20 @@ class projectViewsets(viewsets.ModelViewSet):
                 'status': status.HTTP_204_NO_CONTENT,
                 'data': serializer.data,
             })
+    def update(self, request, pk=None):
+        data_in = request.data
+        print(data_in)
+        instance = self.get_object()
+        print(instance.project_id)
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        # serializer.is_valid(raise_exception=True)
+
+        if serializer.is_valid():
+            print("into")
+            serializer.save()
+            return Response(serializer.data)
+        # data_out = serializer.data
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 class pubViewsets(viewsets.ModelViewSet):
     queryset = Publication.objects.all()
@@ -1522,16 +1558,62 @@ class pubViewsets(viewsets.ModelViewSet):
             licuser = JobseekerCertificate(jobseeker_certificate_id=id2, certificate_id=lic, user_id_id=reg_id)
             licuser.save()
         return Response(status=status.HTTP_204_NO_CONTENT)
+class licAndcertiViewsets(viewsets.ModelViewSet):
+    queryset = LicenseCertificate.objects.all()
+    serializer_class = certiSerializer
+    def update(self, request, pk=None):
+        data_in = request.data
+        print(data_in)
+        instance = self.get_object()
+        print(instance.certificate_id)
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        # serializer.is_valid(raise_exception=True)
+
+        if serializer.is_valid():
+            print("into")
+            serializer.save()
+            return Response(serializer.data)
+        # data_out = serializer.data
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 class LicViewsets(viewsets.ModelViewSet):
     queryset = JobseekerCertificate.objects.all()
     serializer_class =LicSerializer
-
+    global logged_in_id
     @action(methods=['post', 'get'], detail=False, url_path='get_lic')
     def get_lic(self, request):
+        user_id = logged_in_id
         if request.method == 'POST':
+            global reg_id
+            certificate_name = request.data["certificate_name"].split("#")
+            certificate_link = request.data["certificate_link"].split("#")
+            issuing_org = request.data["issuing_org"].split("#")
+
+            print(certificate_name)
+            for i in range(len(certificate_name)):
+                if len(LicenseCertificate.objects.all()) == 0:
+                    id = 0
+                else:
+                    id = LicenseCertificate.objects.order_by('-certificate_id').first().certificate_id
+                id = id + 1
+                if  issuing_org [i] == "?":
+                    issuingorg = None
+                else:
+                    issuingorg  =  issuing_org [i]
+                print(id)
+                lic = LicenseCertificate(certificate_id=id, certificate_name=certificate_name[i],
+                               issuing_org=issuing_org[i],
+                               certificate_link=certificate_link[i])
+                lic.save()
+                jobseekerlicId = JobseekerCertificate.objects.order_by('-jobseeker_certificate_id').first().jobseeker_certificate_id
+                jobseekerlicId+=1
+                jobseekerlic= JobseekerCertificate(jobseeker_certificate_id = jobseekerlicId, certificate_id_id = id, user_id_id = user_id)
+                jobseekerlic.save()
+
+            print(request.data)
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
-            global logged_in_id
+
             objs = JobseekerCertificate.objects.filter(user_id=logged_in_id)
             serializer = LicSerializer(objs, many=True)
 
@@ -1539,6 +1621,8 @@ class LicViewsets(viewsets.ModelViewSet):
                 'status': status.HTTP_204_NO_CONTENT,
                 'data': serializer.data,
             })
+
+
 
     @action(methods=['post', 'get'], detail=False, url_path='get_lic_id')
     def get_license(self, request):

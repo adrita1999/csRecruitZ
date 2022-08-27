@@ -118,8 +118,17 @@ div.content_reg_2 {
   width:200px;
   margin-left: 690px;
   margin-bottom: 120px;
-
   transition-duration: 0.4s;
+}
+.sub_btn_job1 {
+  margin-top: 30px;
+  width:120px;
+  margin-left: 785px;
+  margin-bottom: 120px;
+  transition-duration: 0.4s;
+}
+.sub_btn_job1:hover  {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
 .sub_btn:hover  {
   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
