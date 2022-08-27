@@ -140,7 +140,7 @@ class EditProject extends Component {
             .then(response=>response.json())
             .then((data)=>console.log(data));
         }
-        //  window.location.href = "/professional"
+         window.location.href = "/professional"
     }
     handleChange(event) {
         let input = this.state.input;

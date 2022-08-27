@@ -66,43 +66,19 @@ export class companylist extends Component {
         super(props);
         this.state = {
             items: [],
-            DetaisLoaded:false,
+            DetailsLoaded:false,
             redirect:false,
             tot_posts:[],
         };
         this.handleClickView=this.handleClickView.bind(this);
-        this.handleClickDelete=this.handleClickDelete.bind(this);
       }
 
      handleClickView(event) {
-        // console.log(event.target.id)
-        // const concatlink = "/jobdetails?" + event.target.id;
-        // this.setState({'navlink':concatlink})
-        // this.setState({'redirect':true})
-  }
-
-       handleClickDelete(event) {
-        // console.log("delete")
-        // console.log(event.target.id)
-        //    jsonData.id=event.target.id
-        // fetch('http://127.0.0.1:8000/first_module/employer/', {  // Enter your IP address here
-        //      method: 'GET',
-        //      headers:{
-        //      'Content-Type': 'application/json',
-        //      },
-        //      mode: 'cors',
-        //      body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
-        //   })
-        //  fetch(
-        //     "http://127.0.0.1:8000/first_module/shortlistedjobs/shortlist")
-        //     .then((res) => res.json())
-        //     .then((json) => {
-        //         this.setState({
-        //             apps: json.data,
-        //             DetailsLoaded:true
-        //         });
-        //     console.log(json)
-        //     })
+        console.log("button id")
+        console.log(event.target.id)
+        const concatlink = "/empprofile?" + event.target.id;
+        this.setState({'navlink':concatlink})
+        this.setState({'redirect':true})
   }
 
     componentDidMount() {
@@ -114,7 +90,7 @@ export class companylist extends Component {
                 .then((json) => {
 
                     this.setState({items: json.data,
-                                    DataisLoaded: true
+                                    DetailsLoaded: true
                                 })
                     console.log(this.state)
                     console.log(json.data);
@@ -127,6 +103,7 @@ export class companylist extends Component {
 
 
   render() {
+        if (!this.state.DetailsLoaded) return <Loader/>
     return (
         <React.Fragment>
         <body>
@@ -160,7 +137,7 @@ export class companylist extends Component {
                 <StyledTableCell align="left">{row.org_type}</StyledTableCell>
                 <StyledTableCell align="left"> {this.state.tot_posts[i]}</StyledTableCell>
 
-                <StyledTableCell align="left"><button className="btn btn-sm btn-success" id={row.user_ptr_id} >View</button></StyledTableCell>
+                <StyledTableCell align="left"><button className="btn btn-sm btn-success" id={row.user_id} onClick={this.handleClickView}>View</button></StyledTableCell>
                 {/* <StyledTableCell align="center"><RiDeleteBin6Line id={row.newjobpost_id} name={row.newjobpost_id} size={'1.5em'}  className="icon_delete"/></StyledTableCell> */}
           {/* <button className="icon_delete_btn" name={row.user_prt_id} id={row.user_prt_id} ></button> */}
           {/*<StyledTableCell align="right"><button className="btn btn-sm btn-success">Delete</button></StyledTableCell>*/}

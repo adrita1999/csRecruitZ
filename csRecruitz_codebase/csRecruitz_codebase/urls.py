@@ -20,6 +20,7 @@ from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
 #router.register('',postViewsets,basename='posts')
+
 router.register('', postViewsets_for_jobpost, basename='jobposts')
 router.register(r'first_module/jobseeker', jobseekerViewsets)
 router.register(r'first_module/recommendation', recoViewsets)
