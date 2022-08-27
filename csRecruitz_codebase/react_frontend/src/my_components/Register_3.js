@@ -18,8 +18,22 @@ const SkillOptions = [
     { value: 'C++', label: 'C++' },
     { value: 'Angular', label: 'Angular' },
     { value: 'Django', label: 'Django' },
-    { value: 'Java', label: 'Java' }
-    ]
+    { value: 'Java', label: 'Java' },
+    { value: 'PostgreSQL', label: 'PostgreSQL' },
+    { value: 'Flask', label: 'Flask' },
+    { value: 'C', label: 'C' },
+    { value: 'JavaFX', label: 'JavaFX' },
+    { value: 'NodeJS', label: 'NodeJS' },
+    { value: 'Bash', label: 'Bash' },
+    { value: 'C#', label: 'C#' },
+    { value: 'MongoDB', label: 'MongoDB' },
+    { value: 'PHP', label: 'PHP' },
+    { value: 'Laravel', label: 'Laravel' },
+    { value: 'JQuery', label: 'JQuery' },
+    { value: 'MySQL', label: 'MySQL' },
+    { value: 'Swift', label: 'Swift' },
+    { value: 'PL/SQL', label: 'PL/SQL' },
+]
  const dropDownStyle ={
     control: (base, state) => ({
     ...base,

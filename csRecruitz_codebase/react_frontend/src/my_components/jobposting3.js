@@ -8,6 +8,10 @@ import {storage} from "./Firebase";
 import Select from "react-select";
 import {InputLabel, ToggleButton, ToggleButtonGroup} from "@mui/material";
 import Loader from "./loader";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import TypeAnimation from "react-type-animation";
 var jsonData = {
     "j_edu": "",
     "j_step": "3",
@@ -16,7 +20,21 @@ var jsonData = {
 
 }
 
-
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 500,
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  p:4,
+  backdrop:false,
+  show:true,
+    borderRadius:5,
+    border:0,
+    overflow:'hidden'
+};
  const dropDownStyle ={
     control: (base, state) => ({
     ...base,
@@ -75,7 +93,7 @@ class Job_3 extends Component {
       mode: 'cors',
       body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
     })
-          window.location.href = "/emp"
+          this.setState({signinopen: true});
       }
       handleChange(event) {
 
@@ -97,6 +115,13 @@ class Job_3 extends Component {
     });
         //console.log(event.target.files)
   }
+  handleClickYes() {
+        window.location.href="/emp"
+      }
+  handleClose() {
+      this.setState({'signinopen':false})
+      console.log(this.state.signinopen)
+      }
     render() {
 
         return(<React.Fragment>
@@ -179,6 +204,47 @@ class Job_3 extends Component {
         </form>
             </div>
             </Animated>
+              <Modal
+        open={this.state.signinopen}
+        onClose={this.handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        style={{background:"rgba(0,0,0,0)"}}
+      >
+        <Box sx={style}>
+            <div style={{display:"inline",position:'absolute',width:'49%'}}>
+                <Typography id="modal-modal-title" variant="h5" component="h2" style={{color:"#410390",fontWeight:"bold",paddingTop:'3px'}}>
+
+              </Typography>
+            </div>
+
+
+            <svg className="svg_class" viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg">
+                <g stroke="currentColor" stroke-width="2" fill="none" fill-rule="evenodd" stroke-linecap="round"
+                   stroke-linejoin="round">
+                    <path className="circle"
+                          d="M13 1C6.372583 1 1 6.372583 1 13s5.372583 12 12 12 12-5.372583 12-12S19.627417 1 13 1z"/>
+                    <path className="tick" d="M6.5 13.5L10 17 l8.808621-8.308621"/>
+                </g>
+            </svg>
+            <div style={{marginLeft:60}}>
+            <TypeAnimation
+                cursor={true}
+                sequence={['Your Post Has Been Uploaded', 2000,'']}
+                wrapper="h6"
+                repeat={Infinity}
+
+            />
+                </div>
+
+            <div style={{height:'auto',marginTop:"50px",background:"green",marginLeft:"-33px",marginRight:'-33px',marginBottom:'-43px',paddingLeft:'20px',paddingTop:'3px',paddingBottom:'12px',borderBottomLeftRadius:5,borderBottomRightRadius:5}}>
+
+                <button style={{marginTop:"30px",width:'80%',height:'40px',marginLeft:'8%',marginBottom:'30px',background:'#FFFFFF',border:0,borderRadius:5,color:'#410390',fontWeight:'bold'}} onClick={this.handleClickYes}>Back To Home</button>
+
+            </div>
+
+        </Box>
+      </Modal>
             <Foot margin_value={172}/>
         </React.Fragment>)
     }
