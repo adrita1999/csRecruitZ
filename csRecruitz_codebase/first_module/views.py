@@ -1861,74 +1861,130 @@ class empApplicantViewsets(viewsets.ModelViewSet):
                     print(postViewsets_for_jobpost.filter_keyword_arr)
                     keycheckarr=[]
                     for key in postViewsets_for_jobpost.filter_keyword_arr:
-                        print("loop")
-                        print(keycheckarr)
+                        # print("loop")
+                        # print(keycheckarr)
                         #name check
                         namecheck = Jobseeker.objects.filter(user_ptr_id=int(id),name__icontains=key)
                         if len(namecheck)!=0:
                             keycheckarr.append(True)
-                            print("name check")
-                            print(keycheckarr)
+                            # print("name check")
+                            # print(keycheckarr)
                             continue
                         #street check
                         streetcheck = Jobseeker.objects.filter(user_ptr_id=int(id),street__icontains=key)
                         if len(streetcheck)!=0:
                             keycheckarr.append(True)
-                            print("s check")
-                            print(keycheckarr)
+                            # print("s check")
+                            # print(keycheckarr)
                             continue
                         #thana check
                         thanacheck = Jobseeker.objects.filter(user_ptr_id=int(id),thana__icontains=key)
                         if len(thanacheck)!=0:
                             keycheckarr.append(True)
-                            print("th check")
-                            print(keycheckarr)
+                            # print("th check")
+                            # print(keycheckarr)
                             continue
                         #sdistrict check
                         discheck = Jobseeker.objects.filter(user_ptr_id=int(id),district__icontains=key)
                         if len(discheck)!=0:
                             keycheckarr.append(True)
-                            print("ds check")
-                            print(keycheckarr)
+                            # print("ds check")
+                            # print(keycheckarr)
                             continue
                         #division check
                         divcheck = Jobseeker.objects.filter(user_ptr_id=int(id),division__icontains=key)
                         if len(divcheck)!=0:
                             keycheckarr.append(True)
-                            print("dv check")
-                            print(keycheckarr)
+                            # print("dv check")
+                            # print(keycheckarr)
                             continue
                         # self desc check
                         desccheck = Jobseeker.objects.filter(user_ptr_id=int(id), self_desc__icontains=key)
                         if len(desccheck) != 0:
                             keycheckarr.append(True)
-                            print("desc check")
-                            print(keycheckarr)
+                            # print("desc check")
+                            # print(keycheckarr)
                             continue
                         # nationality check
                         natiocheck = Jobseeker.objects.filter(user_ptr_id=int(id), nationality__icontains=key)
                         if len(natiocheck) != 0:
                             keycheckarr.append(True)
-                            print("nt check")
-                            print(keycheckarr)
+                            # print("nt check")
+                            # print(keycheckarr)
                             continue
                         # field check
                         fieldcheck = Jobseeker.objects.filter(user_ptr_id=int(id), field__icontains=key)
                         if len(fieldcheck) != 0:
                             keycheckarr.append(True)
-                            print("f check")
-                            print(keycheckarr)
+                            # print("f check")
+                            # print(keycheckarr)
                             continue
                         # skill check
                         skillcheck = JobSeekerSkill.objects.filter(user_id_id=int(id), skill_id__skill_name__icontains=key)
                         if len(skillcheck) != 0:
-                            print("skill check")
+                            # print("skill check")
                             keycheckarr.append(True)
-                            print(keycheckarr)
+                            # print(keycheckarr)
                             continue
-                        print("false dhukche")
+                        # project name check
+                        projnamecheck = Project.objects.filter(user_id_id=int(id), project_name__icontains=key)
+                        if len(projnamecheck) != 0:
+                            keycheckarr.append(True)
+                            continue
+                        # project desc check
+                        projdesccheck = Project.objects.filter(user_id_id=int(id), project_short_desc__icontains=key)
+                        if len(projdesccheck) != 0:
+                            keycheckarr.append(True)
+                            continue
+                        # project language check
+                        projlangcheck = Project.objects.filter(user_id_id=int(id), language__icontains=key)
+                        if len(projlangcheck) != 0:
+                            keycheckarr.append(True)
+                            continue
+                        # publication name check
+                        pubnamecheck = Publication.objects.filter(user_id_id=int(id),
+                                                                  publication_name__icontains=key)
+                        if len(pubnamecheck) != 0:
+                            keycheckarr.append(True)
+                            continue
+                        # publication venue check
+                        pubvenuecheck = Publication.objects.filter(user_id_id=int(id), venue__icontains=key)
+                        if len(pubvenuecheck) != 0:
+                            keycheckarr.append(True)
+                            continue
+                        # certi name check
+                        certinamecheck = JobseekerCertificate.objects.filter(user_id_id=int(id),
+                                                                  certificate_id__certificate_name__icontains=key)
+                        if len(certinamecheck) != 0:
+                            keycheckarr.append(True)
+                            continue
+                        # certi org check
+                        certiorgcheck = JobseekerCertificate.objects.filter(user_id_id=int(id),
+                                                                             certificate_id__issuing_org__icontains=key)
+                        if len(certiorgcheck) != 0:
+                            keycheckarr.append(True)
+                            continue
+                        # exp name check
+                        expnamecheck = JobExperience.objects.filter(user_id_id=int(id),
+                                                                             experience_name__icontains=key)
+                        if len(expnamecheck) != 0:
+                            keycheckarr.append(True)
+                            continue
+                        # exp desc check
+                        expdesccheck = JobExperience.objects.filter(user_id_id=int(id),
+                                                                    description__icontains=key)
+                        if len(expdesccheck) != 0:
+                            keycheckarr.append(True)
+                            continue
+                        # exp org check
+                        exporgcheck = JobExperience.objects.filter(user_id_id=int(id),
+                                                                    organization_name__icontains=key)
+                        if len(exporgcheck) != 0:
+                            keycheckarr.append(True)
+                            continue
+                        # print("false dhukche")
                         keycheckarr.append(False)
-                        print(keycheckarr)
+                        # print(keycheckarr)
                     print("keycheck")
                     print(keycheckarr)
                     tempflag=True
