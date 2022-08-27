@@ -30,6 +30,8 @@ import {TiTick} from "react-icons/ti";
 import {styled} from "@mui/material/styles";
 import TableCell, {tableCellClasses} from "@mui/material/TableCell";
 import {HiExternalLink} from "react-icons/hi";
+import Loader from "./loader";
+import {ImCross} from "react-icons/im";
 const style = {
   position: 'absolute',
   top: '50%',
@@ -40,6 +42,23 @@ const style = {
   boxShadow: 24,
   p:4,
   backdrop:false,
+  show:true,
+    borderRadius:5,
+    border:0,
+    overflow:'hidden'
+};
+const style2 = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 700,
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  p:4,
+  backdrop:false,
+  paddingTop:'10px',
+  paddingBottom:'10px',
   show:true,
     borderRadius:5,
     border:0,
@@ -70,27 +89,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     border: 0,
   },
 }));
-var jsonData = {
-    "name":"",
-    "password":"",
-    "email":"",
-    "dob":"",
-    "gender":"",
-    "mob":"",
-    "nid":"",
-    "nat":"",
-    "father":"",
-    "mother":"",
-    "desc":"",
-    "street":"",
-    "thana":"",
-    "dis":"",
-    "div":"",
-    "field":"",
-    "pref_org":"",
-    "pref_nat":"",
-    "pref_sal":""
-  }
+
   const dropDownStyle ={
     control: (base, state) => ({
     ...base,
@@ -146,31 +145,92 @@ class JobseekerPreview extends  Component {
     constructor() {
     super();
     this.state = {
-      input: {},
-      errors: {},
+        items: [],
+        projects:[],
+        exps:[],
+        pubs:[],
+        lics:[],
+        skills:[],
+        resume:"",
+        extras:"",
+        extras_array:[],
+        extras_name:[],
+        DataisLoaded:false,
+        DetailsLoaded4:false,
+        input: {},
+        errors: {},
         redirect:false,
         signinopen:false,
+        editnopen:false,
         pdfpath:"",
     };
 
 
-    this.handleSubmit = this.handleSubmit.bind(this);
+
     this.handleChange = this.handleChange.bind(this);
     this.handleClose=this.handleClose.bind(this);
+    this.handleClose2=this.handleClose2.bind(this);
     this.handleChangeDropGen=this.handleChangeDropGen.bind(this);
     this.handleChangeDropDiv=this.handleChangeDropDiv.bind(this);
     this.handleChangeDropNat=this.handleChangeDropNat.bind(this);
     this.handleChangeDropOrg=this.handleChangeDropOrg.bind(this);
     this.handleChangeDropField=this.handleChangeDropField.bind(this);
     this.SubmitAppli=this.SubmitAppli.bind(this);
+    this.SubmitEdit=this.SubmitEdit.bind(this);
   }
 componentDidMount() {
         console.log("mount hoise")
 
-    storage.ref("pdfs/temp.pdf").getDownloadURL().then(url=>{
-          console.log(url);
-          this.setState({pdfpath:url});
-        })
+    // storage.ref("pdfs/temp.pdf").getDownloadURL().then(url=>{
+    //       console.log(url);
+    //       this.setState({pdfpath:url});
+    //     })
+    fetch(
+            "http://127.0.0.1:8000/first_module/jobseeker/get_id/",{
+            method:"GET"
+                })
+                .then((res) => res.json())
+                .then((json) => {
+
+                    this.setState({items: json.data,
+                                    DataisLoaded: true
+                                })
+                    console.log(this.state)
+                    // console.log(json.data);
+                    console.log(json.response);
+
+                })
+          fetch(
+            "http://127.0.0.1:8000/first_module/apply/get_app_info")
+
+            .then((res) => res.json())
+            .then((json) => {
+                this.setState({
+                    projects: json.data,
+                    pubs:json.data_1,
+                    lics:json.data_2,
+                    exps:json.data_3,
+                    skills:json.data_4,
+                    resume:json.resume,
+                    extras:json.extras,
+                    DetailsLoaded4:true
+                });
+                console.log(json)
+                let temp=[]
+                temp=json.extras.split(" ")
+                temp.shift()
+                console.log(temp)
+                let name_arrray=[]
+                for(let i=0;i<temp.length;i++) {
+                    var file_name=storage.refFromURL(temp[i])
+                    console.log(file_name.name)
+                    name_arrray.push(file_name.name)
+                }
+
+                this.setState({extras_array:temp})
+                this.setState({extras_name:name_arrray})
+
+            })
     }
 handleChange(event) {
     let input = this.state.input;
@@ -183,6 +243,9 @@ handleChange(event) {
   }
   SubmitAppli(event) {
         this.setState({signinopen: true});
+  }
+  SubmitEdit(event) {
+        this.setState({editopen: true});
   }
   handleChangeDropGen = (event) => {
         let input = this.state.input;
@@ -236,124 +299,23 @@ handleChange(event) {
 
   }
 
-  onFocusHandle(event) {
-        event.target.type='date';
-  }
-  onBlurHandle(event) {
-        event.target.type='text';
-  }
+
   handleClose() {
       this.setState({'signinopen':false})
       console.log(this.state.signinopen)
       }
-      handleClickNotnow() {
-
+      handleClose2() {
+        this.setState({'editopen':false})
       }
       handleClickYes() {
         window.location.href="/"
       }
-  handleSubmit(event) {
-    event.preventDefault();
-    console.log("geree");
-
-    if(this.validate()){
-
-        console.log(this.state);
-        if(this.state.input["name"]) {
-            jsonData.name=this.state.input["name"];
-        }
-        if(this.state.input["email"]) {
-            jsonData.email = this.state.input["email"];
-        }
-        jsonData.password=this.state.input["password"];
-        jsonData.dob=this.state.input["dob"];
-        if(this.state.input["gen"]) {
-            jsonData.gender = this.state.input["gen"];
-        }
-        jsonData.mob=this.state.input["mob"];
-        jsonData.nid=this.state.input["nid"];
-        jsonData.nat=this.state.input["nat"];
-        if(this.state.input["father"]) {
-            jsonData.father = this.state.input["father"];
-        }
-        if(this.state.input["mother"]) {
-            jsonData.mother = this.state.input["mother"];
-        }
-        if(this.state.input["about"]) {
-            jsonData.desc = this.state.input["about"];
-        }
-        if(this.state.input["street"]) {
-            jsonData.street = this.state.input["street"];
-        }
-        if(this.state.input["thana"]) {
-            jsonData.thana=this.state.input["thana"];
-        }
-        if(this.state.input["dis"]) {
-            jsonData.dis = this.state.input["dis"];
-        }
-        jsonData.div=this.state.input["div"];
-        jsonData.field=this.state.input["field"];
-        if(this.state.input["pref_org"]) {
-            jsonData.pref_org = this.state.input["pref_org"];
-        }
-        if(this.state.input["pref_nat"]) {
-            jsonData.pref_nat = this.state.input["pref_nat"];
-        }
-        if(this.state.input["pref_sal"]) {
-            jsonData.pref_sal=this.state.input["pref_sal"];
-        }
 
 
-        let input = {};
 
-        this.setState({input:input});
-        fetch('http://127.0.0.1:8000/first_module/jobseeker/adduser/', {  // Enter your IP address here
-
-      method: 'POST',
-        headers:{
-        'Content-Type': 'application/json',
-      },
-      mode: 'cors',
-      body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
-    })
-    this.setState({'redirect':true});
-    this.setState({signinopen: true});
-
-
-    }
-  }
-
-  validate(){
-      let input = this.state.input;
-      let errors = {};
-      let isValid = true;
-
-
-      if (typeof input["email"] !== "undefined") {
-
-        var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
-        if (!pattern.test(input["email"])) {
-          isValid = false;
-          errors["email"] = "Please enter valid email address.";
-        }
-      }
-
-      if (typeof input["password"] !== "undefined" && typeof input["confirm_password"] !== "undefined") {
-
-        if (input["password"] !== input["confirm_password"]) {
-          isValid = false;
-          errors["password"] = "Passwords don't match.";
-        }
-      }
-
-      this.setState({
-        errors: errors
-      });
-
-      return isValid;
-  }
 
   render() {
+         if (!this.state.DataisLoaded || !this.state.DetailsLoaded4) return <Loader/>
     return (
         <React.Fragment>
         <Navb/>
@@ -372,11 +334,11 @@ handleChange(event) {
          }}>
              <div className="col-sm-6">
           <div className="form-group">
-            <b>Name:</b>  Adrita Hossain Nakshi
+            <b>Name:</b>  {this.state.items.name}
           </div>
              </div>
              <div className="col-sm-6">
-                 <b>Age:</b>  23 Years
+                 <b>Age:</b>  {this.state.items.age} years
 
              </div>
          </div>
@@ -384,11 +346,11 @@ handleChange(event) {
              marginBottom:5
          }}>
             <div className="col-sm-6">
-            <b>Contact No:</b>  01521226945
+            <b>Contact No:</b>  {this.state.items.contact_no}
 
             </div>
             <div className="col-sm-6">
-            <b>Email Address:</b>  queendristi27@gmail.com
+            <b>Email Address:</b>  {this.state.items.email}
 
             </div>
                 </div>
@@ -396,11 +358,11 @@ handleChange(event) {
              marginBottom:5
          }}>
             <div className="col-sm-6">
-            <b>District:</b>  Narayanganj
+            <b>District:</b>  {this.state.items.district}
 
             </div>
             <div className="col-sm-6">
-            <b>Division:</b>  Dhaka
+            <b>Division:</b>  {this.state.items.division}
 
             </div>
                 </div>
@@ -416,7 +378,7 @@ handleChange(event) {
              marginBottom:5
          }}>
             <div className="col-sm-12">
-            <b>Field of Work:</b>  Research and Development
+            <b>Field of Work:</b>  {this.state.items.field}
             </div>
 
                 </div>
@@ -439,30 +401,21 @@ handleChange(event) {
           </TableRow>
         </TableHead>
         <TableBody>
+            {this.state.exps.map((row) => (
             <StyledTableRow >
               <StyledTableCell component="th" scope="row" align="center">
-                  baaal
+                  {row.experience_name}
               </StyledTableCell>
-                <StyledTableCell align="center">Exp name</StyledTableCell>
-                <StyledTableCell align="center">bal</StyledTableCell>
-                <StyledTableCell align="center">bal</StyledTableCell>
+                <StyledTableCell align="center">{row.organization_name}</StyledTableCell>
+                <StyledTableCell align="center">{row.from_year}</StyledTableCell>
+                <StyledTableCell align="center">{row.to_year}</StyledTableCell>
 
 
           {/*<StyledTableCell align="right"><button className="btn btn-sm btn-success">Delete</button></StyledTableCell>*/}
 
             </StyledTableRow>
-            <StyledTableRow >
-              <StyledTableCell component="th" scope="row" align="center">
-                  baaal
-              </StyledTableCell>
-                <StyledTableCell align="center">Exp name</StyledTableCell>
-                <StyledTableCell align="center">bal</StyledTableCell>
-                <StyledTableCell align="center">bal</StyledTableCell>
+                ))}
 
-
-          {/*<StyledTableCell align="right"><button className="btn btn-sm btn-success">Delete</button></StyledTableCell>*/}
-
-            </StyledTableRow>
 
         </TableBody>
       </Table>
@@ -479,11 +432,27 @@ handleChange(event) {
                   <ul style={{
                       listStyle:"None"
                   }}>
-                      <li><GrAttachment/> <a href="./temp.pdf" target="_blank">temp.pdf</a></li>
-                      <li><GrAttachment/> <a href="./temp.pdf" target="_blank">temp.pdf</a></li>
-                      <li><GrAttachment/> <a href="./temp.pdf" target="_blank">temp.pdf</a></li>
+                      {
+                          this.state.extras_array.map((links,i)=>(
+                          <li><GrAttachment/> <a href={links} target="_blank">{this.state.extras_name[i]}</a></li>
+                          ))
+                      }
                   </ul>
               </div>
+          </div>
+          <div className="row" style={{
+             marginBottom:5
+          }}>
+              <b>Submitted Resume:</b>
+              {!this.state.resume === null &&
+                  <div>
+                      <ul style={{
+                          listStyle: "None"
+                      }}>
+                          <li><GrAttachment/> <a href={this.state.resume} target="_blank">Resume.pdf</a></li>
+                      </ul>
+                  </div>
+              }
           </div>
           <div className="row" style={{
              marginBottom:5
@@ -493,10 +462,12 @@ handleChange(event) {
                   <ul style={{
                       listStyle:"None"
                   }}>
-                      <li>< TiTick size={'1.5em'} color="green"/>  Python</li>
-                      <li>< TiTick size={'1.5em'} color="green"/>  Python</li>
-                      <li>< TiTick size={'1.5em'} color="green"/>  Python</li>
-
+                      {
+                            this.state.skills.map((sk) => {
+                                return(
+                                <li>< TiTick size={'1.5em'} color="green"/>  {sk.skill_name}</li>
+                                )})
+                      }
                   </ul>
               </div>
           </div>
@@ -505,16 +476,16 @@ handleChange(event) {
           }}>
               <b>Highlighted Projects:</b>
               <ul className="hprojlist">
-                  <li><b><HiExternalLink size={'1.5em'}/><a href="/"
-                   style={{marginLeft: 2}}>Istishon</a></b>
-                      <small><br/>Language and FrameWork</small>
-                  <br/>Proj Desc
-                  </li>
-                  <li><b><HiExternalLink size={'1.5em'}/><a href="/"
-                   style={{marginLeft: 2}}>CsRecruitZ</a></b>
-                      <small><br/>Language and FrameWork</small>
-                  <br/>Proj Desc
-                  </li>
+                  {
+                            this.state.projects.map((proj) => {
+                                return(
+                                <li><b><HiExternalLink size={'1.5em'}/><a href={proj.project_link}
+                                                                 style={{marginLeft: 2}}>{proj.project_name}</a></b>
+                          <small><br/>{proj.language}</small>
+                          <br/>{proj.project_short_desc}
+                      </li>
+                                )})
+                            }
 
               </ul>
           </div>
@@ -526,12 +497,16 @@ handleChange(event) {
               <ul style={{
                   listStyle:"square"
               }}>
-                  <li><b><a href="/"
-                   style={{marginLeft: 2}}>SentiCR:An approach to  baal</a></b>  , IEEE Conference, 12/11/2018
+                  {
+                            this.state.pubs.map((pub) => {
+                                return(
+                                <li><b><a href={pub.publication_link}
+                   style={{marginLeft: 2}}>{pub.publication_name}</a></b>  , {pub.venue}, {pub.publication_year}
                   </li>
-                  <li><b><a href="/"
-                   style={{marginLeft: 2}}>SentiCR:An approach to  baal</a></b>  , IEEE Conference, 12/11/2018
-                  </li>
+                                )})
+                            }
+
+
 
               </ul>
               </div>
@@ -542,9 +517,15 @@ handleChange(event) {
               <b>Highlighted Licenses and Certificates:</b>
 
               <ul className="hliclist">
-                  <li><b>IBM certi</b>
-                    <a href="/" className="cred_tag_2" target="_blank">View Credential</a>
-                    <small><br/>Coursera</small></li>
+                         {
+                            this.state.lics.map((lic) => {
+                                return(
+                                <li><b>{lic.certificate_name}</b>
+                                <a href={lic.certificate_link} className="cred_tag_2" target="_blank">View Credential</a>
+                                <small><br/>{lic.issuing_org}</small>
+                                </li>
+                                )})
+                            }
               </ul>
 
           </div>
@@ -552,7 +533,7 @@ handleChange(event) {
             <div className="row" style={{
              marginBottom:5
          }}>
-                <button className="btn btn-success edit_btn" >Edit Information</button>
+                <button className="btn btn-success edit_btn" onClick={this.SubmitEdit} >Edit Information</button>
             <button className="btn btn-success sub_btn" onClick={this.SubmitAppli} >Submit Application</button>
                 </div>
 
@@ -599,6 +580,122 @@ handleChange(event) {
             </div>
 
         </Box>
+      </Modal>
+        <Modal
+        open={this.state.editopen}
+        onClose={this.handleClose2}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        style={{background:"rgba(0,0,0,0)"}}
+      >
+        <Box sx={style2}>
+            {/* <p className="seems-h1_reg"><b> Change Your Information</b></p> */}
+                <div className="row" style={{
+                    marginBottom:15
+                }}>
+                    <p className="seems-h1_reg" style={{marginBottom:"5px" }}><b> Edit Application Requirements </b></p>
+                    <div className="col-sm-12">
+                        <div className="form-group">
+                            <InputLabel style={{color:"black" ,fontWeight:"Bold", fontSize:"15px", marginBottom:"10px" }}  for="name">Select Projects that you want to highlight:</InputLabel>
+                            <Select name="proj" id="proj" styles={dropDownStyle} options={this.state.proj_options} onChange={this.handleChangeDropProj} placeholder="Enter Projects" isMulti openMenuOnFocus isClearable />
+                        </div>
+                    </div>
+
+                </div>
+               <div className="row" style={{
+                    marginBottom:15
+                }}>
+
+                    <div className="col-sm-12">
+                        <div className="form-group">
+                            <InputLabel style={{color:"black" ,fontWeight:"Bold", fontSize:"15px", marginBottom:"10px" }}  for="name">Select Publications that you want to highlight:</InputLabel>
+                            <Select name="pub" id="pub" styles={dropDownStyle} options={this.state.pub_options} onChange={this.handleChangeDropPub} placeholder="Enter Publications"  isMulti openMenuOnFocus isClearable />
+                        </div>
+                    </div>
+
+                </div>
+            <div className="row" style={{
+                    marginBottom:15
+                }}>
+
+                    <div className="col-sm-12">
+                        <div className="form-group">
+                            <InputLabel style={{color:"black" ,fontWeight:"Bold", fontSize:"15px", marginBottom:"10px" }}  for="name">Select Credentials that you want to highlight:</InputLabel>
+                            <Select name="lic" id="lic" styles={dropDownStyle} options={this.state.lic_options} onChange={this.handleChangeDropLic} placeholder="Enter Credentials" isMulti openMenuOnFocus isClearable />
+                        </div>
+                    </div>
+
+                </div>
+            <div className="row" style={{
+                    marginBottom:15
+                }}>
+
+                    <div className="col-sm-12">
+                        <div className="form-group">
+                            <InputLabel style={{color:"black" ,fontWeight:"Bold", fontSize:"15px", marginBottom:"10px" }}>Add necessary credentials for application (pdf only)</InputLabel>
+                        <input
+                            type="file"
+                            name="extra_file"
+                            onChange={this.handleChangeFile}
+                            className="form-control"
+                            placeholder="Upload Credentials"
+                            id="extra_file"/>
+                        </div>
+                        {/*{this.state.file_array.map((files,index) => {*/}
+
+                        {/*        { if(index===0) return(*/}
+                        {/*        <div style={{marginTop:10}}><div><a href={files.link} target="_blank">{files.name}</a></div><button className="clear_btn" onClick={this.ClearAll}><ImCross className="cross"/>Clear All</button></div>*/}
+                        {/*            )*/}
+                        {/*        }*/}
+                        {/*    { if(index!==0) return(*/}
+                        {/*        <div style={{marginTop:10}}><a href={files.link} target="_blank">{files.name}</a></div>*/}
+                        {/*            )*/}
+                        {/*    }*/}
+
+                        {/*})*/}
+
+                        {/*}*/}
+                    </div>
+
+                </div>
+             <div className="row" style={{
+                    marginBottom:15
+                }}>
+
+                    <div className="col-sm-12">
+                        <div className="form-group">
+                            <InputLabel style={{color:"black" ,fontWeight:"Bold", fontSize:"15px", marginBottom:"10px" }}>Add Resume (pdf only)</InputLabel>
+                        <input
+                            type="file"
+                            name="cv"
+                            onChange={this.handleChangeResume}
+                            className="form-control"
+                            placeholder="Upload Resume"
+
+                            id="cv"/>
+                        </div>
+                        {/*{this.state.res_array.map((files,index) => {*/}
+
+                        {/*        { if(index===0) return(*/}
+                        {/*            <div style={{marginTop:10}}><div><a href={files.link} target="_blank">{files.name}</a></div><button className="clear_btn" onClick={this.ClearResume}><ImCross className="cross"/>Clear</button></div>*/}
+                        {/*            )*/}
+                        {/*        }*/}
+                        {/*    { if(index!==0) return(*/}
+                        {/*        <div style={{marginTop:10}}><a href={files.link} target="_blank">{files.name}</a></div>*/}
+                        {/*            )*/}
+                        {/*    }*/}
+
+                        {/*})*/}
+
+                        {/*}*/}
+                    </div>
+
+                </div>
+
+                <button className='btn btn-success' style={{marginTop:"5px",width:"20%",marginRight:"-2px", marginBottom:"10px"}} onClick={this.handleClickApply}>Submit</button>
+
+        </Box>
+
       </Modal>
     </div>
             </body>
