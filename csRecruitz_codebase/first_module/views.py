@@ -2787,7 +2787,7 @@ pas_temp=make_pw_hash("1234")
 user1 = Jobseeker(user_id=1, name="Adrita Hossain Nakshi", email="adrita_99@yahoo.com", password=pas_temp, thana="Lalbag",contact_no="01871666053",
                   district="Dhaka", division="Dhaka", father_name="Dr. Md. Elias Hossain",
                   mother_name="Dr. Zennat Ferdousi", date_of_birth="1999-02-06",
-                  self_desc="I am a CS under-graduate. I love programmimg and I love computers too. Like Steve Jobs, I like to believe 'Everybody should learn to program a computer, because it teaches you how to think.'",
+                  self_desc="I am a CS under-graduate. I love programmimg. I am keen to learning. Like Steve Jobs, I like to believe 'Everybody should learn to program a computer, because it teaches you how to think.'",
                   nationality="Bangladeshi", nid_number="12345678", field="Research and Development", pref_sal="30000",
                   pref_job_ntr="Full-time", pref_org_type="NGO", propic="https://firebasestorage.googleapis.com/v0/b/csrecruitz-fd59e.appspot.com/o/images%2Fnakshi.jpg?alt=media&token=0fd92bf9-8418-432c-9d7c-9a03291ab619",
                   resume="resumes_input/nakshi.docx")
@@ -2795,7 +2795,7 @@ user1.save()
 user2 = Jobseeker(user_id=2, name="Simantika Bhattacharjee Dristi", email="1705029@ugrad.cse.buet.ac.bd", password=pas_temp, thana="Lalbag",
                   district="Dhaka", division="Dhaka", father_name="Pintu Bhattacharjee",
                   mother_name="Soma Chowdhury", date_of_birth="1998-01-21",
-                  self_desc="I am a CS under-graduate. I believe in hardwork. CSE is my first love and my one and only passion.",
+                  self_desc="I am studying in CSE, BUET. I am good at programming. CSE is my first love and my one and only passion.",
                   nationality="Bangladeshi", nid_number="12349876", field="Teaching", propic="propics_input/nakshi.jpg",
                   resume="resumes_input/nakshi.docx")
 user2.save()

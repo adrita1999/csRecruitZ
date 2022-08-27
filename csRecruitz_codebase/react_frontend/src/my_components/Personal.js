@@ -18,6 +18,9 @@ import Form from "react-bootstrap/Form";
 import InputLabel from "@mui/material/InputLabel";
 import { fontSize } from "@mui/system";
 
+var typestring1=""
+var typestring2=""
+var typestring3=""
 
 var jsonData = {
     "name":"",
@@ -256,7 +259,7 @@ class Personal extends Component {
                     
             <TypeAnimation
             cursor={true}
-            sequence={['Research and Development Engineer', 3000, 'Skilled in Cpp, Java and more ',3000,'10 years of work experience',3000,'']}
+            sequence={[`${typestring}`,3000,'Research and Development Engineer', 3000, 'Skilled in Cpp, Java and more ',3000,'10 years of work experience',3000,'']}
             wrapper="h6"
             repeat={Infinity}/>
             </div>
