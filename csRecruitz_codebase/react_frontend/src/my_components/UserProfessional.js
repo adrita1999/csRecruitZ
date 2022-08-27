@@ -9,7 +9,7 @@ import {MdFileDownloadDone} from 'react-icons/md';
 import {HiExternalLink} from 'react-icons/hi';
 import {BiLockAlt} from 'react-icons/bi';
 
-import Navb from "./Navb";
+import Nab_emp from "./Nab_emp.js";
 import Foot from "./Foot";
 import Loader from "./loader";
 
@@ -70,15 +70,9 @@ const style = {
     { value: 'Java', label: 'Java' }
     ]
 var jsonData = {
-    "field":"",
+    "id":""
 }
-var jsonDataSkill = {
-    "user_id":"",
-    "jobseeker_skill_id":"",
-    "skill_id":"",
-    "skill_name":"",
 
-}
 class UserProfessional extends Component {
     constructor(props) {
         super(props);
@@ -86,6 +80,7 @@ class UserProfessional extends Component {
             items: [],
             skills:[],
             logged_in_id:0,
+            ret_id:"",
             DetailsLoaded1:false,
             DetailsLoaded2:false,
             DetailsLoaded3:false,
@@ -112,98 +107,127 @@ class UserProfessional extends Component {
         jsonData.field=value
     }
     componentDidMount() {
-        const id=1
+        //const id=1
+        console.log(window.location.href)
+        const url = window.location.href
+        const splitid = url.split("?")
+        const id = splitid[1]
+        const ret_id=splitid[2]
+        this.setState({ret_id:ret_id})
+        // fetch(
+        //     "http://127.0.0.1:8000/first_module/jobseeker/get_id/")
+        //
+        //     .then((res) => res.json())
+        //     .then((json) => {
+        //         this.setState({
+        //             items: json.data,
+        //             DetailsLoaded1:true
+        //         });
+        //     console.log(json)
+        //     // console.log(this.state)
+        //     })
+        // fetch(
+        //     "http://127.0.0.1:8000/first_module/jobexp/get_info_user_emp/")
+        //
+        //     .then((res) => res.json())
+        //     .then((json) => {
+        //         this.setState({
+        //             exps: json.data,
+        //             DetailsLoaded2:true
+        //         });
+        //     // console.log(json)
+        //     // console.log(this.state)
+        //     })
+        jsonData.id=id
+        fetch('http://127.0.0.1:8000/first_module/jobexp/get_info_user_emp/', {  // Enter your IP address here
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            mode: 'cors',
+            body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
+        })
         fetch(
-            "http://127.0.0.1:8000/first_module/jobseeker/get_id/")
-
-            .then((res) => res.json())
-            .then((json) => {
-                this.setState({
-                    items: json.data,
-                    DetailsLoaded1:true
-                });
-            console.log(json)
-            // console.log(this.state)
-            })
-        fetch(
-            "http://127.0.0.1:8000/first_module/jobexp/addexp/")
+            "http://127.0.0.1:8000/first_module/jobexp/get_info_user_emp/")
 
             .then((res) => res.json())
             .then((json) => {
                 this.setState({
                     exps: json.data,
+                    projects:json.projects,
+                    pubs:json.pubs,
+                    lics:json.lics,
+                    items:json.items,
                     DetailsLoaded2:true
-                });
-            // console.log(json)
-            // console.log(this.state)
-            })
-        fetch(
-            "http://127.0.0.1:8000/first_module/uskill/addskill")
-
-            .then((res) => res.json())
-            .then((json) => {
-                this.setState({
-                    skills: json.data,
-                    DetailsLoaded3:true
                 });
              console.log(json)
             // console.log(this.state)
             })
-
-        fetch(
-            "http://127.0.0.1:8000/first_module/proj/get_proj")
-
-            .then((res) => res.json())
-            .then((json) => {
-                this.setState({
-                    projects: json.data,
-                    DetailsLoaded4:true
-                });
-            // console.log(json)
-            // console.log(this.state)
-            })
-         fetch(
-            "http://127.0.0.1:8000/first_module/pub/get_pub")
-
-            .then((res) => res.json())
-            .then((json) => {
-                this.setState({
-                    pubs: json.data,
-                    DetailsLoaded5:true
-                });
-            // console.log(json)
-            // console.log(this.state)
-            })
-        fetch(
-            "http://127.0.0.1:8000/first_module/lic/get_lic")
-
-            .then((res) => res.json())
-            .then((json) => {
-                this.setState({
-                    lics: json.data,
-                    DetailsLoaded6:true
-                });
-            // console.log(json)
-            console.log(this.state)
-            //  this.setState({logged_in_id:this.items.user_id})
-            console.log(this.state.items.user_id)
-
-            })
+        // fetch(
+        //     "http://127.0.0.1:8000/first_module/uskill/addskill")
+        //
+        //     .then((res) => res.json())
+        //     .then((json) => {
+        //         this.setState({
+        //             skills: json.data,
+        //             DetailsLoaded3:true
+        //         });
+        //      console.log(json)
+        //     // console.log(this.state)
+        //     })
+        //
+        // fetch(
+        //     "http://127.0.0.1:8000/first_module/proj/get_proj")
+        //
+        //     .then((res) => res.json())
+        //     .then((json) => {
+        //         this.setState({
+        //             projects: json.data,
+        //             DetailsLoaded4:true
+        //         });
+        //     // console.log(json)
+        //     // console.log(this.state)
+        //     })
+        //  fetch(
+        //     "http://127.0.0.1:8000/first_module/pub/get_pub")
+        //
+        //     .then((res) => res.json())
+        //     .then((json) => {
+        //         this.setState({
+        //             pubs: json.data,
+        //             DetailsLoaded5:true
+        //         });
+        //     // console.log(json)
+        //     // console.log(this.state)
+        //     })
+        // fetch(
+        //     "http://127.0.0.1:8000/first_module/lic/get_lic")
+        //
+        //     .then((res) => res.json())
+        //     .then((json) => {
+        //         this.setState({
+        //             lics: json.data,
+        //             DetailsLoaded6:true
+        //         });
+        //     // console.log(json)
+        //     console.log(this.state)
+        //     //  this.setState({logged_in_id:this.items.user_id})
+        //     console.log(this.state.items.user_id)
+        //
+        //     })
            
     }
-    To_Quiz() {
-        window.location.href="/quiz"
-    }
+
     render() {
-        if (!this.state.DetailsLoaded1 || !this.state.DetailsLoaded2 || !this.state.DetailsLoaded3 || !this.state.DetailsLoaded4 || !this.state.DetailsLoaded5 || !this.state.DetailsLoaded6) return <Loader/>
+        if (!this.state.DetailsLoaded2) return <Loader/>
         return (
             <React.Fragment>
                 <body>
-                <Navb/>
+                <Nab_emp/>
 
                 <div className="sidebar">
-                    <a className={this.pathaname==='/userprofile'?"active":""} href="/userprofile" >Personal Information</a>
-                    <a className={this.pathaname==='/userprofessional'?"active":""} href="/userprofessional" >Professional Information</a>
+                    <a className={this.pathaname==='/userprofile'?"active":""} href={"/userprofile?"+this.state.ret_id} >Personal Information</a>
+                    <a className={this.pathaname==='/userprofessional'?"active":""}  >Professional Information</a>
             </div>
                 <div className="content">
 
@@ -214,7 +238,7 @@ class UserProfessional extends Component {
                     <div>
                <div className="row_custom">
                     <div className="align">
-                        <p><b className="seems-h1">Field of Work: </b>{this.state.items.field}</p>
+                        <p><b className="seems-h1">Field of Work: </b>{this.state.items[0].field}</p>
                     </div>
                    </div>
 

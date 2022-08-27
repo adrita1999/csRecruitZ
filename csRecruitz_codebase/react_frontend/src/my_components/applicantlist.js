@@ -233,9 +233,9 @@ class Applicantlist extends Component {
 
     handleClickProfile(event) {
     // console.log(event.target.id)
-    // const concatlink = "/jobdetails?" + event.target.id;
-    // this.setState({'navlink2':concatlink})
-    // this.setState({'redirect2':true})
+     const concatlink = "/userprofile?" + event.target.id;
+     this.setState({'navlink2':concatlink})
+     this.setState({'redirect2':true})
     }
 
     render() {
@@ -362,7 +362,7 @@ class Applicantlist extends Component {
                   <b>{row.app_name}</b>
               </StyledTableCell>
               <StyledTableCell align="center">{row.apply_date}</StyledTableCell>
-              <StyledTableCell align="right"><button className="btn btn-sm btn-success" id={row.user_id} onClick={this.handleClickPrev}>Summary</button></StyledTableCell>
+              <StyledTableCell align="right"><button className="btn btn-sm btn-success" id={row.application_id} onClick={this.handleClickPrev}>Summary</button></StyledTableCell>
               <StyledTableCell align="right"><button className="btn btn-sm btn-success" id={row.application_id} onClick={this.handleClickProfile}>Profile</button></StyledTableCell>
 
 
