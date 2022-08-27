@@ -112,6 +112,7 @@ class Professional extends Component {
         this.handleSkill=this.handleSkill.bind(this);
         this.handleChangeSkill=this.handleChangeSkill.bind(this);
         this.handleProject=this.handleProject.bind(this);
+        this.handleLicense=this.handleLicense.bind(this);
         this.handleClose=this.handleClose.bind(this);
 
     }
@@ -121,6 +122,9 @@ class Professional extends Component {
         this.state.cat.value=value
         this.state.cat.label=value
         jsonData.field=value
+    }
+    handleLicense(){
+        window.location.href="/editlicense"
     }
     handleField(){
         this.setState({field_of_work: true})
@@ -168,6 +172,8 @@ class Professional extends Component {
     handleProject()
     {
         this.setState({project: true})
+        window.location.href = "/editproject"
+
 
     }
     handleClose() {
@@ -421,7 +427,7 @@ class Professional extends Component {
                     <div className="row">
                         <div className="align">
                         <h4>Projects:</h4>
-                            <button className="icon_btn"><FiEdit2 size={'1.5em'} className="icon_edit"/></button></div>
+                            <button className="icon_btn"><FiEdit2 size={'1.5em'} className="icon_edit" onClick={this.handleProject}/></button></div>
                     </div>
                     </div>
                     <AnimationOnScroll animateIn="bounceInRight" duration={2} delay={50} animateOnce={true}>
@@ -470,7 +476,7 @@ class Professional extends Component {
                     <div className="row">
                         <div className="align">
                         <h4>Licenses and Certificates:</h4>
-                            <button className="icon_btn"><FiEdit2 size={'1.5em'} className="icon_edit"/></button></div>
+                            <button className="icon_btn" onClick={this.handleLicense}><FiEdit2 size={'1.5em'} className="icon_edit"/></button></div>
                     </div>
                     </div>
                     <AnimationOnScroll animateIn="bounceInRight" duration={2} delay={50} animateOnce={true}>
