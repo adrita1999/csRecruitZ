@@ -180,7 +180,7 @@ class Navb extends Component {
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav">
     <Nav  style={{
-        marginLeft:735,
+        marginLeft:855,
         marginRight:-120
     }}>
         <Nav.Link href="/" style={{
@@ -193,11 +193,11 @@ class Navb extends Component {
                  marginRight:8
 
         }} className="navHover" onClick={this.DashBoard}>Dashboard</Nav.Link>
-        <Nav.Link  style={{
-                 color:"#410390",
-                 marginRight:8
+        {/*<Nav.Link  style={{*/}
+        {/*         color:"#410390",*/}
+        {/*         marginRight:8*/}
 
-        }} className="navHover">Notifications</Nav.Link>
+        {/*}} className="navHover">Notifications</Nav.Link>*/}
         <Nav.Link href="/" style={{
                  color:"#410390",
                  marginRight:8

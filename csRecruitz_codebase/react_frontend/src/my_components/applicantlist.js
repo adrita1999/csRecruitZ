@@ -334,7 +334,7 @@ class Applicantlist extends Component {
                     </div>
 
                 <div style={{marginTop:"17px",marginBottom:"-5px"}}>
-                    <h4>Applicants list (sorted according to best match)</h4>
+                    <h5>Applicants list (sorted according to best match)</h5>
                 </div>
 
 
