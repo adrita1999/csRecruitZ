@@ -1321,7 +1321,53 @@ class jobexpViewsets(viewsets.ModelViewSet):
             serializer4 = LicSerializer(objs4, many=True)
             objs5=Jobseeker.objects.filter(user_id=jobexpViewsets.user_er_id)
             serializer5=jobseekerSerializer(objs5,many=True)
+            objs = JobSeekerSkill.objects.filter(user_id=jobexpViewsets.user_er_id).order_by("skill_id")
+            skill_if_verified = ""
+            skill_ids = ""
+            # skill based mark
+            for js in objs:  # for each jobskill
+                jsid = int(js.skill_id_id)
+                # check if jobskill is present in uskill and he is open to that
+                user_skill = JobSeekerSkill.objects.filter(user_id_id=jobexpViewsets.user_er_id, skill_id_id=jsid)
+                skillflag = False
+                usid = 0
+                if len(user_skill) != 0:
+                    skillflag = True
+                    usid = int(user_skill[0].jobseeker_skill_id)
+                # print(skillflag)
+                if skillflag:  # user has that skill, check if he has given assessment and passed
+                    assflag = False
+                    ass = Assessment.objects.filter(jobseeker_skill_id_id=usid).order_by("-date")
+                    if len(ass) != 0:
+                        assflag = True
+                        assmark = ass[0].marks_obtained
+                        asspercent = assmark * 10
+                    if assflag:  # user has given assessment, check cutoff mark
+                        # print("ass dise")
+                        todaydate = datetime.today().strftime('%Y-%m-%d')
+                        cutoff = SkillMarkCutoff.objects.filter(skill_id_id=jsid, to_date__gte=todaydate,
+                                                                from_date__lte=todaydate)
+                        cutoffmark = cutoff[0].cutoff_percentage
+                        if asspercent >= cutoffmark:
+                            skill_if_verified = skill_if_verified + "1" + "#"
+                            skill_ids = skill_ids + "#" + str(jsid)
+                        else:
+                            skill_if_verified = skill_if_verified + "0" + "#"
+                            skill_ids = skill_ids + "#" + str(jsid)
+                    else:
+                        skill_if_verified = skill_if_verified + "0" + "#"
+                        skill_ids = skill_ids + "#" + str(jsid)
+
+            serializer6 = uskillSerializer(objs, many=True)
+            # return Response({
+            #     'status': status.HTTP_204_NO_CONTENT,
+            #     'data': serializer.data,
+            #     "verifylist": skill_if_verified,
+            #     "skill_ids": skill_ids
+            # })
             return Response({
+                'skills':serializer6.data,
+                'verifylist':skill_if_verified,
                 'status': status.HTTP_204_NO_CONTENT,
                 'data': serializer.data,
                 'projects':serializer2.data,
@@ -2746,9 +2792,10 @@ user2 = Jobseeker(user_id=2, name="Simantika Bhattacharjee Dristi", email="17050
                   district="Dhaka", division="Dhaka", father_name="Pintu Bhattacharjee",
                   mother_name="Soma Chowdhury", date_of_birth="1998-01-21",
                   self_desc="I am a CS under-graduate. I believe in hardwork. CSE is my first love and my one and only passion.",
-                  nationality="Bangladeshi", nid_number="12349876", field="Teaching", propic="propics_input/nakshi.jpg",
+                  nationality="Bangladeshi", nid_number="12349876", field="Teaching", propic="https://firebasestorage.googleapis.com/v0/b/csrecruitz-fd59e.appspot.com/o/images%2F154617714_2792879197694937_5512096372900003083_n%20(2).jpg?alt=media&token=4730bdb0-7979-424d-bbbd-eeb6e11425f6",
                   resume="resumes_input/nakshi.docx")
 user2.save()
+
 emp1 = Employer(user_id=3, name="Optimizely", email="optimizely@gmail.com", password=pas_temp, district="Dhaka",
                 division="Dhaka", org_type="NGO", establishment_year="2005")
 emp1.save()

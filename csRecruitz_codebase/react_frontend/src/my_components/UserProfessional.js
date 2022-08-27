@@ -19,6 +19,7 @@ import InputLabel from "@mui/material/InputLabel";
 import Select, { StylesConfig }  from 'react-select';
 import {Button, Collapse} from 'react-bootstrap'
 import TypeAnimation from "react-type-animation";
+import {BsCheck2} from "react-icons/bs";
 
 const dropDownStyle ={
     control: (base, state) => ({
@@ -159,6 +160,8 @@ class UserProfessional extends Component {
                     pubs:json.pubs,
                     lics:json.lics,
                     items:json.items,
+                    skills: json.skills,
+                    verifylist:json.verifylist.split("#"),
                     DetailsLoaded2:true
                 });
              console.log(json)
@@ -316,14 +319,41 @@ class UserProfessional extends Component {
                         <h4>Skills:</h4>
                             </div>
                         <ol className="gradient-list" >
-                            {
-                                            this.state.skills.map((skill) => {
+
+                                            {
+                                            this.state.skills.map((skill,i) => {
+                                            if(this.state.verifylist[i] === "0")
+                                            {
                                             return(
-                                                <li><b style={{
-                                                    fontSize:"large",
-                                                    color:"darkorange"
-                                                }}>{skill.skill_name}</b> </li>
-                                            )})
+                                                <li>
+                                                    <b style={{
+                                                            fontSize:"large",
+                                                            color:"darkorange"
+                                                        }}>{skill.skill_name}
+                                                    </b>
+
+                                                </li>
+                                            )}
+                                            if(this.state.verifylist[i] === "1"){
+                                            return(
+                                                <li>
+                                                    <b style={{
+                                                            fontSize:"large",
+                                                            color:"darkorange"
+                                                        }}>{skill.skill_name}
+                                                    </b>
+                                                    <button style={{backgroundColor:"#F7FFFF", float: "right",marginTop:"-12px",border: "none"}} disabled>< BsCheck2 size={'3em'} color="green" fontWeight="bold"/> </button>
+
+                                                </li>
+                                            )}
+
+                                        })
+
+
+
+
+
+
                              }
 
 
@@ -388,7 +418,7 @@ class UserProfessional extends Component {
                     </div>
                     </div>
                     <AnimationOnScroll animateIn="bounceInRight" duration={2} delay={50} animateOnce={true}>
-                    <ul className="publist">
+                    <ul className="publist" style={{marginBottom:80}}>
                         {
                             this.state.lics.map((lic) => {
                                 return(
