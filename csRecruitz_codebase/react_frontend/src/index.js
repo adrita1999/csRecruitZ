@@ -19,6 +19,7 @@ import Companylist from "./my_components/companylist";
 
 import Home from "./my_components/Home";
 import EmpHome from "./my_components/emp_home";
+import EmpProfile from "./my_components/emp_profile";
 import Quiz from "./my_components/Quiz"
 import Applicantlist from "./my_components/applicantlist";
 import Tag from "./my_components/Tag.js"
@@ -52,6 +53,7 @@ root.render(
         <Route path="/tag" element={< Tag/>} />
         <Route path="/companylist" element={< Companylist/>} />
         <Route path="/emp" element={< EmpHome/>} />
+        <Route path="/empprofile" element={< EmpProfile/>} />
         <Route path="/applicants" element={< Applicantlist/>} />
         <Route path="/experienceEdit" element={< ExperienceEdit/>} />
         <Route path="/editskill" element={< EditSkill/>} />

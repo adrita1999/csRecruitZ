@@ -49,6 +49,7 @@ class postViewsets_for_jobpost(viewsets.ModelViewSet):
     sort_dir= ""
     sort_option= ""
     search_str=""
+    emp_prof_id=-1
     objs_keyword = NewJobpost.objects.none()
 
     @action(methods=['post', 'get'], detail=False, url_path='details')
@@ -707,6 +708,28 @@ class postViewsets_for_jobpost(viewsets.ModelViewSet):
                 'status': status.HTTP_204_NO_CONTENT,
                 'data': serializer.data,
                 'response': appstr,
+            })
+
+    @action(methods=['post', 'get'], detail=False, url_path='empprofjobs')
+    def get_all_jobs_empprofile(self, request):
+        if request.method == 'POST':
+            postViewsets_for_jobpost.emp_prof_id=int(request.data["emp_id"])
+
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            findemp=Employer.objects.filter(user_ptr_id=postViewsets_for_jobpost.emp_prof_id)
+            employername=findemp[0].name
+            employerdiv=findemp[0].division
+            employeryear=findemp[0].establishment_year
+            jobs = NewJobpost.objects.filter(employer_id_id=postViewsets_for_jobpost.emp_prof_id)
+            # print(appstr)
+            serializer = NewPostSerializer(jobs, many=True)
+            return Response({
+                'status': status.HTTP_204_NO_CONTENT,
+                'data': serializer.data,
+                'empname':employername,
+                'empdiv':employerdiv,
+                'empyear':employeryear
             })
 
 
