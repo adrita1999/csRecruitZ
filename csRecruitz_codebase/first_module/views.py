@@ -1301,11 +1301,49 @@ class uskillViewsets(viewsets.ModelViewSet):
         else:
             global logged_in_id
             print("koooooo" + str(logged_in_id))
-            objs = JobSeekerSkill.objects.filter(user_id=logged_in_id)
+            objs = JobSeekerSkill.objects.filter(user_id=logged_in_id).order_by("skill_id")
+            skill_if_verified=""
+            skill_ids=""
+            # skill based mark
+            for js in objs:  # for each jobskill
+                jsid = int(js.skill_id_id)
+                # check if jobskill is present in uskill and he is open to that
+                user_skill = JobSeekerSkill.objects.filter(user_id_id=logged_in_id, skill_id_id=jsid)
+                skillflag = False
+                usid = 0
+                if len(user_skill) != 0:
+                    skillflag = True
+                    usid = int(user_skill[0].jobseeker_skill_id)
+                # print(skillflag)
+                if skillflag:  # user has that skill, check if he has given assessment and passed
+                    assflag = False
+                    ass = Assessment.objects.filter(jobseeker_skill_id_id=usid).order_by("-date")
+                    if len(ass) != 0:
+                        assflag = True
+                        assmark = ass[0].marks_obtained
+                        asspercent = assmark * 10
+                    if assflag:  # user has given assessment, check cutoff mark
+                        # print("ass dise")
+                        todaydate = datetime.today().strftime('%Y-%m-%d')
+                        cutoff = SkillMarkCutoff.objects.filter(skill_id_id=jsid, to_date__gte=todaydate,
+                                                                from_date__lte=todaydate)
+                        cutoffmark = cutoff[0].cutoff_percentage
+                        if asspercent >= cutoffmark:
+                            skill_if_verified=skill_if_verified+"1"+"#"
+                            skill_ids = skill_ids +"#"+str(jsid)
+                        else:
+                            skill_if_verified = skill_if_verified +  "0"+"#"
+                            skill_ids = skill_ids+ "#" + str(jsid)
+                    else:
+                        skill_if_verified = skill_if_verified +  "0"+"#"
+                        skill_ids = skill_ids + "#" + str(jsid)
+
             serializer = uskillSerializer(objs, many=True)
             return Response({
                 'status': status.HTTP_204_NO_CONTENT,
                 'data': serializer.data,
+                "verifylist":skill_if_verified,
+                "skill_ids":skill_ids
             })
 
 
@@ -1683,7 +1721,6 @@ class shortlistedjobViewsets(viewsets.ModelViewSet):
 
 
 class questionViewsets(viewsets.ModelViewSet):
-    ##################################kon skill er eta dekhate hobe################################
     skill_id =2
 
     @action(methods=['post', 'get'], detail=False, url_path='skillid')
@@ -1702,10 +1739,10 @@ class questionViewsets(viewsets.ModelViewSet):
     @action(methods=['post', 'get'], detail=False, url_path='questionselect')
     def questionselect(self, request):
         if request.method == 'GET':
-            print(questionViewsets.skill_id)
+            # print(questionViewsets.skill_id)
             id = questionViewsets.skill_id
             tempset = Question.objects.filter(skill_id =id).order_by('?')
-            print(tempset)
+            # print(tempset)
             id_list = []
             count_1 = 0
             count_2 = 0
@@ -1757,12 +1794,12 @@ class questionViewsets(viewsets.ModelViewSet):
                 print("next theke ashche")
                 question_id = request.data["question_id"]
                 answer = request.data["answer"]
-                print(request.data)
+                # print(request.data)
 
                 obj = Question.objects.filter(question_id=question_id)
                 correct_ans = obj[0].answer
                 ques_mark = obj[0].mark
-                print(correct_ans)
+                # print(correct_ans)
 
                 if answer == correct_ans:
                     print("milse")
@@ -1832,10 +1869,37 @@ class questionViewsets(viewsets.ModelViewSet):
             })
 
 
+class cutoffViewsets(viewsets.ModelViewSet):
+    queryset = SkillMarkCutoff.objects.all()
+    serializer_class = Cutoff_Serializer
 
-    # @action(methods=['post', 'get'], detail=False, url_path='specificquestions')
-    # def specificquestions(self, request):
+    @action(methods=['post', 'get'], detail=False, url_path='cutoffpercent')
+    def cutoffPercent(self, request):
+        global logged_in_id
+        user_id = logged_in_id
+        if request.method == 'GET':
+            obj = JobSeekerSkill.objects.filter(user_id=user_id)
+            # print(obj)
+            id_list = []
+            for i in range(len(obj)):
+                print(obj[i].skill_id)
+                id_list.append(obj[i].skill_id)
+            print(id_list)
+            skill = SkillMarkCutoff.objects.filter(skill_id_id__in=id_list)
+            serializer = Cutoff_Serializer(skill, many=True)
+            print(serializer.data)
+            return Response({
+                'status': status.HTTP_204_NO_CONTENT,
+                'data': serializer.data,
+            })
 
+        else:
+            return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class assesmentViewsets(viewsets.ModelViewSet):
+    queryset = Assessment.objects.all()
+    serializer_class = assesmentSerializer
 
 
 
@@ -2161,8 +2225,6 @@ class empApplicantViewsets(viewsets.ModelViewSet):
                             todaydate = datetime.today().strftime('%Y-%m-%d')
                             cutoff=SkillMarkCutoff.objects.filter(skill_id_id=jsid,to_date__gte=todaydate,from_date__lte=todaydate)
                             cutoffmark=cutoff[0].cutoff_percentage
-                            # print("cutoffmark")
-                            # print(cutoffmark)
                             if asspercent>=cutoffmark:
                                 tempmark=tempmark+10
                 #field based mark
@@ -2192,8 +2254,6 @@ class empApplicantViewsets(viewsets.ModelViewSet):
 
             # print(markarr)
             markarr.sort(reverse=True)
-            # print(markarr)
-
             listapp = []
             for m in markarr:
                 mark_idx=m[1]
@@ -2937,7 +2997,7 @@ ass1=Assessment(assessment_id=1,marks_obtained=8,date="2022-08-26",jobseeker_ski
 ass1.save()
 ass2=Assessment(assessment_id=2,marks_obtained=7,date="2022-08-26",jobseeker_skill_id=uskill5)
 ass2.save()
-ass3=Assessment(assessment_id=3,marks_obtained=9,date="2022-08-26",jobseeker_skill_id=uskill1)
+ass3=Assessment(assessment_id=3,marks_obtained=7,date="2022-08-26",jobseeker_skill_id=uskill1)
 ass3.save()
 ass4=Assessment(assessment_id=4,marks_obtained=8,date="2022-08-26",jobseeker_skill_id=uskill6)
 ass4.save()
