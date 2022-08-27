@@ -25,6 +25,7 @@ import {AiFillEdit} from "react-icons/ai";
 var jsonData = {
     "job_id":"",
     "mount":"",
+    "mountfrom":"job",
     "type":"",
     "ifshortlist":"",
     "iffollow":"",

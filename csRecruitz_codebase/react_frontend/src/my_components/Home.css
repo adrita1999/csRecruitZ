@@ -126,10 +126,10 @@ body {
 .emplogo{
     z-index: 1;
     position: absolute;
-    left:82%;
+    left:82.8%;
     top: 19%;
-    height: 130px;
-    width: 130px;
+    height: 110px;
+    width: 110px;
 }
 
 .icondiv{
