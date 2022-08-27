@@ -68,9 +68,12 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 var jsonData = {
-  "emp_id":"",
+    "emp_id":"",
+    "mount":"",
+     "mountfrom":"prof",
+    "type":"",
+    "iffollow":"",
 }
-
 
 
 export class EmpProfile extends Component {
@@ -81,12 +84,14 @@ export class EmpProfile extends Component {
         DetailsLoaded2:false,
         DetailsLoaded3:false,
         navlink:"/jobdetails",
-
+        iffollowed:"",
+        empid:""
     };
 
     constructor(props) {
     super(props);
     this.handleClickJob=this.handleClickJob.bind(this);
+    this.handleClickFollow=this.handleClickFollow.bind(this);
 
   }
 
@@ -103,6 +108,8 @@ componentDidMount() {
         const splitid = url.split("?")
         const id=splitid[1]
         jsonData.emp_id=id
+        jsonData.mount="true"
+        this.setState({empid:id})
         fetch('http://127.0.0.1:8000/empprofjobs/', {  // Enter your IP address here
         method: 'POST',
         headers:{
@@ -128,7 +135,61 @@ componentDidMount() {
 
             //console.log(this.state)
             })
+
+        fetch('http://127.0.0.1:8000/first_module/apply/getapplication/', {  // Enter your IP address here
+              method: 'POST',
+                headers:{
+                'Content-Type': 'application/json',
+              },
+              mode: 'cors',
+              body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
+            })
+
+            fetch(
+        "http://127.0.0.1:8000/first_module/apply/getapplication/",{
+            method:"GET"
+            })
+            .then((res) => res.json())
+            .then((json) => {
+                this.setState({
+                    DetailsLoaded2: true
+                });
+            //    follow code
+                if (json.follow==="followed") {
+                    this.state.iffollowed=true
+                }
+                else {
+                   this.state.iffollowed=false
+                }
+            })
     }
+
+
+    handleClickFollow() {
+    jsonData.mount="false"
+    jsonData.type="profilefollow"
+    // this.state.iffollowed=!this.state.iffollowed
+      console.log(this.state.iffollowed)
+      if(this.state.iffollowed==false)
+      {
+          jsonData.iffollow="true"
+      }
+      else
+      {
+          jsonData.iffollow="false"
+      }
+      this.setState({iffollowed:!this.state.iffollowed})
+      console.log(this.state.iffollowed)
+      console.log(jsonData.iffollow)
+    fetch('http://127.0.0.1:8000/first_module/apply/getapplication/', {  // Enter your IP address here
+      method: 'POST',
+        headers:{
+        'Content-Type': 'application/json',
+      },
+      mode: 'cors',
+      body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
+    })
+  }
 
   render() {
       if ( !this.state.DetailsLoaded1) return <Loader/>
@@ -146,8 +207,9 @@ componentDidMount() {
                     <h1>{this.state.empname}</h1>
                     <h6>{this.state.empdiv} | Established in {this.state.empyear}</h6>
                 </div>
-               <button className="btn btn-success" style={{float:"right",left:"87.2%",marginTop:'-38px',position:"absolute"}}><RiUserFollowFill style={{fontSize:"20",fontWeight:"bold",color:"white",marginLeft:"-1px",paddingRight:"5px",marginTop:"-4px"}}/>
-               Follow</button>
+               {this.state.iffollowed && <button className="btn btn-primary" onClick={this.handleClickFollow} style={{float:"right",left:"86.2%",marginTop:'-35.5px',position:"absolute",paddingTop:"4px",paddingBottom:"4px",width:"125px"}}><RiUserFollowFill style={{fontSize:"20",fontWeight:"bold",color:"white",marginLeft:"-1px",paddingRight:"5px",marginTop:"-4px"}}/>Unfollow</button>}
+               {!this.state.iffollowed && <button className="btn btn-success" onClick={this.handleClickFollow} style={{float:"right",left:"86.2%",marginTop:'-35.5px',position:"absolute",paddingTop:"4px",paddingBottom:"4px",width:"125px"}}><RiUserFollowFill style={{fontSize:"20",fontWeight:"bold",color:"white",marginLeft:"-1px",paddingRight:"5px",marginTop:"-4px"}}/>Follow</button>}
+
             </div>
 
             <div className='nicherdiv2 mb-3'>

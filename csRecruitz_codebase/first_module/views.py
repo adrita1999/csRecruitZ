@@ -1490,6 +1490,8 @@ class applicationViewsets(viewsets.ModelViewSet):
     # else:
     #     user_id = 1
     job_id = ""
+    emp_id = ""
+    mountfrom=""
 
     @action(methods=['post', 'get'], detail=False, url_path='getapplication')
     def apply(self, request):
@@ -1501,7 +1503,11 @@ class applicationViewsets(viewsets.ModelViewSet):
         if request.method == 'POST':
             # print(request.data)
             if request.data['mount']=="true":#mount er shomoy post
-                applicationViewsets.job_id = int(request.data['job_id'])
+                applicationViewsets.mountfrom = request.data['mountfrom']
+                if request.data['mountfrom']=="job":
+                    applicationViewsets.job_id = int(request.data['job_id'])
+                else:
+                    applicationViewsets.emp_id = int(request.data['emp_id'])
             else:#apply er somoy
                 if request.data['type']=="apply":
                     print(request.data)
@@ -1515,12 +1521,12 @@ class applicationViewsets(viewsets.ModelViewSet):
                         objs=Project.objects.filter(
                             project_name=proj_list[i]
                         )
-                        print("etaaaaaaaaa"+proj_list[i])
-                        print(len(objs))
+                        # print("etaaaaaaaaa"+proj_list[i])
+                        # print(len(objs))
                         proj_id=objs[0].project_id
 
-                        print(proj_id)
-                        print("idddddddddddd"+str(proj_id))
+                        # print(proj_id)
+                        # print("idddddddddddd"+str(proj_id))
                         proj_id_list=proj_id_list+"#"+str(proj_id)
 
                     for i in range(1,len(pub_list)):
@@ -1580,6 +1586,21 @@ class applicationViewsets(viewsets.ModelViewSet):
                         findselectedempid = int(findselectedjob[0].employer_id_id)
                         followobj = Follow(follow_id=f_id,follower_id_id=int(logged_user_id),employer_id_id=findselectedempid)
                         followobj.save()
+                elif request.data['type']=="profilefollow":
+                    print("profile er follow te dhukse")
+                    if request.data["iffollow"]=="false":
+                        followobj = Follow.objects.filter(follower_id_id=int(logged_user_id), employer_id_id=applicationViewsets.emp_id)
+                        followobj.delete()
+                    else:
+                        allfollow=Follow.objects.all()
+                        f_id=1
+                        if len(allfollow)==0:
+                            f_id=1
+                        else:
+                            lists=Follow.objects.filter().order_by('-follow_id')
+                            f_id=int(lists[0].follow_id)+1
+                        followobj = Follow(follow_id=f_id,follower_id_id=int(logged_user_id),employer_id_id=applicationViewsets.emp_id)
+                        followobj.save()
                 else:
                     if request.data["ifshortlist"]=="false":
                         applicationViewsets.job_id = int(request.data['job_id'])
@@ -1598,35 +1619,47 @@ class applicationViewsets(viewsets.ModelViewSet):
                         shortlist.save()
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
-            str1="notapplied"
-            apps = JobApplication.objects.filter(newjobpost_id_id=int(applicationViewsets.job_id),user_id_id=int(logged_user_id))
-            print(apps)
-            if len(apps)!=0:
-                str1="applied"
+            if applicationViewsets.mountfrom=="job":
+                str1="notapplied"
+                apps = JobApplication.objects.filter(newjobpost_id_id=int(applicationViewsets.job_id),user_id_id=int(logged_user_id))
+                print(apps)
+                if len(apps)!=0:
+                    str1="applied"
 
-            str2 = "notshortlisted"
-            sh = JobShortlist.objects.filter(newjobpost_id_id=int(applicationViewsets.job_id),
-                                                 user_id_id=int(logged_user_id))
-            print(sh)
-            if len(sh) != 0:
-                str2 = "shortlisted"
-            serializer = applicationSerializer(apps, many=True)
+                str2 = "notshortlisted"
+                sh = JobShortlist.objects.filter(newjobpost_id_id=int(applicationViewsets.job_id),
+                                                     user_id_id=int(logged_user_id))
+                print(sh)
+                if len(sh) != 0:
+                    str2 = "shortlisted"
+                serializer = applicationSerializer(apps, many=True)
 
-            str3 = "notfollowed"
-            findselectedjob=NewJobpost.objects.filter(jobpost_id=int(applicationViewsets.job_id))
-            findselectedempid=int(findselectedjob[0].employer_id_id)
-            fl = Follow.objects.filter(employer_id_id=findselectedempid,
-                                             follower_id_id=int(logged_user_id))
-            if len(fl) != 0:
-                str3 = "followed"
-            serializer = applicationSerializer(apps, many=True)
-            return Response({
-                'status': status.HTTP_204_NO_CONTENT,
-                'data':serializer.data,
-                'response': str1,
-                'short':str2,
-                'follow':str3
-            })
+                str3 = "notfollowed"
+                findselectedjob=NewJobpost.objects.filter(jobpost_id=int(applicationViewsets.job_id))
+                findselectedempid=int(findselectedjob[0].employer_id_id)
+                fl = Follow.objects.filter(employer_id_id=findselectedempid,
+                                                 follower_id_id=int(logged_user_id))
+                if len(fl) != 0:
+                    str3 = "followed"
+                serializer = applicationSerializer(apps, many=True)
+                return Response({
+                    'status': status.HTTP_204_NO_CONTENT,
+                    'data':serializer.data,
+                    'response': str1,
+                    'short':str2,
+                    'follow':str3
+                })
+            else:
+                str3 = "notfollowed"
+                fl = Follow.objects.filter(employer_id_id=applicationViewsets.emp_id,
+                                           follower_id_id=int(logged_user_id))
+                if len(fl) != 0:
+                    str3 = "followed"
+
+                return Response({
+                    'status': status.HTTP_204_NO_CONTENT,
+                    'follow': str3
+                })
 
     @action(methods=['post', 'get'], detail=False, url_path='get_app_info')
     def get_app_info(self,request):
