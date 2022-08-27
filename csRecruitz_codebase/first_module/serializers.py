@@ -161,3 +161,8 @@ class employerSerializer(serializers.ModelSerializer):
     #     posts = NewJobpost.objects.filter(employer_id = obj.user_ptr_id)
     #     total = len(posts)
     #     return posts
+class assesmentSerializer(serializers.ModelSerializer):
+    # tot_jobpost = serializers.SerializerMethodField("get_tot_jobpost")
+    class Meta:
+        model=Assessment
+        fields='__all__'

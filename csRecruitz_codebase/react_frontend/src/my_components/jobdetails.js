@@ -27,6 +27,7 @@ var jsonData = {
     "mount":"",
     "type":"",
     "ifshortlist":"",
+    "iffollow":"",
     "projs":"",
     "pubs":"",
     "lics":"",
@@ -90,7 +91,8 @@ class Jobdetails extends Component {
         editopen:false,
         ifapplied:"",
         ifshortlisted:"",
-        iffollowed:""
+        iffollowed:"",
+        empid:""
     }
 
     constructor(props) {
@@ -98,6 +100,7 @@ class Jobdetails extends Component {
         this.handleClickApply=this.handleClickApply.bind(this);
         this.handleClickShortlist=this.handleClickShortlist.bind(this);
         this.handleClickFollow=this.handleClickFollow.bind(this);
+        this.handleClickVisit=this.handleClickVisit.bind(this);
         this.handleClickModal=this.handleClickModal.bind(this);
         this.handleClose=this.handleClose.bind(this);
         this.handleChangeFile=this.handleChangeFile.bind(this);
@@ -253,6 +256,8 @@ class Jobdetails extends Component {
                 this.setState({'req_exp':exp_text})
                 const jid = json.jobpost_id
                 this.setState({'job_id': jid})
+                console.log(json.employer_id)
+                this.setState({'empid': json.employer_id})
             })
 
 
@@ -288,6 +293,12 @@ class Jobdetails extends Component {
                    this.state.ifshortlisted=false
                 }
             //    follow code
+                if (json.follow==="followed") {
+                    this.state.iffollowed=true
+                }
+                else {
+                   this.state.iffollowed=false
+                }
             })
         fetch(
             "http://127.0.0.1:8000/first_module/proj/get_proj")
@@ -326,7 +337,7 @@ class Jobdetails extends Component {
             // console.log(json)
             console.log(this.state)
             //  this.setState({logged_in_id:this.items.user_id})
-            console.log(this.state.items.user_id)
+            // console.log(this.state.items.user_id)
 
             })
 
@@ -381,8 +392,9 @@ class Jobdetails extends Component {
     jsonData.job_id=this.state.job_id
     jsonData.mount="false"
     jsonData.type="shortlist"
-    this.state.ifshortlisted=!this.state.ifshortlisted
-      if(this.state.ifshortlisted==true)
+    // this.state.ifshortlisted=!this.state.ifshortlisted
+    console.log(this.state.ifshortlisted)
+      if(this.state.ifshortlisted==false)
       {
           jsonData.ifshortlist="true"
       }
@@ -390,7 +402,9 @@ class Jobdetails extends Component {
       {
           jsonData.ifshortlist="false"
       }
+      this.setState({ifshortlisted:!this.state.ifshortlisted})
     console.log(this.state.ifshortlisted)
+    console.log(jsonData.ifshortlist)
     fetch('http://127.0.0.1:8000/first_module/apply/getapplication/', {  // Enter your IP address here
       method: 'POST',
         headers:{
@@ -399,33 +413,40 @@ class Jobdetails extends Component {
       mode: 'cors',
       body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
     })
-    this.setState({'redirect':true})
   }
 
   handleClickFollow() {
-    // jsonData.job_id=this.state.job_id
-    // jsonData.mount="false"
-    // jsonData.type="shortlist"
-    this.state.iffollowed=!this.state.iffollowed
-      // if(this.state.ifshortlisted==true)
-      // {
-      //     jsonData.ifshortlist="true"
-      // }
-      // else
-      // {
-      //     jsonData.ifshortlist="false"
-      // }
-    // console.log(this.state.ifshortlisted)
-    // fetch('http://127.0.0.1:8000/first_module/apply/getapplication/', {  // Enter your IP address here
-    //   method: 'POST',
-    //     headers:{
-    //     'Content-Type': 'application/json',
-    //   },
-    //   mode: 'cors',
-    //   body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
-    // })
-    this.setState({'redirect':true})
+    jsonData.job_id=this.state.job_id
+    jsonData.mount="false"
+    jsonData.type="follow"
+    // this.state.iffollowed=!this.state.iffollowed
+      console.log(this.state.iffollowed)
+      if(this.state.iffollowed==false)
+      {
+          jsonData.iffollow="true"
+      }
+      else
+      {
+          jsonData.iffollow="false"
+      }
+      this.setState({iffollowed:!this.state.iffollowed})
+      console.log(this.state.iffollowed)
+      console.log(jsonData.iffollow)
+    fetch('http://127.0.0.1:8000/first_module/apply/getapplication/', {  // Enter your IP address here
+      method: 'POST',
+        headers:{
+        'Content-Type': 'application/json',
+      },
+      mode: 'cors',
+      body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
+    })
   }
+
+  handleClickVisit() {
+    const concatlink = "/empprofile?" + this.state.empid;
+    this.setState({'navlink':concatlink})
+    this.setState({'redirect':true})
+    }
     render() {
         if (!this.state.DetailsLoaded1 || !this.state.DetailsLoaded2 || !this.state.DetailsLoaded4 || !this.state.DetailsLoaded5 ||!this.state.DetailsLoaded6 ) return <Loader/>
         return (
@@ -471,6 +492,7 @@ class Jobdetails extends Component {
                     {!this.state.ifshortlisted && <button className="job_details_btn" onClick={this.handleClickShortlist}>Shortlist Job</button>}
                     {this.state.iffollowed && <button className="job_details_btn_short" onClick={this.handleClickFollow}>Unfollow Employer</button>}
                     {!this.state.iffollowed && <button className="job_details_btn" onClick={this.handleClickFollow}>Follow Employer</button>}
+                    <button className="job_details_btn" onClick={this.handleClickVisit}>Visit Employer</button>
                     {/*<button className="job_details_btn">Follow Employer</button>*/}
                 </span>
 
@@ -598,6 +620,7 @@ class Jobdetails extends Component {
 
       </Modal>
             <Foot margin_value={40}/>
+            {this.state.redirect && <Navigate to={this.state.navlink}/>}
             </body>
                 </React.Fragment>
         )
