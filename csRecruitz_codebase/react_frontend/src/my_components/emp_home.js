@@ -92,7 +92,9 @@ export class EmpHome extends Component {
         this.setState({'navlink':concatlink})
         this.setState({'redirect':true})
   }
-
+To_Job(event) {
+        window.location.href="/job1";
+}
 handleSearch(event)
 {
     //console.log(event.target.value)
@@ -215,7 +217,7 @@ componentDidMount() {
                 <h4>List of all job posts:</h4>
                 </div>
                 <div>
-                    <button className="btn btn-success" style={{float:"right",left:"64%",marginTop:'-38px',position:"absolute"}}><FaPlus style={{fontSize:"16",fontWeight:"bold",color:"white",marginLeft:"-1px",paddingRight:"5px",marginTop:"-3px"}}/>Add new job post</button>
+                    <button className="btn btn-success" style={{float:"right",left:"64%",marginTop:'-38px',position:"absolute"}} onClick={this.To_Job}><FaPlus style={{fontSize:"16",fontWeight:"bold",color:"white",marginLeft:"-1px",paddingRight:"5px",marginTop:"-3px"}}/>Add new job post</button>
                     <FaSearch style={{fontSize:"24",float:"right",left:"76.5%",marginTop:'-32px',position:"absolute",color:"#29A335"}}/>
                     {/*<Form >*/}
                         {/*<InputLabel id="demo-simple-select-label">Search by keyword</InputLabel>*/}

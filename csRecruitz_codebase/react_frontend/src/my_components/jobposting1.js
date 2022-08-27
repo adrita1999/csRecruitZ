@@ -64,22 +64,21 @@ class Job_1 extends Component {
           if(this.state.input["context"]) {
               str4=this.state.input["context"]
           }
-
           jsonData.j_title=str1
           jsonData.j_cat=str2
           jsonData.j_nat=str3
           jsonData.j_context=str4
 
-          fetch('http://127.0.0.1:8000/first_module/jobexp/addexp/', {  // Enter your IP address here
+          fetch('http://127.0.0.1:8000/jobpost/', {  // Enter your IP address here
 
-      method: 'POST',
+          method: 'POST',
         headers:{
         'Content-Type': 'application/json',
       },
       mode: 'cors',
       body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
     })
-          window.location.href = "/register3"
+          window.location.href = "/job2"
       }
       handleChange(event) {
     let input = this.state.input;
@@ -132,7 +131,7 @@ class Job_1 extends Component {
                 <p className="seems-h1_reg"><b> Create A New Job Post</b></p>
                 <hr/>
 
-                <form onSubmit={this.handleSubmit}>
+                <form onSubmit={this.handleSubmit} >
                     <div className="row" style={{
              marginBottom:5
                }}>
@@ -195,13 +194,19 @@ class Job_1 extends Component {
          }}>
 
                     <div className="form-group" >
-                        <InputLabel htmlFor="desc">Job Context</InputLabel>
+                        <InputLabel htmlFor="desc">Job Context:<sup style={{
+                color:"red",
+                fontSize:16,
+                lineHeight:0,
+                top:-1.4,
+                left:1
+            }}>*</sup></InputLabel>
                         <textarea
                             name="context"
                             onChange={this.handleChange}
                             className="form-control"
                             placeholder="Write something about job context"
-                            id="desc"/>
+                            id="desc" required/>
 
                   </div>
                 </div>
@@ -210,7 +215,8 @@ class Job_1 extends Component {
                         width:"120%"
                     }} >
 
-                        <button className="btn btn-success sub_btn_job1" >Next</button>
+                        {/*<button className="btn btn-success sub_btn_job1" onClick={this.handleSubmit} >Next</button>*/}
+                        <input type="submit" value="Next" className="btn btn-success sub_btn_job1" />
                 </div>
 
         </form>

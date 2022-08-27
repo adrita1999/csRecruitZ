@@ -9,15 +9,13 @@ import Select from "react-select";
 import {InputLabel, ToggleButton, ToggleButtonGroup} from "@mui/material";
 import Loader from "./loader";
 var jsonData = {
-    "pub_name": "",
-    "pub_link": "",
+    "j_edu": "",
+    "j_step": "3",
+    "j_add": "",
+    "j_apply": "",
 
 }
-var jsonData2 ={
-    "lic_name": "",
-    "lic_org": "",
-    "lic_link":"",
-}
+
 
  const dropDownStyle ={
     control: (base, state) => ({
@@ -48,310 +46,36 @@ class Job_3 extends Component {
         this.handleChange=this.handleChange.bind(this);
         this.handleChangeFile=this.handleChangeFile.bind(this);
     }
-    componentDidMount() {
-        console.log("mount hoise");
-        fetch(
-            "http://127.0.0.1:8000/first_module/lic/get_lic_id/")
-
-            .then((res) => res.json())
-            .then((json) => {
-                console.log(json.total_certis);
-                this.setState({
-                    tot_certis:json.total_certis,
-
-                    DetailsLoaded4:true
-                });
 
 
-            })
-
-    }
-    handleClickSkip() {
-       window.location.href="/"
-      }
       handleSubmit(event) {
           event.preventDefault();
-          var str1=this.state.input["pub_name_start"];
-          var str2=""
-          if(this.state.input["pub_link_start"]) {
-              str2=this.state.input["pub_link_start"]
+          var str1=this.state.input["edu"];
+          var str2="";
+          if(this.state.input["add"]) {
+              str2=this.state.input["add"];
           }
-          else str2="?"
-
-          var str3=this.state.input["lic_name_start"];
-          var str4=this.state.input["lic_org_start"];
-          jsonData2.lic_name= str3;
-          jsonData2.lic_org=str4;
-              if(this.state.input["lic_file"]) {
-              var a=parseInt(this.state.tot_certis);
-              var lic_id=a+1;
-              last_lic=lic_id;
-              console.log(
-                  lic_id
-              )
-              var path='license/'+this.state.input["lic_file"].name;
-              console.log(path);
-              storage.ref(path).put(
-                  this.state.input["lic_file"]
-              ).then(snap=>{
-                  storage.ref(path).getDownloadURL().then(url=>{
-              console.log(url);
-              license_links=url;
-              data_sent=true;
-              jsonData2.lic_link=license_links;
-              fetch('http://127.0.0.1:8000/first_module/pub/addlic/', {  // Enter your IP address here
-
-                  method: 'POST',
-                  headers: {
-                      'Content-Type': 'application/json',
-                  },
-                  mode: 'cors',
-                  body: JSON.stringify(jsonData2) // body data type must match "Content-Type" header
-              }).then(dummy=>{
-                  if(1<=this.state.numDivs_2){
-                  var jsonData3={
-                      "lic_name": "",
-                      "lic_org": "",
-                      "lic_link":"",
-                  }
-                  console.log("loop")
-                  var ind1="lic_name_"+0;
-                  var ind2="lic_org_"+0;
-                  var ind3="lic_file_"+0;
-                  jsonData3.lic_name=this.state.input[ind1];
-                  jsonData3.lic_org=this.state.input[ind2];
-
-                  if(this.state.input[ind3]) {
-                      var to_be_inserted = last_lic + 1;
-                      last_lic = to_be_inserted;
-                      console.log(last_lic);
-                      var path='license/'+this.state.input[ind3].name;
-                      console.log(path);
-                      storage.ref(path).put(
-                          this.state.input[ind3]
-                      ).then(snap => {
-                          storage.ref(path).getDownloadURL().then(url => {
-                                  console.log(url);
-                                  license_links = url;
-                                  data_sent = true;
-                                  jsonData3.lic_link = license_links;
-                                  fetch('http://127.0.0.1:8000/first_module/pub/addlic/', {  // Enter your IP address here
-
-                                      method: 'POST',
-                                      headers: {
-                                          'Content-Type': 'application/json',
-                                      },
-                                      mode: 'cors',
-                                      body: JSON.stringify(jsonData3) // body data type must match "Content-Type" header
-                                  }).then(dummy=>{
-                  if(2<=this.state.numDivs_2){
-                  var jsonData3={
-                      "lic_name": "",
-                      "lic_org": "",
-                      "lic_link":"",
-                  }
-                  console.log("loop")
-                  var ind1="lic_name_"+1;
-                  var ind2="lic_org_"+1;
-                  var ind3="lic_file_"+1;
-                  jsonData3.lic_name=this.state.input[ind1];
-                  jsonData3.lic_org=this.state.input[ind2];
-
-                  if(this.state.input[ind3]) {
-                      var to_be_inserted = last_lic + 1;
-                      last_lic = to_be_inserted;
-                      console.log(last_lic);
-                      var path='license/'+this.state.input[ind3].name;
-                      console.log(path);
-                      storage.ref(path).put(
-                          this.state.input[ind3]
-                      ).then(snap => {
-                          storage.ref(path).getDownloadURL().then(url => {
-                                  console.log(url);
-                                  license_links = url;
-                                  data_sent = true;
-                                  jsonData3.lic_link = license_links;
-                                  fetch('http://127.0.0.1:8000/first_module/pub/addlic/', {  // Enter your IP address here
-
-                                      method: 'POST',
-                                      headers: {
-                                          'Content-Type': 'application/json',
-                                      },
-                                      mode: 'cors',
-                                      body: JSON.stringify(jsonData3) // body data type must match "Content-Type" header
-                                  }).then(dummy=>{
-                  if(3<=this.state.numDivs_2){
-                  var jsonData3={
-                      "lic_name": "",
-                      "lic_org": "",
-                      "lic_link":"",
-                  }
-                  console.log("loop")
-                  var ind1="lic_name_"+2;
-                  var ind2="lic_org_"+2;
-                  var ind3="lic_file_"+2;
-                  jsonData3.lic_name=this.state.input[ind1];
-                  jsonData3.lic_org=this.state.input[ind2];
-
-                  if(this.state.input[ind3]) {
-                      var to_be_inserted = last_lic + 1;
-                      last_lic = to_be_inserted;
-                      console.log(last_lic);
-                      var path='license/'+this.state.input[ind3].name;
-                      console.log(path);
-                      storage.ref(path).put(
-                          this.state.input[ind3]
-                      ).then(snap => {
-                          storage.ref(path).getDownloadURL().then(url => {
-                                  console.log(url);
-                                  license_links = url;
-                                  data_sent = true;
-                                  jsonData3.lic_link = license_links;
-                                  fetch('http://127.0.0.1:8000/first_module/pub/addlic/', {  // Enter your IP address here
-
-                                      method: 'POST',
-                                      headers: {
-                                          'Content-Type': 'application/json',
-                                      },
-                                      mode: 'cors',
-                                      body: JSON.stringify(jsonData3) // body data type must match "Content-Type" header
-                                  }).then(dummy=>{
-                  if(4<=this.state.numDivs_2){
-                  var jsonData3={
-                      "lic_name": "",
-                      "lic_org": "",
-                      "lic_link":"",
-                  }
-                  console.log("loop")
-                  var ind1="lic_name_"+3;
-                  var ind2="lic_org_"+3;
-                  var ind3="lic_file_"+3;
-                  jsonData3.lic_name=this.state.input[ind1];
-                  jsonData3.lic_org=this.state.input[ind2];
-
-                  if(this.state.input[ind3]) {
-                      var to_be_inserted = last_lic + 1;
-                      last_lic = to_be_inserted;
-                      console.log(last_lic);
-                      var path='license/'+this.state.input[ind3].name;
-                      console.log(path);
-                      storage.ref(path).put(
-                          this.state.input[ind3]
-                      ).then(snap => {
-                          storage.ref(path).getDownloadURL().then(url => {
-                                  console.log(url);
-                                  license_links = url;
-                                  data_sent = true;
-                                  jsonData3.lic_link = license_links;
-                                  fetch('http://127.0.0.1:8000/first_module/pub/addlic/', {  // Enter your IP address here
-
-                                      method: 'POST',
-                                      headers: {
-                                          'Content-Type': 'application/json',
-                                      },
-                                      mode: 'cors',
-                                      body: JSON.stringify(jsonData3) // body data type must match "Content-Type" header
-                                  })
-                              }
-                          )
-                      })
-                  }
-
+          var str3="";
+          if(this.state.input["apply"]) {
+              str3=this.state.input["apply"];
           }
-              })
-                              }
-                          )
-                      })
-                  }
 
-          }
-              })
-                              }
-                          )
-                      })
-                  }
-
-          }
-              })
-                              }
-                          )
-                      })
-                  }
-
-          }
-              })
-               }
-              )})
-
-          }
-          for(let i=0;i<this.state.numDivs;i++) {
-              var ind1="pub_name_"+i;
-              var ind2="pub_link_"+i;
-
-              str1=str1+"#"+this.state.input[ind1]
-
-              if(this.state.input[ind2]) {
-                  str2 = str2 + " " + this.state.input[ind2]
-              }
-              else str2=str2+" "+'?'
-          }
-         // for(let i=0;i<this.state.numDivs_2;i++) {
-          //     var ind3="lic_name_"+i;
-          //     var ind4="lic_org_"+i;
-          //
-          //     str3=str3+"#"+this.state.input[ind3]
-          //     str4=str4+"#"+this.state.input[ind4]
-          //
-          // }
-          console.log(str1)
-          console.log(str2)
-
-          jsonData.pub_name=str1
-          jsonData.pub_link=str2
-
-          var license_links=""
-          var last_lic=0;
-          var data_sent=false;
-
-          // for(let i=0;i<this.state.numDivs_2;i++) {
-          //     var ind="lic_file_"+i;
-          //     if(this.state.input[ind]) {
-          //         var to_be_inserted=last_lic+1;
-          //         last_lic=to_be_inserted;
-          //         console.log(last_lic);
-          //         var path='license/'+last_lic+'.pdf';
-          //     console.log(path);
-          //     storage.ref(path).put(
-          //         this.state.input[ind]
-          //     );
-          //     storage.ref(path).getDownloadURL().then(url=>{
-          //         console.log(url);
-          //     license_links=license_links+" "+url;
-          //     }
-          //     )
-          //     }
-          //
-          //
-          // }
-          // console.log(license_links);
+          jsonData.j_edu=str1;
+          jsonData.j_add=str2;
+          jsonData.j_apply=str3;
 
 
 
-          // if(data_sent===true) {
-          //
-          // }
-          fetch('http://127.0.0.1:8000/first_module/pub/addpub/', {  // Enter your IP address here
+          fetch('http://127.0.0.1:8000/jobpost/', {  // Enter your IP address here
 
-                  method: 'POST',
-                  headers: {
-                      'Content-Type': 'application/json',
-                  },
-                  mode: 'cors',
-                  body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
-              })
-
-
-          window.location.href = "/"
+      method: 'POST',
+        headers:{
+        'Content-Type': 'application/json',
+      },
+      mode: 'cors',
+      body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
+    })
+          window.location.href = "/emp"
       }
       handleChange(event) {
 
@@ -374,7 +98,7 @@ class Job_3 extends Component {
         //console.log(event.target.files)
   }
     render() {
-         if (!this.state.DetailsLoaded4) return <Loader/>
+
         return(<React.Fragment>
             <Navb/>
             <div >
@@ -398,12 +122,33 @@ class Job_3 extends Component {
          }}>
 
                     <div className="form-group" >
-                        <InputLabel htmlFor="proj_desc">Educational Requirements</InputLabel>
+                        <InputLabel htmlFor="proj_desc">Educational Requirements:<sup style={{
+                color:"red",
+                fontSize:16,
+                lineHeight:0,
+                top:-1.4,
+                left:1
+            }}>*</sup></InputLabel>
                         <textarea
-                            name="job_res"
+                            name="edu"
                             onChange={this.handleChange}
                             className="form-control"
-                            placeholder="Write Something About Job responsibilities"
+                            placeholder="Mention Educational Requirements"
+                            id="job_res" required/>
+
+                  </div>
+                </div>
+                     <div className="row" style={{
+             marginBottom:5
+         }}>
+
+                    <div className="form-group" >
+                        <InputLabel htmlFor="proj_desc">Additional Requirements:</InputLabel>
+                        <textarea
+                            name="add"
+                            onChange={this.handleChange}
+                            className="form-control"
+                            placeholder="Mention Additional Requirements"
                             id="job_res"/>
 
                   </div>
@@ -413,27 +158,12 @@ class Job_3 extends Component {
          }}>
 
                     <div className="form-group" >
-                        <InputLabel htmlFor="proj_desc">Additioanl Requirements</InputLabel>
+                        <InputLabel htmlFor="proj_desc">Application Process:</InputLabel>
                         <textarea
-                            name="job_res"
+                            name="apply"
                             onChange={this.handleChange}
                             className="form-control"
-                            placeholder="Write Something About Job responsibilities"
-                            id="job_res"/>
-
-                  </div>
-                </div>
-                     <div className="row" style={{
-             marginBottom:5
-         }}>
-
-                    <div className="form-group" >
-                        <InputLabel htmlFor="proj_desc">Application Process</InputLabel>
-                        <textarea
-                            name="job_res"
-                            onChange={this.handleChange}
-                            className="form-control"
-                            placeholder="Write Something About Job responsibilities"
+                            placeholder="Mention Application Process"
                             id="job_res"/>
 
                   </div>
@@ -443,7 +173,7 @@ class Job_3 extends Component {
                         width:"120%"
                     }} >
 
-                       <button className="btn btn-success sub_btn_job1" >Finish</button>
+                       <input type="submit" value="Finish" className="btn btn-success sub_btn_job1" />
                 </div>
 
         </form>

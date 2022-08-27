@@ -772,11 +772,11 @@ class postViewsets_for_jobpost(viewsets.ModelViewSet):
                 print("step3")
                 postViewsets_for_jobpost.j_edu = request.data["j_edu"]
                 if request.data["j_add"]!="":
-                    postViewsets_for_jobpost.j_add = int(request.data["j_add"])
+                    postViewsets_for_jobpost.j_add = (request.data["j_add"])
                 else:
                     postViewsets_for_jobpost.j_add =None
                 if request.data["j_apply"]!="":
-                    postViewsets_for_jobpost.j_apply = int(request.data["j_apply"])
+                    postViewsets_for_jobpost.j_apply = (request.data["j_apply"])
                 else:
                     postViewsets_for_jobpost.j_apply =None
 
@@ -796,7 +796,7 @@ class postViewsets_for_jobpost(viewsets.ModelViewSet):
                                    required_experience=postViewsets_for_jobpost.j_exp,vacancies=postViewsets_for_jobpost.j_vacancy,
                                    job_context=postViewsets_for_jobpost.j_context,job_nature=postViewsets_for_jobpost.j_nat,
                                    job_responsibilities=postViewsets_for_jobpost.j_res,edu_requirement=postViewsets_for_jobpost.j_edu,
-                                   additional_requirements=postViewsets_for_jobpost.j_add,application_process=postViewsets_for_jobpost.j_app)
+                                   additional_requirements=postViewsets_for_jobpost.j_add,application_process=postViewsets_for_jobpost.j_apply)
                 newpost.save()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
