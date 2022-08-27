@@ -374,6 +374,7 @@ class UserProfessional extends Component {
                             this.state.projects.map((proj) => {
                                 return(
                                 <li><b className="seems-h1"> {proj.project_name}</b>
+                                    <br/><small>{proj.language}</small>
                                     <p>{proj.project_short_desc}</p>
 
                                     <HiExternalLink size={'1.5em'}/><a href={proj.project_link}
@@ -402,7 +403,7 @@ class UserProfessional extends Component {
                                 <HiExternalLink size={'1.5em'}/><a href={pub.publication_link}
                                                                    style={{
                                                                        marginLeft: 2
-                                                                   }}>{pub.publication_name}</a>
+                                                                   }}>{pub.publication_name}</a> , {pub.venue}, {pub.publication_year}
                             </li>
                                     )})
                         }
