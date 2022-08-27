@@ -25,7 +25,7 @@ class Jobseeker(User):
     father_name = models.CharField(max_length=40, null=True)
     mother_name = models.CharField(max_length=40, null=True)
     self_desc = models.CharField(max_length=200, null=True)
-    propic = models.ImageField(upload_to='images', null=True)
+    propic = models.TextField(null=True)
     date_of_birth = models.DateField()
     nationality = models.CharField(max_length=20)
     gender = models.CharField(max_length=20,null=True)

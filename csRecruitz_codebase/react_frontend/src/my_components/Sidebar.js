@@ -15,10 +15,10 @@ class Sidebar extends Component {
 
             <div className="sidebar">
                 <a className={this.pathaname==='/dashboard'?"active":""} href="/dashboard" >Personal Information</a>
-                <a  href="/">Upload Resume</a>
+
                 <a className={this.pathaname==='/professional'?"active":""} href="/professional" >Professional Information</a>
-                <a  href="/applied">Applied Jobs</a>
-                <a  href="/shortlisted">Shortlisted Jobs</a>
+                <a className={this.pathaname==='/applied'?"active":""} href="/applied">Applied Jobs</a>
+                <a  className={this.pathaname==='/shortlisted'?"active":""} href="/shortlisted">Shortlisted Jobs</a>
             </div>
         )
     }

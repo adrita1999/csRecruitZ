@@ -7,7 +7,7 @@ import Foot from "./Foot";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import {TypeAnimation} from 'react-type-animation';
+import TypeAnimation from 'react-type-animation';
 
 
 import {storage} from "./Firebase";
@@ -46,6 +46,7 @@ var jsonData = {
     "thana":"",
     "dis":"",
     "div":"",
+    "pic":"",
     "field":"",
     "pref_org":"",
     "pref_nat":"",
@@ -107,6 +108,7 @@ class Register extends  Component {
     super();
     this.state = {
       input: {},
+        image:"",
       errors: {},
         redirect:false,
         signinopen:false,
@@ -122,6 +124,7 @@ class Register extends  Component {
     this.handleChangeDropNat=this.handleChangeDropNat.bind(this);
     this.handleChangeDropOrg=this.handleChangeDropOrg.bind(this);
     this.handleChangeDropField=this.handleChangeDropField.bind(this);
+    this.handleChangeImage=this.handleChangeImage.bind(this);
   }
 componentDidMount() {
         console.log("mount hoise")
@@ -133,10 +136,32 @@ componentDidMount() {
     //         console.log(url);
     //     }
     // )
-    storage.ref("pdfs/temp.pdf").getDownloadURL().then(url=>{
-          console.log(url);
-          this.setState({pdfpath:url});
-        })
+
+    }
+    handleChangeImage(event) {
+
+        if(event.target.files[0]) {
+            console.log("resumeeeeeeee")
+              var path='images/'+event.target.files[0].name;
+              var link_to_image="";
+              storage.ref(path).put(
+                  event.target.files[0]
+              ).then(snap => {
+                      storage.ref(path).getDownloadURL().then(url => {
+                          console.log(url);
+                          link_to_image=url;
+
+                      this.setState({
+                       image:link_to_image,
+                })
+
+                      })
+
+                  }
+              )
+          }
+
+
     }
 handleChange(event) {
     let input = this.state.input;
@@ -264,6 +289,9 @@ handleChange(event) {
         }
         if(this.state.input["pref_sal"]) {
             jsonData.pref_sal=this.state.input["pref_sal"];
+        }
+        if(this.state.image!=="") {
+            jsonData.pic=this.state.image;
         }
 
 
@@ -528,7 +556,7 @@ handleChange(event) {
                         <input
                             type="file"
                             name="pic"
-
+                            onChange={this.handleChangeImage}
                             accept=".png, .jpg, .jpeg"
                             className="form-control"
                             placeholder="Add a profile picture"
@@ -686,7 +714,7 @@ handleChange(event) {
             </div>
                 <div>
 
-   <a href={this.state.pdfpath} target="_blank">temp.pdf</a>
+  
                     </div>
             </div>
                 </div>

@@ -875,6 +875,10 @@ class jobseekerViewsets(viewsets.ModelViewSet):
                 pref_sal = request.data['pref_sal']
             else:
                 pref_sal = None
+            if request.data['pic']!="":
+                pic=request.data['pic']
+            else:
+                pic=None
             if len(User.objects.all())==0:
                 id=0
             else:
@@ -885,7 +889,7 @@ class jobseekerViewsets(viewsets.ModelViewSet):
             print(reg_id)
             user=Jobseeker(user_id=id,name=name,email=email,password=password,thana=thana,district=dis,division=div,father_name=father,
                            mother_name=mother,date_of_birth=dob,self_desc=desc,nationality=nat,nid_number=nid,field=field,pref_sal=pref_sal,
-                           pref_job_ntr=pref_nat,pref_org_type=pref_org,gender=gender,contact_no=mob,street=street)
+                           pref_job_ntr=pref_nat,pref_org_type=pref_org,gender=gender,contact_no=mob,street=street,propic=pic)
             user.save()
             print(request.data)
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -2384,7 +2388,7 @@ user1 = Jobseeker(user_id=1, name="Adrita Hossain Nakshi", email="adrita_99@yaho
                   mother_name="Dr. Zennat Ferdousi", date_of_birth="1999-02-06",
                   self_desc="I am a CS under-graduate. I love programmimg and I love computers too. Like Steve Jobs, I like to believe 'Everybody should learn to program a computer, because it teaches you how to think.'",
                   nationality="Bangladeshi", nid_number="12345678", field="Research and Development", pref_sal="30000",
-                  pref_job_ntr="Full-time", pref_org_type="NGO", propic="propics_input/nakshi.jpg",
+                  pref_job_ntr="Full-time", pref_org_type="NGO", propic="https://firebasestorage.googleapis.com/v0/b/csrecruitz-fd59e.appspot.com/o/images%2Fnakshi.jpg?alt=media&token=0fd92bf9-8418-432c-9d7c-9a03291ab619",
                   resume="resumes_input/nakshi.docx")
 user1.save()
 user2 = Jobseeker(user_id=2, name="Simantika Bhattacharjee Dristi", email="1705029@ugrad.cse.buet.ac.bd", password=pas_temp, thana="Lalbag",
@@ -2401,7 +2405,7 @@ emp2 = Employer(user_id=4, name="Kona SL", email="kona@yahoo.com", password="123
                 division="Dhaka",
                 org_type="NGO", establishment_year="2001")
 emp2.save()
-emp3 = Employer(user_id=5, name="Data Edge Ltd", email="dataedge@gmail.com", password="1234", district="Sunamganj",
+emp3 = Employer(user_id=5, name="Data Edge Ltd", email="dataedge@gmail.com", password=pas_temp, district="Sunamganj",
                 division="Sylhet", org_type="NGO", establishment_year="1996")
 emp3.save()
 emp4 = Employer(user_id=6, name="Samsung", email="samsung@gmail.com", password="1234", district="Cox's Bazar",

@@ -30,8 +30,6 @@ router.register(r'first_module/pub', pubViewsets)
 router.register(r'first_module/lic', LicViewsets)
 router.register(r'first_module/apply', applicationViewsets)
 
-
-
 router.register(r'first_module/appliedjobs', appliedjobViewsets)
 router.register(r'first_module/shortlistedjobs', shortlistedjobViewsets)
 

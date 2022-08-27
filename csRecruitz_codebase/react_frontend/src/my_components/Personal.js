@@ -3,9 +3,9 @@ import {Animated} from "react-animated-css";
 import './Personal.css';
 import {AiFillEdit} from 'react-icons/ai'
 import pic from './images/pp.JPG'
-import {TypeAnimation} from 'react-type-animation';
+import TypeAnimation from 'react-type-animation';
 
-
+import {storage} from './Firebase.js';
 import Sidebar from "./Sidebar";
 import Navb from "./Navb";
 import Foot from "./Foot";
@@ -35,6 +35,7 @@ var jsonData = {
     "district":"",
     "division":"",
     "self_desc":"",
+    "iamge":"",
 
   }
 
@@ -67,6 +68,7 @@ class Personal extends Component {
             input:{},
             id:-1,
             DataisLoaded2:false,
+            image_loaded:false,
             datas:[],
         };
         this.handleClick=this.handleClick.bind(this);
@@ -92,6 +94,11 @@ class Personal extends Component {
                     
                 })
            ;
+        // storage.ref("images/nakshi.jpg").getDownloadURL().then(url=>{
+        //   console.log(url);
+        //   this.setState({iamge:url});
+        //   this.setState({image_loaded:true});
+        // })
             // console.log(this.state.id)
         // fetch(
         //     "http://127.0.0.1:8000/first_module/jobseeker/1/")
@@ -216,7 +223,7 @@ class Personal extends Component {
       
    render() {
     const { DataisLoaded, items } = this.state;
-    if (!this.state.DataisLoaded) return <Loader/>
+    if (!this.state.DataisLoaded ) return <Loader/>
     return (
         <React.Fragment>
         <body>
@@ -231,7 +238,7 @@ class Personal extends Component {
                 flexFlow:"row"
             }}>
             
-                    <img  src="/nakshi.jpg" alt="Profile Pic" style={{
+                    <img  src={items.propic} alt="Profile Pic" style={{
                         height:120,
                         width:140,
                         borderRadius:"50%"
