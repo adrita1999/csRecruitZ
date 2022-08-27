@@ -3,7 +3,7 @@ import {Animated} from "react-animated-css";
 import './Personal.css';
 import {AiFillEdit} from 'react-icons/ai'
 import pic from './images/pp.JPG'
-import TypeAnimation from 'react-type-animation';
+import {TypeAnimation} from 'react-type-animation';
 
 import {storage} from './Firebase.js';
 import Sidebar from "./Sidebar";
@@ -18,6 +18,7 @@ import Form from "react-bootstrap/Form";
 import InputLabel from "@mui/material/InputLabel";
 import { fontSize } from "@mui/system";
 
+var typestring="abcd"
 var typestring1=""
 var typestring2=""
 var typestring3=""
@@ -71,6 +72,7 @@ class Personal extends Component {
             input:{},
             id:-1,
             DataisLoaded2:false,
+            DataisLoaded3:false,
             image_loaded:false,
             datas:[],
         };
@@ -91,9 +93,15 @@ class Personal extends Component {
                     this.setState({items: json.data,
                                     DataisLoaded: true
                                 })
-                    console.log(this.state)
-                    // console.log(json.data);
-                    console.log(json.response);
+                    // console.log(this.state)
+                    console.log(json.data.self_desc);
+                    const desc = json.data.self_desc
+                    const splitid = desc.split(".")
+                    typestring1 = splitid[0]
+                    typestring2 = splitid[1]
+                    typestring3 = splitid[2]
+                    this.setState({DataisLoaded3: true})
+                    // console.log(json.response);
                     
                 })
            ;
@@ -226,7 +234,7 @@ class Personal extends Component {
       
    render() {
     const { DataisLoaded, items } = this.state;
-    if (!this.state.DataisLoaded ) return <Loader/>
+    if (!this.state.DataisLoaded || !this.state.DataisLoaded3) return <Loader/>
     return (
         <React.Fragment>
         <body>
@@ -259,7 +267,8 @@ class Personal extends Component {
                     
             <TypeAnimation
             cursor={true}
-            sequence={[`${typestring}`,3000,'Research and Development Engineer', 3000, 'Skilled in Cpp, Java and more ',3000,'10 years of work experience',3000,'']}
+            // sequence={[`${typestring}`,3000,'Research and Development Engineer', 3000, 'Skilled in Cpp, Java and more ',3000,'10 years of work experience',3000,'']}
+            sequence={[`${typestring1}`,3000,`${typestring2}`, 3000,`${typestring3}`,3000,'']}
             wrapper="h6"
             repeat={Infinity}/>
             </div>

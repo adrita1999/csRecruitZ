@@ -7,7 +7,7 @@ import Foot from "./Foot";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import TypeAnimation from 'react-type-animation';
+import {TypeAnimation} from 'react-type-animation';
 import Form from "react-bootstrap/Form";
 const style = {
   position: 'absolute',
