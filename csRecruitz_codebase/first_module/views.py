@@ -1224,7 +1224,7 @@ class jobexpViewsets(viewsets.ModelViewSet):
     ############################kora hoynaiiiii#############################33
     queryset = JobExperience.objects.all()
     serializer_class = jobexpSerializer
-
+    user_er_id=-1
     @action(methods=['post', 'get'], detail=False, url_path='addexp')
     def add_exp(self, request):
         if request.method == 'POST':
@@ -1303,6 +1303,35 @@ class jobexpViewsets(viewsets.ModelViewSet):
                 'status': status.HTTP_204_NO_CONTENT,
                 'data': serializer.data,
             })
+
+    @action(methods=['post', 'get'], detail=False, url_path='get_info_user_emp')
+    def user_emp_prof(self,request):
+        if request.method == 'POST':
+            jobexpViewsets.user_er_id=request.data['id']
+            print(jobexpViewsets.user_er_id)
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            objs = JobExperience.objects.filter(user_id=jobexpViewsets.user_er_id)
+            serializer = jobexpSerializer(objs, many=True)
+            objs2 = Project.objects.filter(user_id=jobexpViewsets.user_er_id)
+            serializer2 = projSerializer(objs2, many=True)
+            objs3 = Publication.objects.filter(user_id=jobexpViewsets.user_er_id)
+            serializer3 = pub_Serializer(objs3, many=True)
+            objs4 = JobseekerCertificate.objects.filter(user_id=jobexpViewsets.user_er_id)
+            serializer4 = LicSerializer(objs4, many=True)
+            objs5=Jobseeker.objects.filter(user_id=jobexpViewsets.user_er_id)
+            serializer5=jobseekerSerializer(objs5,many=True)
+            return Response({
+                'status': status.HTTP_204_NO_CONTENT,
+                'data': serializer.data,
+                'projects':serializer2.data,
+                'pubs':serializer3.data,
+                'lics':serializer4.data,
+                 'items':serializer5.data,
+            })
+
+
+
     def update(self, request, pk=None):
         data_in = request.data
         print(data_in)

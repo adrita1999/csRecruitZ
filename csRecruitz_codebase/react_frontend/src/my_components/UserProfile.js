@@ -3,11 +3,11 @@ import {Animated} from "react-animated-css";
 import './Personal.css';
 import {AiFillEdit} from 'react-icons/ai'
 import pic from './images/pp.JPG'
-import {TypeAnimation} from 'react-type-animation';
+import TypeAnimation from 'react-type-animation';
 
 
 import Sidebar from "./Sidebar";
-import Navb from "./Navb";
+import Nab_emp from "./Nab_emp.js";
 import Foot from "./Foot";
 import Loader from "./loader";
 import Modal from "@mui/material/Modal";
@@ -20,22 +20,7 @@ import { fontSize } from "@mui/system";
 
 
 var jsonData = {
-    "name":"",
-    "age":"",
-    "father_name":"",
-    "mother_name":"",
-    "date_of_birth":"",
-    "gender":"",
-    "nationality":"",
-    "nid_number":"",
-    "mobile":"",
-    "email":"",
-    "street":"",
-    "thana":"",
-    "district":"",
-    "division":"",
-    "self_desc":"",
-
+    "app_id":"",
   }
 
 const style = {
@@ -65,7 +50,9 @@ class UserProfile extends Component {
             DataisLoaded:false,
             editopen:false,
             input:{},
-            id:-1,
+            id:"",
+            app_id:"",
+            path_to_prof:"",
             DataisLoaded2:false,
             datas:[],
         };
@@ -75,24 +62,41 @@ class UserProfile extends Component {
     }
     componentDidMount() {
 
-        fetch(
-            "http://127.0.0.1:8000/first_module/jobseeker/get_id/",{
-            method:"GET"
-                })
-                .then((res) => res.json())
-                .then((json) => {
+        console.log(window.location.href)
+        const url = window.location.href
+        const splitid = url.split("?")
+        const id = splitid[1]
+        this.setState({app_id:id})
+        // console.log(id)
+        jsonData.app_id = id
 
-                    this.setState({items: json.data,
-                                    DataisLoaded: true
-                                })
-                    console.log(this.state)
-                    // console.log(json.data);
-                    console.log(json.response);
-                    
-                })
-           ;
-            
-    
+        fetch('http://127.0.0.1:8000/first_module/apply/get_app_info_emp/', {  // Enter your IP address here
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            mode: 'cors',
+            body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
+        })
+        fetch(
+            "http://127.0.0.1:8000/first_module/apply/get_app_info_emp/")
+
+            .then((res) => res.json())
+            .then((json) => {
+                this.setState({
+
+                    items: json.user,
+                    id:json.user.user_id,
+                    DataisLoaded2: true,
+
+                });
+
+            })
+        // this.setState({"id":this.state.items.user_id});
+        console.log(this.state.id)
+
+
+
     }
     handleClick() {
         this.setState({editopen: true})
@@ -109,15 +113,15 @@ class UserProfile extends Component {
   
    render() {
     const { DataisLoaded, items } = this.state;
-    if (!this.state.DataisLoaded) return <Loader/>
+    if (!this.state.DataisLoaded2) return <Loader/>
     return (
         <React.Fragment>
         <body>
-       <Navb/>
+       <Nab_emp/>
 
        <div className="sidebar">
-            <a className={this.pathaname==='/userprofile'?"active":""} href="/userprofile" >Personal Information</a>
-            <a className={this.pathaname==='/userprofessional'?"active":""} href="/userprofessional" >Professional Information</a>
+            <a className={this.pathaname==='/userprofile'?"active":""}  >Personal Information</a>
+            <a className={this.pathaname==='/userprofessional'?"active":""} href={"/userprofessional?"+this.state.id+"?"+this.state.app_id} >Professional Information</a>
 
 
         </div>
@@ -130,7 +134,7 @@ class UserProfile extends Component {
                 flexFlow:"row"
             }}>
             
-                    <img  src="/nakshi.jpg" alt="Profile Pic" style={{
+                    <img  src={items.propic} alt="Profile Pic" style={{
                         height:120,
                         width:140,
                         borderRadius:"50%"
@@ -242,7 +246,7 @@ class UserProfile extends Component {
             </div>
             </div>
 
-            <div className="row">
+            <div className="row" style={{marginBottom:50}}>
                 {/* <div className="row_custom">
             <button className="custom_btn" onClick={this.handleClick}><AiFillEdit/> Edit Information</button>
                 </div> */}
