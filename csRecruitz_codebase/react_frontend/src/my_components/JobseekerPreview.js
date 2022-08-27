@@ -7,7 +7,7 @@ import Foot from "./Foot";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import {TypeAnimation} from 'react-type-animation';
+import TypeAnimation from 'react-type-animation';
 
 import {GrAttachment} from 'react-icons/gr';
 import {FaMedal} from 'react-icons/fa';
@@ -32,6 +32,13 @@ import TableCell, {tableCellClasses} from "@mui/material/TableCell";
 import {HiExternalLink} from "react-icons/hi";
 import Loader from "./loader";
 import {ImCross} from "react-icons/im";
+var jsonData = {
+    "projs":"",
+    "pubs":"",
+    "lics":"",
+    "extras":"",
+    "resume":""
+  }
 const style = {
   position: 'absolute',
   top: '50%',
@@ -105,42 +112,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     transform: state.selectProps.menuIsOpen ? "rotate(180deg)" : null
    })
 };
-const GenderOptions = [
-    { value: 'Male', label: 'Male' },
-    { value: 'Female', label: 'Female' },
-    { value: 'Others', label: 'Others' }
-    ]
-const CatOptions = [
-    { value: 'Teaching', label: 'Teaching' },
-    { value: 'DevOps', label: 'DevOps' },
-    { value: 'Security', label: 'Security' },
-    { value: 'Research and Development', label: 'Research and Development' },
-    { value: 'Programming', label: 'Programming' },
-  ]
-const NatureOptions = [
-    { value: 'Part-time', label: 'Part-time' },
-    { value: 'Full-time', label: 'Full-time' },
-    { value: 'Remote', label: 'Remote' },
-    { value: 'Freelancing', label: 'Freelancing' }
-    ]
-  const OrgOptions = [
-    { value: 'Government', label: 'Government' },
-    { value: 'Semi Government', label: 'Semi Government' },
-    { value: 'NGO', label: 'NGO' },
-    { value: 'Private Firm', label: 'Private Firm' },
-    { value: 'International Agencies', label: 'International Agencies' }
-  ]
 
-const LocationOptions = [
-    { value: 'Dhaka', label: 'Dhaka' },
-    { value: 'Rajshahi', label: 'Rajshahi' },
-    { value: 'Rangpur', label: 'Rangpur' },
-    { value: 'Sylhet', label: 'Sylhet' },
-    { value: 'Khulna', label: 'Khulna' },
-    { value: 'Chittagong', label: 'Chittagong' },
-    { value: 'Mymensingh ', label: 'Mymensingh ' },
-    { value: 'Barishal', label: 'Barishal' }
-  ]
+let dummy_files=[];
 class JobseekerPreview extends  Component {
     constructor() {
     super();
@@ -150,13 +123,30 @@ class JobseekerPreview extends  Component {
         exps:[],
         pubs:[],
         lics:[],
+        all_projs:[],
+        all_pubs:[],
+        all_lics:[],
+        def_projs:[],
+        def_pubs:[],
+        def_lics:[],
+        selected_projs:[],
+        selected_pubs:[],
+        selected_lics:[],
+        proj_options:[],
+        pub_options:[],
+        lic_options:[],
         skills:[],
         resume:"",
         extras:"",
         extras_array:[],
         extras_name:[],
+        file_array:[],
+        res_array:[],
         DataisLoaded:false,
         DetailsLoaded4:false,
+        DetailsLoaded2:false,
+        DetailsLoaded5:false,
+        DetailsLoaded6:false,
         input: {},
         errors: {},
         redirect:false,
@@ -170,14 +160,18 @@ class JobseekerPreview extends  Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleClose=this.handleClose.bind(this);
     this.handleClose2=this.handleClose2.bind(this);
-    this.handleChangeDropGen=this.handleChangeDropGen.bind(this);
-    this.handleChangeDropDiv=this.handleChangeDropDiv.bind(this);
-    this.handleChangeDropNat=this.handleChangeDropNat.bind(this);
-    this.handleChangeDropOrg=this.handleChangeDropOrg.bind(this);
-    this.handleChangeDropField=this.handleChangeDropField.bind(this);
+    this.ClearAll=this.ClearAll.bind(this);
+    this.handleClickApply=this.handleClickApply.bind(this);
+    this.handleChangeFile=this.handleChangeFile.bind(this);
+    this.handleChangeResume=this.handleChangeResume.bind(this);
+    this.ClearResume=this.ClearResume.bind(this);
+    this.handleChangeDropProj=this.handleChangeDropProj.bind(this);
+    this.handleChangeDropPub=this.handleChangeDropPub.bind(this);
+    this.handleChangeDropLic=this.handleChangeDropLic.bind(this);
     this.SubmitAppli=this.SubmitAppli.bind(this);
     this.SubmitEdit=this.SubmitEdit.bind(this);
   }
+
 componentDidMount() {
         console.log("mount hoise")
 
@@ -231,7 +225,156 @@ componentDidMount() {
                 this.setState({extras_name:name_arrray})
 
             })
+           fetch(
+            "http://127.0.0.1:8000/first_module/proj/get_proj")
+
+            .then((res) => res.json())
+            .then((json) => {
+                this.setState({
+                    all_projs: json.data,
+                    DetailsLoaded2:true
+                });
+
+            console.log(json.data)
+
+            })
+         fetch(
+            "http://127.0.0.1:8000/first_module/pub/get_pub")
+
+            .then((res) => res.json())
+            .then((json) => {
+                this.setState({
+                    all_pubs: json.data,
+                    DetailsLoaded5:true
+                });
+            // console.log(json)
+            // console.log(this.state)
+            })
+        fetch(
+            "http://127.0.0.1:8000/first_module/lic/get_lic")
+
+            .then((res) => res.json())
+            .then((json) => {
+                this.setState({
+                    all_lics: json.data,
+                    DetailsLoaded6:true
+                });
+
+
+
+            })
     }
+ClearResume(event) {
+            this.setState({
+                res_array:[]
+            })
+}
+ClearAll(event) {
+        dummy_files=[];
+        this.setState({
+            file_array:[]
+        })
+}
+handleClickApply() {
+    //jsonData.job_id=this.state.job_id
+    //jsonData.mount="false"
+    //jsonData.type="apply"
+        var str1=""
+        for (let i=0;i<this.state.selected_projs.length;i++) {
+              str1=str1+"#"+this.state.selected_projs[i].value
+          }
+        jsonData.projs=str1;
+        var str2=""
+        for (let i=0;i<this.state.selected_pubs.length;i++) {
+              str2=str2+"#"+this.state.selected_pubs[i].value
+          }
+        jsonData.pubs=str2;
+        var str3=""
+        for (let i=0;i<this.state.selected_lics.length;i++) {
+              str3=str3+"#"+this.state.selected_lics[i].value
+          }
+        jsonData.lics=str3;
+        var str4=""
+        for (let i=0;i<this.state.file_array.length;i++) {
+              str4=str4+" "+this.state.file_array[i].link;
+          }
+        jsonData.extras=str4;
+        var str5=""
+        if(this.state.res_array[0]) {
+             str5= this.state.res_array[0].link;
+        }
+
+
+        jsonData.resume=str5;
+
+    //this.state.ifapplied=!this.state.ifapplied
+    fetch('http://127.0.0.1:8000/first_module/apply/editapplication/', {  // Enter your IP address here
+      method: 'POST',
+        headers:{
+        'Content-Type': 'application/json',
+      },
+      mode: 'cors',
+      body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
+    })
+        window.location.href="/userprev"
+    // this.setState({'redirect':true})
+  }
+handleChangeFile(event) {
+          if (event.target.files[0]) {
+
+              var path='extras/'+event.target.files[0].name;
+              var link_to_pdf="";
+              storage.ref(path).put(
+                  event.target.files[0]
+              ).then(snap => {
+                      storage.ref(path).getDownloadURL().then(url => {
+                          console.log(url);
+                          link_to_pdf=url;
+                          let obj={
+                          "name":event.target.files[0].name,
+                          "link":link_to_pdf
+                        }
+                        dummy_files.push(obj);
+                      this.setState({
+                    file_array:dummy_files,
+                })
+                      console.log(this.state.file_array);
+                      event.target.value=null;
+                      })
+
+                  }
+              )
+          }
+      }
+       handleChangeResume(event) {
+        let dummy_res=[];
+        if(event.target.files[0]) {
+            console.log("resumeeeeeeee")
+              var path='resumes/'+event.target.files[0].name;
+              var link_to_pdf="";
+              storage.ref(path).put(
+                  event.target.files[0]
+              ).then(snap => {
+                      storage.ref(path).getDownloadURL().then(url => {
+                          console.log(url);
+                          link_to_pdf=url;
+                          let obj={
+                          "name":event.target.files[0].name,
+                          "link":link_to_pdf
+                        }
+                        dummy_res.push(obj);
+                      this.setState({
+                    res_array:dummy_res,
+                })
+                          event.target.value=null;
+
+                      })
+
+                  }
+              )
+          }
+
+      }
 handleChange(event) {
     let input = this.state.input;
     input[event.target.name] = event.target.value;
@@ -241,63 +384,119 @@ handleChange(event) {
       input
     });
   }
+
   SubmitAppli(event) {
         this.setState({signinopen: true});
   }
   SubmitEdit(event) {
         this.setState({editopen: true});
+        let proj_dummy=[]
+        let pub_dummy=[]
+        let lic_dummy=[]
+                //console.log("hereee");
+                //console.log(this.state.projects.length);
+                for(let i=0;i<this.state.all_projs.length;i++) {
+                    let obj={
+                "value":this.state.all_projs[i].project_name,
+                 "label":this.state.all_projs[i].project_name
+                }
+                proj_dummy.push(obj);
+                }
+                this.setState({
+                    proj_options:proj_dummy,
+                })
+          for(let i=0;i<this.state.all_pubs.length;i++) {
+                    let obj={
+                "value":this.state.all_pubs[i].publication_name,
+                 "label":this.state.all_pubs[i].publication_name
+                }
+                pub_dummy.push(obj);
+                }
+                this.setState({
+                    pub_options:pub_dummy,
+                })
+          for(let i=0;i<this.state.all_lics.length;i++) {
+                    let obj={
+                "value":this.state.all_lics[i].lic_name,
+                 "label":this.state.all_lics[i].lic_name
+                }
+                lic_dummy.push(obj);
+                }
+                this.setState({
+                    lic_options:lic_dummy,
+                })
+      proj_dummy=[]
+      pub_dummy=[]
+      lic_dummy=[]
+
+          for(let i=0;i<this.state.projects.length;i++) {
+                    let obj={
+                "value":this.state.projects[i].project_name,
+                 "label":this.state.projects[i].project_name
+                }
+                proj_dummy.push(obj);
+                }
+                this.setState({
+                    def_projs:proj_dummy,
+                    selected_projs:proj_dummy,
+                })
+          for(let i=0;i<this.state.pubs.length;i++) {
+                    let obj={
+                "value":this.state.pubs[i].publication_name,
+                 "label":this.state.pubs[i].publication_name
+                }
+                pub_dummy.push(obj);
+                }
+                this.setState({
+                    def_pubs:pub_dummy,
+                    selected_pubs:pub_dummy,
+                })
+          for(let i=0;i<this.state.lics.length;i++) {
+                    let obj={
+                "value":this.state.lics[i].certificate_name,
+                 "label":this.state.lics[i].certificate_name
+                }
+                lic_dummy.push(obj);
+                }
+                this.setState({
+                    def_lics:lic_dummy,
+                    selected_lics:lic_dummy,
+                })
+
+      for(let i=0;i<this.state.extras_array.length;i++) {
+
+       let obj={
+                "link":this.state.extras_array[i],
+                 "name":this.state.extras_name[i],
+                }
+                dummy_files.push(obj);
+                }
+                this.setState({
+                    file_array:dummy_files,
+                })
+      let dummy_resume=[];
+      let obj={
+          "link":this.state.resume,
+          "name":"Resume.pdf",
+
+      }
+      dummy_resume.push(obj)
+      this.setState({
+          res_array:dummy_resume,
+      })
   }
-  handleChangeDropGen = (event) => {
-        let input = this.state.input;
 
-        console.log(event.value);
-        input["gen"]=event.value;
-        this.setState({
-      input
-    });
+  handleChangeDropProj= (selectedOptions) => {
+        console.log(selectedOptions);
+        this.setState({ selected_projs :selectedOptions })
 
-  }
-  handleChangeDropDiv = (event) => {
-        let input = this.state.input;
-        //console.log("heree");
-
-        console.log(event.value);
-        input["div"]=event.value;
-        this.setState({
-      input
-    });
-
-  }
-  handleChangeDropNat = (event) => {
-        let input = this.state.input;
-
-        console.log(event.value);
-        input["pref_nat"]=event.value;
-        this.setState({
-      input
-    });
-
-  }
-  handleChangeDropOrg = (event) => {
-        let input = this.state.input;
-
-        console.log(event.value);
-        input["pref_org"]=event.value;
-        this.setState({
-      input
-    });
-
-  }
-  handleChangeDropField = (event) => {
-        let input = this.state.input;
-
-        console.log(event.value);
-        input["field"]=event.value;
-        this.setState({
-      input
-    });
-
-  }
+      }
+      handleChangeDropPub= (selectedOptions) => {
+         this.setState({ selected_pubs :selectedOptions })
+      }
+      handleChangeDropLic= (selectedOptions) => {
+         this.setState({ selected_lics :selectedOptions })
+      }
 
 
   handleClose() {
@@ -444,7 +643,7 @@ handleChange(event) {
              marginBottom:5
           }}>
               <b>Submitted Resume:</b>
-              {!this.state.resume === null &&
+              {this.state.resume !== null &&
                   <div>
                       <ul style={{
                           listStyle: "None"
@@ -597,7 +796,7 @@ handleChange(event) {
                     <div className="col-sm-12">
                         <div className="form-group">
                             <InputLabel style={{color:"black" ,fontWeight:"Bold", fontSize:"15px", marginBottom:"10px" }}  for="name">Select Projects that you want to highlight:</InputLabel>
-                            <Select name="proj" id="proj" styles={dropDownStyle} options={this.state.proj_options} onChange={this.handleChangeDropProj} placeholder="Enter Projects" isMulti openMenuOnFocus isClearable />
+                            <Select name="proj" id="proj" styles={dropDownStyle} options={this.state.proj_options} defaultValue={this.state.def_projs} onChange={this.handleChangeDropProj} placeholder="Enter Projects" isMulti openMenuOnFocus isClearable />
                         </div>
                     </div>
 
@@ -609,7 +808,7 @@ handleChange(event) {
                     <div className="col-sm-12">
                         <div className="form-group">
                             <InputLabel style={{color:"black" ,fontWeight:"Bold", fontSize:"15px", marginBottom:"10px" }}  for="name">Select Publications that you want to highlight:</InputLabel>
-                            <Select name="pub" id="pub" styles={dropDownStyle} options={this.state.pub_options} onChange={this.handleChangeDropPub} placeholder="Enter Publications"  isMulti openMenuOnFocus isClearable />
+                            <Select name="pub" id="pub" styles={dropDownStyle} options={this.state.pub_options} defaultValue={this.state.def_pubs} onChange={this.handleChangeDropPub} placeholder="Enter Publications"  isMulti openMenuOnFocus isClearable />
                         </div>
                     </div>
 
@@ -621,7 +820,7 @@ handleChange(event) {
                     <div className="col-sm-12">
                         <div className="form-group">
                             <InputLabel style={{color:"black" ,fontWeight:"Bold", fontSize:"15px", marginBottom:"10px" }}  for="name">Select Credentials that you want to highlight:</InputLabel>
-                            <Select name="lic" id="lic" styles={dropDownStyle} options={this.state.lic_options} onChange={this.handleChangeDropLic} placeholder="Enter Credentials" isMulti openMenuOnFocus isClearable />
+                            <Select name="lic" id="lic" styles={dropDownStyle} options={this.state.lic_options} defaultValue={this.state.def_lics} onChange={this.handleChangeDropLic} placeholder="Enter Credentials" isMulti openMenuOnFocus isClearable />
                         </div>
                     </div>
 
@@ -641,20 +840,20 @@ handleChange(event) {
                             placeholder="Upload Credentials"
                             id="extra_file"/>
                         </div>
-                        {/*{this.state.file_array.map((files,index) => {*/}
+                        {this.state.file_array.map((files,index) => {
 
-                        {/*        { if(index===0) return(*/}
-                        {/*        <div style={{marginTop:10}}><div><a href={files.link} target="_blank">{files.name}</a></div><button className="clear_btn" onClick={this.ClearAll}><ImCross className="cross"/>Clear All</button></div>*/}
-                        {/*            )*/}
-                        {/*        }*/}
-                        {/*    { if(index!==0) return(*/}
-                        {/*        <div style={{marginTop:10}}><a href={files.link} target="_blank">{files.name}</a></div>*/}
-                        {/*            )*/}
-                        {/*    }*/}
+                                { if(index===0) return(
+                                <div style={{marginTop:10}}><div><a href={files.link} target="_blank">{files.name}</a></div><button className="clear_btn" onClick={this.ClearAll}><ImCross className="cross"/>Clear All</button></div>
+                                    )
+                                }
+                            { if(index!==0) return(
+                                <div style={{marginTop:10}}><a href={files.link} target="_blank">{files.name}</a></div>
+                                    )
+                            }
 
-                        {/*})*/}
+                        })
 
-                        {/*}*/}
+                        }
                     </div>
 
                 </div>
@@ -674,20 +873,20 @@ handleChange(event) {
 
                             id="cv"/>
                         </div>
-                        {/*{this.state.res_array.map((files,index) => {*/}
+                        {this.state.res_array.map((files,index) => {
 
-                        {/*        { if(index===0) return(*/}
-                        {/*            <div style={{marginTop:10}}><div><a href={files.link} target="_blank">{files.name}</a></div><button className="clear_btn" onClick={this.ClearResume}><ImCross className="cross"/>Clear</button></div>*/}
-                        {/*            )*/}
-                        {/*        }*/}
-                        {/*    { if(index!==0) return(*/}
-                        {/*        <div style={{marginTop:10}}><a href={files.link} target="_blank">{files.name}</a></div>*/}
-                        {/*            )*/}
-                        {/*    }*/}
+                                { if(index===0) return(
+                                    <div style={{marginTop:10}}><div><a href={files.link} target="_blank">{files.name}</a></div><button className="clear_btn" onClick={this.ClearResume}><ImCross className="cross"/>Clear</button></div>
+                                    )
+                                }
+                            { if(index!==0) return(
+                                <div style={{marginTop:10}}><a href={files.link} target="_blank">{files.name}</a></div>
+                                    )
+                            }
 
-                        {/*})*/}
+                        })
 
-                        {/*}*/}
+                        }
                     </div>
 
                 </div>

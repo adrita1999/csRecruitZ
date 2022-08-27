@@ -161,7 +161,6 @@ class Jobdetails extends Component {
       }
       handleChangeFile(event) {
           if (event.target.files[0]) {
-              console.log("extrasssssssss");
 
               var path='extras/'+event.target.files[0].name;
               var link_to_pdf="";

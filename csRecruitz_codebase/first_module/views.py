@@ -679,7 +679,7 @@ class postViewsets_for_jobpost(viewsets.ModelViewSet):
     @action(methods=['post', 'get'], detail=False, url_path='empjobs')
     def get_all_jobs_emp(self, request):
         global logged_in_id
-        emp_id=3
+        emp_id=logged_in_id
         if request.method == 'POST':
             postViewsets_for_jobpost.search_str=request.data["search_str"]
 
@@ -1625,6 +1625,78 @@ class applicationViewsets(viewsets.ModelViewSet):
                 'extras' :obj[0].extra_certificates,
             })
 
+    @action(methods=['post', 'get'], detail=False, url_path='editapplication')
+    def edit_apply(self, request):
+        global logged_in_id
+        if logged_in_id != -1:
+            logged_user_id = logged_in_id
+        else:
+            logged_user_id = 1
+        if request.method == 'POST':
+            print(request.data)
+            proj_list = request.data['projs'].split("#")
+            proj_id_list = ""
+            pub_id_list = ""
+            lic_id_list = ""
+            pub_list = request.data['pubs'].split("#")
+            lic_list = request.data['lics'].split("#")
+            for i in range(1, len(proj_list)):
+                objs = Project.objects.filter(
+                    project_name=proj_list[i]
+                )
+                print("etaaaaaaaaa" + proj_list[i])
+                print(len(objs))
+                proj_id = objs[0].project_id
+
+                print(proj_id)
+                print("idddddddddddd" + str(proj_id))
+                proj_id_list = proj_id_list + "#" + str(proj_id)
+
+            for i in range(1, len(pub_list)):
+                objs = Publication.objects.filter(
+                    publication_name=pub_list[i]
+                )
+                pub_id = objs[0].publication_id
+                pub_id_list = pub_id_list + "#" + str(pub_id)
+
+            for i in range(1, len(lic_list)):
+                objs = LicenseCertificate.objects.filter(
+                    certificate_name=lic_list[i]
+                )
+                lic_id = objs[0].certificate_id
+                lic_id_list = lic_id_list + "#" + str(lic_id)
+
+            allapplication = JobApplication.objects.all()
+            app_id = 1
+
+            if len(allapplication) == 0:
+                app_id = 1
+            else:
+                apps = JobApplication.objects.filter().order_by('-application_id')
+                # print(apps[0].application_id)
+                app_id = int(apps[0].application_id)
+            t=JobApplication.objects.filter(application_id=app_id)
+            js=int(t[0].newjobpost_id_id)
+            now = datetime.now()
+            current_time = now.strftime("%H:%M:%S")
+            print("Current Time =", current_time)
+            todaydate = datetime.today().strftime('%Y-%m-%d')
+            print(app_id)
+            if request.data['resume'] == "":
+                res = None
+            else:
+                res = request.data['resume']
+
+            #applicationViewsets.job_id = int(request.data['job_id'])
+            application = JobApplication(application_id=int(app_id), user_id_id=int(logged_user_id),
+                                         newjobpost_id_id=js, apply_date=todaydate,
+                                         apply_time=current_time, highlighted_projects=proj_id_list
+                                         , highlighted_publications=pub_id_list, highlighted_lics=lic_id_list,
+                                         extra_certificates=request.data['extras'], resume_link=res)
+            application.save()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 class appliedjobViewsets(viewsets.ModelViewSet):
     global logged_in_id
@@ -1860,7 +1932,8 @@ class employerViewsets(viewsets.ModelViewSet):
         print("if er age")
         if request.method == 'GET':
             print("getttttt")
-            empid = 3
+            global logged_in_id
+            empid = logged_in_id
             emp = Employer.objects.filter(user_ptr_id=empid)
             serializer = employerSerializer(emp, many=True)
             # print(serializer.data)
