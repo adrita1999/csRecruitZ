@@ -16,7 +16,9 @@ import Register_4 from "./my_components/Register_4";
 import RegisterEmp from "./my_components/Register_emp"
 import Appliedjoblist from "./my_components/appliedjoblist";
 import Companylist from "./my_components/companylist";
-
+import Job_1 from "./my_components/jobposting1";
+import Job_2 from "./my_components/jobposting2";
+import Job_3 from "./my_components/jobposting3";
 import Home from "./my_components/Home";
 import EmpHome from "./my_components/emp_home";
 import EmpProfile from "./my_components/emp_profile";
@@ -43,8 +45,13 @@ root.render(
         <Route path="/register2" element={< Register_2/>} />
         <Route path="/register3" element={< Register_3/>} />
         <Route path="/register4" element={< Register_4/>} />
+        <Route path="/register2" element={< Register_2/>} />
+        <Route path="/register3" element={< Register_3/>} />
+        <Route path="/register4" element={< Register_4/>} />
         <Route path="/register_emp" element={< RegisterEmp/>} />
-
+        <Route path="/job1" element={< Job_1/>} />
+        <Route path="/job2" element={< Job_2/>} />
+        <Route path="/job3" element={< Job_3/>} />
         <Route path="/jobdetails" element={< Jobdetails/>} />
         <Route path="/applied" element={<Appliedjoblist/>} />
         <Route path="/shortlisted" element={<Shortlistedjoblist/>} />
