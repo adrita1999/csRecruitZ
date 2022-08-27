@@ -8,7 +8,7 @@ import {FaRegClock} from 'react-icons/fa';
 import {FaRegMoneyBillAlt} from 'react-icons/fa';
 import {FaRegCalendarAlt} from 'react-icons/fa';
 import Filter_sidebar from "./Filter_sidebar";
-import Navb from "./Navb";
+import Nab_emp from "./Nab_emp.js"
 import Select2 from "react-select";
 import {Navigate} from "react-router-dom";
 import {element} from "prop-types";
@@ -245,7 +245,7 @@ class Applicantlist extends Component {
         return (
             <React.Fragment>
             <body>
-            <Navb/>
+            <Nab_emp/>
 
 
 

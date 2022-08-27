@@ -20,7 +20,7 @@ import {FaRegMoneyBillAlt} from 'react-icons/fa';
 import {FaRegCalendarAlt} from 'react-icons/fa';
 import {FaSearch} from 'react-icons/fa';
 import {GrFormAdd} from 'react-icons/gr';
-import Navb from "./Navb";
+import Nab_emp from "./Nab_emp";
 import Foot from "./Foot";
 import {Navigate} from "react-router-dom";
 import Button from "./Button";
@@ -170,6 +170,26 @@ componentDidMount() {
 
             //console.log(this.state)
             })
+          fetch(
+    "http://127.0.0.1:8000/first_module/jobseeker/matchuser/",{
+        method:"GET"
+            })
+            .then((res) => res.json())
+            .then((json) => {
+                if(json.response !=="not_submitted") {
+
+                    console.log(json.data)
+                    console.log(json.response)
+                    if (json.response==="success") {
+                         alert("Login Successful")
+                    }
+                    else {
+                       alert("Login Failed.Try Again")
+                    }
+                }
+                console.log(json.response)
+
+            })
     }
 
   render() {
@@ -177,7 +197,7 @@ componentDidMount() {
     return (
        <React.Fragment>
        <body>
-       <Navb/>
+       <Nab_emp/>
 
        <div className='homebg'>
             <div className='container-fluid mb-5 wow fadeIn'></div>
