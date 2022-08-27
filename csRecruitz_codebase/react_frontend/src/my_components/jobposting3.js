@@ -11,7 +11,7 @@ import Loader from "./loader";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import {TypeAnimation} from "react-type-animation";
+import TypeAnimation from "react-type-animation";
 var jsonData = {
     "j_edu": "",
     "j_step": "3",

@@ -119,7 +119,7 @@ class applicationSerializer(serializers.ModelSerializer):
         return obj.newjobpost_id.employer_id.name
 
     def get_emp_id(self, obj):
-        return obj.newjobpost_id.employer_id
+        return obj.newjobpost_id.employer_id_id
 
     def get_app_name(self, obj):
         return obj.user_id.name

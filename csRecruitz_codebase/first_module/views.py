@@ -1354,6 +1354,57 @@ class uskillViewsets(viewsets.ModelViewSet):
     queryset = JobSeekerSkill.objects.all()
     serializer_class = uskillSerializer
 
+    @action(methods=['post', 'get'], detail=False, url_path='editskill')
+    def edit_skill(self, request):
+        if request.method == 'POST':
+            global reg_id
+            print(request.data)
+            print(reg_id)
+            skill_list = request.data['skills'].split("#")
+            open_to_list = request.data['currentSkills'].split("#")
+            print(skill_list)
+            print(open_to_list)
+            # shortlist = JobShortlist.objects.filter(user_id_id=int(logged_user_id),
+            #                                         newjobpost_id_id=int(request.data['job_id']))
+            # shortlist.delete()
+            print(len(JobSeekerSkill.objects.all()))
+            # for i in range (1,len(skill_list)):
+            #     temp = Skill.objects.filter(skill_name=skill_list[i])
+            #     if len(temp) == 0:
+            #         continue
+            #     else:
+            #         id = int(temp[0].skill_id)
+            #         obj =  JobSeekerSkill.objects.filter(skill_id_id = id, user_id = logged_in_id)
+            #         obj.delete()
+
+            objs =  JobSeekerSkill.objects.filter( user_id = logged_in_id)
+            objs.delete()
+
+            print(len(JobSeekerSkill.objects.all()))
+            for i in range(1, len(skill_list)):
+                if len(JobSeekerSkill.objects.all()) == 0:
+                    id = 0
+                else:
+                    id = JobSeekerSkill.objects.order_by('-jobseeker_skill_id').first().jobseeker_skill_id
+                id = id + 1
+                if (skill_list[i] in open_to_list):
+                    flag = True
+                else:
+                    flag = False
+                print(skill_list[i])
+                objs = Skill.objects.filter(skill_name=skill_list[i])
+                print(objs)
+                print(objs[0].skill_id)
+                uskill = JobSeekerSkill(jobseeker_skill_id=id, isOpenToWork=flag, skill_id_id=objs[0].skill_id,
+                                        user_id_id=logged_in_id)
+                uskill.save()
+
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            return Response({
+                'status': status.HTTP_204_NO_CONTENT,
+            })
+
     @action(methods=['post', 'get'], detail=False, url_path='addskill')
     def add_skill(self, request):
         if request.method == 'POST':
@@ -1361,7 +1412,6 @@ class uskillViewsets(viewsets.ModelViewSet):
             global reg_id
             print(reg_id)
             skill_list = request.data['skills'].split("#")
-
             open_to_list = request.data['open_to'].split("#")
             for i in range (1,len(skill_list)):
                 if len(JobSeekerSkill.objects.all())==0:
