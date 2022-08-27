@@ -72,6 +72,21 @@ const style = {
     { value: 'Django', label: 'Django' },
     { value: 'Java', label: 'Java' }
     ]
+
+const NatureOptions = [
+    { value: 'Part-time', label: 'Part-time' },
+    { value: 'Full-time', label: 'Full-time' },
+    { value: 'Remote', label: 'Remote' },
+    { value: 'Freelancing', label: 'Freelancing' }
+    ]
+  const OrgOptions = [
+    { value: 'Government', label: 'Government' },
+    { value: 'Semi Government', label: 'Semi Government' },
+    { value: 'NGO', label: 'NGO' },
+    { value: 'Private Firm', label: 'Private Firm' },
+    { value: 'International Agencies', label: 'International Agencies' }
+  ]
+
 var jsonData = {
     "field":"",
 }
@@ -80,7 +95,11 @@ var jsonDataSkill = {
     "jobseeker_skill_id":"",
     "skill_id":"",
     "skill_name":"",
-
+}
+var jsonDataPref={
+      "pref_job_ntr":"",
+    "pref_org_type":"",
+    "pref_sal":""
 }
 class Professional extends Component {
     constructor(props) {
@@ -99,6 +118,9 @@ class Professional extends Component {
             experience:false,
             skill:false,
             project:false,
+            prefopen:false,
+            pref_nat:{ value: '',label:'' },
+            pref_org:{ value: '',label:'' },
             cat: { value: '',label:'' },
             selectedOption: { value: '',label:'' },
             selectedOptions:[],
@@ -107,9 +129,10 @@ class Professional extends Component {
         };
         this.handleField=this.handleField.bind(this);
         this.handleFieldSubmit=this.handleFieldSubmit.bind(this);
-
+        this.handlePrefSubmit=this.handlePrefSubmit.bind(this);
         this.handleExperience=this.handleExperience.bind(this);
         this.handleSkill=this.handleSkill.bind(this);
+        this.handlePref=this.handlePref.bind(this);
         this.handleChangeSkill=this.handleChangeSkill.bind(this);
         this.handleProject=this.handleProject.bind(this);
         this.handleLicense=this.handleLicense.bind(this);
@@ -123,12 +146,37 @@ class Professional extends Component {
         this.state.cat.label=value
         jsonData.field=value
     }
+
+    handlerprefnat = (event) => {
+    const value = event.value
+    // console.log(value)
+    this.state.pref_nat.value=value
+    this.state.pref_nat.label=value
+    jsonDataPref.pref_job_ntr=value
+    }
+
+    handlerpreforg = (event) => {
+    const value = event.value
+    // console.log(value)
+    this.state.pref_org.value=value
+    this.state.pref_org.label=value
+    jsonDataPref.pref_org_type=value
+    }
+
+    handlerprefsal = (event) => {
+    const value = event.target.value
+    jsonDataPref.pref_sal=value
+    }
+
     handleLicense(){
         window.location.href="/editlicense"
     }
     handleField(){
         this.setState({field_of_work: true})
         console.log(this.state.field_of_work);
+    }
+    handlePref(){
+        this.setState({prefopen: true})
     }
     handleFieldSubmit(){
         console.log(this.state.items.user_id)
@@ -139,6 +187,19 @@ class Professional extends Component {
         },
         mode: 'cors',
         body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
+        })
+        .then(response=>response.json())
+        .then((data)=>console.log(data));
+        window.location.href="/professional"
+    }
+    handlePrefSubmit(){
+        fetch(`http://127.0.0.1:8000/first_module/jobseeker/${this.state.items.user_id}/`, {  // Enter your IP address here
+        method: 'PUT',
+        headers:{
+        'Content-Type': 'application/json',
+        },
+        mode: 'cors',
+        body: JSON.stringify(jsonDataPref) // body data type must match "Content-Type" header
         })
         .then(response=>response.json())
         .then((data)=>console.log(data));
@@ -180,6 +241,7 @@ class Professional extends Component {
         this.setState({field_of_work:false})
         this.setState({project: false})
         this.setState({skill: false})
+        this.setState({prefopen: false})
     }
     handleSubmit(event) {
         event.preventDefault();
@@ -208,9 +270,18 @@ class Professional extends Component {
             .then((json) => {
                 this.setState({
                     items: json.data,
-                    DetailsLoaded1:true
+                    DetailsLoaded1:true,
+
                 });
-            // console.log(json)
+                this.state.pref_nat.value=json.data.pref_job_ntr
+                this.state.pref_nat.label=json.data.pref_job_ntr
+                this.state.pref_org.value=json.data.pref_org_type
+                this.state.pref_org.label=json.data.pref_org_type
+                jsonDataPref.pref_job_ntr=json.data.pref_job_ntr
+                jsonDataPref.pref_sal=json.data.pref_sal
+                jsonDataPref.pref_org_type=json.data.pref_org_type
+               console.log(this.state.pref_nat)
+               console.log(json.data.pref_job_ntr)
             // console.log(this.state)
             })
         fetch(
@@ -305,6 +376,8 @@ class Professional extends Component {
         //     })
            
     }
+
+
     To_Quiz(value) {
         localStorage.setItem("skill",JSON.stringify(value));
         jsonDataSkill.jobseeker_skill_id = value.jobseeker_skill_id
@@ -497,7 +570,7 @@ class Professional extends Component {
                     <div className="row">
                         <div className="align">
                         <h4>Personal Preferences:</h4>
-                            <button className="icon_btn"><FiEdit2 size={'1.5em'} className="icon_edit"/></button></div>
+                            <button className="icon_btn" onClick={this.handlePref}><FiEdit2 size={'1.5em'} className="icon_edit"/></button></div>
                             <p>Private to you <BiLockAlt size={'1.2em'} style={{
                                 marginTop:-3
                             }}/></p>
@@ -584,7 +657,47 @@ class Professional extends Component {
 
             </div> 
         </Box>
-        </Modal> 
+        </Modal>
+
+
+
+
+        <div>
+          <Modal
+            open={this.state.prefopen}
+            //   open={true}
+            onClose={this.handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+            style={{background:"rgba(0,0,0,0)"}}
+          >
+            <Box sx={style}>
+                    <div className="row" style={{marginBottom:"10px" }}>
+                        <p className="seems-h1_reg" style={{marginBottom:"10px" }}><b> Personal Preferences </b></p>
+                        <div className="col-sm-12">
+                            <div className="form-group">
+                                <InputLabel style={{color:"black" ,fontWeight:"Bold", fontSize:"15px" }}  for="name">Preferred Salary:</InputLabel>
+                                <input type="text"  name="name" className="form-control" id="name" defaultValue={this.state.items.pref_sal} onChange={this.handlerprefsal} style={{borderColor:"black"}}/>
+                            </div>
+                        </div>
+                    </div>
+
+                <div className='row' style={{marginBottom:"10px" }}>
+                 <div className='col-sm-6' style={{}}>
+                    <InputLabel id="demo-simple-select-label" style={{color:"black" ,fontWeight:"Bold", fontSize:"15px" }}>Preferred Job Nature:</InputLabel>
+                    <Select styles={dropDownStyle} options={NatureOptions} value={this.state.pref_nat}  onChange={this.handlerprefnat} isClearable  />
+                </div>
+                    <div className='col-sm-6' style={{}}>
+                    <InputLabel id="demo-simple-select-label" style={{color:"black" ,fontWeight:"Bold", fontSize:"15px" }}>Preferred Organization Type:</InputLabel>
+                    <Select styles={dropDownStyle} options={OrgOptions} value={this.state.pref_org}  onChange={this.handlerpreforg} isClearable  />
+                </div>
+            </div>
+                    <button className='btn btn-success' style={{marginTop:"5px",width:"20%",marginRight:"-2px",marginBottom:"10px"}} onClick={this.handlePrefSubmit}>Submit</button>
+
+            </Box>
+
+          </Modal>
+        </div>
         
         <Foot margin_value={172}/>
 
