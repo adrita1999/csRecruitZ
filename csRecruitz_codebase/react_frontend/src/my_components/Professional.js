@@ -8,7 +8,8 @@ import { AnimationOnScroll } from 'react-animation-on-scroll';
 import {MdFileDownloadDone} from 'react-icons/md';
 import {HiExternalLink} from 'react-icons/hi';
 import {BiLockAlt} from 'react-icons/bi';
-
+import {TiTick} from "react-icons/ti";
+import {BsCheck2} from "react-icons/bs";
 import Navb from "./Navb";
 import Foot from "./Foot";
 import Loader from "./loader";
@@ -101,6 +102,7 @@ class Professional extends Component {
             cat: { value: '',label:'' },
             selectedOption: { value: '',label:'' },
             selectedOptions:[],
+            verify:[],
 
         };
         this.handleField=this.handleField.bind(this);
@@ -202,7 +204,7 @@ class Professional extends Component {
                     items: json.data,
                     DetailsLoaded1:true
                 });
-            console.log(json)
+            // console.log(json)
             // console.log(this.state)
             })
         fetch(
@@ -224,9 +226,13 @@ class Professional extends Component {
             .then((json) => {
                 this.setState({
                     skills: json.data,
+                    verifylist:json.verifylist.split("#"),
+                    skill_ids:json.skill_ids,
                     DetailsLoaded3:true
                 });
-             console.log(json)
+             console.log(json.verifylist.split("#"))
+            //  console.log(json.skill_ids)
+             this.state.verify=this.state.verifylist
             // console.log(this.state)
             })
 
@@ -263,12 +269,34 @@ class Professional extends Component {
                     lics: json.data,
                     DetailsLoaded6:true
                 });
-            // console.log(json)
-            console.log(this.state)
-            //  this.setState({logged_in_id:this.items.user_id})
-            console.log(this.state.items.user_id)
+            // console.log(this.state)
+            // console.log(this.state.items.user_id)
 
             })
+        // fetch(
+        //     "http://127.0.0.1:8000/first_module/assesment/checkpassorfail")
+
+        //     .then((res) => res.json())
+        //     .then((json) => {
+        //         this.setState({
+        //             assesment: json.data,
+        //             DetailsLoaded7:true
+        //         });
+        //     console.log(json.data)
+        //     console.log(this.state)
+        //     })
+        // fetch(
+        //     "http://127.0.0.1:8000/first_module/cutoff/cutoffpercent")
+
+        //     .then((res) => res.json())
+        //     .then((json) => {
+        //         this.setState({
+        //             cutoff: json.data,
+        //             DetailsLoaded7:true
+        //         });
+        //     console.log(json.data)
+        //     console.log(this.state)
+        //     })
            
     }
     To_Quiz(value) {
@@ -351,7 +379,9 @@ class Professional extends Component {
                             <button className="icon_btn" onClick={this.handleSkill}><FiEdit2 size={'1.5em'} className="icon_edit"/></button></div>
                         <ol className="gradient-list" >
                             {
-                                            this.state.skills.map((skill) => {
+                                            this.state.skills.map((skill,i) => {
+                                            if(this.state.verifylist[i] === "0")
+                                            {
                                             return(
                                                 <li>
                                                     <b style={{
@@ -359,9 +389,27 @@ class Professional extends Component {
                                                             color:"darkorange"
                                                         }}>{skill.skill_name}
                                                     </b>
-                                                <button className="custom_btn2" onClick={()=>{this.To_Quiz(skill)}}>Take Skill Quiz</button>
-                                                 </li>
-                                            )})
+                                                    <button className="custom_btn2" onClick={()=>{this.To_Quiz(skill)}}>Take Skill Quiz</button>
+                                                </li>
+                                            )}
+                                            if(this.state.verifylist[i] === "1"){
+                                            return(
+                                                <li>
+                                                    <b style={{
+                                                            fontSize:"large",
+                                                            color:"darkorange"
+                                                        }}>{skill.skill_name}
+                                                    </b>
+                                                    <button style={{backgroundColor:"#F7FFFF", float: "right",marginTop:"-12px",border: "none"}} disabled>< BsCheck2 size={'3em'} color="green" fontWeight="bold"/> </button>
+                                                     
+                                                </li>
+                                            )}
+
+                                        })
+                                           
+                                            
+                                            
+                                            
                              }
 
 
