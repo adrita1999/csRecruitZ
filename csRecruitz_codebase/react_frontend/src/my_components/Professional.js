@@ -47,6 +47,7 @@ const style = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 600,
+    height:200,
     bgcolor: 'background.paper',
     boxShadow: 24,
     p:4,
@@ -90,6 +91,7 @@ const NatureOptions = [
 var jsonData = {
     "field":"",
 }
+
 var jsonDataSkill = {
     "user_id":"",
     "jobseeker_skill_id":"",
@@ -101,6 +103,10 @@ var jsonDataPref={
     "pref_org_type":"",
     "pref_sal":""
 }
+var jsonDataSkillEdit = {
+    "skills":"",
+}
+
 class Professional extends Component {
     constructor(props) {
         super(props);
@@ -132,10 +138,14 @@ class Professional extends Component {
         this.handlePrefSubmit=this.handlePrefSubmit.bind(this);
         this.handleExperience=this.handleExperience.bind(this);
         this.handleSkill=this.handleSkill.bind(this);
+
         this.handlePref=this.handlePref.bind(this);
+
+        this.handleSubmitSkill=this.handleSubmitSkill.bind(this);
         this.handleChangeSkill=this.handleChangeSkill.bind(this);
         this.handleProject=this.handleProject.bind(this);
         this.handleLicense=this.handleLicense.bind(this);
+        this.handlePublication=this.handlePublication.bind(this);
         this.handleClose=this.handleClose.bind(this);
 
     }
@@ -170,6 +180,9 @@ class Professional extends Component {
 
     handleLicense(){
         window.location.href="/editlicense"
+    }
+    handlePublication(){
+        window.location.href="/editpublication"
     }
     handleField(){
         this.setState({field_of_work: true})
@@ -213,17 +226,19 @@ class Professional extends Component {
         this.setState({skill: true})
         // window.location.href="/editskill"
         console.log("size"+this.state.skills.length)
+        let proj_dummy=[]
+       
         for (let i=0;i<this.state.skills.length;i++) {
-
-            console.log(this.state.skills[i].skill_name)
-            this.state.selectedOption.value=this.state.skills[i].skill_name;
-            this.state.selectedOption.label=this.state.skills[i].skill_name;
-            console.log(this.state.selectedOption);
-            this.state.selectedOptions[i] = this.state.selectedOption;
-            // this.setState({selectedOptions[i]:this.state.selectedOption})
-            console.log(this.state.selectedOptions[i]);
-            // this.setState({ selectedOptions:[this.state.selectedOptions,this.state.selectedOption ] })
+            let obj={
+                "value":this.state.skills[i].skill_name,
+                 "label":this.state.skills[i].skill_name
+                }
+                proj_dummy.push(obj);
+                console.log(obj)
         }
+        this.setState({
+            selectedOptions:proj_dummy    
+        })
         console.log(this.state.selectedOptions)
     }
     handleChangeSkill = (selectedOptions) => {
@@ -243,14 +258,14 @@ class Professional extends Component {
         this.setState({skill: false})
         this.setState({prefopen: false})
     }
-    handleSubmit(event) {
+    handleSubmitSkill(event) {
         event.preventDefault();
         var str1="";
         for (let i=0;i<this.state.selectedOptions.length;i++) {
             str1=str1+"#"+this.state.selectedOptions[i].value
         }
         console.log(str1)
-        jsonData.skills=str1
+        jsonDataSkillEdit.skills=str1
         fetch('http://127.0.0.1:8000/first_module/uskill/addskill/', {  // Enter your IP address here
 
             method: 'POST',
@@ -526,7 +541,7 @@ class Professional extends Component {
                     <div className="row">
                         <div className="align">
                         <h4>Publications:</h4>
-                            <button className="icon_btn"><FiEdit2 size={'1.5em'} className="icon_edit"/></button></div>
+                            <button className="icon_btn" onClick={this.handlePublication}><FiEdit2 size={'1.5em'} className="icon_edit"/></button></div>
                     </div>
                     </div>
                     <AnimationOnScroll animateIn="bounceInRight" duration={2} delay={50} animateOnce={true}>
