@@ -52,6 +52,23 @@ class postViewsets_for_jobpost(viewsets.ModelViewSet):
     emp_prof_id=-1
     objs_keyword = NewJobpost.objects.none()
 
+    #variables for job posting
+    # j_step=""
+    j_title=""
+    j_cat=""
+    j_context=""
+    j_nat=""
+    j_sal=""
+    j_deadline=""
+    j_vacancy=""
+    j_exp=""
+    j_res=""
+    j_edu=""
+    j_add=""
+    j_apply=""
+
+
+
     @action(methods=['post', 'get'], detail=False, url_path='details')
     def jobdetails(self, request):
         global logged_in_id
@@ -731,6 +748,59 @@ class postViewsets_for_jobpost(viewsets.ModelViewSet):
                 'empdiv':employerdiv,
                 'empyear':employeryear
             })
+
+    @action(methods=['post', 'get'], detail=False, url_path='jobpost')
+    def post_new_job(self, request):
+        if request.method == 'POST':
+            if request.data["j_step"]=="1":
+                print("step1")
+                postViewsets_for_jobpost.j_title=request.data["j_title"]
+                postViewsets_for_jobpost.j_cat = request.data["j_cat"]
+                postViewsets_for_jobpost.j_context = request.data["j_context"]
+                postViewsets_for_jobpost.j_nat=request.data["j_nat"]
+            elif request.data["j_step"]=="2":
+                print("step2")
+                postViewsets_for_jobpost.j_sal = int(request.data["j_sal"])
+                postViewsets_for_jobpost.j_deadline = request.data["j_deadline"]
+                postViewsets_for_jobpost.j_exp = int(request.data["j_exp"])
+                if request.data["j_vacancy"]!="":
+                    postViewsets_for_jobpost.j_vacancy = int(request.data["j_vacancy"])
+                else:
+                    postViewsets_for_jobpost.j_vacancy =None
+                postViewsets_for_jobpost.j_res = request.data["j_res"]
+            else:
+                print("step3")
+                postViewsets_for_jobpost.j_edu = request.data["j_edu"]
+                if request.data["j_add"]!="":
+                    postViewsets_for_jobpost.j_add = int(request.data["j_add"])
+                else:
+                    postViewsets_for_jobpost.j_add =None
+                if request.data["j_apply"]!="":
+                    postViewsets_for_jobpost.j_apply = int(request.data["j_apply"])
+                else:
+                    postViewsets_for_jobpost.j_apply =None
+
+                #get next id
+                allpostlist = NewJobpost.objects.all()
+                p_id = 1
+                if len(allpostlist) == 0:
+                    p_id = 1
+                else:
+                    lists = NewJobpost.objects.filter().order_by('-jobpost_id')
+                    p_id = int(lists[0].jobpost_id) + 1
+
+                todaydate = datetime.today().strftime('%Y-%m-%d')
+                global logged_in_id
+                newpost=NewJobpost(jobpost_id=p_id,employer_id_id=logged_in_id,title=postViewsets_for_jobpost.j_title,category=postViewsets_for_jobpost.j_cat,
+                                   post_date=todaydate,deadline_date=postViewsets_for_jobpost.j_deadline,salary=postViewsets_for_jobpost.j_sal,
+                                   required_experience=postViewsets_for_jobpost.j_exp,vacancies=postViewsets_for_jobpost.j_vacancy,
+                                   job_context=postViewsets_for_jobpost.j_context,job_nature=postViewsets_for_jobpost.j_nat,
+                                   job_responsibilities=postViewsets_for_jobpost.j_res,edu_requirement=postViewsets_for_jobpost.j_edu,
+                                   additional_requirements=postViewsets_for_jobpost.j_add,application_process=postViewsets_for_jobpost.j_app)
+                newpost.save()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 
 class jobseekerViewsets(viewsets.ModelViewSet):
