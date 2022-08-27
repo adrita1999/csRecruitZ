@@ -1522,6 +1522,26 @@ class applicationViewsets(viewsets.ModelViewSet):
                     application = JobApplication(application_id=int(app_id), user_id_id=int(logged_user_id), newjobpost_id_id=int(request.data['job_id']), apply_date=todaydate,apply_time=current_time,highlighted_projects=proj_id_list
                                                  ,highlighted_publications=pub_id_list,highlighted_lics=lic_id_list,extra_certificates=request.data['extras'],resume_link=res)
                     application.save()
+                elif request.data['type']=="follow":
+                    if request.data["iffollow"]=="false":
+                        applicationViewsets.job_id = int(request.data['job_id'])
+                        findselectedjob = NewJobpost.objects.filter(jobpost_id=int(applicationViewsets.job_id))
+                        findselectedempid = int(findselectedjob[0].employer_id_id)
+                        followobj = Follow.objects.filter(follower_id_id=int(logged_user_id), employer_id_id=findselectedempid)
+                        followobj.delete()
+                    else:
+                        allfollow=Follow.objects.all()
+                        f_id=1
+                        if len(allfollow)==0:
+                            f_id=1
+                        else:
+                            lists=Follow.objects.filter().order_by('-follow_id')
+                            f_id=int(lists[0].follow_id)+1
+                        applicationViewsets.job_id = int(request.data['job_id'])
+                        findselectedjob = NewJobpost.objects.filter(jobpost_id=int(applicationViewsets.job_id))
+                        findselectedempid = int(findselectedjob[0].employer_id_id)
+                        followobj = Follow(follow_id=f_id,follower_id_id=int(logged_user_id),employer_id_id=findselectedempid)
+                        followobj.save()
                 else:
                     if request.data["ifshortlist"]=="false":
                         applicationViewsets.job_id = int(request.data['job_id'])
@@ -1553,11 +1573,21 @@ class applicationViewsets(viewsets.ModelViewSet):
             if len(sh) != 0:
                 str2 = "shortlisted"
             serializer = applicationSerializer(apps, many=True)
+
+            str3 = "notfollowed"
+            findselectedjob=NewJobpost.objects.filter(jobpost_id=int(applicationViewsets.job_id))
+            findselectedempid=int(findselectedjob[0].employer_id_id)
+            fl = Follow.objects.filter(employer_id_id=findselectedempid,
+                                             follower_id_id=int(logged_user_id))
+            if len(fl) != 0:
+                str3 = "followed"
+            serializer = applicationSerializer(apps, many=True)
             return Response({
                 'status': status.HTTP_204_NO_CONTENT,
                 'data':serializer.data,
                 'response': str1,
                 'short':str2,
+                'follow':str3
             })
 
     @action(methods=['post', 'get'], detail=False, url_path='get_app_info')
