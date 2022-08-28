@@ -18,7 +18,7 @@ import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import Select, { StylesConfig }  from 'react-select';
 import {Button, Collapse} from 'react-bootstrap'
-import TypeAnimation from "react-type-animation";
+import {TypeAnimation} from "react-type-animation";
 import {BsCheck2} from "react-icons/bs";
 
 const dropDownStyle ={

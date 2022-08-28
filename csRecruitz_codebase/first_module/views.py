@@ -652,10 +652,13 @@ class postViewsets_for_jobpost(viewsets.ModelViewSet):
                 print("filter theke asche")
                 objs2=postViewsets_for_jobpost.objs_keyword
                 if postViewsets_for_jobpost.filter_cat!="":
+                    print("cat")
                     objs2=postViewsets_for_jobpost.objs_keyword.filter(category=postViewsets_for_jobpost.filter_cat)
                 if postViewsets_for_jobpost.filter_nat!="":
+                    print("nat")
                     objs2=objs2.filter(job_nature=postViewsets_for_jobpost.filter_nat)
                 if postViewsets_for_jobpost.filter_exp!="":
+                    print("exp")
                     if postViewsets_for_jobpost.filter_exp=="Upto 1 year":
                         objs2 = objs2.filter(required_experience__lte=1)
                     elif postViewsets_for_jobpost.filter_exp=="2-5 years":
@@ -2062,11 +2065,6 @@ class applicationViewsets(viewsets.ModelViewSet):
 
             ver_skilles_to_send=Skill.objects.filter(skill_id__in=ver_skills_ids)
 
-
-
-
-
-
             serializer=projSerializer(projects,many=True)
             serializer_1=pubSerializer(publications,many=True)
             serializer_2=certiSerializer(licenses,many=True)
@@ -2970,16 +2968,16 @@ proj_3=Project(project_id=7,project_name="Covid-Safe Room",
                project_link="https://github.com/adrita1999/csRecruitZ",project_short_desc="It is a hardware project.We used ATmega32 for this. Besides ATmega , we used an Arduino, servo motors, LCD display etc.",user_id=user3,language="C, C++")
 proj_3.save()
 
-uskill1 = JobSeekerSkill(jobseeker_skill_id=12, isOpenToWork=True, skill_id=skill1, user_id=user3)
-uskill1.save()
-uskill2 = JobSeekerSkill(jobseeker_skill_id=13, isOpenToWork=True, skill_id=skill5, user_id=user3)
-uskill2.save()
-uskill3 = JobSeekerSkill(jobseeker_skill_id=14, isOpenToWork=True, skill_id=skill7, user_id=user3)
-uskill3.save()
-uskill4 = JobSeekerSkill(jobseeker_skill_id=15, isOpenToWork=False, skill_id=skill17, user_id=user3)
-uskill4.save()
-uskill5 = JobSeekerSkill(jobseeker_skill_id=16, isOpenToWork=True, skill_id=skill18, user_id=user3)
-uskill5.save()
+uskill12 = JobSeekerSkill(jobseeker_skill_id=12, isOpenToWork=True, skill_id=skill1, user_id=user3)
+uskill12.save()
+uskill13 = JobSeekerSkill(jobseeker_skill_id=13, isOpenToWork=True, skill_id=skill5, user_id=user3)
+uskill13.save()
+uskill14 = JobSeekerSkill(jobseeker_skill_id=14, isOpenToWork=True, skill_id=skill7, user_id=user3)
+uskill14.save()
+uskill15 = JobSeekerSkill(jobseeker_skill_id=15, isOpenToWork=False, skill_id=skill17, user_id=user3)
+uskill15.save()
+uskill16 = JobSeekerSkill(jobseeker_skill_id=16, isOpenToWork=True, skill_id=skill18, user_id=user3)
+uskill16.save()
 
 
 
@@ -3068,16 +3066,16 @@ proj_2=Project(project_id=9,project_name="FootballMania",project_link="https://g
 proj_2.save()
 
 
-uskill1 = JobSeekerSkill(jobseeker_skill_id=17, isOpenToWork=False, skill_id=skill19, user_id=user4)
-uskill1.save()
-uskill2 = JobSeekerSkill(jobseeker_skill_id=18, isOpenToWork=True, skill_id=skill8, user_id=user4)
-uskill2.save()
-uskill3 = JobSeekerSkill(jobseeker_skill_id=19, isOpenToWork=False, skill_id=skill7, user_id=user4)
-uskill3.save()
-uskill4 = JobSeekerSkill(jobseeker_skill_id=20, isOpenToWork=False, skill_id=skill12, user_id=user4)
-uskill4.save()
-uskill5 = JobSeekerSkill(jobseeker_skill_id=21, isOpenToWork=True, skill_id=skill14, user_id=user4)
-uskill5.save()
+uskill17 = JobSeekerSkill(jobseeker_skill_id=17, isOpenToWork=False, skill_id=skill19, user_id=user4)
+uskill17.save()
+uskill18 = JobSeekerSkill(jobseeker_skill_id=18, isOpenToWork=True, skill_id=skill8, user_id=user4)
+uskill18.save()
+uskill19 = JobSeekerSkill(jobseeker_skill_id=19, isOpenToWork=False, skill_id=skill7, user_id=user4)
+uskill19.save()
+uskill20 = JobSeekerSkill(jobseeker_skill_id=20, isOpenToWork=False, skill_id=skill12, user_id=user4)
+uskill20.save()
+uskill21= JobSeekerSkill(jobseeker_skill_id=21, isOpenToWork=True, skill_id=skill14, user_id=user4)
+uskill21.save()
 
 
 
@@ -3099,15 +3097,15 @@ job_exp2 = JobExperience(jobexperience_id=10, experience_name="Blockchain DevOps
 job_exp2.save()
 
 
-user5 = Jobseeker(user_id=5, name="Samira Akter", email="1705028@ugrad.cse.buet.ac.bd", password=pas_temp, thana="Lalbag",
+user5 = Jobseeker(user_id=19, name="Samira Akter", email="1705028@ugrad.cse.buet.ac.bd", password=pas_temp, thana="Lalbag",
                   district="Dhaka", division="Dhaka", father_name="Pintu Akter",
                   mother_name="Soma Begum", date_of_birth="1998-01-21",
                   self_desc="I am studying in CSE, BUET. I am good at programming. CSE is my first love and my one and only passion.",
-                  nationality="Bangladeshi", nid_number="11231256", field="Security", propic="https://firebasestorage.googleapis.com/v0/b/csrecruitz-fd59e.appspot.com/o/images%2Frand_pp.png?alt=media&token=d51fec8d-bc95-4290-a1b1-09601abde54f",
+                  nationality="Bangladeshi", nid_number="1122356", field="Security", propic="https://firebasestorage.googleapis.com/v0/b/csrecruitz-fd59e.appspot.com/o/images%2Frand_pp.png?alt=media&token=d51fec8d-bc95-4290-a1b1-09601abde54f",
                   resume="resumes_input/nakshi.docx")
 user5.save()
 
-proj_=Project(project_id=10,project_name="csRecruitz",project_link="https://github.com/adrita1999/csRecruitZ",project_short_desc="This is our 4-1 term project. It is a job searching website. The development of the project is still ongoing.",user_id=user5,language="Python, DjangoRESTFramework, HTML, CSS, ReactJS, PostgreSQL")
+proj_4=Project(project_id=10,project_name="csRecruitz",project_link="https://github.com/adrita1999/csRecruitZ",project_short_desc="This is our 4-1 term project. It is a job searching website. The development of the project is still ongoing.",user_id=user5,language="Python, DjangoRESTFramework, HTML, CSS, ReactJS, PostgreSQL")
 proj_4.save()
 proj_4=Project(project_id=11,project_name="Uber",project_link="https://github.com/adrita1999/csRecruitZ",project_short_desc="This is our 2-2 term project. It is a replication of Uber.",user_id=user5,language="Python, Django, HTML, CSS")
 proj_4.save()
@@ -3141,11 +3139,11 @@ job_exp4 = JobExperience(jobexperience_id=11, experience_name="Security Junior I
 job_exp4.save()
 
 
-user6 = Jobseeker(user_id=6, name="Syeda Rukaiya Hossain", email="1705019@ugrad.cse.buet.ac.bd", password=pas_temp, thana="Lalbag",
+user6 = Jobseeker(user_id=20, name="Syeda Rukaiya Hossain", email="1705019@ugrad.cse.buet.ac.bd", password=pas_temp, thana="Lalbag",
                   district="Dhaka", division="Dhaka", father_name="Pintu Akter",
                   mother_name="Soma Begum", date_of_birth="1998-01-21",
                   self_desc="I am studying in CSE, BUET. I am good at programming. CSE is my first love and my one and only passion.",
-                  nationality="Bangladeshi", nid_number="99785634", field="Research and Development", propic="https://firebasestorage.googleapis.com/v0/b/csrecruitz-fd59e.appspot.com/o/images%2Frand_pp.png?alt=media&token=d51fec8d-bc95-4290-a1b1-09601abde54f",
+                  nationality="Bangladeshi", nid_number="997268", field="Research and Development", propic="https://firebasestorage.googleapis.com/v0/b/csrecruitz-fd59e.appspot.com/o/images%2Frand_pp.png?alt=media&token=d51fec8d-bc95-4290-a1b1-09601abde54f",
                   resume="resumes_input/nakshi.docx")
 user6.save()
 
@@ -3155,14 +3153,14 @@ proj_4=Project(project_id=13,project_name="Uber",project_link="https://github.co
 proj_4.save()
 
 
-uskill8 = JobSeekerSkill(jobseeker_skill_id=27, isOpenToWork=True, skill_id=skill9, user_id=user6)
-uskill8.save()
-uskill9 = JobSeekerSkill(jobseeker_skill_id=28, isOpenToWork=False, skill_id=skill2, user_id=user6)
-uskill9.save()
-uskill10 = JobSeekerSkill(jobseeker_skill_id=29, isOpenToWork=True, skill_id=skill5, user_id=user6)
-uskill10.save()
-uskill11 = JobSeekerSkill(jobseeker_skill_id=30, isOpenToWork=False, skill_id=skill19, user_id=user6)
-uskill11.save()
+uskill27 = JobSeekerSkill(jobseeker_skill_id=27, isOpenToWork=True, skill_id=skill9, user_id=user6)
+uskill27.save()
+uskill28 = JobSeekerSkill(jobseeker_skill_id=28, isOpenToWork=False, skill_id=skill2, user_id=user6)
+uskill28.save()
+uskill29 = JobSeekerSkill(jobseeker_skill_id=29, isOpenToWork=True, skill_id=skill5, user_id=user6)
+uskill29.save()
+uskill30 = JobSeekerSkill(jobseeker_skill_id=30, isOpenToWork=False, skill_id=skill19, user_id=user6)
+uskill30.save()
 
 pub_3=Publication(publication_id=8,publication_name="Comprehensive characterization of amino acid positions in protein structures reveals molecular effect of missense variants",publication_link="https://ieeexplore.ieee.org/abstract/document/8115623",user_id=user6,venue="Proceedings of the National Academy of Sciences of the United States of America, 2020",publication_year="2020-05-09")
 pub_3.save()
@@ -3190,7 +3188,7 @@ job_exp4.save()
 
 
 
-user7 = Jobseeker(user_id=20, name="Joydip", email="iamjOysa1.0@gmail.com", password=pas_temp, thana="Azimpur",contact_no="01871866053",
+user7 = Jobseeker(user_id=21, name="Joydip", email="iamjOysa1.0@gmail.com", password=pas_temp, thana="Azimpur",contact_no="01871866053",
                   district="Dhaka", division="Dhaka", father_name="Md. Abu Zafar Talukder",
                   mother_name="Shahina Beethi", date_of_birth="1997-10-31",
                   self_desc="I am a CSE graduate from MIT. I am sincere and I love to explore new frameworks. Deep learning and Simulation is my field of interest",
@@ -3203,16 +3201,16 @@ proj.save()
 
 
 
-uskill1 = JobSeekerSkill(jobseeker_skill_id=31, isOpenToWork=False, skill_id=skill19, user_id=user7)
-uskill1.save()
-uskill2 = JobSeekerSkill(jobseeker_skill_id=32, isOpenToWork=True, skill_id=skill8, user_id=user7)
-uskill2.save()
-uskill3 = JobSeekerSkill(jobseeker_skill_id=33, isOpenToWork=False, skill_id=skill9, user_id=user7)
-uskill3.save()
-uskill4 = JobSeekerSkill(jobseeker_skill_id=34, isOpenToWork=False, skill_id=skill1, user_id=user7)
-uskill4.save()
-uskill5 = JobSeekerSkill(jobseeker_skill_id=35, isOpenToWork=True, skill_id=skill12, user_id=user7)
-uskill5.save()
+uskill31 = JobSeekerSkill(jobseeker_skill_id=31, isOpenToWork=False, skill_id=skill19, user_id=user7)
+uskill31.save()
+uskill32 = JobSeekerSkill(jobseeker_skill_id=32, isOpenToWork=True, skill_id=skill8, user_id=user7)
+uskill32.save()
+uskill33 = JobSeekerSkill(jobseeker_skill_id=33, isOpenToWork=False, skill_id=skill9, user_id=user7)
+uskill33.save()
+uskill34 = JobSeekerSkill(jobseeker_skill_id=34, isOpenToWork=False, skill_id=skill1, user_id=user7)
+uskill34.save()
+uskill35 = JobSeekerSkill(jobseeker_skill_id=35, isOpenToWork=True, skill_id=skill12, user_id=user7)
+uskill35.save()
 
 pub_1=Publication(publication_id=10,publication_name="Statistical binning enables an accurate coalescent-based estimation of the avian tree",publication_link="https://ieeexplore.ieee.org/abstract/document/8115623",user_id=user7,venue="IBM international Conference",publication_year="2017-1-30")
 pub_1.save()
@@ -3236,7 +3234,7 @@ job_exp2.save()
 emp1 = Employer(user_id=3, name="Optimizely", email="optimizely@gmail.com", password=pas_temp, district="Dhaka",
                 division="Dhaka", org_type="NGO", establishment_year="2005")
 emp1.save()
-emp2 = Employer(user_id=4, name="Kona SL", email="kona@yahoo.com", password="1234", district="Kishoreganj",
+emp2 = Employer(user_id=4, name="Kona SL", email="kona@yahoo.com", password=pas_temp, district="Kishoreganj",
                 division="Dhaka",
                 org_type="NGO", establishment_year="2001")
 emp2.save()
@@ -3920,6 +3918,42 @@ cut1=SkillMarkCutoff(cutoff_id=1,skill_id_id=2,cutoff_percentage=80,from_date="1
 cut1.save()
 cut2=SkillMarkCutoff(cutoff_id=2,skill_id_id=1,cutoff_percentage=80,from_date="1999-02-06",to_date="2024-02-06")
 cut2.save()
+cut3=SkillMarkCutoff(cutoff_id=3,skill_id_id=3,cutoff_percentage=80,from_date="1999-02-06",to_date="2024-02-06")
+cut3.save()
+cut4=SkillMarkCutoff(cutoff_id=4,skill_id_id=4,cutoff_percentage=80,from_date="1999-02-06",to_date="2024-02-06")
+cut4.save()
+cut5=SkillMarkCutoff(cutoff_id=5,skill_id_id=5,cutoff_percentage=80,from_date="1999-02-06",to_date="2024-02-06")
+cut5.save()
+cut6=SkillMarkCutoff(cutoff_id=6,skill_id_id=6,cutoff_percentage=80,from_date="1999-02-06",to_date="2024-02-06")
+cut6.save()
+cut7=SkillMarkCutoff(cutoff_id=7,skill_id_id=7,cutoff_percentage=80,from_date="1999-02-06",to_date="2024-02-06")
+cut7.save()
+cut8=SkillMarkCutoff(cutoff_id=8,skill_id_id=8,cutoff_percentage=80,from_date="1999-02-06",to_date="2024-02-06")
+cut8.save()
+cut9=SkillMarkCutoff(cutoff_id=9,skill_id_id=9,cutoff_percentage=80,from_date="1999-02-06",to_date="2024-02-06")
+cut9.save()
+cut10=SkillMarkCutoff(cutoff_id=10,skill_id_id=10,cutoff_percentage=80,from_date="1999-02-06",to_date="2024-02-06")
+cut10.save()
+cut11=SkillMarkCutoff(cutoff_id=11,skill_id_id=11,cutoff_percentage=80,from_date="1999-02-06",to_date="2024-02-06")
+cut11.save()
+cut12=SkillMarkCutoff(cutoff_id=12,skill_id_id=12,cutoff_percentage=80,from_date="1999-02-06",to_date="2024-02-06")
+cut12.save()
+cut13=SkillMarkCutoff(cutoff_id=13,skill_id_id=13,cutoff_percentage=80,from_date="1999-02-06",to_date="2024-02-06")
+cut13.save()
+cut14=SkillMarkCutoff(cutoff_id=14,skill_id_id=14,cutoff_percentage=80,from_date="1999-02-06",to_date="2024-02-06")
+cut14.save()
+cut15=SkillMarkCutoff(cutoff_id=15,skill_id_id=15,cutoff_percentage=80,from_date="1999-02-06",to_date="2024-02-06")
+cut15.save()
+cut16=SkillMarkCutoff(cutoff_id=16,skill_id_id=16,cutoff_percentage=80,from_date="1999-02-06",to_date="2024-02-06")
+cut16.save()
+cut17=SkillMarkCutoff(cutoff_id=17,skill_id_id=17,cutoff_percentage=80,from_date="1999-02-06",to_date="2024-02-06")
+cut17.save()
+cut18=SkillMarkCutoff(cutoff_id=18,skill_id_id=18,cutoff_percentage=80,from_date="1999-02-06",to_date="2024-02-06")
+cut18.save()
+cut19=SkillMarkCutoff(cutoff_id=19,skill_id_id=19,cutoff_percentage=80,from_date="1999-02-06",to_date="2024-02-06")
+cut19.save()
+cut20=SkillMarkCutoff(cutoff_id=20,skill_id_id=20,cutoff_percentage=80,from_date="1999-02-06",to_date="2024-02-06")
+cut20.save()
 # jobapp1=JobApplication(application_id=1,apply_date="2022-08-25",apply_time="03:42:07",newjobpost_id=jobpost8,user_id=user1)
 # jobapp1.save()
 # jobapp2=JobApplication(application_id=2,apply_date="2022-08-25",apply_time="03:45:07",newjobpost_id=jobpost8,user_id=user2)

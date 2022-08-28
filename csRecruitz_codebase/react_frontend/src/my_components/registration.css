@@ -173,6 +173,7 @@ div.content_reg_2 {
 .add_btn:hover  {
   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
   color: white;
+  background-color: #31105B;
 }
 .add_btn_2 {
   margin-top: -10px;
@@ -187,6 +188,7 @@ div.content_reg_2 {
 .add_btn_2:hover  {
   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
   color: white;
+  background-color: #31105B;
 }
 .add_btn_3 {
   margin-top: -40px;
@@ -201,6 +203,7 @@ div.content_reg_2 {
 .add_btn_3:hover  {
   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
   color: white;
+  background-color: #31105B;
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
