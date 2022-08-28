@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import Navb from "./Navb";
+import Nab_emp from "./Nab_emp";
 import './registration.css';
 import Foot from "./Foot";
 import {Animated} from "react-animated-css";
@@ -115,7 +115,7 @@ class Job_1 extends Component {
     render() {
 
         return(<React.Fragment>
-            <Navb/>
+            <Nab_emp/>
             <div >
                 <br/><br/>
                 <ul className="list-unstyled multi-steps">

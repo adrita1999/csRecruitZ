@@ -59,6 +59,24 @@ const style = {
       border:0,
       overflow: 'visible'
   };
+const styleskill = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 600,
+    height:242,
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    p:4,
+    backdrop:false,
+    paddingTop:'10px',
+    paddingBottom:'10px',
+    show:true,
+      borderRadius:5,
+      border:0,
+      overflow: 'visible'
+  };
   const styleField = {
     position: 'absolute',
     top: '50%',
@@ -480,6 +498,7 @@ class Professional extends Component {
 
                         <p><b className="seems-h1">Field of Work: </b>{this.state.items.field}</p>
 
+
                         <button className="icon_btn" onClick={this.handleField}><FiEdit2 size={'1.5em'} className="icon_edit"/></button>
                     </div>
                    </div>
@@ -690,7 +709,7 @@ class Professional extends Component {
         <Box sx={styleField}>
             <div className='row' >
                  <div className='col-md-9' style={{width: "80%", paddingRight:"12px"}}>
-                    <InputLabel id="demo-simple-select-label">Field of work</InputLabel>
+                    <InputLabel id="demo-simple-select-label" style={{color:"black" ,fontWeight:"Bold", fontSize:"15px",marginTop:"5px" }} >Field of work</InputLabel>
                     <Select styles={dropDownStyle} options={CatOptions}   onChange={this.handler} isClearable  />
                 </div>
                 <div>
@@ -709,13 +728,13 @@ class Professional extends Component {
         aria-describedby="modal-modal-description"
         style={{background:"rgba(0,0,0,0)"}} 
       >
-        <Box sx={style}>
+        <Box sx={styleskill}>
             <div className='row' >
-                 <div className='col-md-12' style={{width: "100%", paddingRight:"12px"}}>
+                 <div className='col-md-12' style={{width: "100%", paddingRight:"12px",marginTop:"5px",marginBottom:"10px"}}>
                     <InputLabel id="demo-simple-select-label">Skills</InputLabel>
                     <Select name="skills" id="skills" styles={dropDownStyle} value={this.state.selectedOptions} options={SkillOptions} onChange={this.handleChangeSkill} isMulti placeholder="Add Your Skills" openMenuOnFocus isClearable />
                 </div>
-                <div className='col-md-12' style={{width: "100%", paddingRight:"12px"}}>
+                <div className='col-md-12' style={{width: "100%", paddingRight:"12px",marginBottom:"10px"}}>
                     <InputLabel id="demo-simple-select-label">Current Skills</InputLabel>
                     <Select name="open_skills" id="open_skills" styles={dropDownStyle}  options={this.state.selectedOptions} onChange={this.handleChangeOpenTo} isMulti placeholder="Add Your Skills" openMenuOnFocus isClearable />
                 </div>
