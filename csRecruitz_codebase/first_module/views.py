@@ -2943,6 +2943,62 @@ job_exp3 = JobExperience(jobexperience_id=3, experience_name="Assistant Executiv
 job_exp3.save()
 
 
+
+
+
+
+
+user3 = Jobseeker(user_id=17, name="Shafqat Talukder Rakin", email="iamshafqatrakin@gmail.com", password=pas_temp, thana="Mirbag",contact_no="01871866053",
+                  district="Dhaka", division="Dhaka", father_name="Md. Abu Zafar Talukder",
+                  mother_name="Shahina Beethi", date_of_birth="1997-10-31",
+                  self_desc="I am a CS under-graduate. I love programming. Python is my favourite language. I want to work with ReactJS in future.",
+                  nationality="Bangladeshi", nid_number="12045678", field="Programming", pref_sal="50000",
+                  pref_job_ntr="Full-time", pref_org_type="NGO", propic="https://firebasestorage.googleapis.com/v0/b/csrecruitz-fd59e.appspot.com/o/images%2Frand_pp.png?alt=media&token=d51fec8d-bc95-4290-a1b1-09601abde54f",
+                  resume="resumes_input/nakshi.docx")
+user3.save()
+proj=Project(project_id=5,project_name="Pathao",project_link="https://github.com/adrita1999/ishtishon",project_short_desc="This is our 2-2 term project. It is basically a ride sharing app.",user_id=user3,language="Python, Django, HTML, CSS, Oracle, JavaScript")
+proj.save()
+proj_2=Project(project_id=6,project_name="Uber",project_link="https://github.com/adrita1999/csRecruitZ",project_short_desc="This is our 4-1 term project. I did full stack development on this project",user_id=user3,language="Python, DjangoRESTFramework, HTML, CSS, ReactJS, PostgreSQL")
+proj_2.save()
+proj_3=Project(project_id=7,project_name="Covid-Safe Room",
+               project_link="https://github.com/adrita1999/csRecruitZ",project_short_desc="It is a hardware project.We used ATmega32 for this. Besides ATmega , we used an Arduino, servo motors, LCD display etc.",user_id=user3,language="C, C++")
+proj_3.save()
+
+uskill1 = JobSeekerSkill(jobseeker_skill_id=12, isOpenToWork=True, skill_id=skill1, user_id=user3)
+uskill1.save()
+uskill2 = JobSeekerSkill(jobseeker_skill_id=13, isOpenToWork=True, skill_id=skill5, user_id=user3)
+uskill2.save()
+uskill3 = JobSeekerSkill(jobseeker_skill_id=14, isOpenToWork=True, skill_id=skill7, user_id=user3)
+uskill3.save()
+uskill4 = JobSeekerSkill(jobseeker_skill_id=15, isOpenToWork=False, skill_id=skill17, user_id=user3)
+uskill4.save()
+uskill5 = JobSeekerSkill(jobseeker_skill_id=16, isOpenToWork=True, skill_id=skill18, user_id=user3)
+uskill5.save()
+
+
+
+pub_1=Publication(publication_id=5,publication_name="A localized fault tolerant load balancing algorithm for RFID systems",publication_link="https://ieeexplore.ieee.org/abstract/document/8115623",user_id=user3,venue="Journal of Ambient Intelligence",publication_year="2017-10-30")
+pub_1.save()
+
+js_1=JobseekerCertificate(jobseeker_certificate_id=8,certificate_id=lic_2,user_id=user3)
+js_1.save()
+js_2=JobseekerCertificate(jobseeker_certificate_id=9,certificate_id=lic_3,user_id=user3)
+js_2.save()
+js_3=JobseekerCertificate(jobseeker_certificate_id=10,certificate_id=lic_4,user_id=user3)
+js_3.save()
+
+job_exp1 = JobExperience(jobexperience_id=6, experience_name="Junior Programmer", organization_name="SuperCoder", from_year="2017",
+                         to_year="2019", user_id=user3)
+job_exp1.save()
+job_exp2 = JobExperience(jobexperience_id=7, experience_name="Full Stack Developer", organization_name="Wipro Ltd.",
+                         from_year="2018", to_year="2020", user_id=user3)
+job_exp2.save()
+
+job_exp3 = JobExperience(jobexperience_id=8, experience_name="PHP programmer", organization_name="Kolpolok Ltd",
+                         from_year="2020", to_year="2021", user_id=user3)
+job_exp3.save()
+
+
 user2 = Jobseeker(user_id=2, name="Simantika Bhattacharjee Dristi", email="1705029@ugrad.cse.buet.ac.bd", password=pas_temp, thana="Lalbag",
                   district="Dhaka", division="Dhaka", father_name="Pintu Bhattacharjee",
                   mother_name="Soma Chowdhury", date_of_birth="1998-01-21",
