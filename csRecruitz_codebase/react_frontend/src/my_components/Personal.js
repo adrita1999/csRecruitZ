@@ -96,10 +96,14 @@ class Personal extends Component {
                     // console.log(this.state)
                     console.log(json.data.self_desc);
                     const desc = json.data.self_desc
-                    const splitid = desc.split(".")
-                    typestring1 = splitid[0]
-                    typestring2 = splitid[1]
-                    typestring3 = splitid[2]
+                    var splitid
+                    if(desc!==null) {
+                        splitid = desc.split(".")
+
+                        typestring1 = splitid[0]
+                        typestring2 = splitid[1]
+                        typestring3 = splitid[2]
+                    }
                     this.setState({DataisLoaded3: true})
                     // console.log(json.response);
                     

@@ -51,9 +51,6 @@ root.render(
         <Route path="/register2" element={< Register_2/>} />
         <Route path="/register3" element={< Register_3/>} />
         <Route path="/register4" element={< Register_4/>} />
-        <Route path="/register2" element={< Register_2/>} />
-        <Route path="/register3" element={< Register_3/>} />
-        <Route path="/register4" element={< Register_4/>} />
         <Route path="/register_emp" element={< RegisterEmp/>} />
         <Route path="/job1" element={< Job_1/>} />
         <Route path="/job2" element={< Job_2/>} />
@@ -72,7 +69,6 @@ root.render(
         <Route path="/editproject" element={< EditProject/>} />
         <Route path="/editlicense" element={< EditLicense/>} />
         <Route path="/editpublication" element={< EditPublication/>} />
-
         <Route path="/editskill" element={< EditSkill/>} />
         <Route path="/userprofile" element={< UserProfile/>} />
         <Route path="/userprofessional" element={< UserProfessional/>} />
