@@ -3055,7 +3055,7 @@ user4 = Jobseeker(user_id=18, name="Joy Saha", email="iamjOysaha1.0@gmail.com", 
                   district="Dhaka", division="Dhaka", father_name="Md. Abu Zafar Talukder",
                   mother_name="Shahina Beethi", date_of_birth="1997-10-31",
                   self_desc="I am a CSE graduate from BUET. I am sincere and I love to explore new frameworks",
-                  nationality="Bangladeshi", nid_number="12045678", field="DevOps", pref_sal="70000",
+                  nationality="Bangladeshi", nid_number="1204598", field="DevOps", pref_sal="70000",
                   pref_job_ntr="Full-time", pref_org_type="NGO", propic="https://firebasestorage.googleapis.com/v0/b/csrecruitz-fd59e.appspot.com/o/images%2Frand_pp.png?alt=media&token=d51fec8d-bc95-4290-a1b1-09601abde54f",
                   resume="resumes_input/nakshi.docx")
 user4.save()
@@ -3115,7 +3115,7 @@ uskill22.save()
 uskill23 = JobSeekerSkill(jobseeker_skill_id=23, isOpenToWork=False, skill_id=skill15, user_id=user5)
 uskill23.save()
 uskill24 = JobSeekerSkill(jobseeker_skill_id=24, isOpenToWork=True, skill_id=skill16, user_id=user5)
-uskill25.save()
+uskill24.save()
 uskill26 = JobSeekerSkill(jobseeker_skill_id=26, isOpenToWork=False, skill_id=skill20, user_id=user5)
 uskill26.save()
 
@@ -3187,46 +3187,44 @@ job_exp4.save()
 
 
 
-user7 = Jobseeker(user_id=20, name="Joydip", email="iamjOysaha1.0@gmail.com", password=pas_temp, thana="Azimpur",contact_no="01871866053",
+user7 = Jobseeker(user_id=20, name="Joydip", email="iamjOysa1.0@gmail.com", password=pas_temp, thana="Azimpur",contact_no="01871866053",
                   district="Dhaka", division="Dhaka", father_name="Md. Abu Zafar Talukder",
                   mother_name="Shahina Beethi", date_of_birth="1997-10-31",
                   self_desc="I am a CSE graduate from MIT. I am sincere and I love to explore new frameworks. Deep learning and Simulation is my field of interest",
-                  nationality="Bangladeshi", nid_number="12045678", field="DevOps", pref_sal="70000",
+                  nationality="Bangladeshi", nid_number="045678", field="DevOps", pref_sal="70000",
                   pref_job_ntr="Full-time", pref_org_type="NGO", propic="https://firebasestorage.googleapis.com/v0/b/csrecruitz-fd59e.appspot.com/o/images%2Frand_pp.png?alt=media&token=d51fec8d-bc95-4290-a1b1-09601abde54f",
                   resume="resumes_input/nakshi.docx")
 user7.save()
-proj=Project(project_id=9,project_name="CricInfo",project_link="https://github.com/adrita1999/ishtishon",project_short_desc="This is our 2-2 term project. It is a replication of ESPN cricinfo",user_id=user4,language="Python, Flask, SQL")
+proj=Project(project_id=14,project_name="CricInfo",project_link="https://github.com/adrita1999/ishtishon",project_short_desc="This is our 2-2 term project. It is a replication of ESPN cricinfo",user_id=user7,language="Python, Flask, SQL")
 proj.save()
 
 
 
-uskill1 = JobSeekerSkill(jobseeker_skill_id=17, isOpenToWork=False, skill_id=skill19, user_id=user4)
+uskill1 = JobSeekerSkill(jobseeker_skill_id=31, isOpenToWork=False, skill_id=skill19, user_id=user7)
 uskill1.save()
-uskill2 = JobSeekerSkill(jobseeker_skill_id=18, isOpenToWork=True, skill_id=skill8, user_id=user4)
+uskill2 = JobSeekerSkill(jobseeker_skill_id=32, isOpenToWork=True, skill_id=skill8, user_id=user7)
 uskill2.save()
-uskill3 = JobSeekerSkill(jobseeker_skill_id=19, isOpenToWork=False, skill_id=skill7, user_id=user4)
+uskill3 = JobSeekerSkill(jobseeker_skill_id=33, isOpenToWork=False, skill_id=skill9, user_id=user7)
 uskill3.save()
-uskill4 = JobSeekerSkill(jobseeker_skill_id=20, isOpenToWork=False, skill_id=skill12, user_id=user4)
+uskill4 = JobSeekerSkill(jobseeker_skill_id=34, isOpenToWork=False, skill_id=skill1, user_id=user7)
 uskill4.save()
-uskill5 = JobSeekerSkill(jobseeker_skill_id=21, isOpenToWork=True, skill_id=skill14, user_id=user4)
+uskill5 = JobSeekerSkill(jobseeker_skill_id=35, isOpenToWork=True, skill_id=skill12, user_id=user7)
 uskill5.save()
 
-
-
-pub_1=Publication(publication_id=7,publication_name="Statistical binning enables an accurate coalescent-based estimation of the avian tree",publication_link="https://ieeexplore.ieee.org/abstract/document/8115623",user_id=user7,venue="IBM international Conference",publication_year="2017-1-30")
+pub_1=Publication(publication_id=10,publication_name="Statistical binning enables an accurate coalescent-based estimation of the avian tree",publication_link="https://ieeexplore.ieee.org/abstract/document/8115623",user_id=user7,venue="IBM international Conference",publication_year="2017-1-30")
 pub_1.save()
 
-js_1=JobseekerCertificate(jobseeker_certificate_id=11,certificate_id=lic_7,user_id=user7)
+js_1=JobseekerCertificate(jobseeker_certificate_id=23,certificate_id=lic_7,user_id=user7)
 js_1.save()
-js_2=JobseekerCertificate(jobseeker_certificate_id=12,certificate_id=lic_3,user_id=user7)
+js_2=JobseekerCertificate(jobseeker_certificate_id=24,certificate_id=lic_1,user_id=user7)
 js_2.save()
-js_3=JobseekerCertificate(jobseeker_certificate_id=13,certificate_id=lic_2,user_id=user7)
+js_3=JobseekerCertificate(jobseeker_certificate_id=25,certificate_id=lic_5,user_id=user7)
 js_3.save()
 
-job_exp1 = JobExperience(jobexperience_id=11, experience_name="DevOps Engineer", organization_name="Otto BD", from_year="2016",
+job_exp1 = JobExperience(jobexperience_id=14, experience_name="DevOps Engineer", organization_name="Otto BD", from_year="2016",
                          to_year="2019", user_id=user7)
 job_exp1.save()
-job_exp2 = JobExperience(jobexperience_id=12, experience_name="DevOps Testing Professional", organization_name="Jenkins Ltd",
+job_exp2 = JobExperience(jobexperience_id=15, experience_name="DevOps Testing Professional", organization_name="Jenkins Ltd",
                          from_year="2019", to_year="2021", user_id=user7)
 job_exp2.save()
 
