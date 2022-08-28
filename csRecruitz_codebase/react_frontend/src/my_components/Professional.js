@@ -59,6 +59,24 @@ const style = {
       border:0,
       overflow: 'visible'
   };
+  const styleField = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 600,
+    height:100,
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    p:4,
+    backdrop:false,
+    paddingTop:'10px',
+    paddingBottom:'10px',
+    show:true,
+      borderRadius:5,
+      border:0,
+      overflow: 'visible'
+  };
 const stylepref = {
     position: 'absolute',
     top: '50%',
@@ -669,11 +687,11 @@ class Professional extends Component {
         aria-describedby="modal-modal-description"
         style={{background:"rgba(0,0,0,0)"}} 
       >
-        <Box sx={style}>
+        <Box sx={styleField}>
             <div className='row' >
                  <div className='col-md-9' style={{width: "80%", paddingRight:"12px"}}>
                     <InputLabel id="demo-simple-select-label">Field of work</InputLabel>
-                    <Select styles={dropDownStyle} options={CatOptions} value={this.state.cat}  onChange={this.handler} isClearable  />
+                    <Select styles={dropDownStyle} options={CatOptions}   onChange={this.handler} isClearable  />
                 </div>
                 <div>
                     <button className='btn btn-success' onClick={this.handleFieldSubmit} style={{marginTop:"-38px",width:"20%",marginRight:"-2px"}} >Submit</button>         
@@ -693,20 +711,18 @@ class Professional extends Component {
       >
         <Box sx={style}>
             <div className='row' >
-                 <div className='col-md-9' style={{width: "80%", paddingRight:"12px"}}>
+                 <div className='col-md-12' style={{width: "100%", paddingRight:"12px"}}>
                     <InputLabel id="demo-simple-select-label">Skills</InputLabel>
                     <Select name="skills" id="skills" styles={dropDownStyle} value={this.state.selectedOptions} options={SkillOptions} onChange={this.handleChangeSkill} isMulti placeholder="Add Your Skills" openMenuOnFocus isClearable />
                 </div>
-                <div className='col-md-9' style={{width: "80%", paddingRight:"12px"}}>
+                <div className='col-md-12' style={{width: "100%", paddingRight:"12px"}}>
                     <InputLabel id="demo-simple-select-label">Current Skills</InputLabel>
                     <Select name="open_skills" id="open_skills" styles={dropDownStyle}  options={this.state.selectedOptions} onChange={this.handleChangeOpenTo} isMulti placeholder="Add Your Skills" openMenuOnFocus isClearable />
                 </div>
-                <div>
-                    <button className='btn btn-success' onClick={this.handleSubmitSkill}  style={{marginTop:"-38px",width:"20%",marginRight:"-2px"}} >Submit</button>         
-
-                </div>
-
             </div> 
+            <div>
+                <button className='btn btn-success' onClick={this.handleSubmitSkill}  style={{marginTop:"5px",width:"20%",marginRight:"-2px"}} >Submit</button>         
+            </div>
         </Box>
         </Modal>
 
