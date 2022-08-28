@@ -3048,6 +3048,55 @@ job_exp5 = JobExperience(jobexperience_id=5, experience_name="Lecturer", organiz
 job_exp5.save()
 
 
+
+
+
+user4 = Jobseeker(user_id=18, name="Joy Saha", email="iamjOysaha1.0@gmail.com", password=pas_temp, thana="Azimpur",contact_no="01871866053",
+                  district="Dhaka", division="Dhaka", father_name="Md. Abu Zafar Talukder",
+                  mother_name="Shahina Beethi", date_of_birth="1997-10-31",
+                  self_desc="I am a CSE graduate from BUET. I am sincere and I love to explore new frameworks",
+                  nationality="Bangladeshi", nid_number="12045678", field="DevOps", pref_sal="70000",
+                  pref_job_ntr="Full-time", pref_org_type="NGO", propic="https://firebasestorage.googleapis.com/v0/b/csrecruitz-fd59e.appspot.com/o/images%2Frand_pp.png?alt=media&token=d51fec8d-bc95-4290-a1b1-09601abde54f",
+                  resume="resumes_input/nakshi.docx")
+user4.save()
+proj=Project(project_id=8,project_name="CricInfo",project_link="https://github.com/adrita1999/ishtishon",project_short_desc="This is our 2-2 term project. It is a replication of ESPN cricinfo",user_id=user4,language="Java, Spring, SQL")
+proj.save()
+proj_2=Project(project_id=9,project_name="FootballMania",project_link="https://github.com/adrita1999/csRecruitZ",project_short_desc="Here, I tried to implement something like FIFA. I used PHP for this.",user_id=user4,language="PHP,Laravel")
+proj_2.save()
+
+
+uskill1 = JobSeekerSkill(jobseeker_skill_id=17, isOpenToWork=False, skill_id=skill19, user_id=user4)
+uskill1.save()
+uskill2 = JobSeekerSkill(jobseeker_skill_id=18, isOpenToWork=True, skill_id=skill8, user_id=user4)
+uskill2.save()
+uskill3 = JobSeekerSkill(jobseeker_skill_id=19, isOpenToWork=False, skill_id=skill7, user_id=user4)
+uskill3.save()
+uskill4 = JobSeekerSkill(jobseeker_skill_id=20, isOpenToWork=False, skill_id=skill12, user_id=user4)
+uskill4.save()
+uskill5 = JobSeekerSkill(jobseeker_skill_id=21, isOpenToWork=True, skill_id=skill14, user_id=user4)
+uskill5.save()
+
+
+
+pub_1=Publication(publication_id=6,publication_name="Statistical binning enables an accurate coalescent-based estimation of the avian tree",publication_link="https://ieeexplore.ieee.org/abstract/document/8115623",user_id=user4,venue="Journal of BioTech",publication_year="2017-10-30")
+pub_1.save()
+
+js_1=JobseekerCertificate(jobseeker_certificate_id=11,certificate_id=lic_7,user_id=user4)
+js_1.save()
+js_2=JobseekerCertificate(jobseeker_certificate_id=12,certificate_id=lic_5,user_id=user4)
+js_2.save()
+js_3=JobseekerCertificate(jobseeker_certificate_id=13,certificate_id=lic_1,user_id=user4)
+js_3.save()
+
+job_exp1 = JobExperience(jobexperience_id=9, experience_name="DevOps Engineer (Mid)", organization_name="Otto BD", from_year="2016",
+                         to_year="2019", user_id=user4)
+job_exp1.save()
+job_exp2 = JobExperience(jobexperience_id=10, experience_name="Blockchain DevOps Engineer", organization_name="Snaphyre Bangladesh",
+                         from_year="2019", to_year="2021", user_id=user4)
+job_exp2.save()
+
+
+
 emp1 = Employer(user_id=3, name="Optimizely", email="optimizely@gmail.com", password=pas_temp, district="Dhaka",
                 division="Dhaka", org_type="NGO", establishment_year="2005")
 emp1.save()
