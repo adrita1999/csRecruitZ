@@ -3003,7 +3003,7 @@ emp3 = Employer(user_id=5, name="Data Edge Ltd", email="dataedge@gmail.com", pas
                 division="Sylhet", org_type="NGO", establishment_year="1996")
 emp3.save()
 emp4 = Employer(user_id=6, name="Samsung", email="samsung@gmail.com", password="1234", district="Cox's Bazar",
-                division="Chattogram", org_type="NGO", establishment_year="1981")
+                division="Chittagong", org_type="NGO", establishment_year="1981")
 emp4.save()
 emp5 = Employer(user_id=7, name="Intelligent Machines Limited", email="iml@gmail.com", password="1234",
                 district="Rangpur", division="Rangpur", org_type="NGO", establishment_year="2015")
@@ -3028,7 +3028,15 @@ emp10.save()
 emp11 = Employer(user_id=13, name="Bangladesh Airforce", email="airbdrj@gmail.com", password="1234", district="Rajshahi",
                 division="Rajshahi", org_type="Government", establishment_year="1990")
 emp11.save()
-
+emp12 = Employer(user_id=14, name="Green University of Bangladesh", email="gubun@gmail.com", password="1234", district="Chittagong",
+                division="Chittagong", org_type="Private Firm", establishment_year="2005")
+emp12.save()
+emp13 = Employer(user_id=15, name="Feni University (FU)", email="fu@gmail.com", password="1234", district="Chittagong",
+                division="Chittagong", org_type="Government", establishment_year="2005")
+emp13.save()
+emp14 = Employer(user_id=16, name="boo2 Bangla", email="boo@gmail.com", password="1234", district="Sylhet",
+                division="Sylhet", org_type="Private Firm", establishment_year="2010")
+emp14.save()
 
 
 jobpost1 = NewJobpost(jobpost_id=1, employer_id=emp1, title="Senior Software Engineer",
@@ -3308,6 +3316,69 @@ jobpost19 = NewJobpost(jobpost_id=19, employer_id=emp11,
                        additional_requirements="Good knowledge of Data Structure & Algorithms.150+ ACM problems solved (Mandatory Requirement).",
                        application_process="airbdrj@gmail.com ")
 jobpost19.save()
+jobpost20 = NewJobpost(jobpost_id=20, employer_id=emp12,
+                       title="Teaching",
+                       category="Teaching",
+                       post_date="2022-08-28", deadline_date="2022-09-28", salary=50000, required_experience=1,
+                       vacancies=3,
+                       job_context="We are looking for competent Faculty Members in different disciplines. We encourage individuals, who are academically competent and dedicated to educational development, to apply to be a part of Green Family.",
+                       job_nature="Part-time",
+                       job_responsibilities="Act as a Lecturer in the department of CSE of GUB.",
+                       edu_requirement="4 years Hons/ Master degree in CSE. At least 3 First Division/Class/A Grade",
+                       additional_requirements="Candidates having Masters degree will get preference.",
+                       application_process="gub@gmail.com ")
+jobpost20.save()
+jobpost21 = NewJobpost(jobpost_id=21, employer_id=emp13,
+                       title="Lecturer",
+                       category="Teaching",
+                       post_date="2022-08-27", deadline_date="2022-09-27", salary=45000, required_experience=2,
+                       vacancies=3,
+                       job_context="LTO for the Computer Science & Engineering (CSE).",
+                       job_nature="Part-time",
+                       job_responsibilities="Assist students and faculty members to carry out their research work.ay have to perform additional responsibilities of the department;",
+                       edu_requirement="4 years Hons/ Master degree in CSE.",
+                       additional_requirements="Experienced candidates will be given preference.",
+                       application_process="fu@gmail.com ")
+jobpost21.save()
+jobpost22 = NewJobpost(jobpost_id=22, employer_id=emp10,
+                       title="Team Lead- Information Security",
+                       category="Security",
+                       post_date="2022-08-26", deadline_date="2022-09-26", salary=70000, required_experience=3,
+                       vacancies=2,
+                       job_context="Main Purpose of this job is ensure information security of the Group, Review computer and computer networked device / equipment’s configuration and recommend configuration based on CIS control.",
+                       job_nature="Full-time",
+                       job_responsibilities="Implementation of information security process, policy, solution to the entire organization.",
+                       edu_requirement="B.Sc (Honors) in CSE, CSC, TE, ICE, ETE or related science faculty",
+                       additional_requirements="at least 3 year as Managerial position.",
+                       application_process="sumsung@gmail.com ")
+jobpost22.save()
+jobpost23 = NewJobpost(jobpost_id=23, employer_id=emp6,
+                       title="Trainee Engineer, Network & IT Security",
+                       category="Security",
+                       post_date="2022-08-28", deadline_date="2022-09-28", salary=60000, required_experience=2,
+                       vacancies=2,
+                       job_context="BEPRC limited is looking for some suitable young Fresh Graduates as Trainee for the position of `Trainee - Network & IT Security` to assist in its Voice, Network & IT Security Department.",
+                       job_nature="Full-time",
+                       job_responsibilities="Implementing, managing, monitoring, and upgrading security measures for the protection of the organization's data, systems, and networks..",
+                       edu_requirement="B.Sc Engineering in CSE.",
+                       additional_requirements="Strong understanding of a complete ISP environment is required.",
+                       application_process="beprc@gmail.com ")
+jobpost23.save()
+
+jobpost24 = NewJobpost(jobpost_id=24, employer_id=emp14,
+                       title="Power App Developer Freelance for Projects",
+                       category="Freelancing",
+                       post_date="2022-08-27", deadline_date="2022-09-27", salary=50000, required_experience=2,
+                       vacancies=2,
+                       job_context="We manage IT projects of any kind in Netherlands. We frequently are asked for Power App development work and are seeking a freelance, work-from-the-home Power app developer to take on the project with our Bangladesh Project managers..",
+                       job_nature="Part-time",
+                       job_responsibilities="Develop according the specifications.Supply technical support after the developed application is live.",
+                       edu_requirement="Diploma in English and IT.",
+                       additional_requirements="Person with disability are encouraged to apply.",
+                       application_process="boo@gmail.com ")
+jobpost24.save()
+
+
 jskill34 = JobSkill(job_skill_id=34,jobpost_id=jobpost14,skill_id=skill1)
 jskill34.save()
 jskill35 = JobSkill(job_skill_id=35,jobpost_id=jobpost14,skill_id=skill5)

@@ -168,14 +168,22 @@ body {
     position: absolute;
     cursor: pointer;
     left: 0%;
+    transition: 0.5s ease-in-out;
 }
+.imageicon_1:hover{
+    transform: scale(1.2); 
+  }
 .imageicon_2{
     height: 100px;
     width: 100px;
     display: inline;
     position: absolute;
     left: 5%;
+    transition: 0.5s ease-in-out;
 }
+.imageicon_2:hover{
+    transform: scale(1.2); 
+  }
 .imageicon_3{
     height: 100px;
     width: 100px;
@@ -183,19 +191,25 @@ body {
     position: absolute;
     cursor: pointer;
     left: 10%;
+    transition: 0.5s ease-in-out;
 }
+.imageicon_3:hover{
+    transform: scale(1.2); 
+  }
 .imageicontitle_1{
     display: inline;
     position: absolute;
     left: 30%;
     margin-top: 24px;
 }
+
 .imageicontitle_2{
     display: inline;
     position: absolute;
     left: 35%;
     margin-top: 24px;
 }
+
 .imageicontitle_3{
     display: inline;
     position: absolute;
