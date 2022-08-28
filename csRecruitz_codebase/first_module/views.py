@@ -3096,6 +3096,95 @@ job_exp2 = JobExperience(jobexperience_id=10, experience_name="Blockchain DevOps
 job_exp2.save()
 
 
+user5 = Jobseeker(user_id=5, name="Samira Akter", email="1705028@ugrad.cse.buet.ac.bd", password=pas_temp, thana="Lalbag",
+                  district="Dhaka", division="Dhaka", father_name="Pintu Akter",
+                  mother_name="Soma Begum", date_of_birth="1998-01-21",
+                  self_desc="I am studying in CSE, BUET. I am good at programming. CSE is my first love and my one and only passion.",
+                  nationality="Bangladeshi", nid_number="11231256", field="Security", propic="https://firebasestorage.googleapis.com/v0/b/csrecruitz-fd59e.appspot.com/o/images%2Frand_pp.png?alt=media&token=d51fec8d-bc95-4290-a1b1-09601abde54f",
+                  resume="resumes_input/nakshi.docx")
+user5.save()
+
+proj_=Project(project_id=10,project_name="csRecruitz",project_link="https://github.com/adrita1999/csRecruitZ",project_short_desc="This is our 4-1 term project. It is a job searching website. The development of the project is still ongoing.",user_id=user5,language="Python, DjangoRESTFramework, HTML, CSS, ReactJS, PostgreSQL")
+proj_4.save()
+proj_4=Project(project_id=11,project_name="Uber",project_link="https://github.com/adrita1999/csRecruitZ",project_short_desc="This is our 2-2 term project. It is a replication of Uber.",user_id=user5,language="Python, Django, HTML, CSS")
+proj_4.save()
+
+
+uskill22 = JobSeekerSkill(jobseeker_skill_id=22, isOpenToWork=True, skill_id=skill2, user_id=user5)
+uskill22.save()
+uskill23 = JobSeekerSkill(jobseeker_skill_id=23, isOpenToWork=False, skill_id=skill15, user_id=user5)
+uskill23.save()
+uskill24 = JobSeekerSkill(jobseeker_skill_id=24, isOpenToWork=True, skill_id=skill16, user_id=user5)
+uskill25.save()
+uskill26 = JobSeekerSkill(jobseeker_skill_id=26, isOpenToWork=False, skill_id=skill20, user_id=user5)
+uskill26.save()
+
+pub_3=Publication(publication_id=7,publication_name="CGAL: computing genome assembly likelihoods",publication_link="https://ieeexplore.ieee.org/abstract/document/8115623",user_id=user5,venue="Genome Biology, 14",publication_year="2013-05-09")
+pub_3.save()
+
+js_4=JobseekerCertificate(jobseeker_certificate_id=14,certificate_id=lic_1,user_id=user5)
+js_4.save()
+js_5=JobseekerCertificate(jobseeker_certificate_id=15,certificate_id=lic_2,user_id=user5)
+js_5.save()
+js_5=JobseekerCertificate(jobseeker_certificate_id=16,certificate_id=lic_3,user_id=user5)
+js_5.save()
+js_6=JobseekerCertificate(jobseeker_certificate_id=17,certificate_id=lic_6,user_id=user5)
+js_6.save()
+js_7=JobseekerCertificate(jobseeker_certificate_id=18,certificate_id=lic_7,user_id=user5)
+js_7.save()
+
+job_exp4 = JobExperience(jobexperience_id=11, experience_name="Security Junior Intern", organization_name="Dohatec", from_year="2019",
+                         to_year="2021", user_id=user5)
+job_exp4.save()
+
+
+user6 = Jobseeker(user_id=6, name="Syeda Rukaiya Hossain", email="1705019@ugrad.cse.buet.ac.bd", password=pas_temp, thana="Lalbag",
+                  district="Dhaka", division="Dhaka", father_name="Pintu Akter",
+                  mother_name="Soma Begum", date_of_birth="1998-01-21",
+                  self_desc="I am studying in CSE, BUET. I am good at programming. CSE is my first love and my one and only passion.",
+                  nationality="Bangladeshi", nid_number="99785634", field="Research and Development", propic="https://firebasestorage.googleapis.com/v0/b/csrecruitz-fd59e.appspot.com/o/images%2Frand_pp.png?alt=media&token=d51fec8d-bc95-4290-a1b1-09601abde54f",
+                  resume="resumes_input/nakshi.docx")
+user6.save()
+
+proj_4=Project(project_id=12,project_name="IntDesk",project_link="https://github.com/adrita1999/csRecruitZ",project_short_desc="This is our 4-1 term project. It is a website for taking preparation for interviews.",user_id=user6,language="Python, NodeJS, ReactJS, MongoDB")
+proj_4.save()
+proj_4=Project(project_id=13,project_name="Uber",project_link="https://github.com/adrita1999/csRecruitZ",project_short_desc="This is our 2-2 term project. It is a replication of Uber.",user_id=user6,language="Python, Django, HTML")
+proj_4.save()
+
+
+uskill8 = JobSeekerSkill(jobseeker_skill_id=27, isOpenToWork=True, skill_id=skill9, user_id=user6)
+uskill8.save()
+uskill9 = JobSeekerSkill(jobseeker_skill_id=28, isOpenToWork=False, skill_id=skill2, user_id=user6)
+uskill9.save()
+uskill10 = JobSeekerSkill(jobseeker_skill_id=29, isOpenToWork=True, skill_id=skill5, user_id=user6)
+uskill10.save()
+uskill11 = JobSeekerSkill(jobseeker_skill_id=30, isOpenToWork=False, skill_id=skill19, user_id=user6)
+uskill11.save()
+
+pub_3=Publication(publication_id=8,publication_name="Comprehensive characterization of amino acid positions in protein structures reveals molecular effect of missense variants",publication_link="https://ieeexplore.ieee.org/abstract/document/8115623",user_id=user6,venue="Proceedings of the National Academy of Sciences of the United States of America, 2020",publication_year="2020-05-09")
+pub_3.save()
+pub_3=Publication(publication_id=9,publication_name="CRISPRpred(SEQ): A Sequence-Based Method for sgRNA On Target Activity Prediction Using Traditional Machine Learning",publication_link="https://ieeexplore.ieee.org/abstract/document/8115623",user_id=user6,venue="BMC Bioinformatics",publication_year="2021-05-01")
+pub_3.save()
+
+js_4=JobseekerCertificate(jobseeker_certificate_id=19,certificate_id=lic_3,user_id=user6)
+js_4.save()
+js_5=JobseekerCertificate(jobseeker_certificate_id=20,certificate_id=lic_4,user_id=user6)
+js_5.save()
+js_5=JobseekerCertificate(jobseeker_certificate_id=21,certificate_id=lic_5,user_id=user6)
+js_5.save()
+js_6=JobseekerCertificate(jobseeker_certificate_id=22,certificate_id=lic_6,user_id=user6)
+js_6.save()
+
+
+job_exp4 = JobExperience(jobexperience_id=12, experience_name="Software Developer", organization_name="Dohatec", from_year="2016",
+                         to_year="2018", user_id=user6)
+job_exp4.save()
+job_exp4 = JobExperience(jobexperience_id=13, experience_name="Executive Software Developer", organization_name="Dohatec", from_year="2019",
+                         to_year="2021", user_id=user6)
+job_exp4.save()
+
+
+
 
 
 user7 = Jobseeker(user_id=20, name="Joydip", email="iamjOysaha1.0@gmail.com", password=pas_temp, thana="Azimpur",contact_no="01871866053",
@@ -3868,3 +3957,9 @@ job_short9=JobShortlist(jobshortlist_id=9,user_id_id=1,newjobpost_id_id=7)
 job_short9.save()
 job_short10=JobShortlist(jobshortlist_id=10,user_id_id=1,newjobpost_id_id=8)
 job_short10.save()
+
+
+
+
+
+
