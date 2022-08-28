@@ -2932,13 +2932,19 @@ js_3.save()
 
 
 job_exp1 = JobExperience(jobexperience_id=1, experience_name="Software Developer Intern", organization_name="Kona SL", from_year="2017",
+                         description="It was my first experience as an intern. To be honest, it was an intimidating experience. But, with time"
+                                     "I became quite comfortable in my position and became 'Employee of the Month'",
                          to_year="2018", user_id=user1)
 job_exp1.save()
 job_exp2 = JobExperience(jobexperience_id=2, experience_name="Junior Engineer", organization_name="Imagine Ltd.",
+                        description="I have worked there for a short period, but it helped me gaining some good career perspective.",
                          from_year="2018", to_year="2020", user_id=user1)
 job_exp2.save()
 
 job_exp3 = JobExperience(jobexperience_id=3, experience_name="Assistant Executive Developer", organization_name="Optimizely",
+                        description="This is the job I am currently doing. I started working as a group member in a project."
+                                    "Gradually, I became full-time software developer and worked with my own team. Recently I got"
+                                    "promoted as assistant executive developer and I am really enjoying my job.",
                          from_year="2020", to_year="2021", user_id=user1)
 job_exp3.save()
 
