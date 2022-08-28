@@ -253,16 +253,16 @@ class Personal extends Component {
                 flexFlow:"row"
             }}>
             
-                    {/*<img  src={items.propic} alt="Profile Pic" style={{*/}
-                    {/*    height:120,*/}
-                    {/*    width:140,*/}
-                    {/*    borderRadius:"50%"*/}
-                    {/*}}/>*/}
-                <img  src="/nakshi.jpg" alt="Profile Pic" style={{
+                    <img  src={items.propic} alt="Profile Pic" style={{
                         height:120,
                         width:140,
                         borderRadius:"50%"
                     }}/>
+                {/*<img  src="/nakshi.jpg" alt="Profile Pic" style={{*/}
+                {/*        height:120,*/}
+                {/*        width:140,*/}
+                {/*        borderRadius:"50%"*/}
+                {/*    }}/>*/}
                
 
                 <div style ={{

@@ -706,7 +706,7 @@ class postViewsets_for_jobpost(viewsets.ModelViewSet):
 
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
-            jobs = NewJobpost.objects.filter(employer_id_id=emp_id,title__icontains=postViewsets_for_jobpost.search_str)
+            jobs = NewJobpost.objects.filter(employer_id_id=emp_id,title__icontains=postViewsets_for_jobpost.search_str).order_by('-jobpost_id')
             # print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
             # print(jobs)
             appstr=""
@@ -2244,7 +2244,7 @@ class appliedjobViewsets(viewsets.ModelViewSet):
         user_id = logged_in_id
     else:
         user_id = 1
-    queryset = JobApplication.objects.filter(user_id_id=user_id)
+    queryset = JobApplication.objects.filter(user_id_id=user_id).order_by('-application_id')
     serializer_class = applicationSerializer
 
 class shortlistedjobViewsets(viewsets.ModelViewSet):
@@ -2262,7 +2262,7 @@ class shortlistedjobViewsets(viewsets.ModelViewSet):
             shortlist.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
-            jobs=JobShortlist.objects.filter(user_id_id=shortlistedjobViewsets.user_id)
+            jobs=JobShortlist.objects.filter(user_id_id=shortlistedjobViewsets.user_id).order_by('-jobshortlist_id')
 
             serializer = shortlistSerializer(jobs, many=True)
             return Response({
