@@ -556,6 +556,7 @@ class Professional extends Component {
                                 return(
                                 <li><b className="seems-h1"> {proj.project_name}</b>
                                     <br/><small>{proj.language}</small>
+                                    <br/><br/>
                                     <p>{proj.project_short_desc}</p>
 
                                     <HiExternalLink size={'1.5em'}/><a href={proj.project_link}
