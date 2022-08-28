@@ -2830,60 +2830,6 @@ class empApplicantViewsets(viewsets.ModelViewSet):
             })
 
 pas_temp=make_pw_hash("1234")
-user1 = Jobseeker(user_id=1, name="Adrita Hossain Nakshi", email="adrita_99@yahoo.com", password=pas_temp, thana="Lalbag",contact_no="01871666053",
-                  district="Dhaka", division="Dhaka", father_name="Dr. Md. Elias Hossain",
-                  mother_name="Dr. Zennat Ferdousi", date_of_birth="1999-02-06",
-                  self_desc="I am a CS under-graduate. I love programming. I am keen to learning. Like Steve Jobs, I like to believe 'Everybody should learn to program a computer, because it teaches you how to think.'",
-                  nationality="Bangladeshi", nid_number="12345678", field="Research and Development", pref_sal="30000",
-                  pref_job_ntr="Full-time", pref_org_type="NGO", propic="https://firebasestorage.googleapis.com/v0/b/csrecruitz-fd59e.appspot.com/o/images%2Fnakshi.jpg?alt=media&token=0fd92bf9-8418-432c-9d7c-9a03291ab619",
-                  resume="resumes_input/nakshi.docx")
-user1.save()
-user2 = Jobseeker(user_id=2, name="Simantika Bhattacharjee Dristi", email="1705029@ugrad.cse.buet.ac.bd", password=pas_temp, thana="Lalbag",
-                  district="Dhaka", division="Dhaka", father_name="Pintu Bhattacharjee",
-                  mother_name="Soma Chowdhury", date_of_birth="1998-01-21",
-                  self_desc="I am studying in CSE, BUET. I am good at programming. CSE is my first love and my one and only passion.",
-                  nationality="Bangladeshi", nid_number="12349876", field="Teaching", propic="https://firebasestorage.googleapis.com/v0/b/csrecruitz-fd59e.appspot.com/o/images%2F154617714_2792879197694937_5512096372900003083_n%20(2).jpg?alt=media&token=4730bdb0-7979-424d-bbbd-eeb6e11425f6",
-                  resume="resumes_input/nakshi.docx")
-user2.save()
-
-emp1 = Employer(user_id=3, name="Optimizely", email="optimizely@gmail.com", password=pas_temp, district="Dhaka",
-                division="Dhaka", org_type="NGO", establishment_year="2005")
-emp1.save()
-emp2 = Employer(user_id=4, name="Kona SL", email="kona@yahoo.com", password="1234", district="Kishoreganj",
-                division="Dhaka",
-                org_type="NGO", establishment_year="2001")
-emp2.save()
-emp3 = Employer(user_id=5, name="Data Edge Ltd", email="dataedge@gmail.com", password=pas_temp, district="Sunamganj",
-                division="Sylhet", org_type="NGO", establishment_year="1996")
-emp3.save()
-emp4 = Employer(user_id=6, name="Samsung", email="samsung@gmail.com", password="1234", district="Cox's Bazar",
-                division="Chattogram", org_type="NGO", establishment_year="1981")
-emp4.save()
-emp5 = Employer(user_id=7, name="Intelligent Machines Limited", email="iml@gmail.com", password="1234",
-                district="Rangpur", division="Rangpur", org_type="NGO", establishment_year="2015")
-emp5.save()
-emp6 = Employer(user_id=8, name="BEPRC", email="beprc@gmail.com", password="1234", district="Netrokona",
-                division="Mymensingh",
-                org_type="Government", establishment_year="1998")
-emp6.save()
-emp7 = Employer(user_id=9, name="Bangladesh Airforce", email="airbd@gmail.com", password="1234", district="Bogura",
-                division="Rajshahi", org_type="Government", establishment_year="1975")
-emp7.save()
-
-emp8 = Employer(user_id=10, name="Brac", email="brac@edu.bd", password="1234", district="Dhaka",
-                division="Dhaka", org_type="NGO", establishment_year="1975")
-emp8.save()
-emp9 = Employer(user_id=11, name="UIU", email="uiu@edu.com", password="1234", district="Dhaka",
-                division="Dhaka", org_type="NGO", establishment_year="2000")
-emp9.save()
-emp10 = Employer(user_id=12, name="Samsung", email="samsungrj@gmail.com", password="1234", district="Rajshahi",
-                division="Rajshahi", org_type="Private Firm", establishment_year="2001")
-emp10.save()
-emp11 = Employer(user_id=13, name="Bangladesh Airforce", email="airbdrj@gmail.com", password="1234", district="Rajshahi",
-                division="Rajshahi", org_type="Government", establishment_year="1990")
-emp11.save()
-
-
 skill1 = Skill(skill_id=1, skill_name="Python", gap_between_consecutive_attempts=30)
 skill1.save()
 skill2 = Skill(skill_id=2, skill_name="C++", gap_between_consecutive_attempts=30)
@@ -2924,6 +2870,161 @@ skill19 = Skill(skill_id=19, skill_name="Swift", gap_between_consecutive_attempt
 skill19.save()
 skill20 = Skill(skill_id=20, skill_name="PL/SQL", gap_between_consecutive_attempts=30)
 skill20.save()
+lic_1=LicenseCertificate(certificate_id=1,certificate_name="HTML, CSS, and Javascript for Web Developers",issuing_org="Coursera",certificate_link="https://firebasestorage.googleapis.com/v0/b/csrecruitz-fd59e.appspot.com/o/license%2Fhtmlcss.pdf?alt=media&token=dd2e3156-b892-4edd-90bf-05d580b736e8")
+lic_1.save()
+lic_2=LicenseCertificate(certificate_id=2,certificate_name="HTML, CSS, and Javascript for Web Developers (Advanced)",issuing_org="Coursera",certificate_link="https://firebasestorage.googleapis.com/v0/b/csrecruitz-fd59e.appspot.com/o/license%2Fhtml2.pdf?alt=media&token=46514382-30cd-4507-a3cb-21186ac6d020")
+lic_2.save()
+lic_3=LicenseCertificate(certificate_id=3,certificate_name="Machine Learning",issuing_org="Stanford Online",certificate_link="https://firebasestorage.googleapis.com/v0/b/csrecruitz-fd59e.appspot.com/o/license%2FML.pdf?alt=media&token=c3c9147e-f1af-4e9d-b7b7-f5a76b190238")
+lic_3.save()
+lic_4=LicenseCertificate(certificate_id=4,certificate_name="Improving Deep Neural Networks: Hyperparameter tuning, Regularization and Optimization",issuing_org="Coursera",certificate_link="https://firebasestorage.googleapis.com/v0/b/csrecruitz-fd59e.appspot.com/o/license%2Fdl1.pdf?alt=media&token=c09c1cc0-f83b-4e3e-87ec-bd5c3cce9071")
+lic_4.save()
+lic_5=LicenseCertificate(certificate_id=5,certificate_name="Neural Networks and Deep Learning",issuing_org="Coursera",certificate_link="https://firebasestorage.googleapis.com/v0/b/csrecruitz-fd59e.appspot.com/o/license%2Fdl2.pdf?alt=media&token=c4503d6d-0ca2-4797-8137-0854104fba39")
+lic_5.save()
+lic_6=LicenseCertificate(certificate_id=6,certificate_name="Introduction to Artificial Intelligence (AI)",issuing_org="Coursera",certificate_link="https://firebasestorage.googleapis.com/v0/b/csrecruitz-fd59e.appspot.com/o/license%2FAI.pdf?alt=media&token=79888840-be06-435e-a052-52380261cb6f")
+lic_6.save()
+lic_7=LicenseCertificate(certificate_id=7,certificate_name="AI for Everyone",issuing_org="ResearchGate",certificate_link="https://firebasestorage.googleapis.com/v0/b/csrecruitz-fd59e.appspot.com/o/license%2FAI2.pdf?alt=media&token=c4c17935-6e10-4d36-b161-5e03b12ba742")
+lic_7.save()
+user1 = Jobseeker(user_id=1, name="Adrita Hossain Nakshi", email="adrita_99@yahoo.com", password=pas_temp, thana="Lalbag",contact_no="01871666053",
+                  district="Dhaka", division="Dhaka", father_name="Dr. Md. Elias Hossain",
+                  mother_name="Dr. Zennat Ferdousi", date_of_birth="1999-02-06",
+                  self_desc="I am a CS under-graduate. I love programming. I am keen to learning. Like Steve Jobs, I like to believe 'Everybody should learn to program a computer, because it teaches you how to think.'",
+                  nationality="Bangladeshi", nid_number="12345678", field="Research and Development", pref_sal="40000",
+                  pref_job_ntr="Full-time", pref_org_type="NGO", propic="https://firebasestorage.googleapis.com/v0/b/csrecruitz-fd59e.appspot.com/o/images%2Fnakshi.jpg?alt=media&token=0fd92bf9-8418-432c-9d7c-9a03291ab619",
+                  resume="resumes_input/nakshi.docx")
+user1.save()
+proj=Project(project_id=1,project_name="Istishon",project_link="https://github.com/adrita1999/ishtishon",project_short_desc="This is our 2-2 term project. It is basically a railway ticket booking website.",user_id=user1,language="Python, Django, HTML, CSS, Oracle, JavaScript")
+proj.save()
+proj_2=Project(project_id=2,project_name="csRecruitz",project_link="https://github.com/adrita1999/csRecruitZ",project_short_desc="This is our 4-1 term project. It is a job searching website. The development of the project is still ongoing.",user_id=user1,language="Python, DjangoRESTFramework, HTML, CSS, ReactJS, PostgreSQL")
+proj_2.save()
+proj_3=Project(project_id=3,project_name="Gesture-Based-Mini-Piano",
+               project_link="https://github.com/adrita1999/csRecruitZ",project_short_desc="We have made a mini version of piano using the "
+                                                                                          "ATmega32 Microcontroller which is able to play different musical notes. We've been a bit ambitious here by making this "
+                                                                                          "piano play according to the finger gestures made by the users. Also the users can record and save the tune they play "
+                                                                                          "and playback it anytime they want.",user_id=user1,language="C, C++")
+proj_3.save()
+
+uskill1 = JobSeekerSkill(jobseeker_skill_id=1, isOpenToWork=True, skill_id=skill1, user_id=user1)
+uskill1.save()
+uskill2 = JobSeekerSkill(jobseeker_skill_id=2, isOpenToWork=True, skill_id=skill2, user_id=user1)
+uskill2.save()
+uskill3 = JobSeekerSkill(jobseeker_skill_id=3, isOpenToWork=True, skill_id=skill4, user_id=user1)
+uskill3.save()
+uskill4 = JobSeekerSkill(jobseeker_skill_id=4, isOpenToWork=False, skill_id=skill5, user_id=user1)
+uskill4.save()
+uskill5 = JobSeekerSkill(jobseeker_skill_id=5, isOpenToWork=True, skill_id=skill6, user_id=user1)
+uskill5.save()
+uskill6 = JobSeekerSkill(jobseeker_skill_id=6, isOpenToWork=True, skill_id=skill7, user_id=user1)
+uskill6.save()
+uskill7 = JobSeekerSkill(jobseeker_skill_id=7, isOpenToWork=False, skill_id=skill10, user_id=user1)
+uskill7.save()
+
+pub_1=Publication(publication_id=1,publication_name="SentiCR: A customized sentiment analysis tool for code review interactions",publication_link="https://ieeexplore.ieee.org/abstract/document/8115623",user_id=user1,venue="IEEE/ACM International Conference, Urbana, IL, USA",publication_year="2017-10-30")
+pub_1.save()
+pub_2=Publication(publication_id=2,publication_name="Machine Vision Based Rice Disease Recognition by Deep Learning",publication_link="https://ieeexplore.ieee.org/abstract/document/9038350",user_id=user1,venue="IEEE Sensors Journal",publication_year="2020-03-19")
+pub_2.save()
+
+js_1=JobseekerCertificate(jobseeker_certificate_id=1,certificate_id=lic_1,user_id=user1)
+js_1.save()
+js_2=JobseekerCertificate(jobseeker_certificate_id=2,certificate_id=lic_4,user_id=user1)
+js_2.save()
+js_3=JobseekerCertificate(jobseeker_certificate_id=3,certificate_id=lic_5,user_id=user1)
+js_3.save()
+
+
+job_exp1 = JobExperience(jobexperience_id=1, experience_name="Software Developer Intern", organization_name="Kona SL", from_year="2017",
+                         to_year="2018", user_id=user1)
+job_exp1.save()
+job_exp2 = JobExperience(jobexperience_id=2, experience_name="Junior Engineer", organization_name="Imagine Ltd.",
+                         from_year="2018", to_year="2020", user_id=user1)
+job_exp2.save()
+
+job_exp3 = JobExperience(jobexperience_id=3, experience_name="Assistant Executive Developer", organization_name="Optimizely",
+                         from_year="2020", to_year="2021", user_id=user1)
+job_exp3.save()
+
+
+user2 = Jobseeker(user_id=2, name="Simantika Bhattacharjee Dristi", email="1705029@ugrad.cse.buet.ac.bd", password=pas_temp, thana="Lalbag",
+                  district="Dhaka", division="Dhaka", father_name="Pintu Bhattacharjee",
+                  mother_name="Soma Chowdhury", date_of_birth="1998-01-21",
+                  self_desc="I am studying in CSE, BUET. I am good at programming. CSE is my first love and my one and only passion.",
+                  nationality="Bangladeshi", nid_number="12349876", field="Teaching", propic="https://firebasestorage.googleapis.com/v0/b/csrecruitz-fd59e.appspot.com/o/images%2F154617714_2792879197694937_5512096372900003083_n%20(2).jpg?alt=media&token=4730bdb0-7979-424d-bbbd-eeb6e11425f6",
+                  resume="resumes_input/nakshi.docx")
+user2.save()
+
+proj_4=Project(project_id=4,project_name="csRecruitz",project_link="https://github.com/adrita1999/csRecruitZ",project_short_desc="This is our 4-1 term project. It is a job searching website. The development of the project is still ongoing.",user_id=user2,language="Python, DjangoRESTFramework, HTML, CSS, ReactJS, PostgreSQL")
+proj_4.save()
+
+
+uskill8 = JobSeekerSkill(jobseeker_skill_id=8, isOpenToWork=True, skill_id=skill1, user_id=user2)
+uskill8.save()
+uskill9 = JobSeekerSkill(jobseeker_skill_id=9, isOpenToWork=False, skill_id=skill2, user_id=user2)
+uskill9.save()
+uskill10 = JobSeekerSkill(jobseeker_skill_id=10, isOpenToWork=True, skill_id=skill3, user_id=user2)
+uskill10.save()
+uskill11 = JobSeekerSkill(jobseeker_skill_id=11, isOpenToWork=False, skill_id=skill4, user_id=user2)
+uskill11.save()
+
+pub_3=Publication(publication_id=3,publication_name="Multiobjective Formulation of Multiple Sequence Alignment for Phylogeny Inference",publication_link="https://ieeexplore.ieee.org/abstract/document/8115623",user_id=user2,venue="IEEE Transactions on Cybernetics, 2020",publication_year="2020-10-30")
+pub_3.save()
+pub_4=Publication(publication_id=4,publication_name="Association mapping from sequencing reads using k-mers",publication_link="https://ieeexplore.ieee.org/abstract/document/9038350",user_id=user2,venue="eLife",publication_year="2018-10-23")
+pub_4.save()
+
+js_4=JobseekerCertificate(jobseeker_certificate_id=4,certificate_id=lic_1,user_id=user2)
+js_4.save()
+js_5=JobseekerCertificate(jobseeker_certificate_id=5,certificate_id=lic_2,user_id=user2)
+js_5.save()
+js_6=JobseekerCertificate(jobseeker_certificate_id=6,certificate_id=lic_5,user_id=user2)
+js_6.save()
+js_7=JobseekerCertificate(jobseeker_certificate_id=7,certificate_id=lic_6,user_id=user2)
+js_7.save()
+
+job_exp4 = JobExperience(jobexperience_id=4, experience_name="Lecturer", organization_name="UIU", from_year="2018",
+                         to_year="2019", user_id=user2)
+job_exp4.save()
+job_exp5 = JobExperience(jobexperience_id=5, experience_name="Lecturer", organization_name="Brac University",
+                         from_year="2019", to_year="2021", user_id=user2)
+job_exp5.save()
+
+
+emp1 = Employer(user_id=3, name="Optimizely", email="optimizely@gmail.com", password=pas_temp, district="Dhaka",
+                division="Dhaka", org_type="NGO", establishment_year="2005")
+emp1.save()
+emp2 = Employer(user_id=4, name="Kona SL", email="kona@yahoo.com", password="1234", district="Kishoreganj",
+                division="Dhaka",
+                org_type="NGO", establishment_year="2001")
+emp2.save()
+emp3 = Employer(user_id=5, name="Data Edge Ltd", email="dataedge@gmail.com", password=pas_temp, district="Sunamganj",
+                division="Sylhet", org_type="NGO", establishment_year="1996")
+emp3.save()
+emp4 = Employer(user_id=6, name="Samsung", email="samsung@gmail.com", password="1234", district="Cox's Bazar",
+                division="Chattogram", org_type="NGO", establishment_year="1981")
+emp4.save()
+emp5 = Employer(user_id=7, name="Intelligent Machines Limited", email="iml@gmail.com", password="1234",
+                district="Rangpur", division="Rangpur", org_type="NGO", establishment_year="2015")
+emp5.save()
+emp6 = Employer(user_id=8, name="BEPRC", email="beprc@gmail.com", password="1234", district="Netrokona",
+                division="Mymensingh",
+                org_type="Government", establishment_year="1998")
+emp6.save()
+emp7 = Employer(user_id=9, name="Bangladesh Airforce", email="airbd@gmail.com", password="1234", district="Bogura",
+                division="Rajshahi", org_type="Government", establishment_year="1975")
+emp7.save()
+
+emp8 = Employer(user_id=10, name="Brac", email="brac@edu.bd", password="1234", district="Dhaka",
+                division="Dhaka", org_type="NGO", establishment_year="1975")
+emp8.save()
+emp9 = Employer(user_id=11, name="UIU", email="uiu@edu.com", password="1234", district="Dhaka",
+                division="Dhaka", org_type="NGO", establishment_year="2000")
+emp9.save()
+emp10 = Employer(user_id=12, name="Samsung", email="samsungrj@gmail.com", password="1234", district="Rajshahi",
+                division="Rajshahi", org_type="Private Firm", establishment_year="2001")
+emp10.save()
+emp11 = Employer(user_id=13, name="Bangladesh Airforce", email="airbdrj@gmail.com", password="1234", district="Rajshahi",
+                division="Rajshahi", org_type="Government", establishment_year="1990")
+emp11.save()
+
+
+
 jobpost1 = NewJobpost(jobpost_id=1, employer_id=emp1, title="Senior Software Engineer",
                       category="Research and Development", post_date="2022-06-28", deadline_date="2022-09-28",
                       salary=55000, required_experience=5, vacancies=2,
@@ -3496,44 +3597,7 @@ question27 = Question(question_id=27, skill_id=skill1,
                      time_limit="0:30")
 question27.save()
 
-job_exp1 = JobExperience(jobexperience_id=1, experience_name="Lecturer", organization_name="UIU", from_year="2017",
-                         to_year="2018", user_id=user1)
-job_exp1.save()
-job_exp2 = JobExperience(jobexperience_id=2, experience_name="Lecturer", organization_name="Brac University",
-                         from_year="2018", to_year="2021", user_id=user1)
-job_exp2.save()
 
-job_exp3 = JobExperience(jobexperience_id=3, experience_name="Lecturer", organization_name="North-South University",
-                         from_year="2010", to_year="2017", user_id=user1)
-job_exp3.save()
-uskill1 = JobSeekerSkill(jobseeker_skill_id=1, isOpenToWork=True, skill_id=skill1, user_id=user1)
-uskill1.save()
-uskill2 = JobSeekerSkill(jobseeker_skill_id=2, isOpenToWork=False, skill_id=skill3, user_id=user1)
-uskill2.save()
-uskill3 = JobSeekerSkill(jobseeker_skill_id=3, isOpenToWork=True, skill_id=skill4, user_id=user1)
-uskill3.save()
-uskill4 = JobSeekerSkill(jobseeker_skill_id=4, isOpenToWork=True, skill_id=skill2, user_id=user1)
-uskill4.save()
-uskill5 = JobSeekerSkill(jobseeker_skill_id=5, isOpenToWork=True, skill_id=skill2, user_id=user2)
-uskill5.save()
-uskill6 = JobSeekerSkill(jobseeker_skill_id=6, isOpenToWork=True, skill_id=skill1, user_id=user2)
-uskill6.save()
-proj=Project(project_id=1,project_name="Istishon",project_link="https://github.com/adrita1999/ishtishon",project_short_desc="This is our 2-2 term project. It is basically a railway ticket booking website",user_id=user1,language="Python, Django, Oracle,JavaScript")
-proj.save()
-proj_2=Project(project_id=2,project_name="csRecruitz",project_link="https://github.com/adrita1999/csRecruitZ",project_short_desc="This is our 4-1 term project. It is a job searching website. The development of the project is still ongoing",user_id=user1,language="Python, Django, React, PostGRESQL")
-proj_2.save()
-pub_1=Publication(publication_id=1,publication_name="SentiCR: A customized sentiment analysis tool for code review interactions",publication_link="https://ieeexplore.ieee.org/abstract/document/8115623",user_id=user1,venue="IEEE/ACM International Conference, Urbana, IL, USA",publication_year="2017-10-30")
-pub_1.save()
-pub_2=Publication(publication_id=2,publication_name="Machine Vision Based Rice Disease Recognition by Deep Learning",publication_link="https://ieeexplore.ieee.org/abstract/document/9038350",user_id=user1,venue="IEEE Sensors Journal",publication_year="2020-03-19")
-pub_2.save()
-lic_1=LicenseCertificate(certificate_id=1,certificate_name="IBM Data Science Professional Certificate",issuing_org="Coursera",certificate_link="https://firebasestorage.googleapis.com/v0/b/csrecruitz-fd59e.appspot.com/o/license%2F3.pdf?alt=media&token=e84efa7c-4941-4c18-a5f5-19fee62766df")
-lic_1.save()
-lic_2=LicenseCertificate(certificate_id=2,certificate_name="Deep Learning Specialization",issuing_org="Coursera",certificate_link="https://firebasestorage.googleapis.com/v0/b/csrecruitz-fd59e.appspot.com/o/license%2F4.pdf?alt=media&token=7e67c375-7003-4300-9fe8-d5e9d6ada15f")
-lic_2.save()
-js_1=JobseekerCertificate(jobseeker_certificate_id=1,certificate_id=lic_1,user_id=user1)
-js_1.save()
-js_2=JobseekerCertificate(jobseeker_certificate_id=2,certificate_id=lic_2,user_id=user1)
-js_2.save()
 cut1=SkillMarkCutoff(cutoff_id=1,skill_id_id=2,cutoff_percentage=80,from_date="1999-02-06",to_date="2024-02-06")
 cut1.save()
 cut2=SkillMarkCutoff(cutoff_id=2,skill_id_id=1,cutoff_percentage=80,from_date="1999-02-06",to_date="2024-02-06")
