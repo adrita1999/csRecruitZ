@@ -2958,7 +2958,7 @@ user3 = Jobseeker(user_id=17, name="Shafqat Talukder Rakin", email="iamshafqatra
                   district="Dhaka", division="Dhaka", father_name="Md. Abu Zafar Talukder",
                   mother_name="Shahina Beethi", date_of_birth="1997-10-31",
                   self_desc="I am a CS under-graduate. I love programming. Python is my favourite language. I want to work with ReactJS in future.",
-                  nationality="Bangladeshi", nid_number="12045678", field="Programming", pref_sal="50000",
+                  nationality="Bangladeshi", nid_number="1203858", field="Programming", pref_sal="50000",
                   pref_job_ntr="Full-time", pref_org_type="NGO", propic="https://firebasestorage.googleapis.com/v0/b/csrecruitz-fd59e.appspot.com/o/images%2Frand_pp.png?alt=media&token=d51fec8d-bc95-4290-a1b1-09601abde54f",
                   resume="resumes_input/nakshi.docx")
 user3.save()
