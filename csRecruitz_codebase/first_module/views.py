@@ -3025,6 +3025,9 @@ uskill10 = JobSeekerSkill(jobseeker_skill_id=10, isOpenToWork=True, skill_id=ski
 uskill10.save()
 uskill11 = JobSeekerSkill(jobseeker_skill_id=11, isOpenToWork=False, skill_id=skill4, user_id=user2)
 uskill11.save()
+uskill12 = JobSeekerSkill(jobseeker_skill_id=12, isOpenToWork=True, skill_id=skill5, user_id=user2)
+uskill12.save()
+
 
 pub_3=Publication(publication_id=3,publication_name="Multiobjective Formulation of Multiple Sequence Alignment for Phylogeny Inference",publication_link="https://ieeexplore.ieee.org/abstract/document/8115623",user_id=user2,venue="IEEE Transactions on Cybernetics, 2020",publication_year="2020-10-30")
 pub_3.save()
@@ -3935,6 +3938,25 @@ ass3=Assessment(assessment_id=3,marks_obtained=7,date="2022-08-26",jobseeker_ski
 ass3.save()
 ass4=Assessment(assessment_id=4,marks_obtained=8,date="2022-08-26",jobseeker_skill_id=uskill6)
 ass4.save()
+ass5=Assessment(assessment_id=5,marks_obtained=8,date="2022-08-26",jobseeker_skill_id=uskill3)
+ass5.save()
+ass6=Assessment(assessment_id=6,marks_obtained=6,date="2022-08-26",jobseeker_skill_id=uskill2)
+ass6.save()
+ass7=Assessment(assessment_id=7,marks_obtained=7,date="2022-08-26",jobseeker_skill_id=uskill7)
+ass7.save()
+
+ass8=Assessment(assessment_id=8,marks_obtained=7,date="2022-08-26",jobseeker_skill_id=uskill8)
+ass8.save()
+ass9=Assessment(assessment_id=9,marks_obtained=8,date="2022-08-26",jobseeker_skill_id=uskill9)
+ass9.save()
+ass10=Assessment(assessment_id=10,marks_obtained=8,date="2022-08-26",jobseeker_skill_id=uskill10)
+ass10.save()
+ass11=Assessment(assessment_id=11,marks_obtained=9,date="2022-08-26",jobseeker_skill_id=uskill11)
+ass11.save()
+ass12=Assessment(assessment_id=12,marks_obtained=7,date="2022-08-26",jobseeker_skill_id=uskill12)
+ass12.save()
+
+
 job_short1=JobShortlist(jobshortlist_id=1,user_id_id=1,newjobpost_id_id=1)
 job_short1.save()
 job_short2=JobShortlist(jobshortlist_id=2,user_id_id=1,newjobpost_id_id=2)
