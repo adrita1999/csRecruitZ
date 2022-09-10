@@ -416,7 +416,7 @@ handleChange(event) {
         <Navb/>
             <body className="prev_body">
       <div className="content_reg_prev2">
-          <p className="seems-h1_reg"><b> Your Application Preview</b></p>
+          <p className="seems-h1_reg"><b> Application Preview</b></p>
           <p style={{
               fontSize:18,
               marginBottom:-10,

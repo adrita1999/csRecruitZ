@@ -88,12 +88,14 @@ class Jobdetails extends Component {
         DetailsLoaded4:false,
         DetailsLoaded5:false,
         DetailsLoaded6:false,
+        DetailsLoaded7:false,
         req_exp:"",
         editopen:false,
         ifapplied:"",
         ifshortlisted:"",
         iffollowed:"",
-        empid:""
+        empid:"",
+        ifloggedin:false
     }
 
     constructor(props) {
@@ -261,6 +263,21 @@ class Jobdetails extends Component {
                 this.setState({'empid': json.employer_id})
             })
 
+        fetch("http://127.0.0.1:8000/first_module/jobseeker/get_info/",{
+        method:"GET"
+            })
+            .then((res) => res.json())
+            .then((json) => {
+                this.setState({DetailsLoaded7: true})
+                if(json.response ==="No") {
+                    this.state.ifloggedin=false
+                    this.setState({ifloggedin:false})
+                }
+                else {
+                    this.state.ifloggedin=true
+                    this.setState({ifloggedin:true})
+                }
+            })
 
             fetch('http://127.0.0.1:8000/first_module/apply/getapplication/', {  // Enter your IP address here
               method: 'POST',
@@ -449,7 +466,7 @@ class Jobdetails extends Component {
     this.setState({'redirect':true})
     }
     render() {
-        if (!this.state.DetailsLoaded1 || !this.state.DetailsLoaded2 || !this.state.DetailsLoaded4 || !this.state.DetailsLoaded5 ||!this.state.DetailsLoaded6 ) return <Loader/>
+        if (!this.state.DetailsLoaded1 || !this.state.DetailsLoaded2 || !this.state.DetailsLoaded4 || !this.state.DetailsLoaded5 ||!this.state.DetailsLoaded6 ||!this.state.DetailsLoaded7 ) return <Loader/>
         return (
             <React.Fragment>
             <body>
@@ -475,6 +492,8 @@ class Jobdetails extends Component {
                 <Jobdetailsitems title="Apply Procedures" text_val={this.state.items.application_process}/>
 
             </div>
+
+            {this.state.ifloggedin &&
             <div className="jobsummarydiv">
                 <div className="overviewheader"><h5 style={{color:"white"}}>Job Overview</h5></div>
                 <div className="jobsummaryinsidediv">
@@ -496,13 +515,24 @@ class Jobdetails extends Component {
                     <button className="job_details_btn" onClick={this.handleClickVisit}>Visit Employer</button>
                     {/*<button className="job_details_btn">Follow Employer</button>*/}
                 </span>
-
-
-
-
                 </div>
-
             </div>
+            }
+
+            {!this.state.ifloggedin &&
+            <div className="jobsummarydiv2">
+                <div className="overviewheader"><h5 style={{color:"white"}}>Job Overview</h5></div>
+                <div className="jobsummaryinsidediv">
+                <p><b>Published on:</b> {this.state.items.post_date}</p>
+                <p><b>Application deadline:</b> {this.state.items.deadline_date}</p>
+                <p><b>Job nature:</b> {this.state.items.job_nature}</p>
+                <p><b>Location:</b> {this.state.items.emp_division}</p>
+                <p><b>Salary:</b> {this.state.items.salary} BDT</p>
+                <p><b>Required Experience:</b> {this.state.req_exp}</p>
+                <p><b>Vacancy:</b> {this.state.items.vacancies}</p>
+                </div>
+            </div>
+            }
             </div>
             <Modal
         open={this.state.editopen}

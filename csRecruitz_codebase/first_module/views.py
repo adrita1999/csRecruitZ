@@ -1502,16 +1502,16 @@ class uskillViewsets(viewsets.ModelViewSet):
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
             global logged_in_id
-            print("koooooo" + str(logged_in_id))
+            # print("koooooo" + str(logged_in_id))
             objs = JobSeekerSkill.objects.filter(user_id=logged_in_id).order_by("skill_id")
             skill_if_verified=""
             skill_ids=""
-            # skill based mark
             for js in objs:  # for each jobskill
                 jsid = int(js.skill_id_id)
-                # check if jobskill is present in uskill and he is open to that
+                # print("skill")
+                # print(jsid)
                 user_skill = JobSeekerSkill.objects.filter(user_id_id=logged_in_id, skill_id_id=jsid)
-                skillflag = False
+                skillflag = True
                 usid = 0
                 if len(user_skill) != 0:
                     skillflag = True
@@ -1519,24 +1519,42 @@ class uskillViewsets(viewsets.ModelViewSet):
                 # print(skillflag)
                 if skillflag:  # user has that skill, check if he has given assessment and passed
                     assflag = False
-                    ass = Assessment.objects.filter(jobseeker_skill_id_id=usid).order_by("-date")
+                    ass = Assessment.objects.filter(jobseeker_skill_id_id=usid).order_by("-assessment_id")
+                    # print("all as of skill")
+                    # print(ass)
                     if len(ass) != 0:
                         assflag = True
                         assmark = ass[0].marks_obtained
                         asspercent = assmark * 10
+                        # print("skill id")
+                        # print(jsid)
+                        # print("paise")
+                        # print(asspercent)
                     if assflag:  # user has given assessment, check cutoff mark
                         # print("ass dise")
                         todaydate = datetime.today().strftime('%Y-%m-%d')
                         cutoff = SkillMarkCutoff.objects.filter(skill_id_id=jsid, to_date__gte=todaydate,
                                                                 from_date__lte=todaydate)
                         cutoffmark = cutoff[0].cutoff_percentage
+                        # print("cuttoff")
+                        # print(cutoffmark)
                         if asspercent >= cutoffmark:
+                            # print("skill idd")
+                            # print(jsid)
+                            # print(1)
                             skill_if_verified=skill_if_verified+"1"+"#"
                             skill_ids = skill_ids +"#"+str(jsid)
                         else:
+                            # print("skill idd")
+                            # print(jsid)
+                            # print(0)
                             skill_if_verified = skill_if_verified +  "0"+"#"
                             skill_ids = skill_ids+ "#" + str(jsid)
                     else:
+                        # print("skill id")
+                        # print(jsid)
+                        # print("ass deyni")
+                        # print(0)
                         skill_if_verified = skill_if_verified +  "0"+"#"
                         skill_ids = skill_ids + "#" + str(jsid)
 
@@ -3385,7 +3403,7 @@ jskill17 = JobSkill(job_skill_id=17,jobpost_id=jobpost7,skill_id=skill8)
 jskill13.save()
 jskill18 = JobSkill(job_skill_id=18,jobpost_id=jobpost7,skill_id=skill1)
 jskill18.save()
-jobpost8 = NewJobpost(jobpost_id=8, employer_id=emp1, title="Junior Software Engineer",
+jobpost8 = NewJobpost(jobpost_id=8, employer_id=emp1, title="Sr. Software Developer",
                       category="DevOps", post_date="2022-07-08", deadline_date="2022-09-08",
                       salary=55000, required_experience=5, vacancies=2,
                       job_context="We are looking for a Sr. Software Engineer who will able to produce scalable software solutions. Selected Candidate will be the part of a cross-functional team that’s responsible for the full software development life cycle, from conception to deployment. As a Sr. Software Engineer, Candidate should be comfortable around both front-end and back-end coding languages, development frameworks and third-party libraries. Candidate should also be a team player with a knack for visual design and utility.",
@@ -3393,7 +3411,7 @@ jobpost8 = NewJobpost(jobpost_id=8, employer_id=emp1, title="Junior Software Eng
                       job_responsibilities="Bachelor of Science (BSc) in CSE in any reputed university.",
                       edu_requirement="M.Sc/ B.Sc in Computer Science & Engineering or relevant degree from any reputed University",
                       additional_requirements="Work experience as a Full Stack Developer or similar role.",
-                      application_process=" Email your CV from MY BDJOBS account.")
+                      application_process=" Email your CV with academic certificates.")
 jobpost8.save()
 jskill19 = JobSkill(job_skill_id=19,jobpost_id=jobpost8,skill_id=skill1)
 jskill19.save()

@@ -37,8 +37,8 @@ export class Quiz extends Component {
       questions:[],
       current_q_id:0,
       radioval:"none",
-        min:0,
-        sec:0,
+        min:-1,
+        sec:-1,
         if1digit:false,
     };
 
@@ -149,7 +149,7 @@ export class Quiz extends Component {
                 .then((data)=>console.log(data));
             // this.state.percent = this.state.percent+12.5
               this.setState({percent:this.state.percent+12.5})
-            window.location.href="//quizresult"
+            window.location.href="/quizresult"
       }
       else {
           this.state.current_q_id = this.state.questions[this.state.q_id].question_id;
@@ -259,12 +259,11 @@ export class Quiz extends Component {
 
           this.setState({
               questions: json.data,
-              DataisLoaded:true,
               pressed:true
           });
       console.log(json.data)
-      console.log(json[this.state.q_id].time_limit)
-      const questime=json[this.state.q_id].time_limit
+      // console.log(json[this.state.q_id].time_limit)
+      const questime=json.data[this.state.q_id].time_limit
       const splittime = questime.split(":")
       const min=splittime[0]
       const sec=splittime[1]
@@ -276,7 +275,8 @@ export class Quiz extends Component {
       // {
       //     this.setState({if1digit:true})
       // }
-      this.setState({mark:json[this.state.q_id].mark})
+      this.setState({mark:json.data[this.state.q_id].mark})
+          this.setState({DataisLoaded:true})
       })
   }
 
